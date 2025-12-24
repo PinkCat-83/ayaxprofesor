@@ -1,2 +1,9 @@
+# Carpetas de trabajo local
 /_Proceso creación/
 /_Recursos sin Modificar/
+
+# Archivos de configuración o notas personales
+URL.txt
+
+# Scripts de automatización
+*.bat
