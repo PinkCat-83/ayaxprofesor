@@ -1,0 +1,20 @@
+/* ===================================================== */
+/* Canvas de gatos rebotando en fondo - Para layout    */
+/* ===================================================== */
+
+/* Canvas fijo en el fondo, no interfiere con nada */
+#catCanvas {
+    position: fixed; /* Fixed para que quede fijo mientras scrolleas */
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0; /* Detrás de todo el contenido */
+    pointer-events: none; /* No interfiere con clicks ni scroll */
+}
+
+/* Aseguramos que el contenido principal esté por encima del canvas */
+.min-h-screen {
+    position: relative;
+    z-index: 1;
+}

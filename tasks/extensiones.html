@@ -1,0 +1,940 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>El Desafío de las Extensiones</title>
+<style>
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #fff;
+}
+
+.container {
+  width: 90%;
+  max-width: 1200px;
+}
+
+/* Menú Principal */
+#menu {
+  text-align: center;
+  background: rgba(255, 255, 255, 0.1);
+  padding: 50px;
+  border-radius: 20px;
+  backdrop-filter: blur(10px);
+  max-width: 500px;
+  margin: 0 auto;
+}
+
+#menu h1 {
+  font-size: 2.5em;
+  margin-bottom: 40px;
+  color: #ffb3d9;
+  text-shadow: 2px 2px 10px rgba(0,0,0,0.3);
+}
+
+.difficulty-selector {
+  margin: 30px 0;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.difficulty-selector h2 {
+  font-size: 1.5em;
+  margin-bottom: 10px;
+  color: #ffb3d9;
+}
+
+.difficulty-btn {
+  background: linear-gradient(135deg, #ff6b9d 0%, #c44569 100%);
+  border: none;
+  color: white;
+  padding: 18px 30px;
+  font-size: 1.1em;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: transform 0.2s, box-shadow 0.2s;
+  width: 100%;
+}
+
+.difficulty-btn:hover {
+  transform: scale(1.05);
+  box-shadow: 0 5px 20px rgba(255, 107, 157, 0.5);
+}
+
+.library-btn {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  border: none;
+  color: white;
+  padding: 18px 30px;
+  margin-top: 20px;
+  font-size: 1.1em;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: transform 0.2s;
+  width: 100%;
+}
+
+.library-btn:hover {
+  transform: scale(1.05);
+}
+
+/* Botón de sonido */
+.sound-toggle {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  background: rgba(255, 255, 255, 0.2);
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  color: white;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  cursor: pointer;
+  font-size: 1.5em;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s;
+  z-index: 2000;
+  backdrop-filter: blur(10px);
+}
+
+.sound-toggle:hover {
+  background: rgba(255, 255, 255, 0.3);
+  transform: scale(1.1);
+}
+
+/* Juego */
+#game {
+  display: none;
+}
+
+.game-header {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  background: rgba(255, 255, 255, 0.1);
+  padding: 20px;
+  border-radius: 15px;
+  backdrop-filter: blur(10px);
+}
+
+/* Caja de acertadas */
+.correct-box {
+  position: sticky;
+  top: 90px;
+  z-index: 99;
+  background: rgba(76, 175, 80, 0.2);
+  border: 2px solid rgba(76, 175, 80, 0.4);
+  padding: 15px;
+  border-radius: 12px;
+  margin-bottom: 20px;
+  max-height: 60px;
+  overflow: hidden;
+  transition: max-height 0.3s ease, background 0.3s ease;
+  cursor: pointer;
+  backdrop-filter: blur(10px);
+}
+
+.correct-box:hover {
+  max-height: 400px;
+  background: rgba(76, 175, 80, 0.3);
+  overflow-y: auto;
+}
+
+.correct-box h3 {
+  color: #4CAF50;
+  margin-bottom: 10px;
+  font-size: 1.2em;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.correct-box h3::after {
+  content: '▼';
+  margin-left: auto;
+  font-size: 0.8em;
+  transition: transform 0.3s ease;
+}
+
+.correct-box:hover h3::after {
+  transform: rotate(180deg);
+}
+
+#correctList {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 8px;
+  margin-top: 10px;
+}
+
+.correct-item {
+  background: rgba(255, 255, 255, 0.1);
+  padding: 10px;
+  border-radius: 8px;
+  font-size: 0.9em;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.correct-item .ext {
+  color: #ffb3d9;
+  font-weight: bold;
+}
+
+.correct-box::-webkit-scrollbar {
+  width: 8px;
+}
+
+.correct-box::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 10px;
+}
+
+.correct-box::-webkit-scrollbar-thumb {
+  background: rgba(76, 175, 80, 0.5);
+  border-radius: 10px;
+}
+
+.correct-box::-webkit-scrollbar-thumb:hover {
+  background: rgba(76, 175, 80, 0.7);
+}
+
+.lives {
+  font-size: 1.5em;
+  color: #ffb3d9;
+}
+
+.back-btn {
+  background: rgba(255, 255, 255, 0.2);
+  border: none;
+  color: white;
+  padding: 10px 20px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 1em;
+}
+
+.game-area {
+  display: flex;
+  justify-content: space-between;
+  gap: 50px;
+  position: relative;
+}
+
+.game-area.two-columns {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 30px;
+}
+
+.game-area.two-columns .column {
+  display: grid;
+  grid-template-columns: 200px 1fr;
+  gap: 15px;
+  align-items: start;
+}
+
+.column {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+#extensions {
+  flex: 0 0 200px;
+}
+
+#descriptions {
+  flex: 1;
+}
+
+.extension-box, .description-box {
+  background: rgba(255, 255, 255, 0.15);
+  padding: 20px;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.3s;
+  border: 3px solid transparent;
+  position: relative;
+}
+
+.extension-box:hover, .description-box:hover {
+  background: rgba(255, 255, 255, 0.25);
+  transform: translateY(-3px);
+}
+
+.extension-box.new-level::before {
+  content: '✨';
+  position: absolute;
+  top: 5px;
+  right: 10px;
+  font-size: 1.2em;
+}
+
+.selected {
+  border-color: #ffb3d9;
+  background: rgba(255, 179, 217, 0.3);
+}
+
+.matched {
+  background: rgba(76, 175, 80, 0.3);
+  border-color: #4CAF50;
+  pointer-events: none;
+}
+
+/* Canvas para flechas */
+#arrowCanvas {
+  display: none;
+}
+
+/* Modal */
+.modal {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.8);
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.modal-content {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  padding: 50px;
+  border-radius: 20px;
+  text-align: center;
+  position: relative;
+  max-width: 500px;
+}
+
+.modal-content h2 {
+  font-size: 3em;
+  margin-bottom: 30px;
+  color: #ffb3d9;
+}
+
+.modal-btn {
+  background: linear-gradient(135deg, #ff6b9d 0%, #c44569 100%);
+  border: none;
+  color: white;
+  padding: 15px 40px;
+  font-size: 1.2em;
+  border-radius: 10px;
+  cursor: pointer;
+  margin-top: 20px;
+}
+
+/* Biblioteca */
+#library {
+  display: none;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.library-header {
+  background: rgba(255, 255, 255, 0.1);
+  padding: 20px;
+  border-radius: 15px;
+  backdrop-filter: blur(10px);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+#library h2 {
+  font-size: 2em;
+  margin: 0;
+  color: #ffb3d9;
+  flex: 1;
+  text-align: center;
+}
+
+#library-content {
+  background: rgba(255, 255, 255, 0.1);
+  padding: 30px;
+  border-radius: 20px;
+  backdrop-filter: blur(10px);
+  max-height: calc(80vh - 100px);
+  overflow-y: auto;
+}
+
+.library-section {
+  margin-bottom: 30px;
+}
+
+.library-section h3 {
+  color: #ffb3d9;
+  margin-bottom: 15px;
+  font-size: 1.5em;
+}
+
+.library-item {
+  background: rgba(255, 255, 255, 0.1);
+  padding: 15px;
+  border-radius: 10px;
+  margin-bottom: 10px;
+  cursor: pointer;
+  transition: all 0.3s;
+  text-decoration: none;
+  color: white;
+  display: block;
+}
+
+.library-item:hover {
+  background: rgba(255, 255, 255, 0.2);
+  transform: translateX(5px);
+}
+
+.library-item strong {
+  color: #ffb3d9;
+  margin-right: 10px;
+}
+
+.library-item::after {
+  content: '🔗';
+  float: right;
+  opacity: 0.6;
+}
+
+/* Fuegos artificiales */
+.firework {
+  position: absolute;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  animation: explode 1s ease-out infinite;
+}
+
+@keyframes explode {
+  0% {
+    transform: translate(0, 0);
+    opacity: 1;
+  }
+  100% {
+    transform: translate(var(--x), var(--y));
+    opacity: 0;
+  }
+}
+</style>
+</head>
+<body>
+<button class="sound-toggle" id="soundToggle" onclick="toggleSound()">🔊</button>
+<div class="container">
+  <!-- Menú Principal -->
+  <div id="menu">
+    <h1>🎯 El Desafío de las Extensiones</h1>
+    <div class="difficulty-selector">
+      <h2>Selecciona la Dificultad</h2>
+      <button class="difficulty-btn" onclick="startGame(1)">Nivel 1: Básico</button>
+      <button class="difficulty-btn" onclick="startGame(2)">Nivel 2: Intermedio</button>
+      <button class="difficulty-btn" onclick="startGame(3)">Nivel 3: Avanzado</button>
+      <button class="difficulty-btn" onclick="startGame(4)">Nivel 4: Power User</button>
+      <button class="difficulty-btn" onclick="startGame(5)">Nivel 5: Developer</button>
+    </div>
+    <button class="library-btn" onclick="showLibrary()">📚 Biblioteca</button>
+  </div>
+
+  <!-- Juego -->
+  <div id="game">
+    <div class="game-header">
+      <button class="back-btn" onclick="backToMenu()">← Volver al Menú</button>
+      <div class="lives">❤️ Vidas: <span id="lives">3</span></div>
+      <div class="level-info">Nivel <span id="level">1</span></div>
+    </div>
+    
+    <div class="correct-box" id="correctBox">
+      <h3>✅ Acertadas (<span id="correctCount">0</span>)</h3>
+      <div id="correctList"></div>
+    </div>
+    
+    <div class="game-area" id="gameArea">
+      <canvas id="arrowCanvas"></canvas>
+      <div class="column" id="extensions"></div>
+      <div class="column" id="descriptions"></div>
+    </div>
+  </div>
+
+  <!-- Biblioteca -->
+  <div id="library">
+    <div class="library-header">
+      <button class="back-btn" onclick="hideLibrary()">← Volver</button>
+      <h2>📚 Biblioteca de Extensiones</h2>
+      <div style="width: 120px;"></div>
+    </div>
+    <div id="library-content"></div>
+  </div>
+</div>
+
+<!-- Modal Victoria -->
+<div id="victoryModal" class="modal">
+  <div class="modal-content">
+    <h2>¡Bien Hecho!</h2>
+    <div id="fireworks"></div>
+    <button class="modal-btn" onclick="backToMenu()">Volver al Menú</button>
+  </div>
+</div>
+
+<!-- Modal Game Over -->
+<div id="gameOverModal" class="modal">
+  <div class="modal-content">
+    <h2>¡Buen intento, juega otra vez!</h2>
+    <button class="modal-btn" onclick="backToMenu()">Volver al Menú</button>
+  </div>
+</div>
+
+<script>
+const extensionsData = {
+  1: {
+    'PDF': 'Documento que se lee bien en cualquier dispositivo',
+    'DOCX': 'Documento editable de Word',
+    'XLSX': 'Hoja de cálculo de Excel',
+    'HTML': 'Página web',
+    'JPG': 'Imagen sin transparencias de poco peso',
+    'PNG': 'Imagen que puede contener transparencias',
+    'MP4': 'Video digital estándar muy extendido',
+    'MP3': 'Audio comprimido muy extendido',
+    'TXT': 'Archivo de texto plano',
+    'EXE': 'Programa ejecutable',
+    'PPTX': 'Presentación de PowerPoint'
+  },
+  2: {
+    'ODP': 'Presentación de código abierto - OpenDocument',
+    'WEBP': 'Imagen web moderna',
+    'GIF': 'Imagen que puede contener animación',
+    'MKV': 'Contenedor Matroska que incluye vídeo, audio y subtítulos',
+    'ZIP': 'Archivo comprimido estándar estándar',
+    'RAR': 'Archivo comprimido WinRAR',
+    'ODT': 'Documento editable de código abierto - OpenDocument',
+    'ODS': 'Hoja de Cálculo de código abierto - OpenDocument'
+  },
+  3: {
+    'ACCDB': 'Base de datos Microsoft Access',
+    'FLAC': 'Audio sin pérdida de tamaño reducido',
+    'WAV': 'Audio sin comprimir de gran tamaño',
+    'OGG': 'Audio contenedor Ogg de código abierto',
+    'PSD': 'Imagen Photoshop',
+    'TIFF': 'Imagen de alta calidad de uso profesional',
+    '7Z': 'Archivo comprimido 7-Zip',
+    'EPUB': 'Libro electrónico',
+    'TTF': 'Fuente TrueType'
+  },
+  4: {
+    'DOCM': 'Documento Word con macros',
+    'XLSM': 'Excel con macros',
+    'CSV': 'Base de datos',
+    'SVG': 'Gráfico vectorial escalable',
+    'MSI': 'Instalador de programas para Windows',
+    'PPTM': 'PowerPoint con macros',
+    'ICO': 'Icono de Windows',
+    'BAT': 'Ejecutable que permite automatizar procesos de Windows'
+  },
+  5: {
+    'VBS': 'Script Visual Basic',
+    'PHP': 'Script de servidor web',
+    'JSON': 'Formato de intercambio de datos',
+    'APK': 'Aplicación de Android',
+    'PY': 'Script de Python',
+    'JS': 'Script de JavaScript',
+    'ISO': 'Imagen de disco',
+    'XML': 'Lenguaje de marcado extensible',
+    'CSS': 'Hoja de estilos en cascada',
+    'SQL': 'Consulta de base de datos',
+    'MD': 'Documento Markdown'
+  }
+};
+
+// Diccionario de URLs de Wikipedia para cada extensión
+const wikipediaLinks = {
+  'PDF': 'https://es.wikipedia.org/wiki/PDF',
+  'DOCX': 'https://es.wikipedia.org/wiki/Office_Open_XML',
+  'XLSX': 'https://es.wikipedia.org/wiki/Microsoft_Excel',
+  'HTML': 'https://es.wikipedia.org/wiki/HTML',
+  'JPG': 'https://es.wikipedia.org/wiki/JPEG',
+  'PNG': 'https://es.wikipedia.org/wiki/Portable_Network_Graphics',
+  'MP4': 'https://es.wikipedia.org/wiki/MPEG-4',
+  'MP3': 'https://es.wikipedia.org/wiki/MP3',
+  'TXT': 'https://es.wikipedia.org/wiki/Archivo_de_texto',
+  'EXE': 'https://es.wikipedia.org/wiki/EXE',
+  'PPTX': 'https://es.wikipedia.org/wiki/Microsoft_PowerPoint',
+  'ODP': 'https://es.wikipedia.org/wiki/OpenDocument',
+  'WEBP': 'https://es.wikipedia.org/wiki/WebP',
+  'GIF': 'https://es.wikipedia.org/wiki/Graphics_Interchange_Format',
+  'MKV': 'https://es.wikipedia.org/wiki/Matroska',
+  'ZIP': 'https://es.wikipedia.org/wiki/Formato_de_compresi%C3%B3n_ZIP',
+  'RAR': 'https://es.wikipedia.org/wiki/RAR',
+  'ODT': 'https://es.wikipedia.org/wiki/OpenDocument',
+  'ODS': 'https://es.wikipedia.org/wiki/OpenDocument',
+  'ACCDB': 'https://es.wikipedia.org/wiki/Microsoft_Access',
+  'FLAC': 'https://es.wikipedia.org/wiki/FLAC',
+  'WAV': 'https://es.wikipedia.org/wiki/WAV',
+  'OGG': 'https://es.wikipedia.org/wiki/Ogg',
+  'PSD': 'https://es.wikipedia.org/wiki/Adobe_Photoshop',
+  'TIFF': 'https://es.wikipedia.org/wiki/Tagged_Image_File_Format',
+  '7Z': 'https://es.wikipedia.org/wiki/7-Zip',
+  'EPUB': 'https://es.wikipedia.org/wiki/EPUB',
+  'TTF': 'https://es.wikipedia.org/wiki/TrueType',
+  'DOCM': 'https://es.wikipedia.org/wiki/Office_Open_XML',
+  'XLSM': 'https://es.wikipedia.org/wiki/Microsoft_Excel',
+  'CSV': 'https://es.wikipedia.org/wiki/Valores_separados_por_comas',
+  'SVG': 'https://es.wikipedia.org/wiki/Gr%C3%A1ficos_vectoriales_escalables',
+  'MSI': 'https://es.wikipedia.org/wiki/Windows_Installer',
+  'PPTM': 'https://es.wikipedia.org/wiki/Microsoft_PowerPoint',
+  'ICO': 'https://es.wikipedia.org/wiki/ICO_(formato)',
+  'BAT': 'https://es.wikipedia.org/wiki/Archivo_batch',
+  'VBS': 'https://es.wikipedia.org/wiki/VBScript',
+  'PHP': 'https://es.wikipedia.org/wiki/PHP',
+  'JSON': 'https://es.wikipedia.org/wiki/JSON',
+  'APK': 'https://es.wikipedia.org/wiki/Android_Package',
+  'PY': 'https://es.wikipedia.org/wiki/Python',
+  'JS': 'https://es.wikipedia.org/wiki/JavaScript',
+  'ISO': 'https://es.wikipedia.org/wiki/Imagen_ISO',
+  'XML': 'https://es.wikipedia.org/wiki/Extensible_Markup_Language',
+  'CSS': 'https://es.wikipedia.org/wiki/Hoja_de_estilos_en_cascada',
+  'SQL': 'https://es.wikipedia.org/wiki/SQL',
+  'MD': 'https://es.wikipedia.org/wiki/Markdown'
+};
+
+const levelConfig = {
+  1: { pairs: 5, lives: 3, minNew: 5 },
+  2: { pairs: 7, lives: 3, minNew: 4 },
+  3: { pairs: 10, lives: 2, minNew: 4 },
+  4: { pairs: 13, lives: 2, minNew: 4 },
+  5: { pairs: 15, lives: 2, minNew: 4 }
+};
+
+// Sistema de sonido usando AudioContext para simular sonidos de Windows
+const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+let soundEnabled = true;
+
+function toggleSound() {
+  soundEnabled = !soundEnabled;
+  const btn = document.getElementById('soundToggle');
+  btn.textContent = soundEnabled ? '🔊' : '🔇';
+}
+
+function playSound(type) {
+  if (!soundEnabled) return;
+  
+  const oscillator = audioCtx.createOscillator();
+  const gainNode = audioCtx.createGain();
+  
+  oscillator.connect(gainNode);
+  gainNode.connect(audioCtx.destination);
+  
+  switch(type) {
+    case 'click':
+      oscillator.frequency.value = 800;
+      gainNode.gain.setValueAtTime(0.1, audioCtx.currentTime);
+      gainNode.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.1);
+      oscillator.start(audioCtx.currentTime);
+      oscillator.stop(audioCtx.currentTime + 0.1);
+      break;
+    case 'success':
+      oscillator.frequency.value = 523.25;
+      gainNode.gain.setValueAtTime(0.2, audioCtx.currentTime);
+      oscillator.start(audioCtx.currentTime);
+      oscillator.frequency.exponentialRampToValueAtTime(783.99, audioCtx.currentTime + 0.2);
+      gainNode.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.3);
+      oscillator.stop(audioCtx.currentTime + 0.3);
+      break;
+    case 'error':
+      oscillator.frequency.value = 200;
+      gainNode.gain.setValueAtTime(0.2, audioCtx.currentTime);
+      oscillator.start(audioCtx.currentTime);
+      gainNode.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.2);
+      oscillator.stop(audioCtx.currentTime + 0.2);
+      break;
+  }
+}
+
+let currentLevel = 1;
+let lives = 3;
+let selectedExt = null;
+let selectedDesc = null;
+let currentPairs = {};
+let newLevelExts = [];
+let correctMatches = [];
+let canvas, ctx;
+let arrows = [];
+
+function startGame(level) {
+  playSound('click');
+  currentLevel = level;
+  lives = levelConfig[level].lives;
+  correctMatches = [];
+  document.getElementById('menu').style.display = 'none';
+  document.getElementById('game').style.display = 'block';
+  document.getElementById('level').textContent = level;
+  document.getElementById('lives').textContent = lives;
+  document.getElementById('correctCount').textContent = '0';
+  document.getElementById('correctList').innerHTML = '';
+  
+  generatePairs();
+}
+
+function generatePairs() {
+  const config = levelConfig[currentLevel];
+  let pool = {};
+  newLevelExts = [];
+  
+  // Obtener todas las extensiones de niveles anteriores
+  let previousLevelExts = [];
+  for (let i = 1; i < currentLevel; i++) {
+    previousLevelExts = previousLevelExts.concat(Object.keys(extensionsData[i]));
+  }
+  
+  // Seleccionar exactamente minNew extensiones del nivel actual
+  const currentLevelExts = Object.keys(extensionsData[currentLevel]);
+  const numNew = config.minNew;
+  const selectedNew = shuffle(currentLevelExts).slice(0, numNew);
+  
+  // Añadir las extensiones nuevas al pool
+  selectedNew.forEach(ext => {
+    pool[ext] = extensionsData[currentLevel][ext];
+    newLevelExts.push(ext);
+  });
+  
+  // Calcular cuántas extensiones de niveles anteriores necesitamos
+  const remainingSlots = config.pairs - numNew;
+  
+  // Añadir extensiones aleatorias de niveles anteriores
+  const shuffledPrevious = shuffle(previousLevelExts).slice(0, remainingSlots);
+  shuffledPrevious.forEach(ext => {
+    // Buscar en qué nivel está esta extensión
+    for (let i = 1; i < currentLevel; i++) {
+      if (extensionsData[i][ext]) {
+        pool[ext] = extensionsData[i][ext];
+        break;
+      }
+    }
+  });
+  
+  currentPairs = pool;
+  displayPairs();
+}
+
+function displayPairs() {
+  const extsDiv = document.getElementById('extensions');
+  const descsDiv = document.getElementById('descriptions');
+  
+  extsDiv.innerHTML = '';
+  descsDiv.innerHTML = '';
+  
+  const exts = shuffle(Object.keys(currentPairs));
+  const descs = shuffle(Object.values(currentPairs));
+  
+  exts.forEach(ext => {
+    const box = document.createElement('div');
+    box.className = 'extension-box' + (newLevelExts.includes(ext) ? ' new-level' : '');
+    box.textContent = '.' + ext;
+    box.dataset.ext = ext;
+    box.onclick = () => selectExtension(box, ext);
+    extsDiv.appendChild(box);
+  });
+  
+  descs.forEach(desc => {
+    const box = document.createElement('div');
+    box.className = 'description-box';
+    box.textContent = desc;
+    box.dataset.desc = desc;
+    box.onclick = () => selectDescription(box, desc);
+    descsDiv.appendChild(box);
+  });
+}
+
+function selectExtension(box, ext) {
+  if (box.classList.contains('matched')) return;
+  playSound('click');
+  
+  document.querySelectorAll('.extension-box').forEach(b => b.classList.remove('selected'));
+  box.classList.add('selected');
+  selectedExt = { box, ext };
+  
+  if (selectedDesc) {
+    checkMatch();
+  }
+}
+
+function selectDescription(box, desc) {
+  if (box.classList.contains('matched')) return;
+  playSound('click');
+  
+  document.querySelectorAll('.description-box').forEach(b => b.classList.remove('selected'));
+  box.classList.add('selected');
+  selectedDesc = { box, desc };
+  
+  if (selectedExt) {
+    checkMatch();
+  }
+}
+
+function checkMatch() {
+  if (currentPairs[selectedExt.ext] === selectedDesc.desc) {
+    playSound('success');
+    selectedExt.box.classList.add('matched');
+    selectedDesc.box.classList.add('matched');
+    selectedExt.box.classList.remove('selected');
+    selectedDesc.box.classList.remove('selected');
+    
+    // Añadir a la caja de acertadas
+    correctMatches.push({
+      ext: selectedExt.ext,
+      desc: selectedDesc.desc
+    });
+    updateCorrectBox();
+    
+    delete currentPairs[selectedExt.ext];
+    
+    selectedExt = null;
+    selectedDesc = null;
+    
+    if (Object.keys(currentPairs).length === 0) {
+      setTimeout(() => showVictory(), 500);
+    }
+  } else {
+    playSound('error');
+    
+    lives--;
+    document.getElementById('lives').textContent = lives;
+    
+    selectedExt.box.classList.remove('selected');
+    selectedDesc.box.classList.remove('selected');
+    selectedExt = null;
+    selectedDesc = null;
+    
+    if (lives === 0) {
+      setTimeout(() => showGameOver(), 500);
+    }
+  }
+}
+
+function updateCorrectBox() {
+  const list = document.getElementById('correctList');
+  const count = document.getElementById('correctCount');
+  
+  count.textContent = correctMatches.length;
+  
+  list.innerHTML = '';
+  correctMatches.forEach(match => {
+    const item = document.createElement('div');
+    item.className = 'correct-item';
+    item.innerHTML = `<span class="ext">.${match.ext}</span><span>${match.desc}</span>`;
+    list.appendChild(item);
+  });
+  
+  // Scroll suave al final de la lista cuando hay muchos elementos
+  if (correctMatches.length > 4) {
+    const correctBox = document.getElementById('correctBox');
+    correctBox.scrollTop = correctBox.scrollHeight;
+  }
+}
+
+function showVictory() {
+  playSound('success');
+  const modal = document.getElementById('victoryModal');
+  modal.style.display = 'flex';
+  createFireworks();
+}
+
+function showGameOver() {
+  playSound('error');
+  document.getElementById('gameOverModal').style.display = 'flex';
+}
+
+function createFireworks() {
+  const container = document.getElementById('fireworks');
+  container.innerHTML = '';
+  
+  setInterval(() => {
+    for (let i = 0; i < 30; i++) {
+      const fw = document.createElement('div');
+      fw.className = 'firework';
+      fw.style.left = Math.random() * 100 + '%';
+      fw.style.top = Math.random() * 100 + '%';
+      fw.style.background = `hsl(${Math.random() * 360}, 100%, 50%)`;
+      fw.style.setProperty('--x', (Math.random() - 0.5) * 200 + 'px');
+      fw.style.setProperty('--y', (Math.random() - 0.5) * 200 + 'px');
+      container.appendChild(fw);
+      
+      setTimeout(() => fw.remove(), 1000);
+    }
+  }, 200);
+}
+
+function backToMenu() {
+  playSound('click');
+  document.getElementById('game').style.display = 'none';
+  document.getElementById('victoryModal').style.display = 'none';
+  document.getElementById('gameOverModal').style.display = 'none';
+  document.getElementById('menu').style.display = 'block';
+}
+
+function showLibrary() {
+  playSound('click');
+  document.getElementById('menu').style.display = 'none';
+  const library = document.getElementById('library');
+  library.style.display = 'flex';
+  
+  const content = document.getElementById('library-content');
+  content.innerHTML = '';
+  
+  for (let level = 1; level <= 5; level++) {
+    const section = document.createElement('div');
+    section.className = 'library-section';
+    section.innerHTML = `<h3>Nivel ${level}</h3>`;
+    
+    for (const [ext, desc] of Object.entries(extensionsData[level])) {
+      const item = document.createElement('a');
+      item.className = 'library-item';
+      item.href = wikipediaLinks[ext] || `https://es.wikipedia.org/wiki/${ext}`;
+      item.target = '_blank';
+      item.rel = 'noopener noreferrer';
+      item.innerHTML = `<strong>.${ext}</strong> ${desc}`;
+      section.appendChild(item);
+    }
+    
+    content.appendChild(section);
+  }
+}
+
+function hideLibrary() {
+  playSound('click');
+  const library = document.getElementById('library');
+  library.style.display = 'none';
+  document.getElementById('menu').style.display = 'block';
+}
+
+function shuffle(arr) {
+  const array = [...arr];
+  for (let i = array.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [array[i], array[j]] = [array[j], array[i]];
+  }
+  return array;
+}
+</script>
+</body>
+</html>

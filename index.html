@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Informática</title>
+    <link rel="stylesheet" href="res/cat-bouncing.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #000;
+            min-height: 100vh;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        /* Contenedor principal */
+        .container {
+            position: relative;
+            z-index: 1;
+            display: grid;
+            grid-template-columns: 400px 1fr;
+            grid-template-rows: auto 1fr;
+            height: 100vh;
+            gap: 20px;
+            padding: 20px;
+            padding-bottom: 80px;
+        }
+
+        /* Título superior */
+        .header {
+            grid-column: 1;
+            grid-row: 1;
+            text-align: left;
+            padding: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            margin-left: 40px;
+        }
+
+        .header img {
+            max-width: 140%;
+            height: auto;
+            filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.8)) drop-shadow(0 0 20px rgba(255, 20, 147, 0.6)) drop-shadow(0 0 30px rgba(255, 20, 147, 0.4)) drop-shadow(3px 3px 6px rgba(0, 0, 0, 0.2));
+            animation: glow 2s ease-in-out infinite alternate;
+        }
+
+        @keyframes glow {
+            from {
+                filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.8)) drop-shadow(0 0 20px rgba(255, 20, 147, 0.6)) drop-shadow(0 0 30px rgba(255, 20, 147, 0.4)) drop-shadow(3px 3px 6px rgba(0, 0, 0, 0.2));
+            }
+
+            to {
+                filter: drop-shadow(0 0 20px rgba(255, 255, 255, 1)) drop-shadow(0 0 30px rgba(255, 20, 147, 0.8)) drop-shadow(0 0 40px rgba(255, 20, 147, 0.6)) drop-shadow(3px 3px 8px rgba(0, 0, 0, 0.3));
+            }
+        }
+
+        /* Estilo Aero Glass */
+        .glass {
+            background: rgba(255, 192, 203, 0.3);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: 15px;
+            box-shadow:
+                0 8px 32px rgba(255, 105, 180, 0.3),
+                inset 0 1px 0 rgba(255, 255, 255, 0.5),
+                inset 0 -1px 0 rgba(255, 255, 255, 0.2);
+        }
+
+        /* Menú izquierdo */
+        .menu {
+            grid-column: 1;
+            grid-row: 2;
+            padding: 20px;
+            max-height: 100%;
+            overflow-y: auto;
+            margin-left: 40px;
+            align-self: start;
+            margin-top: -20px;
+        }
+
+        .menu::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .menu::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+        }
+
+        .menu::-webkit-scrollbar-thumb {
+            background: rgba(255, 105, 180, 0.5);
+            border-radius: 10px;
+        }
+
+        .menu-item {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+
+        .menu-button,
+        .download-button {
+            padding: 15px 20px;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(255, 105, 180, 0.3);
+        }
+
+        .menu-button {
+            flex: 1;
+            background: rgba(255, 105, 180, 0.4);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.4);
+            color: #fff;
+        }
+
+        .menu-button:hover {
+            background: rgba(255, 105, 180, 0.6);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(255, 105, 180, 0.5);
+        }
+
+        .download-button {
+            background: rgba(255, 20, 147, 0.5);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.4);
+            color: #fff;
+            padding: 15px;
+            width: 50px;
+        }
+
+        .download-button:hover {
+            background: rgba(255, 20, 147, 0.7);
+            transform: scale(1.1);
+        }
+
+        /* Logo derecha */
+        .logo-container {
+            grid-column: 2;
+            grid-row: 2;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 40px;
+            pointer-events: none;
+        }
+
+        .logo-wrapper {
+            position: relative;
+            animation: floatAndSpin 12s ease-in-out infinite;
+            max-width: 90%;
+            max-height: 90%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .logo-wrapper img {
+            max-width: 100%;
+            max-height: 70vh;
+            width: auto;
+            height: auto;
+            object-fit: contain;
+            filter: drop-shadow(0 15px 40px rgba(255, 105, 180, 0.7));
+        }
+
+        @keyframes floatAndSpin {
+            0% {
+                transform: translateY(0px) rotate(0deg);
+            }
+
+            25% {
+                transform: translateY(-20px) rotate(0deg);
+            }
+
+            50% {
+                transform: translateY(0px) rotate(0deg);
+            }
+
+            75% {
+                transform: translateY(-20px) rotate(0deg);
+            }
+
+            85% {
+                transform: translateY(0px) rotate(0deg);
+            }
+
+            92.5% {
+                transform: translateY(-10px) rotate(180deg);
+            }
+
+            100% {
+                transform: translateY(0px) rotate(360deg);
+            }
+        }
+
+        .logo-glow {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 150%;
+            height: 150%;
+            background: radial-gradient(circle, rgba(255, 105, 180, 0.5) 0%, transparent 70%);
+            border-radius: 50%;
+            animation: pulse 2s ease-in-out infinite;
+            z-index: -1;
+        }
+
+        @keyframes pulse {
+
+            0%,
+            100% {
+                opacity: 0.5;
+                transform: translate(-50%, -50%) scale(1);
+            }
+
+            50% {
+                opacity: 0.8;
+                transform: translate(-50%, -50%) scale(1.1);
+            }
+        }
+
+        /* Footer con datos personales */
+        .footer {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            z-index: 10;
+            padding: 15px 30px;
+            text-align: center;
+        }
+
+        .footer p {
+            color: #fff;
+            font-size: 1rem;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+            margin: 3px 0;
+        }
+
+        .footer strong {
+            color: #ff1493;
+            font-weight: 700;
+        }
+
+        .footer a {
+            color: #4dabf7;
+            font-weight: 700;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .footer a:hover {
+            color: #74c0fc;
+            text-shadow: 0 0 10px rgba(77, 171, 247, 0.8);
+        }
+
+        /* Área central (placeholder para contenido futuro) */
+        .content {
+            display: none;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Canvas para gatos rebotando -->
+    <canvas id="catCanvas"></canvas>
+
+    <div class="container">
+        <!-- Header con título -->
+        <div class="header">
+            <img src="imgs/title.png" alt="Informática">
+        </div>
+
+        <!-- Menú izquierdo -->
+        <div class="menu glass">
+            <div class="menu-item">
+                <button class="menu-button" onclick="window.open('https://google.es', '_blank')">
+                    📚 Ejercicio 1
+                </button>
+                <button class="download-button" onclick="downloadFile()" title="Descargar">
+                    ⬇️
+                </button>
+            </div>
+            <div class="menu-item">
+                <button class="menu-button" onclick="window.open('https://google.es', '_blank')">
+                    📝 Ejercicio 2
+                </button>
+                <button class="download-button" onclick="downloadFile()" title="Descargar">
+                    ⬇️
+                </button>
+            </div>
+            <div class="menu-item">
+                <button class="menu-button" onclick="window.open('https://google.es', '_blank')">
+                    💻 Ejercicio 3
+                </button>
+                <button class="download-button" onclick="downloadFile()" title="Descargar">
+                    ⬇️
+                </button>
+            </div>
+        </div>
+
+        <!-- Logo flotante en el centro -->
+        <div class="logo-container">
+            <div class="logo-wrapper">
+                <div class="logo-glow"></div>
+                <img src="imgs/logo.png" alt="Logo Empresa">
+            </div>
+        </div>
+
+        <!-- Footer con datos personales -->
+        <div class="footer glass">
+            <p><strong>Nombre:</strong> <a href="#">Tu Nombre Aquí</a></p>
+            <p><strong>Email:</strong> <a href="mailto:tuemail@ejemplo.com">tuemail@ejemplo.com</a></p>
+        </div>
+    </div>
+
+    <script>
+        // Función para descargar archivo
+        function downloadFile() {
+            const link = document.createElement('a');
+            link.href = 'imgs/logo.png';
+            link.download = 'logo.png';
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        }
+    </script>
+    <script src="res/cat-animation.js"></script>
+</body>
+
+</html>

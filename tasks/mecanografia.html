@@ -1,0 +1,572 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mecanografía con Pink Cat</title>
+    <!-- Carga de Tailwind CSS para el estilizado rápido y responsivo -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Carga de Three.js para la escena 3D -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <style>
+        /* Definición de la fuente "Inter" para la interfaz */
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap');
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #000;
+            overflow: hidden; /* Oculta el scroll para que solo se vea el canvas */
+        }
+
+        /* Estilos para el canvas 3D */
+        #bg-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1; /* Mantiene el canvas detrás de la interfaz */
+        }
+
+        /* Estilo base para el contenedor principal de la aplicación */
+        .app-container {
+            position: relative;
+            z-index: 10;
+            max-width: 1000px;
+            margin: 5vh auto;
+            padding: 2rem;
+            border: 3px solid transparent;
+            border-radius: 1.5rem;
+            box-shadow: 0 0 20px rgba(255, 0, 127, 0.5); /* Sombra Neón Rosa */
+            backdrop-filter: blur(8px); /* Efecto de desenfoque sobre el fondo 3D */
+            background-color: rgba(0, 0, 0, 0.7); /* Fondo oscuro semi-transparente */
+            transition: box-shadow 0.3s ease;
+        }
+
+        /* Estilo para el área de texto objetivo (el texto de Wikipedia) */
+        #target-text {
+            min-height: 150px;
+            padding: 1rem;
+            font-size: 1.25rem;
+            line-height: 1.6;
+            letter-spacing: 0.05em;
+            border-radius: 0.75rem;
+            background-color: rgba(255, 255, 255, 0.05);
+            border: 2px solid #ff007f; /* Borde Rosa Neón */
+            box-shadow: 0 0 10px rgba(255, 0, 127, 0.5);
+            color: #fff;
+            
+            /* Usamos pre-wrap para respetar espacios pero permitir saltos de línea naturales */
+            white-space: pre-wrap; 
+            overflow-wrap: break-word;
+        }
+
+        /* Estilo para el área de entrada del usuario */
+        #user-input {
+            width: 100%;
+            height: 100px;
+            padding: 1rem;
+            font-size: 1.25rem;
+            line-height: 1.6;
+            margin-top: 1rem;
+            border-radius: 0.75rem;
+            background-color: #111;
+            border: 2px solid #ff007f;
+            box-shadow: 0 0 10px rgba(255, 0, 127, 0.5);
+            color: #fff;
+            resize: none; /* Evita que el usuario cambie el tamaño del textarea */
+            caret-color: #00ffff; /* Color del cursor (Cyan Neón) */
+        }
+
+        /* Estilo para la letra correcta (verde) */
+        .correct {
+            color: #4ade80; /* Tailwind green-400 */
+        }
+
+        /* Estilo para la letra incorrecta (rojo neón) - Usado ahora solo para el feedback momentáneo */
+        .incorrect {
+            color: #f87171; /* Tailwind red-400 */
+            text-decoration: underline;
+        }
+
+        /* Estilo para el cursor (la letra que sigue) */
+        .current {
+            background-color: rgba(0, 255, 255, 0.3); /* Resaltado Cyan Neón */
+            border-bottom: 2px solid #00ffff;
+        }
+
+        /* NUEVO: Animación de error (temblor) cuando se bloquea la tecla */
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-5px); background-color: rgba(248, 113, 113, 0.5); }
+            75% { transform: translateX(5px); background-color: rgba(248, 113, 113, 0.5); }
+        }
+
+        .shake-error {
+            animation: shake 0.2s ease-in-out;
+            border-bottom: 2px solid #f87171 !important; /* Cambia el borde a rojo */
+        }
+
+        /* Estilo para los botones */
+        .neon-button {
+            background-color: #ff007f;
+            color: #fff;
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.5rem;
+            font-weight: bold;
+            text-shadow: 0 0 5px #ff007f;
+            box-shadow: 0 0 10px #ff007f, 0 0 20px rgba(255, 0, 127, 0.5);
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .neon-button:hover {
+            background-color: #ff3399;
+            box-shadow: 0 0 15px #ff3399, 0 0 30px #ff3399;
+            transform: translateY(-2px);
+        }
+
+        .loader {
+            border: 4px solid #f3f3f3; /* Light grey */
+            border-top: 4px solid #ff007f; /* Pink Neon */
+            border-radius: 50%;
+            width: 24px;
+            height: 24px;
+            animation: spin 2s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        /* Etiquetas de métricas pequeñas */
+        .metric-label {
+            font-size: 0.875rem;
+            color: #9ca3af; /* gray-400 */
+            margin-bottom: 0.25rem;
+            display: block;
+        }
+    </style>
+</head>
+<body class="bg-black text-white">
+
+    <!-- Canvas para el fondo 3D (Three.js) -->
+    <canvas id="bg-canvas"></canvas>
+
+    <!-- Botón de Reinicio Flotante -->
+    <button id="reset-button" class="neon-button fixed top-6 left-6 z-50 text-sm">
+        ↻ Nuevo Texto
+    </button>
+
+    <!-- Contenedor Principal de la Aplicación -->
+    <div class="app-container">
+        <!-- TÍTULO ACTUALIZADO -->
+        <h1 class="text-4xl font-bold text-center mb-6 text-white" style="text-shadow: 0 0 10px #ff007f;">Mecanografía con Pink Cat</h1>
+        <p class="text-center text-gray-400 mb-4">¡Escribe el texto de Wikipedia sin errores para avanzar!</p>
+
+        <!-- Área de Métricas (WPM, CPM, Errores, %, Tiempo) -->
+        <div class="grid grid-cols-2 md:grid-cols-5 gap-4 text-lg mb-4 p-3 border border-gray-700 rounded-lg bg-black/50">
+            <div class="text-center">
+                <span class="metric-label">PPM (WPM)</span>
+                <p id="wpm" class="text-2xl font-mono text-teal-400" style="text-shadow: 0 0 5px #00ffff;">0</p>
+            </div>
+            <div class="text-center">
+                <span class="metric-label">Pulsaciones (CPM)</span>
+                <p id="cpm" class="text-2xl font-mono text-purple-400" style="text-shadow: 0 0 5px #a855f7;">0</p>
+            </div>
+            <div class="text-center">
+                <span class="metric-label">Errores</span>
+                <p id="errors" class="text-2xl font-mono text-red-400" style="text-shadow: 0 0 5px #f87171;">0</p>
+            </div>
+            <div class="text-center">
+                <span class="metric-label">% Errores</span>
+                <p id="error-percent" class="text-2xl font-mono text-orange-400" style="text-shadow: 0 0 5px #fb923c;">0%</p>
+            </div>
+            <div class="text-center col-span-2 md:col-span-1">
+                <span class="metric-label">Tiempo (s)</span>
+                <p id="timer" class="text-2xl font-mono text-yellow-400" style="text-shadow: 0 0 5px #facc15;">0</p>
+            </div>
+        </div>
+        
+        <!-- Área de Texto Objetivo (Texto de Wikipedia) -->
+        <div id="target-text" class="mb-4">
+            <div class="flex justify-center items-center h-full">
+                <div class="loader"></div>
+                <span class="ml-4 text-xl">Buscando texto válido...</span>
+            </div>
+        </div>
+
+        <!-- Área de Entrada del Usuario -->
+        <textarea 
+            id="user-input" 
+            placeholder="Empieza a escribir aquí..." 
+            spellcheck="false" 
+            autofocus 
+            class="focus:outline-none focus:border-cyan-400 focus:ring-4 focus:ring-cyan-400/50"
+        ></textarea>
+
+    </div>
+
+    <script>
+        // ==========================================================
+        // VARIABLES GLOBALES Y SETUP INICIAL
+        // ==========================================================
+        const targetTextElement = document.getElementById('target-text');
+        const userInputElement = document.getElementById('user-input');
+        const wpmElement = document.getElementById('wpm');
+        const cpmElement = document.getElementById('cpm');
+        const errorsElement = document.getElementById('errors');
+        const errorPercentElement = document.getElementById('error-percent');
+        const timerElement = document.getElementById('timer');
+        const resetButton = document.getElementById('reset-button');
+
+        let targetText = "";
+        let isTyping = false;
+        let startTime = null;
+        let timerInterval = null;
+        let totalErrors = 0;
+        let totalTypedChars = 0;
+
+        // THREE.JS VARIABLES
+        let scene, camera, renderer, stars;
+        let rotationSpeed = 0.0005; // Velocidad de rotación base
+        const maxSpeed = 0.02; // Velocidad de rotación máxima
+
+        // ==========================================================
+        // FUNCIONES DE CONTROL DE LA APP
+        // ==========================================================
+
+        /**
+         * Normaliza el texto para mejorar la experiencia de mecanografía.
+         */
+        function normalizeText(text) {
+            return text
+                .replace(/[\u2018\u2019]/g, "'") 
+                .replace(/[\u201C\u201D]/g, '"') 
+                .replace(/[\u2013\u2014]/g, '-') 
+                .replace(/\[.*?\]/g, '')         
+                .replace(/\s+/g, ' ')            
+                .trim();
+        }
+
+        /**
+         * Verifica si el texto contiene SOLO caracteres permitidos.
+         */
+        function isValidText(text) {
+            const validCharsRegex = /^[a-zA-Z0-9áéíóúÁÉÍÓÚñÑüÜ\s.,;:!?'"()\-\¡\¿%$€]+$/;
+            return validCharsRegex.test(text);
+        }
+
+        /**
+         * Realiza una llamada a la API de Wikipedia.
+         */
+        async function fetchRandomWikipediaText(attempts = 0) {
+            const maxAttempts = 5;
+            
+            if (attempts === 0) {
+                targetTextElement.innerHTML = `
+                    <div class="flex justify-center items-center h-full">
+                        <div class="loader"></div>
+                        <span class="ml-4 text-xl">Cargando texto de Wikipedia...</span>
+                    </div>
+                `;
+                userInputElement.disabled = true;
+            }
+
+            const randomUrl = 'https://es.wikipedia.org/w/api.php?action=query&list=random&rnnamespace=0&rnlimit=1&format=json&origin=*';
+            
+            try {
+                const response1 = await fetch(randomUrl);
+                const data1 = await response1.json();
+                const title = data1.query.random[0].title;
+
+                const contentUrl = `https://es.wikipedia.org/w/api.php?action=query&prop=extracts&exchars=800&explaintext=1&titles=${encodeURIComponent(title)}&format=json&origin=*`;
+                const response2 = await fetch(contentUrl);
+                const data2 = await response2.json();
+
+                const page = Object.values(data2.query.pages)[0];
+                let rawExtract = page.extract || "";
+                let cleanText = normalizeText(rawExtract);
+
+                const sentences = cleanText.match(/[^.!?]+[.!?]/g) || [cleanText];
+                let selectedParagraph = "";
+                let accumulatedLength = 0;
+
+                for (const sentence of sentences) {
+                    if (accumulatedLength > 250) break; 
+                    selectedParagraph += sentence.trim() + " ";
+                    accumulatedLength += sentence.length;
+                }
+                selectedParagraph = selectedParagraph.trim();
+
+                if ((!isValidText(selectedParagraph) || selectedParagraph.length < 50) && attempts < maxAttempts) {
+                    console.log(`Texto rechazado: ${title}. Reintentando...`);
+                    await fetchRandomWikipediaText(attempts + 1);
+                    return;
+                }
+
+                if (attempts >= maxAttempts && (!isValidText(selectedParagraph) || selectedParagraph.length < 50)) {
+                    targetText = "El espacio es vasto y lleno de misterios. Las estrellas nacen y mueren en un ciclo eterno de luz y oscuridad. Nuestra galaxia, la Vía Láctea, es solo una entre miles de millones en el universo observable.";
+                } else {
+                    targetText = selectedParagraph;
+                }
+
+                renderTargetText(targetText);
+                resetAppState();
+                userInputElement.disabled = false;
+                userInputElement.focus();
+
+            } catch (error) {
+                console.error("Error fetching Wikipedia text:", error);
+                targetText = "El sol es una estrella de tipo G de la secuencia principal que abarca aproximadamente el 99,86% de la masa del sistema solar.";
+                renderTargetText(targetText);
+                resetAppState();
+                userInputElement.disabled = false;
+                userInputElement.focus();
+            }
+        }
+
+        function renderTargetText(text) {
+            targetTextElement.innerHTML = text.split('').map((char, index) => {
+                const isCurrent = index === 0 ? 'current' : '';
+                return `<span id="char-${index}" class="${isCurrent}">${char}</span>`;
+            }).join('');
+        }
+
+        function resetAppState() {
+            userInputElement.value = '';
+            totalErrors = 0;
+            totalTypedChars = 0;
+            isTyping = false;
+            startTime = null;
+            clearInterval(timerInterval);
+            timerInterval = null;
+            
+            wpmElement.textContent = 0;
+            cpmElement.textContent = 0;
+            errorsElement.textContent = 0;
+            errorPercentElement.textContent = "0%";
+            timerElement.textContent = 0;
+            rotationSpeed = 0.0005; 
+
+            targetTextElement.querySelectorAll('span').forEach(span => {
+                span.className = '';
+            });
+            if (targetText.length > 0) {
+                 const firstChar = document.getElementById('char-0');
+                 if (firstChar) firstChar.classList.add('current');
+            }
+        }
+
+        /**
+         * LÓGICA PRINCIPAL DE ESCRITURA
+         * Modificada para BLOQUEAR ERRORES
+         */
+        function handleInput(e) {
+            let typedText = userInputElement.value;
+            
+            if (targetText.length === 0) return; 
+
+            // Si se borra todo el texto
+            if (typedText.length === 0) {
+                // Si el borrado fue intencional con Backspace hasta el inicio, no reseteamos todo el estado
+                // a menos que se desee. Pero para mantener consistencia visual:
+                // Simplemente actualizamos la UI del primer caracter.
+                const allSpans = targetTextElement.querySelectorAll('span');
+                allSpans.forEach(s => s.className = '');
+                const first = document.getElementById('char-0');
+                if(first) first.className = 'current';
+                return;
+            }
+
+            // Iniciar Timer
+            if (!isTyping) {
+                isTyping = true;
+                startTime = new Date().getTime();
+                timerInterval = setInterval(updateMetrics, 1000);
+            }
+
+            // --- MANEJO DE BORRADO (BACKSPACE) ---
+            if (e.inputType === 'deleteContentBackward') {
+                const currentPosition = typedText.length; // Posición actual es len (porque acabamos de borrar el char en len)
+                
+                // El caracter que acabamos de "destapar" debe volver a ser el 'current'
+                const currentSpan = document.getElementById(`char-${currentPosition}`);
+                if (currentSpan) currentSpan.className = 'current';
+
+                // El que estaba adelante (si existe) se limpia
+                const nextSpan = document.getElementById(`char-${currentPosition + 1}`);
+                if (nextSpan) nextSpan.className = '';
+                
+                updateMetrics();
+                return;
+            }
+
+            // --- MANEJO DE INSERCIÓN (ESCRITURA) ---
+            const currentPosition = typedText.length - 1; // Índice del caracter recién escrito
+            const targetChar = targetText[currentPosition];
+            const typedChar = typedText[currentPosition];
+            
+            const charElement = document.getElementById(`char-${currentPosition}`);
+
+            // VERIFICACIÓN DE ERROR
+            if (typedChar !== targetChar) {
+                // 1. Registrar el error
+                if (charElement && !charElement.dataset.errorLogged) {
+                    totalErrors++;
+                    charElement.dataset.errorLogged = 'true';
+                }
+
+                // 2. Efecto Visual de Error (Temblor) en el caracter que se intentó escribir
+                if (charElement) {
+                    charElement.classList.remove('current'); // Quitar azul temporalmente
+                    charElement.classList.add('shake-error');
+                    setTimeout(() => {
+                        charElement.classList.remove('shake-error');
+                        charElement.classList.add('current'); // Volver a poner azul
+                    }, 200);
+                }
+
+                // 3. BLOQUEO: Eliminar el caracter incorrecto del input inmediatamente
+                userInputElement.value = typedText.slice(0, -1);
+                
+                // Actualizar métricas para reflejar el error en el contador
+                updateMetrics();
+                return; // DETENER AQUÍ: No avanzar cursor
+            }
+
+            // ÉXITO: Caracter correcto
+            if (charElement) {
+                charElement.className = 'correct'; // Se vuelve verde
+            }
+            
+            // Mover cursor al siguiente
+            const nextCharElement = document.getElementById(`char-${currentPosition + 1}`);
+            if (nextCharElement) nextCharElement.classList.add('current');
+
+            // Verificar si terminó
+            if (typedText.length === targetText.length) {
+                finishTest();
+            }
+
+            totalTypedChars = typedText.length;
+            updateMetrics();
+        }
+        
+        function updateMetrics() {
+            const currentTime = new Date().getTime();
+            const elapsedSeconds = startTime ? Math.floor((currentTime - startTime) / 1000) : 0;
+            timerElement.textContent = elapsedSeconds;
+
+            totalTypedChars = userInputElement.value.length;
+
+            if (elapsedSeconds > 0) {
+                const correctChars = targetTextElement.querySelectorAll('.correct').length;
+                const wpm = Math.round((correctChars / 5) / (elapsedSeconds / 60));
+                wpmElement.textContent = wpm;
+
+                const cpm = Math.round(correctChars / (elapsedSeconds / 60));
+                cpmElement.textContent = cpm;
+            }
+
+            errorsElement.textContent = totalErrors;
+
+            if (totalTypedChars > 0) {
+                // Calculamos porcentaje sobre intentos totales (caracteres actuales + errores cometidos)
+                // para que sea un reflejo real de la precisión
+                const totalAttempts = totalTypedChars + totalErrors; 
+                const errorPercentage = ((totalErrors / totalAttempts) * 100).toFixed(1);
+                errorPercentElement.textContent = errorPercentage + "%";
+            } else {
+                errorPercentElement.textContent = "0%";
+            }
+
+            const currentWPM = parseInt(wpmElement.textContent);
+            let newSpeed = rotationSpeed;
+            if (isTyping) {
+                const wpmRatio = Math.min(1, currentWPM / 80);
+                newSpeed = 0.0005 + wpmRatio * (maxSpeed - 0.0005);
+            } else {
+                newSpeed = 0.0005;
+            }
+            rotationSpeed = newSpeed;
+        }
+
+        function finishTest() {
+            clearInterval(timerInterval);
+            isTyping = false;
+            userInputElement.disabled = true;
+
+            const finalWPM = wpmElement.textContent;
+            const finalCPM = cpmElement.textContent;
+            const finalErrors = errorsElement.textContent;
+            const finalErrorPercent = errorPercentElement.textContent;
+            
+            const message = `¡PRUEBA COMPLETADA!\n\nPPM: ${finalWPM}\nCPM: ${finalCPM}\nErrores Bloqueados: ${finalErrors} (${finalErrorPercent})`;
+            
+            targetTextElement.innerHTML = `<div class="flex justify-center items-center h-full"><p class="text-center font-bold text-2xl p-4 leading-loose" style="color: #00ffff;">${message.replace(/\n/g, '<br>')}</p></div>`;
+            userInputElement.disabled = false;
+        }
+
+        userInputElement.addEventListener('input', handleInput);
+        
+        resetButton.addEventListener('click', () => {
+            fetchRandomWikipediaText(0);
+        });
+        
+        // THREE.JS
+        function initThreeJS() {
+            scene = new THREE.Scene();
+            camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+            renderer = new THREE.WebGLRenderer({ canvas: document.getElementById('bg-canvas'), alpha: true });
+            renderer.setSize(window.innerWidth, window.innerHeight);
+            renderer.setClearColor(0x000000, 0);
+            camera.position.z = 5;
+
+            const starGeometry = new THREE.BufferGeometry();
+            const starCount = 10000;
+            const positions = new Float32Array(starCount * 3);
+
+            for (let i = 0; i < starCount; i++) {
+                positions[i * 3] = (Math.random() - 0.5) * 1000;
+                positions[i * 3 + 1] = (Math.random() - 0.5) * 1000;
+                positions[i * 3 + 2] = (Math.random() - 0.5) * 1000;
+            }
+
+            starGeometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+
+            const starMaterial = new THREE.PointsMaterial({
+                color: 0xffffff, 
+                size: 1.5,
+                blending: THREE.AdditiveBlending, 
+                transparent: true,
+                opacity: 0.8
+            });
+
+            stars = new THREE.Points(starGeometry, starMaterial);
+            scene.add(stars);
+        }
+
+        function animate() {
+            requestAnimationFrame(animate);
+            stars.rotation.y += rotationSpeed;
+            stars.rotation.z += rotationSpeed / 2;
+            renderer.render(scene, camera);
+        }
+
+        function onWindowResize() {
+            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(window.innerWidth, window.innerHeight);
+        }
+
+        window.onload = function() {
+            initThreeJS();
+            animate();
+            window.addEventListener('resize', onWindowResize);
+            fetchRandomWikipediaText(); 
+        };
+    </script>
+</body>
+</html>

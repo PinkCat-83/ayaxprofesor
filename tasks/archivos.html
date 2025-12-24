@@ -1,0 +1,1535 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Explorador de Archivos - Simulador</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #f3f3f3;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Menú de selección de ejercicios */
+        #exerciseMenu {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+
+        .menu-content {
+            background: white;
+            padding: 40px;
+            border-radius: 12px;
+            max-width: 800px;
+            max-height: 80vh;
+            overflow-y: auto;
+        }
+
+        .menu-content h1 {
+            color: #0067C0;
+            margin-bottom: 10px;
+            font-size: 28px;
+        }
+
+        .menu-content p {
+            color: #666;
+            margin-bottom: 30px;
+        }
+
+        .exercise-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 15px;
+        }
+
+        .exercise-btn {
+            padding: 20px;
+            background: #0067C0;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: all 0.3s;
+            text-align: left;
+        }
+
+        .exercise-btn:hover {
+            background: #005a9e;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        }
+
+        .exercise-btn strong {
+            display: block;
+            font-size: 18px;
+            margin-bottom: 5px;
+        }
+
+        /* Barra superior del explorador */
+        .toolbar {
+            background: white;
+            border-bottom: 1px solid #e0e0e0;
+            padding: 10px 20px;
+        }
+
+        .address-bar {
+            display: flex;
+            align-items: center;
+            background: #f8f8f8;
+            border: 1px solid #d0d0d0;
+            border-radius: 4px;
+            padding: 8px 12px;
+            margin-bottom: 10px;
+            font-size: 14px;
+        }
+
+        .address-bar span {
+            color: #666;
+        }
+
+        .toolbar-buttons {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+
+        .back-btn {
+            margin-right: 10px;
+            padding-right: 10px;
+            border-right: 2px solid #d0d0d0;
+        }
+
+        .toolbar-btn {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 4px;
+            padding: 8px 12px;
+            background: white;
+            border: 1px solid #d0d0d0;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 12px;
+            transition: background 0.2s;
+        }
+
+        .toolbar-btn:hover:not(:disabled) {
+            background: #f0f0f0;
+        }
+
+        .toolbar-btn:disabled {
+            opacity: 0.4;
+            cursor: not-allowed;
+        }
+
+        .toolbar-btn svg {
+            width: 20px;
+            height: 20px;
+        }
+
+        /* Área de archivos */
+        .file-area {
+            flex: 1;
+            background: white;
+            margin: 20px;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            padding: 20px;
+            overflow-y: auto;
+        }
+
+        .file-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+            gap: 20px;
+        }
+
+        .file-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 10px;
+            cursor: pointer;
+            border-radius: 4px;
+            transition: background 0.2s;
+            user-select: none;
+        }
+
+        .file-item:hover {
+            background: #f0f0f0;
+        }
+
+        .file-item.selected {
+            background: #cce8ff;
+            outline: 2px solid #0067C0;
+        }
+
+        .file-item.cut {
+            opacity: 0.5;
+        }
+
+        .file-icon {
+            width: 64px;
+            height: 64px;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 48px;
+            object-fit: cover;
+            border-radius: 4px;
+        }
+        
+        .file-icon img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 4px;
+        }
+
+        .file-name {
+            font-size: 13px;
+            text-align: center;
+            word-break: break-word;
+            max-width: 100px;
+        }
+
+        .file-name.editing {
+            background: white;
+            border: 2px solid #0067C0;
+            padding: 2px 4px;
+            outline: none;
+        }
+
+        /* Panel inferior */
+        .bottom-panel {
+            background: white;
+            border-top: 1px solid #e0e0e0;
+            padding: 20px;
+            min-height: 150px;
+        }
+
+        .task-description {
+            margin-bottom: 15px;
+        }
+
+        .task-description h3 {
+            color: #0067C0;
+            margin-bottom: 10px;
+            font-size: 18px;
+        }
+
+        .task-description ul {
+            margin-left: 20px;
+        }
+
+        .task-description li {
+            margin-bottom: 5px;
+            color: #333;
+        }
+
+        .task-status {
+            display: flex;
+            gap: 15px;
+            align-items: center;
+        }
+
+        .hint-btn {
+            padding: 10px 20px;
+            background: #ffa500;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: background 0.3s;
+        }
+
+        .hint-btn:hover {
+            background: #ff8c00;
+        }
+
+        .hint-text {
+            color: #666;
+            font-style: italic;
+        }
+
+        .completed {
+            color: #00aa00;
+            font-weight: bold;
+            font-size: 24px;
+            animation: bounce 0.5s;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+
+        .back-menu-btn {
+            padding: 10px 20px;
+            background: #666;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 14px;
+            margin-left: auto;
+        }
+
+        .back-menu-btn:hover {
+            background: #555;
+        }
+
+        /* Diálogo de renombrar */
+        .rename-dialog {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 16px rgba(0,0,0,0.3);
+            z-index: 100;
+        }
+
+        .rename-dialog input {
+            width: 300px;
+            padding: 8px;
+            font-size: 14px;
+            border: 2px solid #0067C0;
+            border-radius: 4px;
+            margin-bottom: 10px;
+        }
+
+        .rename-dialog-buttons {
+            display: flex;
+            gap: 10px;
+            justify-content: flex-end;
+        }
+
+        .rename-dialog button {
+            padding: 8px 16px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+
+        .rename-dialog .confirm {
+            background: #0067C0;
+            color: white;
+        }
+
+        .rename-dialog .cancel {
+            background: #e0e0e0;
+        }
+    </style>
+</head>
+<body>
+    <!-- Menú de selección de ejercicios -->
+    <div id="exerciseMenu">
+        <div class="menu-content">
+            <h1>🎯 Explorador de Archivos - Simulador Educativo</h1>
+            <p>Selecciona un ejercicio para comenzar a practicar:</p>
+            <div class="exercise-grid">
+                <button class="exercise-btn" onclick="startExercise(1)">
+                    <strong>📁 01 - Viaje</strong>
+                    Organiza archivos de viajes
+                </button>
+                <button class="exercise-btn" onclick="startExercise(2)">
+                    <strong>📁 02 - Otros destinos</strong>
+                    Renombra y organiza fotos
+                </button>
+                <button class="exercise-btn" onclick="startExercise(3)">
+                    <strong>🎨 03 - Colores</strong>
+                    Crea carpetas por colores
+                </button>
+                <button class="exercise-btn" onclick="startExercise(4)">
+                    <strong>💄 04 - Cosméticos</strong>
+                    Organiza productos
+                </button>
+                <button class="exercise-btn" onclick="startExercise(5)">
+                    <strong>📄 05 - Documentos</strong>
+                    Organiza facturas y documentos
+                </button>
+                <button class="exercise-btn" onclick="startExercise(6)">
+                    <strong>📋 06 - Copias</strong>
+                    Copia archivos para otros
+                </button>
+                <button class="exercise-btn" onclick="startExercise(7)">
+                    <strong>🍂 07 - Estaciones</strong>
+                    Organiza por estaciones del año
+                </button>
+                <button class="exercise-btn" onclick="startExercise(8)">
+                    <strong>🎬 08 - Películas</strong>
+                    Clasifica por género
+                </button>
+                <button class="exercise-btn" onclick="startExercise(9)">
+                    <strong>📎 09 - Extensión</strong>
+                    Organiza por tipo de archivo
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Explorador de archivos -->
+    <div class="toolbar">
+        <div class="address-bar">
+            <span id="currentPath">Este equipo</span>
+        </div>
+        <div class="toolbar-buttons">
+            <button class="toolbar-btn back-btn" id="backBtn" onclick="goBack()" disabled title="Atrás">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M19 12H5M12 19l-7-7 7-7"/>
+                </svg>
+                Atrás
+            </button>
+            <button class="toolbar-btn" onclick="createFolder()" title="Nueva carpeta">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/>
+                    <line x1="12" y1="11" x2="12" y2="17"/>
+                    <line x1="9" y1="14" x2="15" y2="14"/>
+                </svg>
+                Nueva Carpeta
+            </button>
+            <button class="toolbar-btn" id="cutBtn" onclick="cutItem()" disabled title="Cortar">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="6" cy="6" r="3"/>
+                    <circle cx="6" cy="18" r="3"/>
+                    <line x1="20" y1="4" x2="8.12" y2="15.88"/>
+                    <line x1="14.47" y1="14.48" x2="20" y2="20"/>
+                    <line x1="8.12" y1="8.12" x2="12" y2="12"/>
+                </svg>
+                Cortar
+            </button>
+            <button class="toolbar-btn" id="copyBtn" onclick="copyItem()" disabled title="Copiar">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <rect x="9" y="9" width="13" height="13" rx="2" ry="2"/>
+                    <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>
+                </svg>
+                Copiar
+            </button>
+            <button class="toolbar-btn" id="pasteBtn" onclick="pasteItem()" disabled title="Pegar">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/>
+                    <rect x="8" y="2" width="8" height="4" rx="1" ry="1"/>
+                </svg>
+                Pegar
+            </button>
+            <button class="toolbar-btn" id="renameBtn" onclick="renameItem()" disabled title="Cambiar nombre">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/>
+                    <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/>
+                </svg>
+                Cambiar Nombre
+            </button>
+            <button class="toolbar-btn" id="deleteBtn" onclick="deleteItem()" disabled title="Borrar">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <polyline points="3 6 5 6 21 6"/>
+                    <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/>
+                </svg>
+                Borrar
+            </button>
+        </div>
+    </div>
+
+    <div class="file-area">
+        <div class="file-grid" id="fileGrid"></div>
+    </div>
+
+    <div class="bottom-panel">
+        <div class="task-description" id="taskDescription"></div>
+        <div class="task-status">
+            <button class="hint-btn" onclick="showHint()">💡 Mostrar Pista</button>
+            <div class="hint-text" id="hintText"></div>
+            <div class="completed" id="completedText"></div>
+            <button class="back-menu-btn" onclick="backToMenu()">← Volver al Menú</button>
+        </div>
+    </div>
+
+    <script>
+        // Estado global
+        let fileSystem = {};
+        let currentPath = [];
+        let selectedItem = null;
+        let clipboard = null;
+        let clipboardMode = null; // 'cut' o 'copy'
+        let currentExercise = null;
+        let hintLevel = 0;
+        
+        // Emoticonos para el ejercicio 3
+        const exercise3Icons = {
+            'Foto1.jpg': '🔵', // Círculo azul
+            'Foto2.jpg': '🐬', // Delfín azul
+            'Foto3.jpg': '👖', // Pantalones azul
+            'Foto4.jpg': '🐟', // Pez azul
+            'Foto5.jpg': '🍋', // Limón amarillo
+            'Foto6.jpg': '⭐', // Estrella amarilla
+            'Foto7.jpg': '🌻', // Girasol amarillo
+            'Foto8.jpg': '🐥', // Pollito amarillo
+            'Foto9.jpg': '🍎', // Manzana roja
+            'Foto10.jpg': '🌹', // Rosa roja
+            'Foto11.jpg': '❤️', // Corazón rojo
+            'Foto12.jpg': '🍓', // Fresa roja
+            'Foto13.jpg': '🍀', // Trébol verde
+            'Foto14.jpg': '🐸', // Rana verde
+            'Foto15.jpg': '🌲', // Árbol verde
+            'Foto16.jpg': '🍏' // Manzana verde
+        };
+        
+        // Emoticonos para el ejercicio 4
+        const exercise4Icons = {
+            'Producto1.jpg': '💍', // Anillo 1
+            'Producto2.jpg': '💎', // Anillo 2
+            'Producto3.jpg': '👑', // Anillo 3
+            'Producto4.jpg': '👓', // Gafas 1
+            'Producto5.jpg': '🕶️', // Gafas 2
+            'Producto6.jpg': '🥽', // Gafas 3
+            'Producto7.jpg': '⌚', // Reloj 1
+            'Producto8.jpg': '⏰', // Reloj 2
+            'Producto9.jpg': '⏱️' // Reloj 3
+        };
+        
+        // URLs de imágenes para el ejercicio 5
+        const exercise5Images = {
+            'Doc1.jpg': 'https://i.imgur.com/3sisGwH.jpg',
+            'Doc2.jpg': 'https://i.imgur.com/pRxo4An.jpg',
+            'Doc3.jpg': 'https://i.imgur.com/3sisGwH.jpg',
+            'Doc4.jpg': 'https://i.imgur.com/pRxo4An.jpg',
+            'Doc5.jpg': 'https://i.imgur.com/3sisGwH.jpg',
+            'Doc6.jpg': 'https://i.imgur.com/pRxo4An.jpg',
+            'Doc7.jpg': 'https://i.imgur.com/3sisGwH.jpg',
+            'Doc8.jpg': 'https://i.imgur.com/pRxo4An.jpg'
+        };
+        
+        // Emoticonos para el ejercicio 6
+        const exercise6Icons = {
+            'IMG_001.jpg': '⚽', // Fútbol
+            'IMG_002.jpg': '🏖️', // Playa
+            'IMG_003.jpg': '🦜', // Loro/Guacamayo
+            'IMG_004.jpg': '🌴', // Palmera
+            'IMG_005.jpg': '🎭' // Carnaval
+        };
+        
+        // Emoticonos para el ejercicio 7
+        const exercise7Icons = {
+            'Imagen1.jpg': '🌸', // Primavera - Flores
+            'Imagen2.jpg': '🦋', // Primavera - Mariposa
+            'Imagen3.jpg': '☀️', // Verano - Sol
+            'Imagen4.jpg': '🏖️', // Verano - Playa
+            'Imagen5.jpg': '🍂', // Otoño - Hojas
+            'Imagen6.jpg': '🍁', // Otoño - Hoja de arce
+            'Imagen7.jpg': '❄️', // Invierno - Nieve
+            'Imagen8.jpg': '⛄' // Invierno - Muñeco de nieve
+        };
+        
+        // URLs de imágenes para el ejercicio 8 (películas)
+        const exercise8Images = {
+            'Pelicula1.jpg': 'https://i.imgur.com/3sisGwH.jpg', // Temporal - reemplazar
+            'Pelicula2.jpg': 'https://i.imgur.com/pRxo4An.jpg', // Temporal - reemplazar
+            'Pelicula3.jpg': 'https://i.imgur.com/3sisGwH.jpg', // Temporal - reemplazar
+            'Pelicula4.jpg': 'https://i.imgur.com/pRxo4An.jpg', // Temporal - reemplazar
+            'Pelicula5.jpg': 'https://i.imgur.com/3sisGwH.jpg', // Temporal - reemplazar
+            'Pelicula6.jpg': 'https://i.imgur.com/pRxo4An.jpg', // Temporal - reemplazar
+            'Pelicula7.jpg': 'https://i.imgur.com/3sisGwH.jpg', // Temporal - reemplazar
+            'Pelicula8.jpg': 'https://i.imgur.com/pRxo4An.jpg'  // Temporal - reemplazar
+        };
+        
+        // Sistema de tracking de íconos para mantener la asociación después de renombrar
+        let iconMapping = {};
+        
+        // Emoticonos para el ejercicio 9 (extensiones)
+        const exercise9Icons = {
+            'You are not Alone (FF9).mp3': '🎵',
+            'Happy (C2C).mp3': '🎵',
+            'Beat it (M. Jackson).mp3': '🎵',
+            'El señor de los Anillos.mp4': '🎬',
+            'Interestellar.mp4': '🎬',
+            'Contact.mp4': '🎬',
+            'Mi CV.pdf': '📄',
+            'Contrato.pdf': '📄',
+            'Factura.pdf': '📄',
+            'Mi gato Anubis.jpg': '📷',
+            'Mi gato Indalo.jpg': '📷',
+            'Mi perrita Pitufina.jpg': '📷'
+        };
+
+        // Definición de ejercicios
+        const exercises = {
+            1: {
+                title: "Carpeta 01 - Viaje",
+                description: "Coloca los archivos de cada viaje en la carpeta correspondiente.",
+                tasks: [
+                    "Abre cada carpeta (Francia, Italia, Japón)",
+                    "Mueve los 4 archivos de cada país a su carpeta correspondiente",
+                    "Por ejemplo: Francia 01.jpg debe estar dentro de la carpeta Francia"
+                ],
+                hints: [
+                    "Primero, haz clic en el archivo para seleccionarlo",
+                    "Luego, haz clic en el botón 'Cortar' (las tijeras)",
+                    "Después, haz doble clic en la carpeta para abrirla",
+                    "Finalmente, haz clic en 'Pegar' para mover el archivo"
+                ],
+                initialFiles: {
+                    'Francia': { type: 'folder', children: {} },
+                    'Italia': { type: 'folder', children: {} },
+                    'Japón': { type: 'folder', children: {} },
+                    'Francia 01.jpg': { type: 'file' },
+                    'Francia 02.jpg': { type: 'file' },
+                    'Francia 03.jpg': { type: 'file' },
+                    'Francia 04.jpg': { type: 'file' },
+                    'Italia 01.jpg': { type: 'file' },
+                    'Italia 02.jpg': { type: 'file' },
+                    'Italia 03.jpg': { type: 'file' },
+                    'Italia 04.jpg': { type: 'file' },
+                    'Japón 01.jpg': { type: 'file' },
+                    'Japón 02.jpg': { type: 'file' },
+                    'Japón 03.jpg': { type: 'file' },
+                    'Japón 04.jpg': { type: 'file' }
+                },
+                validate: (fs) => {
+                    const francia = fs['Francia']?.children || {};
+                    const italia = fs['Italia']?.children || {};
+                    const japon = fs['Japón']?.children || {};
+                    
+                    const franciaCount = Object.keys(francia).filter(k => k.startsWith('Francia') && k.endsWith('.jpg')).length;
+                    const italiaCount = Object.keys(italia).filter(k => k.startsWith('Italia') && k.endsWith('.jpg')).length;
+                    const japonCount = Object.keys(japon).filter(k => k.startsWith('Japón') && k.endsWith('.jpg')).length;
+                    
+                    return franciaCount === 4 && italiaCount === 4 && japonCount === 4;
+                }
+            },
+            2: {
+                title: "Carpeta 02 - Otros destinos",
+                description: "Renombra las fotos de Grecia y muévelas a su carpeta.",
+                tasks: [
+                    "Cambia el nombre de los archivos sin nombre a Grecia 001.jpg, Grecia 002.jpg y Grecia 003.jpg",
+                    "Luego mueve cada foto a la carpeta Grecia",
+                    "También mueve los archivos de Estados Unidos y Polo Norte a sus carpetas"
+                ],
+                hints: [
+                    "Selecciona un archivo y haz clic en 'Cambiar Nombre'",
+                    "Escribe el nuevo nombre y pulsa Enter",
+                    "Repite para los tres archivos de Grecia",
+                    "Luego corta y pega cada uno en su carpeta correspondiente"
+                ],
+                initialFiles: {
+                    'Estados Unidos': { type: 'folder', children: {} },
+                    'Grecia': { type: 'folder', children: {} },
+                    'Polo Norte': { type: 'folder', children: {} },
+                    'Estados Unidos 01.jpg': { type: 'file' },
+                    'Estados Unidos 02.jpg': { type: 'file' },
+                    'Estados Unidos 03.jpg': { type: 'file' },
+                    'asdffd.jpg': { type: 'file' },
+                    'qwerty.jpg': { type: 'file' },
+                    'hjkl.jpg': { type: 'file' },
+                    'Polo Norte 01.jpg': { type: 'file' },
+                    'Polo Norte 02.jpg': { type: 'file' },
+                    'Polo Norte 03.jpg': { type: 'file' }
+                },
+                validate: (fs) => {
+                    const eeuu = fs['Estados Unidos']?.children || {};
+                    const grecia = fs['Grecia']?.children || {};
+                    const polo = fs['Polo Norte']?.children || {};
+                    
+                    const eeuuCount = Object.keys(eeuu).filter(k => k.includes('Estados Unidos') && k.endsWith('.jpg')).length;
+                    const poloCount = Object.keys(polo).filter(k => k.includes('Polo Norte') && k.endsWith('.jpg')).length;
+                    const greciaCount = Object.keys(grecia).filter(k => k.toLowerCase().includes('grecia') && k.endsWith('.jpg')).length;
+                    
+                    return eeuuCount === 3 && poloCount === 3 && greciaCount === 3;
+                }
+            },
+            3: {
+                title: "Carpeta 03 - Colores",
+                description: "Crea carpetas por colores y organiza los archivos.",
+                tasks: [
+                    "Renombra cada archivo según lo que veas y su color (ej: Manzana Roja.jpg)",
+                    "Crea 4 carpetas: Azul, Amarillo, Rojo y Verde",
+                    "Mueve 4 archivos a cada carpeta según su color"
+                ],
+                hints: [
+                    "Haz clic en 'Nueva Carpeta' para crear las carpetas",
+                    "Nombra las carpetas: Azul, Amarillo, Rojo, Verde",
+                    "Renombra los archivos incluyendo el nombre del color",
+                    "Mueve cada archivo a su carpeta de color correspondiente"
+                ],
+                initialFiles: {
+                    'Foto1.jpg': { type: 'file' },
+                    'Foto2.jpg': { type: 'file' },
+                    'Foto3.jpg': { type: 'file' },
+                    'Foto4.jpg': { type: 'file' },
+                    'Foto5.jpg': { type: 'file' },
+                    'Foto6.jpg': { type: 'file' },
+                    'Foto7.jpg': { type: 'file' },
+                    'Foto8.jpg': { type: 'file' },
+                    'Foto9.jpg': { type: 'file' },
+                    'Foto10.jpg': { type: 'file' },
+                    'Foto11.jpg': { type: 'file' },
+                    'Foto12.jpg': { type: 'file' },
+                    'Foto13.jpg': { type: 'file' },
+                    'Foto14.jpg': { type: 'file' },
+                    'Foto15.jpg': { type: 'file' },
+                    'Foto16.jpg': { type: 'file' }
+                },
+                validate: (fs) => {
+                    const colores = {
+                        'azul': 0,
+                        'amarillo': 0,
+                        'rojo': 0,
+                        'verde': 0
+                    };
+                    
+                    // Buscar carpetas de colores y contar archivos con el color en el nombre
+                    for (let folderName in fs) {
+                        const folder = fs[folderName];
+                        if (folder.type === 'folder') {
+                            const folderLower = folderName.toLowerCase();
+                            
+                            // Verificar si es una carpeta de color
+                            for (let color in colores) {
+                                if (folderLower.includes(color)) {
+                                    // Contar archivos que contengan ese color en su nombre
+                                    for (let fileName in folder.children) {
+                                        if (fileName.toLowerCase().includes(color)) {
+                                            colores[color]++;
+                                        }
+                                    }
+                                    break;
+                                }
+                            }
+                        }
+                    }
+                    
+                    // Verificar que cada color tenga exactamente 4 archivos
+                    return colores.azul === 4 && colores.amarillo === 4 && 
+                           colores.rojo === 4 && colores.verde === 4;
+                }
+            },
+            4: {
+                title: "Carpeta 04 - Cosméticos",
+                description: "Organiza productos por categorías.",
+                tasks: [
+                    "Renombra cada archivo según el producto (ej: Joya 01.jpg, Gafas 01.jpg, Reloj 01.jpg)",
+                    "Crea 3 carpetas: Joyas, Gafas y Relojes",
+                    "Mueve 3 archivos a cada carpeta según corresponda"
+                ],
+                hints: [
+                    "Observa cada emoticono y decide qué producto es",
+                    "Crea 3 carpetas para agrupar: Joyas, Gafas, Relojes",
+                    "Usa 'Cambiar Nombre' para renombrar archivos",
+                    "Usa 'Cortar' y 'Pegar' para mover los archivos"
+                ],
+                initialFiles: {
+                    'Producto1.jpg': { type: 'file' },
+                    'Producto2.jpg': { type: 'file' },
+                    'Producto3.jpg': { type: 'file' },
+                    'Producto4.jpg': { type: 'file' },
+                    'Producto5.jpg': { type: 'file' },
+                    'Producto6.jpg': { type: 'file' },
+                    'Producto7.jpg': { type: 'file' },
+                    'Producto8.jpg': { type: 'file' },
+                    'Producto9.jpg': { type: 'file' }
+                },
+                validate: (fs) => {
+                    const categorias = {
+                        'joya': 0,
+                        'gafa': 0,
+                        'reloj': 0
+                    };
+                    
+                    // Buscar carpetas y contar archivos correctos
+                    for (let folderName in fs) {
+                        const folder = fs[folderName];
+                        if (folder.type === 'folder') {
+                            const folderLower = folderName.toLowerCase();
+                            
+                            // Verificar si es una carpeta de categoría
+                            for (let categoria in categorias) {
+                                if (folderLower.includes(categoria)) {
+                                    // Contar archivos que contengan esa categoría en su nombre
+                                    for (let fileName in folder.children) {
+                                        if (fileName.toLowerCase().includes(categoria)) {
+                                            categorias[categoria]++;
+                                        }
+                                    }
+                                    break;
+                                }
+                            }
+                        }
+                    }
+                    
+                    // Verificar que cada categoría tenga exactamente 3 archivos
+                    return categorias.joya === 3 && categorias.gafa === 3 && categorias.reloj === 3;
+                }
+            },
+            5: {
+                title: "Carpeta 05 - Documentos",
+                description: "Organiza documentos y facturas en carpetas.",
+                tasks: [
+                    "Observa cada imagen para identificar si es un documento o una factura",
+                    "Renombra los archivos según corresponda (ej: Documento 01.jpg, Factura 01.jpg)",
+                    "Crea dos carpetas: Documentos y Facturas",
+                    "Mueve 4 archivos a cada carpeta según su tipo"
+                ],
+                hints: [
+                    "Primero crea las dos carpetas: Documentos y Facturas",
+                    "Mira cada imagen para decidir si es factura o documento",
+                    "Renombra con nombres descriptivos que incluyan 'documento' o 'factura'",
+                    "Organiza moviendo 4 archivos a cada carpeta"
+                ],
+                initialFiles: {
+                    'Doc1.jpg': { type: 'file' },
+                    'Doc2.jpg': { type: 'file' },
+                    'Doc3.jpg': { type: 'file' },
+                    'Doc4.jpg': { type: 'file' },
+                    'Doc5.jpg': { type: 'file' },
+                    'Doc6.jpg': { type: 'file' },
+                    'Doc7.jpg': { type: 'file' },
+                    'Doc8.jpg': { type: 'file' }
+                },
+                validate: (fs) => {
+                    const categorias = {
+                        'documento': 0,
+                        'factura': 0
+                    };
+                    
+                    // Buscar carpetas y contar archivos correctos
+                    for (let folderName in fs) {
+                        const folder = fs[folderName];
+                        if (folder.type === 'folder') {
+                            const folderLower = folderName.toLowerCase();
+                            
+                            // Verificar si es una carpeta de categoría
+                            for (let categoria in categorias) {
+                                if (folderLower.includes(categoria)) {
+                                    // Contar archivos que contengan esa categoría en su nombre
+                                    for (let fileName in folder.children) {
+                                        if (fileName.toLowerCase().includes(categoria)) {
+                                            categorias[categoria]++;
+                                        }
+                                    }
+                                    break;
+                                }
+                            }
+                        }
+                    }
+                    
+                    // Verificar que cada categoría tenga exactamente 4 archivos
+                    return categorias.documento === 4 && categorias.factura === 4;
+                }
+            },
+            6: {
+                title: "Carpeta 06 - Copias",
+                description: "Copia archivos para Andrea y Carlos.",
+                tasks: [
+                    "Renombra los archivos a Brasil 001.jpg, Brasil 002.jpg, Brasil 003.jpg, etc.",
+                    "Crea dos carpetas: 'Copia para Andrea' y 'Copia para Carlos'",
+                    "COPIA (no cortes) los 5 archivos en AMBAS carpetas"
+                ],
+                hints: [
+                    "Primero renombra todos los archivos con nombres de Brasil",
+                    "Usa 'Nueva Carpeta' para crear las dos carpetas",
+                    "Recuerda usar el botón 'Copiar' en lugar de 'Cortar'",
+                    "Al copiar, el archivo original se queda y se crea una copia en la carpeta"
+                ],
+                initialFiles: {
+                    'IMG_001.jpg': { type: 'file' },
+                    'IMG_002.jpg': { type: 'file' },
+                    'IMG_003.jpg': { type: 'file' },
+                    'IMG_004.jpg': { type: 'file' },
+                    'IMG_005.jpg': { type: 'file' }
+                },
+                validate: (fs) => {
+                    let andreaFolder = null;
+                    let carlosFolder = null;
+                    
+                    // Buscar las carpetas de Andrea y Carlos
+                    for (let folderName in fs) {
+                        if (fs[folderName].type === 'folder') {
+                            const nameLower = folderName.toLowerCase();
+                            if (nameLower.includes('andrea')) {
+                                andreaFolder = fs[folderName];
+                            }
+                            if (nameLower.includes('carlos')) {
+                                carlosFolder = fs[folderName];
+                            }
+                        }
+                    }
+                    
+                    if (!andreaFolder || !carlosFolder) return false;
+                    
+                    // Contar archivos que contengan "brasil" en cada carpeta
+                    const andreaFiles = Object.keys(andreaFolder.children).filter(
+                        name => name.toLowerCase().includes('brasil')
+                    ).length;
+                    
+                    const carlosFiles = Object.keys(carlosFolder.children).filter(
+                        name => name.toLowerCase().includes('brasil')
+                    ).length;
+                    
+                    return andreaFiles === 5 && carlosFiles === 5;
+                }
+            },
+            7: {
+                title: "Carpeta 07 - Estaciones",
+                description: "Organiza imágenes por estaciones del año.",
+                tasks: [
+                    "Observa cada emoticono y decide a qué estación pertenece",
+                    "Renombra cada archivo incluyendo la palabra 'Foto' (ej: Foto Primavera.jpg)",
+                    "Crea 4 carpetas: Primavera, Verano, Otoño, Invierno",
+                    "Mueve 2 archivos a cada carpeta según la estación correspondiente"
+                ],
+                hints: [
+                    "Observa los emoticonos: flores y mariposas = primavera, sol y playa = verano",
+                    "Hojas caídas = otoño, nieve y muñeco de nieve = invierno",
+                    "Crea las cuatro carpetas de estaciones",
+                    "Renombra cada archivo con 'Foto' y la estación (ej: Foto Primavera.jpg)"
+                ],
+                initialFiles: {
+                    'Imagen1.jpg': { type: 'file' },
+                    'Imagen2.jpg': { type: 'file' },
+                    'Imagen3.jpg': { type: 'file' },
+                    'Imagen4.jpg': { type: 'file' },
+                    'Imagen5.jpg': { type: 'file' },
+                    'Imagen6.jpg': { type: 'file' },
+                    'Imagen7.jpg': { type: 'file' },
+                    'Imagen8.jpg': { type: 'file' }
+                },
+                validate: (fs) => {
+                    const estaciones = {
+                        'primavera': { folder: null, iconos: ['🌸', '🦋'] },
+                        'verano': { folder: null, iconos: ['☀️', '🏖️'] },
+                        'otoño': { folder: null, iconos: ['🍂', '🍁'] },
+                        'invierno': { folder: null, iconos: ['❄️', '⛄'] }
+                    };
+                    
+                    // Buscar carpetas de estaciones
+                    for (let folderName in fs) {
+                        if (fs[folderName].type === 'folder') {
+                            const nameLower = folderName.toLowerCase();
+                            for (let estacion in estaciones) {
+                                if (nameLower.includes(estacion)) {
+                                    estaciones[estacion].folder = fs[folderName];
+                                    break;
+                                }
+                            }
+                        }
+                    }
+                    
+                    // Verificar que todas las carpetas existan y tengan 2 archivos con "foto"
+                    for (let estacion in estaciones) {
+                        const folder = estaciones[estacion].folder;
+                        if (!folder) return false;
+                        
+                        const filesWithFoto = Object.keys(folder.children).filter(
+                            name => name.toLowerCase().includes('foto')
+                        ).length;
+                        
+                        if (filesWithFoto !== 2) return false;
+                    }
+                    
+                    return true;
+                }
+            },
+            8: {
+                title: "Carpeta 08 - Películas",
+                description: "Clasifica películas por género.",
+                tasks: [
+                    "Observa cada imagen para identificar la película",
+                    "Renombra cada archivo con el nombre de la película",
+                    "Crea 2 carpetas: Películas y Dibujos",
+                    "Mueve 4 películas a cada carpeta según su tipo"
+                ],
+                hints: [
+                    "Mira las imágenes y decide si son películas normales o dibujos animados",
+                    "Crea dos carpetas: una para Películas y otra para Dibujos",
+                    "Renombra los archivos con nombres de películas reconocibles",
+                    "Organiza 4 archivos en cada carpeta"
+                ],
+                initialFiles: {
+                    'Pelicula1.jpg': { type: 'file' },
+                    'Pelicula2.jpg': { type: 'file' },
+                    'Pelicula3.jpg': { type: 'file' },
+                    'Pelicula4.jpg': { type: 'file' },
+                    'Pelicula5.jpg': { type: 'file' },
+                    'Pelicula6.jpg': { type: 'file' },
+                    'Pelicula7.jpg': { type: 'file' },
+                    'Pelicula8.jpg': { type: 'file' }
+                },
+                validate: (fs) => {
+                    let peliculaFolder = null;
+                    let dibujoFolder = null;
+                    
+                    // Buscar carpetas que contengan "pelicula" o "dibujo"
+                    for (let folderName in fs) {
+                        if (fs[folderName].type === 'folder') {
+                            const nameLower = folderName.toLowerCase()
+                                .normalize('NFD').replace(/[\u0300-\u036f]/g, ''); // Quitar tildes
+                            
+                            if (nameLower.includes('pelicula')) {
+                                peliculaFolder = fs[folderName];
+                            }
+                            if (nameLower.includes('dibujo')) {
+                                dibujoFolder = fs[folderName];
+                            }
+                        }
+                    }
+                    
+                    if (!peliculaFolder || !dibujoFolder) return false;
+                    
+                    // Verificar que los archivos hayan sido renombrados (no sean los nombres originales)
+                    const allFiles = [
+                        ...Object.keys(peliculaFolder.children),
+                        ...Object.keys(dibujoFolder.children)
+                    ];
+                    
+                    const hasOriginalNames = allFiles.some(name => 
+                        /^Pelicula\d+\.jpg$/i.test(name)
+                    );
+                    
+                    if (hasOriginalNames) return false;
+                    
+                    // Verificar que haya 4 archivos en cada carpeta
+                    return Object.keys(peliculaFolder.children).length === 4 &&
+                           Object.keys(dibujoFolder.children).length === 4;
+                }
+            },
+            9: {
+                title: "Carpeta 09 - Extensión",
+                description: "Organiza archivos por su extensión (tipo).",
+                tasks: [
+                    "Observa la extensión de cada archivo (.mp3, .mp4, .pdf, .jpg)",
+                    "Crea 4 carpetas: Musica, Video, Documento y Foto",
+                    "Mueve 3 archivos de cada tipo a su carpeta correspondiente"
+                ],
+                hints: [
+                    "La extensión son las letras después del punto: .mp3 = música, .mp4 = vídeo",
+                    ".pdf = documento, .jpg = foto",
+                    "Crea las cuatro carpetas para cada tipo",
+                    "Organiza moviendo cada archivo según su extensión"
+                ],
+                initialFiles: {
+                    'You are not Alone (FF9).mp3': { type: 'file' },
+                    'Happy (C2C).mp3': { type: 'file' },
+                    'Beat it (M. Jackson).mp3': { type: 'file' },
+                    'El señor de los Anillos.mp4': { type: 'file' },
+                    'Interestellar.mp4': { type: 'file' },
+                    'Contact.mp4': { type: 'file' },
+                    'Mi CV.pdf': { type: 'file' },
+                    'Contrato.pdf': { type: 'file' },
+                    'Factura.pdf': { type: 'file' },
+                    'Mi gato Anubis.jpg': { type: 'file' },
+                    'Mi gato Indalo.jpg': { type: 'file' },
+                    'Mi perrita Pitufina.jpg': { type: 'file' }
+                },
+                validate: (fs) => {
+                    const categorias = {
+                        'musica': { ext: '.mp3', count: 0 },
+                        'video': { ext: '.mp4', count: 0 },
+                        'documento': { ext: '.pdf', count: 0 },
+                        'foto': { ext: '.jpg', count: 0 }
+                    };
+                    
+                    // Buscar carpetas y contar archivos por extensión
+                    for (let folderName in fs) {
+                        if (fs[folderName].type === 'folder') {
+                            const nameLower = folderName.toLowerCase()
+                                .normalize('NFD').replace(/[\u0300-\u036f]/g, ''); // Quitar tildes
+                            
+                            for (let categoria in categorias) {
+                                if (nameLower.includes(categoria)) {
+                                    // Contar archivos con la extensión correcta
+                                    for (let fileName in fs[folderName].children) {
+                                        if (fileName.toLowerCase().endsWith(categorias[categoria].ext)) {
+                                            categorias[categoria].count++;
+                                        }
+                                    }
+                                    break;
+                                }
+                            }
+                        }
+                    }
+                    
+                    // Verificar que cada categoría tenga exactamente 3 archivos
+                    return categorias.musica.count === 3 &&
+                           categorias.video.count === 3 &&
+                           categorias.documento.count === 3 &&
+                           categorias.foto.count === 3;
+                }
+            }
+        };
+
+        function startExercise(num) {
+            currentExercise = num;
+            hintLevel = 0;
+            document.getElementById('exerciseMenu').style.display = 'none';
+            initializeExercise(exercises[num]);
+        }
+
+        function backToMenu() {
+            document.getElementById('exerciseMenu').style.display = 'flex';
+            currentExercise = null;
+            hintLevel = 0;
+            document.getElementById('hintText').textContent = '';
+            document.getElementById('completedText').textContent = '';
+        }
+
+        function initializeExercise(exercise) {
+            fileSystem = JSON.parse(JSON.stringify(exercise.initialFiles));
+            currentPath = [];
+            selectedItem = null;
+            clipboard = null;
+            clipboardMode = null;
+            
+            // Inicializar el mapeo de íconos para este ejercicio
+            iconMapping = {};
+            buildIconMapping(fileSystem, []);
+            
+            updateTaskDescription(exercise);
+            render();
+        }
+        
+        function buildIconMapping(folder, path) {
+            for (let name in folder) {
+                if (folder[name].type === 'file') {
+                    const fullPath = [...path, name].join('/');
+                    
+                    // Guardar el ícono según el ejercicio
+                    if (currentExercise === 3 && exercise3Icons[name]) {
+                        iconMapping[fullPath] = { type: 'emoji', value: exercise3Icons[name] };
+                    } else if (currentExercise === 4 && exercise4Icons[name]) {
+                        iconMapping[fullPath] = { type: 'emoji', value: exercise4Icons[name] };
+                    } else if (currentExercise === 5 && exercise5Images[name]) {
+                        iconMapping[fullPath] = { type: 'image', value: exercise5Images[name] };
+                    } else if (currentExercise === 6 && exercise6Icons[name]) {
+                        iconMapping[fullPath] = { type: 'emoji', value: exercise6Icons[name] };
+                    } else if (currentExercise === 7 && exercise7Icons[name]) {
+                        iconMapping[fullPath] = { type: 'emoji', value: exercise7Icons[name] };
+                    } else if (currentExercise === 8 && exercise8Images[name]) {
+                        iconMapping[fullPath] = { type: 'image', value: exercise8Images[name] };
+                    } else if (currentExercise === 9) {
+                        // Para el ejercicio 9, asignar por extensión
+                        if (name.endsWith('.mp3')) {
+                            iconMapping[fullPath] = { type: 'emoji', value: '🎵' };
+                        } else if (name.endsWith('.mp4')) {
+                            iconMapping[fullPath] = { type: 'emoji', value: '🎬' };
+                        } else if (name.endsWith('.pdf')) {
+                            iconMapping[fullPath] = { type: 'emoji', value: '📄' };
+                        } else if (name.endsWith('.jpg')) {
+                            iconMapping[fullPath] = { type: 'emoji', value: '📷' };
+                        }
+                    }
+                } else if (folder[name].type === 'folder') {
+                    buildIconMapping(folder[name].children, [...path, name]);
+                }
+            }
+        }
+        
+        function getIconForFile(name, path) {
+            const fullPath = [...path, name].join('/');
+            
+            // Primero buscar en el mapping por ruta completa
+            if (iconMapping[fullPath]) {
+                return iconMapping[fullPath];
+            }
+            
+            // Buscar por nombre original si existe
+            for (let key in iconMapping) {
+                const parts = key.split('/');
+                const originalName = parts[parts.length - 1];
+                const keyPath = parts.slice(0, -1).join('/');
+                const currentPathStr = path.join('/');
+                
+                // Si están en el mismo path, buscar por extensión
+                if (keyPath === currentPathStr) {
+                    const ext1 = originalName.substring(originalName.lastIndexOf('.'));
+                    const ext2 = name.substring(name.lastIndexOf('.'));
+                    if (ext1 === ext2 && !iconMapping[[...path, name].join('/')]) {
+                        // Asignar el ícono al nuevo nombre
+                        iconMapping[[...path, name].join('/')] = iconMapping[key];
+                        return iconMapping[key];
+                    }
+                }
+            }
+            
+            // Para ejercicio 9, asignar por extensión
+            if (currentExercise === 9) {
+                if (name.endsWith('.mp3')) return { type: 'emoji', value: '🎵' };
+                if (name.endsWith('.mp4')) return { type: 'emoji', value: '🎬' };
+                if (name.endsWith('.pdf')) return { type: 'emoji', value: '📄' };
+                if (name.endsWith('.jpg')) return { type: 'emoji', value: '📷' };
+            }
+            
+            return null;
+        }
+
+        function updateTaskDescription(exercise) {
+            const taskDesc = document.getElementById('taskDescription');
+            let html = `<h3>${exercise.title}</h3>`;
+            html += `<p><strong>${exercise.description}</strong></p>`;
+            html += '<ul>';
+            exercise.tasks.forEach(task => {
+                html += `<li>${task}</li>`;
+            });
+            html += '</ul>';
+            taskDesc.innerHTML = html;
+        }
+
+        function getCurrentFolder() {
+            let folder = fileSystem;
+            for (let name of currentPath) {
+                folder = folder[name].children;
+            }
+            return folder;
+        }
+
+        function arraysEqual(a, b) {
+            if (a.length !== b.length) return false;
+            for (let i = 0; i < a.length; i++) {
+                if (a[i] !== b[i]) return false;
+            }
+            return true;
+        }
+
+        function render() {
+            const currentFolder = getCurrentFolder();
+            const grid = document.getElementById('fileGrid');
+            grid.innerHTML = '';
+
+            // Separar carpetas y archivos, y ordenarlos alfabéticamente
+            const folders = [];
+            const files = [];
+            
+            for (let name in currentFolder) {
+                if (currentFolder[name].type === 'folder') {
+                    folders.push(name);
+                } else {
+                    files.push(name);
+                }
+            }
+            
+            // Ordenar alfabéticamente (insensible a mayúsculas/minúsculas)
+            folders.sort((a, b) => a.toLowerCase().localeCompare(b.toLowerCase()));
+            files.sort((a, b) => a.toLowerCase().localeCompare(b.toLowerCase()));
+            
+            // Combinar: primero carpetas, luego archivos
+            const sortedItems = [...folders, ...files];
+
+            // Renderizar carpetas y archivos en orden
+            for (let name of sortedItems) {
+                const item = currentFolder[name];
+                const fileItem = document.createElement('div');
+                fileItem.className = 'file-item';
+                fileItem.dataset.name = name;
+
+                // Marcar como cortado si está en el clipboard en modo cut
+                if (clipboard && clipboardMode === 'cut' && 
+                    clipboard.name === name && 
+                    arraysEqual(clipboard.path, currentPath)) {
+                    fileItem.classList.add('cut');
+                }
+
+                if (item.type === 'folder') {
+                    fileItem.innerHTML = `
+                        <svg class="file-icon" viewBox="0 0 24 24" fill="#ffd700" stroke="#f0c000" stroke-width="1">
+                            <path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/>
+                        </svg>
+                        <div class="file-name">${name}</div>
+                    `;
+                    fileItem.addEventListener('dblclick', () => openFolder(name));
+                } else {
+                    // Verificar si tiene contenido especial según el ejercicio
+                    const icon = getIconForFile(name, currentPath);
+                    let iconHTML;
+                    
+                    if (icon) {
+                        if (icon.type === 'emoji') {
+                            iconHTML = `<div class="file-icon">${icon.value}</div>`;
+                        } else if (icon.type === 'image') {
+                            iconHTML = `<div class="file-icon"><img src="${icon.value}" alt="${name}"></div>`;
+                        }
+                    } else {
+                        iconHTML = `
+                            <svg class="file-icon" viewBox="0 0 24 24" fill="#fff" stroke="#0067C0" stroke-width="1.5">
+                                <path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"/>
+                                <polyline points="13 2 13 9 20 9"/>
+                            </svg>
+                        `;
+                    }
+                    
+                    fileItem.innerHTML = `
+                        ${iconHTML}
+                        <div class="file-name">${name}</div>
+                    `;
+                }
+
+                fileItem.addEventListener('click', (e) => selectItem(name, e));
+                grid.appendChild(fileItem);
+            }
+
+            updateAddressBar();
+            updateButtons();
+            checkCompletion();
+        }
+
+        function updateAddressBar() {
+            const pathElement = document.getElementById('currentPath');
+            if (currentPath.length === 0) {
+                pathElement.textContent = 'Este equipo';
+            } else {
+                pathElement.textContent = 'Este equipo > ' + currentPath.join(' > ');
+            }
+        }
+
+        function selectItem(name, event) {
+            if (event) event.stopPropagation();
+            
+            // Deseleccionar anterior
+            document.querySelectorAll('.file-item').forEach(item => {
+                item.classList.remove('selected');
+            });
+
+            // Seleccionar nuevo
+            selectedItem = name;
+            const items = document.querySelectorAll('.file-item');
+            items.forEach(item => {
+                if (item.dataset.name === name) {
+                    item.classList.add('selected');
+                }
+            });
+
+            updateButtons();
+        }
+
+        function openFolder(name) {
+            const currentFolder = getCurrentFolder();
+            if (currentFolder[name]?.type === 'folder') {
+                currentPath.push(name);
+                selectedItem = null;
+                render();
+            }
+        }
+
+        function goBack() {
+            if (currentPath.length > 0) {
+                currentPath.pop();
+                selectedItem = null;
+                render();
+            }
+        }
+
+        function updateButtons() {
+            const hasSelection = selectedItem !== null;
+            const hasClipboard = clipboard !== null;
+            const canGoBack = currentPath.length > 0;
+
+            document.getElementById('backBtn').disabled = !canGoBack;
+            document.getElementById('cutBtn').disabled = !hasSelection;
+            document.getElementById('copyBtn').disabled = !hasSelection;
+            document.getElementById('pasteBtn').disabled = !hasClipboard;
+            document.getElementById('renameBtn').disabled = !hasSelection;
+            document.getElementById('deleteBtn').disabled = !hasSelection;
+        }
+
+        function createFolder() {
+            const currentFolder = getCurrentFolder();
+            let folderName = 'Nueva carpeta';
+            let counter = 1;
+            
+            while (currentFolder[folderName]) {
+                folderName = `Nueva carpeta (${counter})`;
+                counter++;
+            }
+
+            currentFolder[folderName] = {
+                type: 'folder',
+                children: {}
+            };
+
+            render();
+        }
+
+        function cutItem() {
+            if (!selectedItem) return;
+            clipboard = {
+                name: selectedItem,
+                path: [...currentPath]
+            };
+            clipboardMode = 'cut';
+            render(); // Re-renderizar para mostrar el efecto visual
+            updateButtons();
+        }
+
+        function copyItem() {
+            if (!selectedItem) return;
+            clipboard = {
+                name: selectedItem,
+                path: [...currentPath]
+            };
+            clipboardMode = 'copy';
+            render(); // Re-renderizar por si había algo cortado antes
+            updateButtons();
+        }
+
+        function pasteItem() {
+            if (!clipboard) return;
+
+            const currentFolder = getCurrentFolder();
+            
+            // Obtener la carpeta de origen
+            let sourceFolder = fileSystem;
+            for (let name of clipboard.path) {
+                sourceFolder = sourceFolder[name].children;
+            }
+
+            const item = sourceFolder[clipboard.name];
+            if (!item) return;
+
+            let targetName = clipboard.name;
+            let counter = 1;
+            while (currentFolder[targetName]) {
+                const nameParts = clipboard.name.split('.');
+                if (nameParts.length > 1) {
+                    const ext = nameParts.pop();
+                    targetName = nameParts.join('.') + ` (${counter}).${ext}`;
+                } else {
+                    targetName = `${clipboard.name} (${counter})`;
+                }
+                counter++;
+            }
+
+            // Copiar el item
+            currentFolder[targetName] = JSON.parse(JSON.stringify(item));
+            
+            // Copiar también el ícono en el mapping
+            const oldPath = [...clipboard.path, clipboard.name].join('/');
+            const newPath = [...currentPath, targetName].join('/');
+            if (iconMapping[oldPath]) {
+                iconMapping[newPath] = iconMapping[oldPath];
+            }
+
+            // Si es cortar, eliminar el original
+            if (clipboardMode === 'cut') {
+                delete sourceFolder[clipboard.name];
+                delete iconMapping[oldPath];
+                clipboard = null;
+                clipboardMode = null;
+            }
+
+            render();
+        }
+
+        function renameItem() {
+            if (!selectedItem) return;
+
+            const currentFolder = getCurrentFolder();
+            const oldName = selectedItem;
+            
+            // Extraer el nombre sin extensión y la extensión
+            const lastDotIndex = oldName.lastIndexOf('.');
+            let nameWithoutExt = oldName;
+            let extension = '';
+            
+            if (lastDotIndex > 0 && currentFolder[oldName].type === 'file') {
+                nameWithoutExt = oldName.substring(0, lastDotIndex);
+                extension = oldName.substring(lastDotIndex);
+            }
+            
+            const newNameWithoutExt = prompt('Nuevo nombre (sin extensión):', nameWithoutExt);
+            
+            if (newNameWithoutExt && newNameWithoutExt !== nameWithoutExt) {
+                const newName = newNameWithoutExt + extension;
+                
+                if (!currentFolder[newName]) {
+                    // Actualizar el mapping de íconos
+                    const oldPath = [...currentPath, oldName].join('/');
+                    const newPath = [...currentPath, newName].join('/');
+                    if (iconMapping[oldPath]) {
+                        iconMapping[newPath] = iconMapping[oldPath];
+                        delete iconMapping[oldPath];
+                    }
+                    
+                    currentFolder[newName] = currentFolder[oldName];
+                    delete currentFolder[oldName];
+                    selectedItem = null;
+                    render();
+                } else {
+                    alert('Ya existe un archivo con ese nombre');
+                }
+            }
+        }
+
+        function deleteItem() {
+            if (!selectedItem) return;
+            
+            if (confirm(`¿Estás seguro de que quieres eliminar "${selectedItem}"?`)) {
+                const currentFolder = getCurrentFolder();
+                delete currentFolder[selectedItem];
+                selectedItem = null;
+                render();
+            }
+        }
+
+        function showHint() {
+            const exercise = exercises[currentExercise];
+            if (!exercise) return;
+
+            const hintText = document.getElementById('hintText');
+            
+            // Sistema de pistas cíclico
+            if (hintLevel < exercise.hints.length) {
+                hintText.textContent = `Pista ${hintLevel + 1}/${exercise.hints.length}: ${exercise.hints[hintLevel]}`;
+                hintLevel++;
+            } else {
+                // Reiniciar el ciclo
+                hintLevel = 0;
+                hintText.textContent = `Pista ${hintLevel + 1}/${exercise.hints.length}: ${exercise.hints[hintLevel]}`;
+                hintLevel++;
+            }
+        }
+
+        function checkCompletion() {
+            const exercise = exercises[currentExercise];
+            if (!exercise) return;
+
+            if (exercise.validate(fileSystem)) {
+                document.getElementById('completedText').textContent = '✅ ¡Completado!';
+            } else {
+                document.getElementById('completedText').textContent = '';
+            }
+        }
+
+        // Deseleccionar al hacer clic en el área vacía
+        document.getElementById('fileGrid').addEventListener('click', (e) => {
+            if (e.target.id === 'fileGrid') {
+                selectedItem = null;
+                document.querySelectorAll('.file-item').forEach(item => {
+                    item.classList.remove('selected');
+                });
+                updateButtons();
+            }
+        });
+    </script>
+</body>
+</html>
