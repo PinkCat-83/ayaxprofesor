@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Paquetes de Ofimática</title>
+  <style>
+    /* RESET TOTAL: Esto elimina el fondo blanco del navegador */
+    html,
+    body {
+      margin: 0;
+      padding: 0;
+      width: 100%;
+      height: 100%;
+      background-color: #000000;
+      /* Fondo negro absoluto */
+      color: #e0e0e0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    /* Contenedor principal centrado */
+    .main-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 40px 20px;
+    }
+
+    h1 {
+      color: #ff6bb5;
+      text-align: center;
+      font-size: 2rem;
+      margin-bottom: 30px;
+    }
+
+    /* Grid de tarjetas */
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 20px;
+    }
+
+    /* Estilo de las tarjetas */
+    .card {
+      background: #111;
+      /* Gris casi negro */
+      border: 1px solid #222;
+      border-radius: 15px;
+      padding: 25px;
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .card:hover {
+      border-color: #ff6bb5;
+      transform: translateY(-5px);
+      box-shadow: 0 10px 30px rgba(255, 107, 181, 0.1);
+    }
+
+    .card h3 {
+      margin-top: 0;
+      color: #fff;
+      font-size: 1.3rem;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .card p {
+      line-height: 1.6;
+      color: #bbb;
+      font-size: 0.95rem;
+    }
+
+    /* Enlaces estilo botón */
+    .links-group {
+      margin-top: 15px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .btn {
+      text-decoration: none;
+      font-size: 0.8rem;
+      padding: 6px 12px;
+      border-radius: 5px;
+      background: #222;
+      color: #4da3ff;
+      border: 1px solid #333;
+      transition: 0.2s;
+    }
+
+    .btn:hover {
+      background: #4da3ff;
+      color: #000;
+    }
+
+    .badge {
+      display: inline-block;
+      padding: 2px 8px;
+      border-radius: 4px;
+      font-size: 0.75rem;
+      font-weight: bold;
+      margin-bottom: 10px;
+    }
+
+    .badge-free {
+      background: rgba(76, 175, 80, 0.2);
+      color: #4caf50;
+    }
+
+    .badge-freemium {
+      background: rgba(142, 131, 4, 0.2);
+      color: #f0ff24;
+    }
+
+    .badge-paid {
+      background: rgba(255, 152, 0, 0.2);
+      color: #ff9800;
+    }
+
+    footer {
+      text-align: center;
+      margin-top: 50px;
+      padding: 20px;
+      font-size: 0.85rem;
+      color: #555;
+      border-top: 1px solid #111;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="main-container">
+    <h1>📦 Paquetes de Ofimática</h1>
+
+    <div class="grid">
+      <article class="card">
+        <span class="badge badge-paid">Suscripción / Pago</span>
+        <h3>💻 Microsoft Office 365</h3>
+        <p>El estándar en empresas y educación; las licencias fuera de canal pueden funcionar pero ser revocadas o no
+          tener soporte del fabricante.</p>
+        <p>También ofrece versión online gratuita, pero muy limitada y no muy recomendable.</p>
+        <p></p>
+        <div class="links-group">
+          <a href="https://www.microsoft.com/es-es/microsoft-365/buy/compare-all-microsoft-365-products"
+            class="btn">Página Oficial</a>
+          <a href="https://www.licenciasoriginales.es/" class="btn">Segunda mano</a>
+          <a href="https://www.clavecd.es/comprar-microsoft-office-365-pro-cd-key-comparar-precios/" class="btn">Tiendas
+            Grises</a>
+        </div>
+      </article>
+
+      <article class="card">
+        <span class="badge badge-free">Gratis (Cuenta Google)</span>
+        <h3>🌐 Google Workspace</h3>
+        <p>Todo en la nube y con fuerte enfoque colaborativo en tiempo real; excelente para trabajo en equipo y
+          accesible desde cualquier dispositivo con navegador</p>
+        <p>Como punto negativo, tenga en cuenta que si no posee conexión a internet, no podrá usar dichos servicios.</p>
+        <p></p>
+        <div class="links-group">
+          <a href="https://www.gmail.com" class="btn">Página Oficial</a>
+        </div>
+      </article>
+
+      <article class="card">
+        <span class="badge badge-free">Gratis (Open Source)</span>
+        <h3>🟢 LibreOffice</h3>
+        <p>Software libre y gratuito. Excelente compatibilidad con formatos de Microsoft para la mayoría de las tareas
+          básicas.</p>
+        <p>Aunque es muy usado, se está quedando atrás en implementaciones modernas.</p>
+        <p></p>
+        <div class="links-group">
+          <a href="https://es.libreoffice.org/" class="btn">Página Oficial</a>
+        </div>
+      </article>
+
+      <article class="card">
+        <span class="badge badge-freemium">Freemium</span>
+        <h3>📱 WPS Office</h3>
+        <p>Ligero y con interfaz muy similar a Office. Incluye versión gratuita con algunas limitaciones o anuncios.</p>
+        <p>Ofrece servicios extras con la versión premium.</p>
+        <br>
+        <div class="links-group">
+          <a href="https://es.wps.com/" class="btn">Página Oficial</a>
+        </div>
+      </article>
+
+      <article class="card">
+        <span class="badge badge-free">Gratis (Para usuario)</span>
+        <h3>📝 OnlyOffice</h3>
+        <p>Buenas capacidades de colaboración y opciones para integrar con servidores o servicios en la nube.</p>
+        <p>También está pensado para entornos empresariales y de self-hosting</p>
+        <div class="links-group">
+          <a href="https://www.onlyoffice.com/es/" class="btn">Página Oficial</a>
+        </div>
+      </article>
+
+      <article class="card">
+        <img src="../imgs/logo.png" alt="Logo Empresa" style="max-width:100%; height:auto;">
+      </article>
+    </div>
+
+    <footer>
+      💡<strong>Disclaimer</strong>💡
+      <p>Aunque recomendamos adquirir las licencias de pago desde las páginas oficiales,
+        entendemos que las circunstancias personales de cada usuario puede hacer que decidamos usar dichas licencias.
+      </p>
+      <p>Tenga en cuenta que dichas licencias podrían no ser duraderas o no ser muy éticas.</p>
+    </footer>
+  </div>
+
+</body>
+
+</html>

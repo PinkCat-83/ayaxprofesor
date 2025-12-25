@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -74,7 +75,7 @@
         .exercise-btn:hover {
             background: #005a9e;
             transform: translateY(-2px);
-            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
         }
 
         .exercise-btn strong {
@@ -198,7 +199,7 @@
             object-fit: cover;
             border-radius: 4px;
         }
-        
+
         .file-icon img {
             width: 100%;
             height: 100%;
@@ -281,8 +282,15 @@
         }
 
         @keyframes bounce {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.1); }
+
+            0%,
+            100% {
+                transform: scale(1);
+            }
+
+            50% {
+                transform: scale(1.1);
+            }
         }
 
         .back-menu-btn {
@@ -309,7 +317,7 @@
             background: white;
             padding: 20px;
             border-radius: 8px;
-            box-shadow: 0 4px 16px rgba(0,0,0,0.3);
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
             z-index: 100;
         }
 
@@ -346,6 +354,7 @@
         }
     </style>
 </head>
+
 <body>
     <!-- Menú de selección de ejercicios -->
     <div id="exerciseMenu">
@@ -382,7 +391,7 @@
                     Organiza por estaciones del año
                 </button>
                 <button class="exercise-btn" onclick="startExercise(8)">
-                    <strong>🎬 08 - Películas</strong>
+                    <strong>🎬 08 - Peliculas</strong>
                     Clasifica por género
                 </button>
                 <button class="exercise-btn" onclick="startExercise(9)">
@@ -401,53 +410,53 @@
         <div class="toolbar-buttons">
             <button class="toolbar-btn back-btn" id="backBtn" onclick="goBack()" disabled title="Atrás">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <path d="M19 12H5M12 19l-7-7 7-7"/>
+                    <path d="M19 12H5M12 19l-7-7 7-7" />
                 </svg>
                 Atrás
             </button>
             <button class="toolbar-btn" onclick="createFolder()" title="Nueva carpeta">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/>
-                    <line x1="12" y1="11" x2="12" y2="17"/>
-                    <line x1="9" y1="14" x2="15" y2="14"/>
+                    <path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z" />
+                    <line x1="12" y1="11" x2="12" y2="17" />
+                    <line x1="9" y1="14" x2="15" y2="14" />
                 </svg>
                 Nueva Carpeta
             </button>
             <button class="toolbar-btn" id="cutBtn" onclick="cutItem()" disabled title="Cortar">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <circle cx="6" cy="6" r="3"/>
-                    <circle cx="6" cy="18" r="3"/>
-                    <line x1="20" y1="4" x2="8.12" y2="15.88"/>
-                    <line x1="14.47" y1="14.48" x2="20" y2="20"/>
-                    <line x1="8.12" y1="8.12" x2="12" y2="12"/>
+                    <circle cx="6" cy="6" r="3" />
+                    <circle cx="6" cy="18" r="3" />
+                    <line x1="20" y1="4" x2="8.12" y2="15.88" />
+                    <line x1="14.47" y1="14.48" x2="20" y2="20" />
+                    <line x1="8.12" y1="8.12" x2="12" y2="12" />
                 </svg>
                 Cortar
             </button>
             <button class="toolbar-btn" id="copyBtn" onclick="copyItem()" disabled title="Copiar">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <rect x="9" y="9" width="13" height="13" rx="2" ry="2"/>
-                    <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>
+                    <rect x="9" y="9" width="13" height="13" rx="2" ry="2" />
+                    <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1" />
                 </svg>
                 Copiar
             </button>
             <button class="toolbar-btn" id="pasteBtn" onclick="pasteItem()" disabled title="Pegar">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/>
-                    <rect x="8" y="2" width="8" height="4" rx="1" ry="1"/>
+                    <path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2" />
+                    <rect x="8" y="2" width="8" height="4" rx="1" ry="1" />
                 </svg>
                 Pegar
             </button>
             <button class="toolbar-btn" id="renameBtn" onclick="renameItem()" disabled title="Cambiar nombre">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/>
-                    <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/>
+                    <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7" />
+                    <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z" />
                 </svg>
                 Cambiar Nombre
             </button>
             <button class="toolbar-btn" id="deleteBtn" onclick="deleteItem()" disabled title="Borrar">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <polyline points="3 6 5 6 21 6"/>
-                    <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/>
+                    <polyline points="3 6 5 6 21 6" />
+                    <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2" />
                 </svg>
                 Borrar
             </button>
@@ -477,7 +486,7 @@
         let clipboardMode = null; // 'cut' o 'copy'
         let currentExercise = null;
         let hintLevel = 0;
-        
+
         // Emoticonos para el ejercicio 3
         const exercise3Icons = {
             'Foto1.jpg': '🔵', // Círculo azul
@@ -497,7 +506,7 @@
             'Foto15.jpg': '🌲', // Árbol verde
             'Foto16.jpg': '🍏' // Manzana verde
         };
-        
+
         // Emoticonos para el ejercicio 4
         const exercise4Icons = {
             'Producto1.jpg': '💍', // Anillo 1
@@ -510,19 +519,20 @@
             'Producto8.jpg': '⏰', // Reloj 2
             'Producto9.jpg': '⏱️' // Reloj 3
         };
-        
+
         // URLs de imágenes para el ejercicio 5
         const exercise5Images = {
-            'Doc1.jpg': 'https://i.imgur.com/3sisGwH.jpg',
-            'Doc2.jpg': 'https://i.imgur.com/pRxo4An.jpg',
-            'Doc3.jpg': 'https://i.imgur.com/3sisGwH.jpg',
-            'Doc4.jpg': 'https://i.imgur.com/pRxo4An.jpg',
-            'Doc5.jpg': 'https://i.imgur.com/3sisGwH.jpg',
-            'Doc6.jpg': 'https://i.imgur.com/pRxo4An.jpg',
-            'Doc7.jpg': 'https://i.imgur.com/3sisGwH.jpg',
-            'Doc8.jpg': 'https://i.imgur.com/pRxo4An.jpg'
+            'Doc1.jpg': '../imgs/fileexplorer5/01.jpg',
+            'Doc2.jpg': '../imgs/fileexplorer5/02.jpg',
+            'Doc3.jpg': '../imgs/fileexplorer5/03.jpg',
+            'Doc4.jpg': '../imgs/fileexplorer5/04.jpg',
+            'Doc5.jpg': '../imgs/fileexplorer5/05.jpg',
+            'Doc6.jpg': '../imgs/fileexplorer5/06.jpg',
+            'Doc7.jpg': '../imgs/fileexplorer5/07.jpg',
+            'Doc8.jpg': '../imgs/fileexplorer5/08.jpg'
+
         };
-        
+
         // Emoticonos para el ejercicio 6
         const exercise6Icons = {
             'IMG_001.jpg': '⚽', // Fútbol
@@ -531,7 +541,7 @@
             'IMG_004.jpg': '🌴', // Palmera
             'IMG_005.jpg': '🎭' // Carnaval
         };
-        
+
         // Emoticonos para el ejercicio 7
         const exercise7Icons = {
             'Imagen1.jpg': '🌸', // Primavera - Flores
@@ -543,22 +553,22 @@
             'Imagen7.jpg': '❄️', // Invierno - Nieve
             'Imagen8.jpg': '⛄' // Invierno - Muñeco de nieve
         };
-        
-        // URLs de imágenes para el ejercicio 8 (películas)
+
+        // URLs de imágenes para el ejercicio 8 (Peliculas)
         const exercise8Images = {
-            'Pelicula1.jpg': 'https://i.imgur.com/3sisGwH.jpg', // Temporal - reemplazar
-            'Pelicula2.jpg': 'https://i.imgur.com/pRxo4An.jpg', // Temporal - reemplazar
-            'Pelicula3.jpg': 'https://i.imgur.com/3sisGwH.jpg', // Temporal - reemplazar
-            'Pelicula4.jpg': 'https://i.imgur.com/pRxo4An.jpg', // Temporal - reemplazar
-            'Pelicula5.jpg': 'https://i.imgur.com/3sisGwH.jpg', // Temporal - reemplazar
-            'Pelicula6.jpg': 'https://i.imgur.com/pRxo4An.jpg', // Temporal - reemplazar
-            'Pelicula7.jpg': 'https://i.imgur.com/3sisGwH.jpg', // Temporal - reemplazar
-            'Pelicula8.jpg': 'https://i.imgur.com/pRxo4An.jpg'  // Temporal - reemplazar
+            'qwe.jpg': '../imgs/fileexplorer8/01.jpg',
+            'asd.jpg': '../imgs/fileexplorer8/02.jpg',
+            'zxc.jpg': '../imgs/fileexplorer8/03.jpg',
+            'wer.jpg': '../imgs/fileexplorer8/04.jpg',
+            'sdf.jpg': '../imgs/fileexplorer8/05.jpg',
+            'xcv.jpg': '../imgs/fileexplorer8/06.jpg',
+            '123.jpg': '../imgs/fileexplorer8/07.jpg',
+            '234.jpg': '../imgs/fileexplorer8/08.jpg'
         };
-        
+
         // Sistema de tracking de íconos para mantener la asociación después de renombrar
         let iconMapping = {};
-        
+
         // Emoticonos para el ejercicio 9 (extensiones)
         const exercise9Icons = {
             'You are not Alone (FF9).mp3': '🎵',
@@ -612,11 +622,12 @@
                     const francia = fs['Francia']?.children || {};
                     const italia = fs['Italia']?.children || {};
                     const japon = fs['Japón']?.children || {};
-                    
-                    const franciaCount = Object.keys(francia).filter(k => k.startsWith('Francia') && k.endsWith('.jpg')).length;
-                    const italiaCount = Object.keys(italia).filter(k => k.startsWith('Italia') && k.endsWith('.jpg')).length;
-                    const japonCount = Object.keys(japon).filter(k => k.startsWith('Japón') && k.endsWith('.jpg')).length;
-                    
+
+                    // CAMBIO: Eliminada comprobación && k.endsWith('.jpg')
+                    const franciaCount = Object.keys(francia).filter(k => k.startsWith('Francia')).length;
+                    const italiaCount = Object.keys(italia).filter(k => k.startsWith('Italia')).length;
+                    const japonCount = Object.keys(japon).filter(k => k.startsWith('Japón')).length;
+
                     return franciaCount === 4 && italiaCount === 4 && japonCount === 4;
                 }
             },
@@ -652,11 +663,13 @@
                     const eeuu = fs['Estados Unidos']?.children || {};
                     const grecia = fs['Grecia']?.children || {};
                     const polo = fs['Polo Norte']?.children || {};
-                    
-                    const eeuuCount = Object.keys(eeuu).filter(k => k.includes('Estados Unidos') && k.endsWith('.jpg')).length;
-                    const poloCount = Object.keys(polo).filter(k => k.includes('Polo Norte') && k.endsWith('.jpg')).length;
-                    const greciaCount = Object.keys(grecia).filter(k => k.toLowerCase().includes('grecia') && k.endsWith('.jpg')).length;
-                    
+
+                    // CAMBIO: Eliminada comprobación && k.endsWith('.jpg')
+                    const eeuuCount = Object.keys(eeuu).filter(k => k.includes('Estados Unidos')).length;
+                    const poloCount = Object.keys(polo).filter(k => k.includes('Polo Norte')).length;
+                    // CAMBIO: Normalización de tildes y mayúsculas para evitar frustración
+                    const greciaCount = Object.keys(grecia).filter(k => k.toLowerCase().includes('grecia')).length;
+
                     return eeuuCount === 3 && poloCount === 3 && greciaCount === 3;
                 }
             },
@@ -664,7 +677,7 @@
                 title: "Carpeta 03 - Colores",
                 description: "Crea carpetas por colores y organiza los archivos.",
                 tasks: [
-                    "Renombra cada archivo según lo que veas y su color (ej: Manzana Roja.jpg)",
+                    "Renombra cada archivo poniendo su color en el nombre (ej: Manzana Roja.jpg)",
                     "Crea 4 carpetas: Azul, Amarillo, Rojo y Verde",
                     "Mueve 4 archivos a cada carpeta según su color"
                 ],
@@ -693,25 +706,17 @@
                     'Foto16.jpg': { type: 'file' }
                 },
                 validate: (fs) => {
-                    const colores = {
-                        'azul': 0,
-                        'amarillo': 0,
-                        'rojo': 0,
-                        'verde': 0
-                    };
-                    
-                    // Buscar carpetas de colores y contar archivos con el color en el nombre
+                    const colores = { 'azul': 0, 'amarillo': 0, 'rojo': 0, 'verde': 0 };
+
                     for (let folderName in fs) {
                         const folder = fs[folderName];
                         if (folder.type === 'folder') {
                             const folderLower = folderName.toLowerCase();
-                            
-                            // Verificar si es una carpeta de color
                             for (let color in colores) {
                                 if (folderLower.includes(color)) {
-                                    // Contar archivos que contengan ese color en su nombre
                                     for (let fileName in folder.children) {
-                                        if (fileName.toLowerCase().includes(color)) {
+                                        // CAMBIO: Usar normalize para ignorar tildes (rojo/Rójo)
+                                        if (fileName.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').includes(color)) {
                                             colores[color]++;
                                         }
                                     }
@@ -720,10 +725,7 @@
                             }
                         }
                     }
-                    
-                    // Verificar que cada color tenga exactamente 4 archivos
-                    return colores.azul === 4 && colores.amarillo === 4 && 
-                           colores.rojo === 4 && colores.verde === 4;
+                    return colores.azul === 4 && colores.amarillo === 4 && colores.rojo === 4 && colores.verde === 4;
                 }
             },
             4: {
@@ -752,22 +754,14 @@
                     'Producto9.jpg': { type: 'file' }
                 },
                 validate: (fs) => {
-                    const categorias = {
-                        'joya': 0,
-                        'gafa': 0,
-                        'reloj': 0
-                    };
-                    
-                    // Buscar carpetas y contar archivos correctos
+                    const categorias = { 'joya': 0, 'gafa': 0, 'reloj': 0 };
+
                     for (let folderName in fs) {
                         const folder = fs[folderName];
                         if (folder.type === 'folder') {
                             const folderLower = folderName.toLowerCase();
-                            
-                            // Verificar si es una carpeta de categoría
                             for (let categoria in categorias) {
                                 if (folderLower.includes(categoria)) {
-                                    // Contar archivos que contengan esa categoría en su nombre
                                     for (let fileName in folder.children) {
                                         if (fileName.toLowerCase().includes(categoria)) {
                                             categorias[categoria]++;
@@ -778,8 +772,6 @@
                             }
                         }
                     }
-                    
-                    // Verificar que cada categoría tenga exactamente 3 archivos
                     return categorias.joya === 3 && categorias.gafa === 3 && categorias.reloj === 3;
                 }
             },
@@ -809,21 +801,14 @@
                     'Doc8.jpg': { type: 'file' }
                 },
                 validate: (fs) => {
-                    const categorias = {
-                        'documento': 0,
-                        'factura': 0
-                    };
-                    
-                    // Buscar carpetas y contar archivos correctos
+                    const categorias = { 'documento': 0, 'factura': 0 };
+
                     for (let folderName in fs) {
                         const folder = fs[folderName];
                         if (folder.type === 'folder') {
                             const folderLower = folderName.toLowerCase();
-                            
-                            // Verificar si es una carpeta de categoría
                             for (let categoria in categorias) {
                                 if (folderLower.includes(categoria)) {
-                                    // Contar archivos que contengan esa categoría en su nombre
                                     for (let fileName in folder.children) {
                                         if (fileName.toLowerCase().includes(categoria)) {
                                             categorias[categoria]++;
@@ -834,8 +819,6 @@
                             }
                         }
                     }
-                    
-                    // Verificar que cada categoría tenga exactamente 4 archivos
                     return categorias.documento === 4 && categorias.factura === 4;
                 }
             },
@@ -863,32 +846,26 @@
                 validate: (fs) => {
                     let andreaFolder = null;
                     let carlosFolder = null;
-                    
-                    // Buscar las carpetas de Andrea y Carlos
+
+                    // 1. Verificar carpetas de destino
                     for (let folderName in fs) {
                         if (fs[folderName].type === 'folder') {
                             const nameLower = folderName.toLowerCase();
-                            if (nameLower.includes('andrea')) {
-                                andreaFolder = fs[folderName];
-                            }
-                            if (nameLower.includes('carlos')) {
-                                carlosFolder = fs[folderName];
-                            }
+                            if (nameLower.includes('andrea')) andreaFolder = fs[folderName];
+                            if (nameLower.includes('carlos')) carlosFolder = fs[folderName];
                         }
                     }
-                    
                     if (!andreaFolder || !carlosFolder) return false;
-                    
-                    // Contar archivos que contengan "brasil" en cada carpeta
-                    const andreaFiles = Object.keys(andreaFolder.children).filter(
-                        name => name.toLowerCase().includes('brasil')
-                    ).length;
-                    
-                    const carlosFiles = Object.keys(carlosFolder.children).filter(
-                        name => name.toLowerCase().includes('brasil')
-                    ).length;
-                    
-                    return andreaFiles === 5 && carlosFiles === 5;
+
+                    // 2. Contar archivos "brasil" en destinos
+                    const andreaFiles = Object.keys(andreaFolder.children).filter(name => name.toLowerCase().includes('brasil')).length;
+                    const carlosFiles = Object.keys(carlosFolder.children).filter(name => name.toLowerCase().includes('brasil')).length;
+
+                    // 3. CAMBIO: Verificar que NO se han cortado (deben quedar archivos en la raíz)
+                    // Contamos archivos en la raíz (fs). Si hay 0, es que los cortó todos.
+                    const rootFiles = Object.keys(fs).filter(k => fs[k].type === 'file').length;
+
+                    return andreaFiles === 5 && carlosFiles === 5 && rootFiles >= 5;
                 }
             },
             7: {
@@ -896,7 +873,7 @@
                 description: "Organiza imágenes por estaciones del año.",
                 tasks: [
                     "Observa cada emoticono y decide a qué estación pertenece",
-                    "Renombra cada archivo incluyendo la palabra 'Foto' (ej: Foto Primavera.jpg)",
+                    "Renombra cada archivo con el nombre de la estación (ej: Primavera 01.jpg)",
                     "Crea 4 carpetas: Primavera, Verano, Otoño, Invierno",
                     "Mueve 2 archivos a cada carpeta según la estación correspondiente"
                 ],
@@ -904,7 +881,7 @@
                     "Observa los emoticonos: flores y mariposas = primavera, sol y playa = verano",
                     "Hojas caídas = otoño, nieve y muñeco de nieve = invierno",
                     "Crea las cuatro carpetas de estaciones",
-                    "Renombra cada archivo con 'Foto' y la estación (ej: Foto Primavera.jpg)"
+                    "Renombra cada archivo con el nombre de la estación correspondiente"
                 ],
                 initialFiles: {
                     'Imagen1.jpg': { type: 'file' },
@@ -918,13 +895,12 @@
                 },
                 validate: (fs) => {
                     const estaciones = {
-                        'primavera': { folder: null, iconos: ['🌸', '🦋'] },
-                        'verano': { folder: null, iconos: ['☀️', '🏖️'] },
-                        'otoño': { folder: null, iconos: ['🍂', '🍁'] },
-                        'invierno': { folder: null, iconos: ['❄️', '⛄'] }
+                        'primavera': { folder: null },
+                        'verano': { folder: null },
+                        'otoño': { folder: null },
+                        'invierno': { folder: null }
                     };
-                    
-                    // Buscar carpetas de estaciones
+
                     for (let folderName in fs) {
                         if (fs[folderName].type === 'folder') {
                             const nameLower = folderName.toLowerCase();
@@ -936,83 +912,71 @@
                             }
                         }
                     }
-                    
-                    // Verificar que todas las carpetas existan y tengan 2 archivos con "foto"
+
                     for (let estacion in estaciones) {
                         const folder = estaciones[estacion].folder;
                         if (!folder) return false;
-                        
-                        const filesWithFoto = Object.keys(folder.children).filter(
-                            name => name.toLowerCase().includes('foto')
+
+                        // CAMBIO: Ahora busca que el archivo incluya el nombre de la estación (ej: "verano")
+                        // en lugar de la palabra genérica "foto". También ignora extensiones.
+                        const correctFiles = Object.keys(folder.children).filter(
+                            name => name.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').includes(estacion)
                         ).length;
-                        
-                        if (filesWithFoto !== 2) return false;
+
+                        if (correctFiles !== 2) return false;
                     }
-                    
                     return true;
                 }
             },
             8: {
-                title: "Carpeta 08 - Películas",
-                description: "Clasifica películas por género.",
+                title: "Carpeta 08 - Peliculas",
+                description: "Clasifica Peliculas por género.",
                 tasks: [
-                    "Observa cada imagen para identificar la película",
-                    "Renombra cada archivo con el nombre de la película",
-                    "Crea 2 carpetas: Películas y Dibujos",
-                    "Mueve 4 películas a cada carpeta según su tipo"
+                    "Observa cada imagen para discernir si es una película o dibujos",
+                    "Renombra cada archivo a lo que representa (por ejemplo Película01, Dibujos01)",
+                    "Crea 2 carpetas: Peliculas y Dibujos",
+                    "Mueve cada archivo a su carpeta correspondiente"
                 ],
                 hints: [
-                    "Mira las imágenes y decide si son películas normales o dibujos animados",
-                    "Crea dos carpetas: una para Películas y otra para Dibujos",
-                    "Renombra los archivos con nombres de películas reconocibles",
+                    "Mira las imágenes y decide si son Peliculas normales o dibujos animados",
+                    "Crea dos carpetas: una para Peliculas y otra para Dibujos",
+                    "Renombra los archivos con nombres descriptivos",
                     "Organiza 4 archivos en cada carpeta"
                 ],
                 initialFiles: {
-                    'Pelicula1.jpg': { type: 'file' },
-                    'Pelicula2.jpg': { type: 'file' },
-                    'Pelicula3.jpg': { type: 'file' },
-                    'Pelicula4.jpg': { type: 'file' },
-                    'Pelicula5.jpg': { type: 'file' },
-                    'Pelicula6.jpg': { type: 'file' },
-                    'Pelicula7.jpg': { type: 'file' },
-                    'Pelicula8.jpg': { type: 'file' }
+                    'qwe.jpg': { type: 'file' },
+                    'asd.jpg': { type: 'file' },
+                    'zxc.jpg': { type: 'file' },
+                    'wer.jpg': { type: 'file' },
+                    'sdf.jpg': { type: 'file' },
+                    'xcv.jpg': { type: 'file' },
+                    '123.jpg': { type: 'file' },
+                    '234.jpg': { type: 'file' }
                 },
                 validate: (fs) => {
                     let peliculaFolder = null;
                     let dibujoFolder = null;
-                    
-                    // Buscar carpetas que contengan "pelicula" o "dibujo"
+
                     for (let folderName in fs) {
                         if (fs[folderName].type === 'folder') {
-                            const nameLower = folderName.toLowerCase()
-                                .normalize('NFD').replace(/[\u0300-\u036f]/g, ''); // Quitar tildes
-                            
-                            if (nameLower.includes('pelicula')) {
-                                peliculaFolder = fs[folderName];
-                            }
-                            if (nameLower.includes('dibujo')) {
-                                dibujoFolder = fs[folderName];
-                            }
+                            const nameLower = folderName.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+                            if (nameLower.includes('pelicula')) peliculaFolder = fs[folderName];
+                            if (nameLower.includes('dibujo')) dibujoFolder = fs[folderName];
                         }
                     }
-                    
+
                     if (!peliculaFolder || !dibujoFolder) return false;
-                    
-                    // Verificar que los archivos hayan sido renombrados (no sean los nombres originales)
-                    const allFiles = [
-                        ...Object.keys(peliculaFolder.children),
-                        ...Object.keys(dibujoFolder.children)
-                    ];
-                    
-                    const hasOriginalNames = allFiles.some(name => 
-                        /^Pelicula\d+\.jpg$/i.test(name)
-                    );
-                    
-                    if (hasOriginalNames) return false;
-                    
-                    // Verificar que haya 4 archivos en cada carpeta
-                    return Object.keys(peliculaFolder.children).length === 4 &&
-                           Object.keys(dibujoFolder.children).length === 4;
+
+                    const allFiles = [...Object.keys(peliculaFolder.children), ...Object.keys(dibujoFolder.children)];
+
+                    // CAMBIO: Invertir lógica. En vez de prohibir "Pelicula01", prohibimos los nombres basura originales.
+                    const originalGarbageNames = ['qwe.jpg', 'asd.jpg', 'zxc.jpg', 'wer.jpg', 'sdf.jpg', 'xcv.jpg', '123.jpg', '234.jpg'];
+
+                    // Si queda algún archivo con nombre basura, falla.
+                    const hasGarbageNames = allFiles.some(name => originalGarbageNames.includes(name));
+                    if (hasGarbageNames) return false;
+
+                    return Object.keys(peliculaFolder.children).length === 4 && Object.keys(dibujoFolder.children).length === 4;
                 }
             },
             9: {
@@ -1044,22 +1008,19 @@
                     'Mi perrita Pitufina.jpg': { type: 'file' }
                 },
                 validate: (fs) => {
+                    // ESTE EJERCICIO MANTIENE VALIDACIÓN DE EXTENSIONES (Es el objetivo del ejercicio)
                     const categorias = {
                         'musica': { ext: '.mp3', count: 0 },
                         'video': { ext: '.mp4', count: 0 },
                         'documento': { ext: '.pdf', count: 0 },
                         'foto': { ext: '.jpg', count: 0 }
                     };
-                    
-                    // Buscar carpetas y contar archivos por extensión
+
                     for (let folderName in fs) {
                         if (fs[folderName].type === 'folder') {
-                            const nameLower = folderName.toLowerCase()
-                                .normalize('NFD').replace(/[\u0300-\u036f]/g, ''); // Quitar tildes
-                            
+                            const nameLower = folderName.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
                             for (let categoria in categorias) {
                                 if (nameLower.includes(categoria)) {
-                                    // Contar archivos con la extensión correcta
                                     for (let fileName in fs[folderName].children) {
                                         if (fileName.toLowerCase().endsWith(categorias[categoria].ext)) {
                                             categorias[categoria].count++;
@@ -1070,12 +1031,11 @@
                             }
                         }
                     }
-                    
-                    // Verificar que cada categoría tenga exactamente 3 archivos
+
                     return categorias.musica.count === 3 &&
-                           categorias.video.count === 3 &&
-                           categorias.documento.count === 3 &&
-                           categorias.foto.count === 3;
+                        categorias.video.count === 3 &&
+                        categorias.documento.count === 3 &&
+                        categorias.foto.count === 3;
                 }
             }
         };
@@ -1101,20 +1061,20 @@
             selectedItem = null;
             clipboard = null;
             clipboardMode = null;
-            
+
             // Inicializar el mapeo de íconos para este ejercicio
             iconMapping = {};
             buildIconMapping(fileSystem, []);
-            
+
             updateTaskDescription(exercise);
             render();
         }
-        
+
         function buildIconMapping(folder, path) {
             for (let name in folder) {
                 if (folder[name].type === 'file') {
                     const fullPath = [...path, name].join('/');
-                    
+
                     // Guardar el ícono según el ejercicio
                     if (currentExercise === 3 && exercise3Icons[name]) {
                         iconMapping[fullPath] = { type: 'emoji', value: exercise3Icons[name] };
@@ -1145,22 +1105,22 @@
                 }
             }
         }
-        
+
         function getIconForFile(name, path) {
             const fullPath = [...path, name].join('/');
-            
+
             // Primero buscar en el mapping por ruta completa
             if (iconMapping[fullPath]) {
                 return iconMapping[fullPath];
             }
-            
+
             // Buscar por nombre original si existe
             for (let key in iconMapping) {
                 const parts = key.split('/');
                 const originalName = parts[parts.length - 1];
                 const keyPath = parts.slice(0, -1).join('/');
                 const currentPathStr = path.join('/');
-                
+
                 // Si están en el mismo path, buscar por extensión
                 if (keyPath === currentPathStr) {
                     const ext1 = originalName.substring(originalName.lastIndexOf('.'));
@@ -1172,7 +1132,7 @@
                     }
                 }
             }
-            
+
             // Para ejercicio 9, asignar por extensión
             if (currentExercise === 9) {
                 if (name.endsWith('.mp3')) return { type: 'emoji', value: '🎵' };
@@ -1180,7 +1140,7 @@
                 if (name.endsWith('.pdf')) return { type: 'emoji', value: '📄' };
                 if (name.endsWith('.jpg')) return { type: 'emoji', value: '📷' };
             }
-            
+
             return null;
         }
 
@@ -1220,7 +1180,7 @@
             // Separar carpetas y archivos, y ordenarlos alfabéticamente
             const folders = [];
             const files = [];
-            
+
             for (let name in currentFolder) {
                 if (currentFolder[name].type === 'folder') {
                     folders.push(name);
@@ -1228,11 +1188,11 @@
                     files.push(name);
                 }
             }
-            
+
             // Ordenar alfabéticamente (insensible a mayúsculas/minúsculas)
             folders.sort((a, b) => a.toLowerCase().localeCompare(b.toLowerCase()));
             files.sort((a, b) => a.toLowerCase().localeCompare(b.toLowerCase()));
-            
+
             // Combinar: primero carpetas, luego archivos
             const sortedItems = [...folders, ...files];
 
@@ -1244,8 +1204,8 @@
                 fileItem.dataset.name = name;
 
                 // Marcar como cortado si está en el clipboard en modo cut
-                if (clipboard && clipboardMode === 'cut' && 
-                    clipboard.name === name && 
+                if (clipboard && clipboardMode === 'cut' &&
+                    clipboard.name === name &&
                     arraysEqual(clipboard.path, currentPath)) {
                     fileItem.classList.add('cut');
                 }
@@ -1262,7 +1222,7 @@
                     // Verificar si tiene contenido especial según el ejercicio
                     const icon = getIconForFile(name, currentPath);
                     let iconHTML;
-                    
+
                     if (icon) {
                         if (icon.type === 'emoji') {
                             iconHTML = `<div class="file-icon">${icon.value}</div>`;
@@ -1277,7 +1237,7 @@
                             </svg>
                         `;
                     }
-                    
+
                     fileItem.innerHTML = `
                         ${iconHTML}
                         <div class="file-name">${name}</div>
@@ -1304,7 +1264,7 @@
 
         function selectItem(name, event) {
             if (event) event.stopPropagation();
-            
+
             // Deseleccionar anterior
             document.querySelectorAll('.file-item').forEach(item => {
                 item.classList.remove('selected');
@@ -1356,7 +1316,7 @@
             const currentFolder = getCurrentFolder();
             let folderName = 'Nueva carpeta';
             let counter = 1;
-            
+
             while (currentFolder[folderName]) {
                 folderName = `Nueva carpeta (${counter})`;
                 counter++;
@@ -1396,7 +1356,7 @@
             if (!clipboard) return;
 
             const currentFolder = getCurrentFolder();
-            
+
             // Obtener la carpeta de origen
             let sourceFolder = fileSystem;
             for (let name of clipboard.path) {
@@ -1421,7 +1381,7 @@
 
             // Copiar el item
             currentFolder[targetName] = JSON.parse(JSON.stringify(item));
-            
+
             // Copiar también el ícono en el mapping
             const oldPath = [...clipboard.path, clipboard.name].join('/');
             const newPath = [...currentPath, targetName].join('/');
@@ -1445,22 +1405,22 @@
 
             const currentFolder = getCurrentFolder();
             const oldName = selectedItem;
-            
+
             // Extraer el nombre sin extensión y la extensión
             const lastDotIndex = oldName.lastIndexOf('.');
             let nameWithoutExt = oldName;
             let extension = '';
-            
+
             if (lastDotIndex > 0 && currentFolder[oldName].type === 'file') {
                 nameWithoutExt = oldName.substring(0, lastDotIndex);
                 extension = oldName.substring(lastDotIndex);
             }
-            
+
             const newNameWithoutExt = prompt('Nuevo nombre (sin extensión):', nameWithoutExt);
-            
+
             if (newNameWithoutExt && newNameWithoutExt !== nameWithoutExt) {
                 const newName = newNameWithoutExt + extension;
-                
+
                 if (!currentFolder[newName]) {
                     // Actualizar el mapping de íconos
                     const oldPath = [...currentPath, oldName].join('/');
@@ -1469,7 +1429,7 @@
                         iconMapping[newPath] = iconMapping[oldPath];
                         delete iconMapping[oldPath];
                     }
-                    
+
                     currentFolder[newName] = currentFolder[oldName];
                     delete currentFolder[oldName];
                     selectedItem = null;
@@ -1482,7 +1442,7 @@
 
         function deleteItem() {
             if (!selectedItem) return;
-            
+
             if (confirm(`¿Estás seguro de que quieres eliminar "${selectedItem}"?`)) {
                 const currentFolder = getCurrentFolder();
                 delete currentFolder[selectedItem];
@@ -1496,7 +1456,7 @@
             if (!exercise) return;
 
             const hintText = document.getElementById('hintText');
-            
+
             // Sistema de pistas cíclico
             if (hintLevel < exercise.hints.length) {
                 hintText.textContent = `Pista ${hintLevel + 1}/${exercise.hints.length}: ${exercise.hints[hintLevel]}`;
@@ -1532,4 +1492,5 @@
         });
     </script>
 </body>
+
 </html>
