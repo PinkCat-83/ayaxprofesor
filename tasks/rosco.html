@@ -1,0 +1,928 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="../favicon.ico">
+    <title>Rosco de Palabras</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html,
+        body {
+            overflow-x: hidden;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #000;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            color: white;
+        }
+
+        @keyframes shake {
+
+            0%,
+            100% {
+                transform: translateX(0);
+            }
+
+            10%,
+            30%,
+            50%,
+            70%,
+            90% {
+                transform: translateX(-10px);
+            }
+
+            20%,
+            40%,
+            60%,
+            80% {
+                transform: translateX(10px);
+            }
+        }
+
+        @keyframes heartFall {
+            0% {
+                transform: translateY(0) rotate(0deg);
+                opacity: 1;
+            }
+
+            100% {
+                transform: translateY(500px) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        .shake {
+            animation: shake 0.5s;
+        }
+
+        .heart-falling {
+            animation: heartFall 1s ease-in forwards;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
+            color: #ffb3c1;
+            padding: 25px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 15px;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+            border-bottom: 2px solid rgba(255, 179, 193, 0.3);
+            position: relative;
+        }
+
+        .header::before {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, #ffb3c1, transparent);
+        }
+
+        .lives {
+            display: flex;
+            gap: 8px;
+            position: relative;
+            justify-content: center;
+            align-items: center;
+            background: rgba(0, 0, 0, 0.3);
+            padding: 12px 24px;
+            border-radius: 12px;
+            border: 2px solid rgba(255, 0, 0, 0.3);
+            box-shadow: inset 0 2px 10px rgba(0, 0, 0, 0.5);
+            transition: all 0.3s ease;
+            width: 350px;
+            height: 75px;
+        }
+
+        .lives:hover {
+            border-color: rgba(255, 0, 0, 0.5);
+            box-shadow: inset 0 2px 10px rgba(0, 0, 0, 0.3), 0 4px 12px rgba(255, 0, 0, 0.2);
+        }
+
+        .heart {
+            color: #ff0000;
+            text-shadow: 0 0 15px rgba(255, 0, 0, 0.8), 0 0 5px rgba(255, 0, 0, 1);
+            display: inline-block;
+            font-size: 22px;
+            filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.5));
+        }
+
+        .header-item {
+            flex: 1;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+            background: rgba(0, 0, 0, 0.3);
+            padding: 12px 24px;
+            border-radius: 12px;
+            border: 2px solid rgba(255, 179, 193, 0.2);
+            box-shadow: inset 0 2px 10px rgba(0, 0, 0, 0.3);
+            transition: all 0.3s ease;
+            width: 350px;
+            height: 75px;
+        }
+
+        .header-item:hover {
+            border-color: rgba(255, 179, 193, 0.4);
+            box-shadow: inset 0 2px 10px rgba(0, 0, 0, 0.3), 0 4px 12px rgba(255, 179, 193, 0.2);
+        }
+
+        .header-item:first-child {
+            text-align: center;
+            background: transparent;
+            border: none;
+            box-shadow: none;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .header-item:first-child:hover {
+            box-shadow: none;
+        }
+
+        .header-item:nth-child(2) {
+            border-color: rgba(144, 238, 144, 0.3);
+        }
+
+        .header-item:nth-child(2):hover {
+            border-color: rgba(144, 238, 144, 0.5);
+            box-shadow: inset 0 2px 10px rgba(0, 0, 0, 0.3), 0 4px 12px rgba(144, 238, 144, 0.2);
+        }
+
+        .header-item:nth-child(3) {
+            border-color: rgba(100, 149, 237, 0.3);
+        }
+
+        .header-item:nth-child(3):hover {
+            border-color: rgba(100, 149, 237, 0.5);
+            box-shadow: inset 0 2px 10px rgba(0, 0, 0, 0.3), 0 4px 12px rgba(100, 149, 237, 0.2);
+        }
+
+        .header-item:last-child {
+            text-align: center;
+        }
+
+        .header-label {
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            color: rgba(255, 179, 193, 0.6);
+            font-weight: 600;
+        }
+
+        .header-item:nth-child(2) .header-label {
+            color: rgba(144, 238, 144, 0.6);
+        }
+
+        .header-item:nth-child(3) .header-label {
+            color: rgba(100, 149, 237, 0.6);
+        }
+
+        .header-value {
+            font-size: 24px;
+            font-weight: bold;
+            color: #ffb3c1;
+            text-shadow: 0 2px 8px rgba(255, 179, 193, 0.4);
+            font-family: 'Arial Black', sans-serif;
+        }
+
+        .header-item:nth-child(2) .header-value {
+            color: #90EE90;
+            text-shadow: 0 2px 8px rgba(144, 238, 144, 0.4);
+        }
+
+        .header-item:nth-child(3) .header-value {
+            color: #6495ED;
+            text-shadow: 0 2px 8px rgba(100, 149, 237, 0.4);
+        }
+
+        .question-box {
+            background-color: #1a1a1a;
+            border-bottom: 3px solid #ffb3c1;
+            padding: 25px 40px;
+            width: 100%;
+            text-align: center;
+            font-size: 35px;
+            line-height: 1.6;
+            box-shadow: 0 4px 10px rgba(255, 179, 193, 0.3);
+            color: white;
+            min-height: 80px;
+            max-height: 80px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+
+        .game-container {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
+            padding: 30px 20px 40px;
+        }
+
+        .belt-container {
+            width: 100%;
+            height: 320px;
+            overflow: hidden;
+            position: relative;
+            margin-bottom: 40px;
+            perspective: 1000px;
+            display: flex;
+            align-items: center;
+        }
+
+        .belt {
+            display: flex;
+            gap: 100px;
+            position: absolute;
+            left: 50%;
+            transition: transform 0.5s ease-out;
+            align-items: center;
+        }
+
+        .letter-circle {
+            width: 120px;
+            height: 120px;
+            min-width: 120px;
+            border-radius: 50%;
+            background-color: #1a1a1a;
+            border: 4px solid #ffb3c1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 48px;
+            font-weight: bold;
+            transition: all 0.5s ease;
+            cursor: default;
+            box-shadow: 0 0 15px rgba(255, 179, 193, 0.3);
+            opacity: 0.3;
+            transform: scale(0.6);
+            color: white;
+        }
+
+        .letter-circle.center {
+            opacity: 1;
+            transform: scale(1.5);
+            background-color: #ffb3c1;
+            color: #000;
+            box-shadow: 0 0 50px rgba(255, 179, 193, 0.9);
+            border-color: #fff;
+            z-index: 10;
+        }
+
+        .letter-circle.near {
+            opacity: 0.7;
+            transform: scale(0.9);
+        }
+
+        .letter-circle.far {
+            opacity: 0.5;
+            transform: scale(0.75);
+        }
+
+        .letter-circle.correct {
+            background-color: #90EE90;
+            border-color: #90EE90;
+            box-shadow: 0 0 20px rgba(144, 238, 144, 0.6);
+            color: #000;
+        }
+
+        .letter-circle.correct.center {
+            background-color: #90EE90;
+            border-color: #fff;
+            box-shadow: 0 0 50px rgba(144, 238, 144, 0.9);
+        }
+
+        .letter-circle.incorrect {
+            background-color: #ff6b6b;
+            border-color: #ff6b6b;
+            box-shadow: 0 0 20px rgba(255, 107, 107, 0.6);
+            color: #000;
+        }
+
+        .letter-circle.incorrect.center {
+            background-color: #ff6b6b;
+            border-color: #fff;
+            box-shadow: 0 0 50px rgba(255, 107, 107, 0.9);
+        }
+
+        .input-container {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            max-width: 600px;
+            width: 100%;
+            margin-bottom: 20px;
+        }
+
+        .pista-box {
+            padding: 12px 20px;
+            text-align: center;
+            color: #ffffff;
+            font-size: 25px;
+            font-weight: bold;
+        }
+
+        .answer-input {
+            width: 100%;
+            padding: 15px;
+            font-size: 18px;
+            border: 3px solid #ffb3c1;
+            border-radius: 8px;
+            outline: none;
+            background-color: #1a1a1a;
+            color: white;
+            text-align: center;
+        }
+
+        .answer-input:focus {
+            box-shadow: 0 0 20px rgba(255, 179, 193, 0.5);
+        }
+
+        .btn {
+            padding: 15px 30px;
+            font-size: 18px;
+            font-weight: bold;
+            border: 3px solid #0066cc;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            background-color: #0066cc;
+            color: white;
+            align-self: center;
+        }
+
+        .btn:hover {
+            background-color: #0052a3;
+            border-color: #0052a3;
+            transform: translateY(-2px);
+            box-shadow: 0 0 20px rgba(0, 102, 204, 0.5);
+        }
+
+        .logo {
+            position: absolute;
+            bottom: 20px;
+            right: 20px;
+            font-size: 14px;
+            color: #ffb3c1;
+            font-style: italic;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.9);
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+
+        .modal-content {
+            background-color: #1a1a1a;
+            padding: 40px;
+            border-radius: 15px;
+            border: 4px solid #ffb3c1;
+            text-align: center;
+            max-width: 500px;
+            box-shadow: 0 0 40px rgba(255, 179, 193, 0.5);
+        }
+
+        .modal h2 {
+            color: #ffb3c1;
+            margin-bottom: 20px;
+            font-size: 32px;
+            text-shadow: 0 0 20px rgba(255, 179, 193, 0.5);
+        }
+
+        .modal p {
+            margin-bottom: 20px;
+            font-size: 18px;
+            color: white;
+        }
+
+        .results-summary {
+            background-color: #000;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            border: 2px solid #ffb3c1;
+        }
+
+        .results-summary h3 {
+            color: #ffb3c1;
+            margin-bottom: 15px;
+            font-size: 24px;
+        }
+
+        .stat-line {
+            font-size: 18px;
+            margin: 10px 0;
+            color: white;
+        }
+
+        .details-toggle {
+            background-color: #1a1a1a;
+            border: 2px solid #ffb3c1;
+            color: #ffb3c1;
+            padding: 12px 24px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+            margin: 10px 0;
+            transition: all 0.3s ease;
+        }
+
+        .details-toggle:hover {
+            background-color: #ffb3c1;
+            color: #000;
+        }
+
+        .answers-list {
+            max-height: 300px;
+            overflow-y: auto;
+            background-color: #000;
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 15px;
+            border: 2px solid #ffb3c1;
+            display: none;
+        }
+
+        .answers-list.show {
+            display: block;
+        }
+
+        .answer-item {
+            padding: 10px;
+            margin: 8px 0;
+            border-radius: 5px;
+            border-left: 4px solid;
+        }
+
+        .answer-item.correct {
+            background-color: rgba(144, 238, 144, 0.2);
+            border-left-color: #90EE90;
+        }
+
+        .answer-item.incorrect {
+            background-color: rgba(255, 107, 107, 0.2);
+            border-left-color: #ff6b6b;
+        }
+
+        .answer-item.unanswered {
+            background-color: rgba(255, 179, 193, 0.2);
+            border-left-color: #ffb3c1;
+        }
+
+        .answer-item strong {
+            color: #ffb3c1;
+        }
+
+        .answer-item .correct-answer {
+            color: #90EE90;
+            font-style: italic;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="header">
+        <div class="header-item">
+            <div class="lives" id="livesContainer">
+                <span class="heart">♥</span>
+                <span class="heart">♥</span>
+                <span class="heart">♥</span>
+                <span class="heart">♥</span>
+                <span class="heart">♥</span>
+                <span class="heart">♥</span>
+                <span class="heart">♥</span>
+                <span class="heart">♥</span>
+                <span class="heart">♥</span>
+                <span class="heart">♥</span>
+            </div>
+        </div>
+        <div class="header-item">
+            <div class="header-label">Puntuación</div>
+            <div class="header-value"><span id="score">0</span>/100</div>
+        </div>
+        <div class="header-item">
+            <div class="header-label">Pendientes</div>
+            <div class="header-value"><span id="pending">28</span>/<span id="total">28</span></div>
+        </div>
+        <div class="header-item">
+            <div class="header-label">Tiempo</div>
+            <div class="header-value" id="timer">15:00</div>
+        </div>
+    </div>
+
+    <div class="question-box" id="question">
+
+    </div>
+
+    <div class="game-container">
+        <div class="belt-container">
+            <div class="belt" id="belt"></div>
+        </div>
+
+        <div class="input-container">
+            <div class="pista-box" id="pista"></div>
+            <input type="text" class="answer-input" id="answerInput" placeholder="Escribe tu respuesta aquí..."
+                autofocus>
+            <button class="btn" id="passBtn">PASAR</button>
+        </div>
+    </div>
+
+    <div class="logo">
+        <img src="../imgs/logo.png" alt="Logo empresa" style="width: 100px; height: 100px;">
+    </div>
+
+    <div class="modal" id="endModal">
+        <div class="modal-content">
+            <h2 id="modalTitle">¡Fin del juego!</h2>
+            <div class="results-summary">
+                <h3>Resultados</h3>
+                <div class="stat-line">Puntuación final: <strong id="finalScore">0</strong>/100</div>
+                <div class="stat-line">Aciertos: <strong id="correctAnswers">0</strong>/<span
+                        id="totalQuestions">0</span></div>
+                <div class="stat-line">Fallos: <strong id="incorrectAnswers">0</strong></div>
+                <div class="stat-line">Sin responder: <strong id="unansweredQuestions">0</strong></div>
+            </div>
+            <button class="details-toggle" onclick="toggleAnswers()">Ver todas las preguntas y respuestas</button>
+            <div class="answers-list" id="answersList"></div>
+            <button class="btn" onclick="location.reload()">Jugar de nuevo</button>
+        </div>
+    </div>
+
+    <script>
+        // CONFIGURACIÓN DEL JUEGO - AQUÍ PUEDES AÑADIR MÁS PALABRAS
+        // Para varias respuestas válidas, usa un array: respuesta: ['opcion1', 'opcion2']
+        const palabras = [
+            { letra: '💖', pregunta: 'Animal favorito del profesor', pista: 'Empieza por G', respuesta: ['gato', 'gatos', 'gata', 'gatas'] },
+            { letra: 'A', pregunta: 'Sirve para almacenar información.', pista: 'Empieza por A', respuesta: ['archivo', 'archivos', 'archibo', 'archibos'] },
+            { letra: 'B', pregunta: 'Acción que realizamos en Google cuando queremos información sobre algo.', pista: 'Empieza por B', respuesta: ['buscar', 'búsqueda'] },
+            { letra: 'C', pregunta: 'Lugar donde guardamos archivos y carpetas.', pista: 'Empieza por C', respuesta: ['carpeta', 'carpetas'] },
+            { letra: 'D', pregunta: 'Nombre de la carpeta donde se almacena por defecto los archivos conseguidos de internet.', pista: 'Empieza por D', respuesta: ['descarga', 'descargas', 'descaga'] },
+            { letra: 'E', pregunta: 'La primera pantalla que ves al entrar al Sistema Operativo, donde hay muchos iconos, archivos y carpetas que puedes organizar.', pista: 'Empieza por E', respuesta: ['escritorio'] },
+            { letra: 'F', pregunta: 'Nombre genérico que engloba los distintos tipos de letras.', pista: 'Empieza por F', respuesta: ['fuente', 'fuentes'] },
+            { letra: 'G', pregunta: 'Motor de búsqueda más usado mundialmente.', pista: 'Empieza por G', respuesta: ['google', 'guguel', 'gugel', 'gogle'] },
+            { letra: 'H', pregunta: 'Componente del ordenador que puede tocarse con las manos.', pista: 'Empieza por H', respuesta: ['hardware'] },
+            { letra: 'I', pregunta: 'Red global de ordenadores que permite comunicarnos e intercambiar información.', pista: 'Empieza por I', respuesta: ['internet'] },
+            { letra: 'J', pregunta: 'Extensión típica de archivos de imagen.', pista: 'Empieza por J', respuesta: ['jpg', 'jpeg'] },
+            { letra: 'K', pregunta: 'Unidad de medida de almacenamiento de datos que equivale a 1024 bytes.', pista: 'Empieza por K', respuesta: ['kilobyte', 'kb', 'kilobytes'] },
+            { letra: 'L', pregunta: 'Sistema Operativo de código abierto muy usado a nivel profesional para servidores cuya mascota es un pingüino.', pista: 'Empieza por L', respuesta: ['linux'] },
+            { letra: 'M', pregunta: 'Periférico de salida que muestra información.', pista: 'Empieza por M', respuesta: ['monitor'] },
+            { letra: 'N', pregunta: 'Nombre genérico que reciben los programas que usamos para movernos por internet, como Google Chrome o Firefox.', pista: 'Empieza por N', respuesta: ['navegador', 'navegadores'] },
+            { letra: 'Ñ', pregunta: 'En un navegador, nombre genérico para la opción de tener varias páginas web abiertas a la vez.', pista: 'Contiene la Ñ', respuesta: ['pestaña', 'pestañas'] },
+            { letra: 'O', pregunta: 'Máquina electrónica que usamos para usar programas electrónicos como Windows, Office o conectarnos a internet', pista: 'Empieza por O', respuesta: ['ordenador'] },
+            { letra: 'P', pregunta: 'Conjunto de instrucciones que realiza una tarea específica en un ordenador, como un procesador de texto, un navegador web o un juego.', pista: 'Empieza por P', respuesta: ['programa', 'programas'] },
+            { letra: 'Q', pregunta: 'Imagen cuadrada con un patrón en blanco y negro que se escanea con dispositivos móviles para acceder rápidamente a información, enlaces web, texto u otros datos.', pista: 'Empieza por Q', respuesta: ['qr', 'qr código', 'qr (código)', 'código qr'] },
+            { letra: 'R', pregunta: 'Dispositivo de entrada que se utiliza para interactuar con la interfaz gráfica, moviendo un puntero en la pantalla y haciendo clic en botones para realizar acciones.', pista: 'Empieza por R', respuesta: ['ratón', 'raton'] },
+            { letra: 'S', pregunta: 'Software que gestiona los recursos del ordenador y proporciona servicios esenciales para que otros programas funcionen en un ordenador.', pista: 'Empieza por S', respuesta: ['sistema operativo', 'so', 'sistema'] },
+            { letra: 'T', pregunta: 'Dispositivo de entrada que consiste en un conjunto de botones, utilizado para introducir datos en un ordenador como letras y números.', pista: 'Empieza por T', respuesta: ['teclado', 'teclados'] },
+            { letra: 'U', pregunta: 'Conexión de entrada de periféricos que se ha convertido en un estándar en todos los ordenadores y la mayoría de periféricos.', pista: 'Empieza por U', respuesta: ['usb'] },
+            { letra: 'V', pregunta: 'Área rectangular en la pantalla que puede mostrar, entre otras cosas, archivos y carpetas.', pista: 'Empieza por V', respuesta: ['ventana', 'vetana', 'ventanas', 'vetanas'] },
+            { letra: 'W', pregunta: 'Se usa como término coloquial para referirse a páginas en línea: Página ...', pista: 'Empieza por W', respuesta: ['web'] },
+            { letra: 'X', pregunta: 'Nombre de los caracteres que hay después del último punto del nombre de un archivo.', pista: 'Contiene la X', respuesta: ['extensión', 'extensiones'] },
+            { letra: 'Y', pregunta: 'Red Social, la más famosa de su género, especializada en vídeos.', pista: 'Empieza por Y', respuesta: ['youtube', 'yotube', 'youtbe', 'yutub'] },
+            { letra: 'Z', pregunta: 'Plataforma de videollamadas y conferencias en línea que permite a usuarios conectarse virtualmente para reuniones, clases o eventos.', pista: 'Empieza por Z', respuesta: ['zoom', 'zum'] }
+        ];
+
+
+        let currentIndex = 0;
+        let score = 0;
+        let correctCount = 0;
+        let incorrectCount = 0;
+        let lives = 10;
+        let gameStarted = false;
+        let timerInterval;
+        let seconds = 15 * 60; // 15 minutos en segundos
+        const pendingQuestions = new Set(Array.from({ length: palabras.length }, (_, i) => i));
+        const answeredQuestions = {}; // Para guardar el historial de respuestas
+
+        function createBelt() {
+            const belt = document.getElementById('belt');
+
+            // Crear tres copias para efecto infinito
+            for (let copy = 0; copy < 3; copy++) {
+                palabras.forEach((palabra, index) => {
+                    const circle = document.createElement('div');
+                    circle.className = 'letter-circle';
+                    circle.textContent = palabra.letra;
+                    circle.id = copy === 1 ? `letra-${index}` : `letra-${index}-copy${copy}`;
+                    circle.dataset.originalIndex = index;
+                    belt.appendChild(circle);
+                });
+            }
+
+            // Inicializar los contadores
+            document.getElementById('pending').textContent = palabras.length;
+            document.getElementById('total').textContent = palabras.length;
+
+            updateBeltPosition();
+        }
+
+        function updateBeltPosition() {
+            const belt = document.getElementById('belt');
+            const circles = belt.querySelectorAll('.letter-circle');
+
+            circles.forEach((circle) => {
+                const index = parseInt(circle.dataset.originalIndex);
+                circle.classList.remove('center', 'near', 'far');
+
+                const distanceFromCurrent = Math.abs(index - currentIndex);
+                const distanceFromEnd = Math.abs(index - (currentIndex - palabras.length));
+                const distanceFromStart = Math.abs(index - (currentIndex + palabras.length));
+                const minDistance = Math.min(distanceFromCurrent, distanceFromEnd, distanceFromStart);
+
+                if (index === currentIndex && circle.id === `letra-${index}`) {
+                    circle.classList.add('center');
+                } else if (minDistance === 1) {
+                    circle.classList.add('near');
+                } else if (minDistance === 2) {
+                    circle.classList.add('far');
+                }
+            });
+
+            const offset = -(palabras.length + currentIndex) * 220 - 60;
+            belt.style.transform = `translateX(${offset}px)`;
+        }
+
+        function startTimer() {
+            timerInterval = setInterval(() => {
+                seconds--;
+
+                if (seconds <= 0) {
+                    clearInterval(timerInterval);
+                    endGame(false, true); // timeout
+                    return;
+                }
+
+                const mins = Math.floor(seconds / 60);
+                const secs = seconds % 60;
+                document.getElementById('timer').textContent =
+                    `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
+
+                // Cambiar color cuando quedan menos de 2 minutos
+                if (seconds <= 120) {
+                    const timerElement = document.getElementById('timer');
+                    timerElement.style.color = '#ff6b6b';
+                    timerElement.style.textShadow = '0 2px 8px rgba(255, 107, 107, 0.6)';
+                }
+            }, 1000);
+        }
+
+        function updateLives() {
+            const livesContainer = document.getElementById('livesContainer');
+            const hearts = livesContainer.querySelectorAll('.heart');
+
+            if (hearts.length > lives) {
+                const lastHeart = hearts[hearts.length - 1];
+                lastHeart.classList.add('heart-falling');
+
+                document.body.classList.add('shake');
+                setTimeout(() => {
+                    document.body.classList.remove('shake');
+                }, 500);
+
+                setTimeout(() => {
+                    lastHeart.remove();
+                }, 1000);
+            }
+        }
+
+        function updatePendingCounter() {
+            document.getElementById('pending').textContent = pendingQuestions.size;
+            document.getElementById('total').textContent = palabras.length;
+        }
+
+        function calculateScore() {
+            const pointsPerCorrect = 100 / palabras.length;
+            const pointsPerIncorrect = -pointsPerCorrect / 3;
+            return Math.max(0, Math.round((correctCount * pointsPerCorrect) + (incorrectCount * pointsPerIncorrect)));
+        }
+
+        function updateScore() {
+            score = calculateScore();
+            document.getElementById('score').textContent = score;
+        }
+
+
+        function adjustQuestionFontSize() {
+            const questionBox = document.getElementById('question');
+            const text = questionBox.textContent;
+
+            // Ajustar tamaño según longitud del texto
+            if (text.length < 50) {
+                questionBox.style.fontSize = '35px';
+            } else if (text.length < 80) {
+                questionBox.style.fontSize = '28px';
+            } else if (text.length < 120) {
+                questionBox.style.fontSize = '24px';
+            } else {
+                questionBox.style.fontSize = '20px';
+            }
+        }
+
+        function showQuestion() {
+            if (pendingQuestions.size === 0) {
+                endGame(true);
+                return;
+            }
+
+            const indices = Array.from(pendingQuestions);
+            currentIndex = indices[0];
+
+            updateBeltPosition();
+            document.getElementById('question').textContent = palabras[currentIndex].pregunta;
+            document.getElementById('pista').textContent = palabras[currentIndex].pista || '';
+            adjustQuestionFontSize();
+            updatePendingCounter();
+        }
+
+        function normalizeAnswer(answer) {
+            return answer.trim().toLowerCase()
+                .normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+        }
+
+        function checkAnswer() {
+            const userAnswer = normalizeAnswer(document.getElementById('answerInput').value);
+
+            if (!userAnswer) return;
+
+            const correctAnswers = Array.isArray(palabras[currentIndex].respuesta)
+                ? palabras[currentIndex].respuesta
+                : [palabras[currentIndex].respuesta];
+
+            const isCorrect = correctAnswers.some(answer =>
+                normalizeAnswer(answer) === userAnswer
+            );
+
+            if (isCorrect) {
+                correctCount++;
+                answeredQuestions[currentIndex] = { correct: true, userAnswer };
+                document.getElementById(`letra-${currentIndex}`).classList.add('correct');
+                pendingQuestions.delete(currentIndex);
+            } else {
+                incorrectCount++;
+                lives--;
+                answeredQuestions[currentIndex] = { correct: false, userAnswer };
+                updateLives();
+                document.getElementById(`letra-${currentIndex}`).classList.add('incorrect');
+                pendingQuestions.delete(currentIndex);
+
+                if (lives === 0) {
+                    endGame(false);
+                    return;
+                }
+            }
+
+            updateScore();
+            document.getElementById('answerInput').value = '';
+            showQuestion();
+        }
+        function passQuestion() {
+            if (!gameStarted) {
+                startGame();
+            }
+
+            pendingQuestions.delete(currentIndex);
+            pendingQuestions.add(currentIndex);
+
+            document.getElementById('answerInput').value = '';
+            showQuestion();
+        }
+
+        function startGame() {
+            if (gameStarted) return;
+            gameStarted = true;
+            startTimer();
+            showQuestion();
+        }
+
+        function endGame(won, timeout = false) {
+            clearInterval(timerInterval);
+            document.getElementById('answerInput').disabled = true;
+
+            const modal = document.getElementById('endModal');
+            const modalTitle = document.getElementById('modalTitle');
+
+            if (timeout) {
+                modalTitle.textContent = '¡TIEMPO AGOTADO!';
+            } else if (won) {
+                modalTitle.textContent = '¡ENHORABUENA!';
+            } else {
+                modalTitle.textContent = 'GAME OVER';
+            }
+
+            // Calcular estadísticas finales
+            const finalScore = calculateScore();
+            const unanswered = pendingQuestions.size;
+
+            document.getElementById('finalScore').textContent = finalScore;
+            document.getElementById('correctAnswers').textContent = correctCount;
+            document.getElementById('incorrectAnswers').textContent = incorrectCount;
+            document.getElementById('unansweredQuestions').textContent = unanswered;
+            document.getElementById('totalQuestions').textContent = palabras.length;
+
+            // Generar lista de respuestas
+            generateAnswersList();
+
+            modal.style.display = 'flex';
+        }
+
+        function generateAnswersList() {
+            const answersList = document.getElementById('answersList');
+            answersList.innerHTML = '';
+
+            palabras.forEach((palabra, index) => {
+                const item = document.createElement('div');
+                item.className = 'answer-item';
+
+                const correctAnswers = Array.isArray(palabra.respuesta)
+                    ? palabra.respuesta.join(' / ')
+                    : palabra.respuesta;
+
+                if (answeredQuestions[index]) {
+                    if (answeredQuestions[index].correct) {
+                        item.classList.add('correct');
+                        item.innerHTML = `
+                            <strong>${palabra.letra}:</strong> ${palabra.pregunta}<br>
+                            <span class="correct-answer">✓ ${answeredQuestions[index].userAnswer}</span>
+                        `;
+                    } else {
+                        item.classList.add('incorrect');
+                        item.innerHTML = `
+                            <strong>${palabra.letra}:</strong> ${palabra.pregunta}<br>
+                            Tu respuesta: ${answeredQuestions[index].userAnswer}<br>
+                            <span class="correct-answer">Correcta: ${correctAnswers}</span>
+                        `;
+                    }
+                } else {
+                    item.classList.add('unanswered');
+                    item.innerHTML = `
+                        <strong>${palabra.letra}:</strong> ${palabra.pregunta}<br>
+                        <span class="correct-answer">Respuesta: ${correctAnswers}</span>
+                    `;
+                }
+
+                answersList.appendChild(item);
+            });
+        }
+
+        function toggleAnswers() {
+            const answersList = document.getElementById('answersList');
+            answersList.classList.toggle('show');
+
+            const button = document.querySelector('.details-toggle');
+            if (answersList.classList.contains('show')) {
+                button.textContent = 'Ocultar preguntas y respuestas';
+            } else {
+                button.textContent = 'Ver todas las preguntas y respuestas';
+            }
+        }
+
+        document.getElementById('answerInput').addEventListener('input', (e) => {
+            if (!gameStarted && e.target.value.length > 0) {
+                startGame();
+            }
+        });
+
+        document.getElementById('answerInput').addEventListener('keypress', (e) => {
+            if (e.key === 'Enter' && gameStarted) {
+                checkAnswer();
+            }
+        });
+
+        document.getElementById('passBtn').addEventListener('click', passQuestion);
+
+        createBelt();
+        showQuestion(); // Mostrar la primera pregunta al cargar
+    </script>
+</body>
+
+</html>
