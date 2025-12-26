@@ -360,6 +360,12 @@
             box-shadow: 0 0 20px rgba(255, 179, 193, 0.5);
         }
 
+        .button-row {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+        }
+
         .btn {
             padding: 15px 30px;
             font-size: 18px;
@@ -370,7 +376,6 @@
             transition: all 0.3s ease;
             background-color: #0066cc;
             color: white;
-            align-self: center;
         }
 
         .btn:hover {
@@ -378,6 +383,29 @@
             border-color: #0052a3;
             transform: translateY(-2px);
             box-shadow: 0 0 20px rgba(0, 102, 204, 0.5);
+        }
+
+        .btn-validate {
+            background-color: #28a745;
+            border-color: #28a745;
+        }
+
+        .btn-validate:hover {
+            background-color: #218838;
+            border-color: #218838;
+            box-shadow: 0 0 20px rgba(40, 167, 69, 0.5);
+        }
+
+        .btn-end {
+            background-color: #dc3545;
+            border-color: #dc3545;
+            margin-top: 15px;
+        }
+
+        .btn-end:hover {
+            background-color: #c82333;
+            border-color: #c82333;
+            box-shadow: 0 0 20px rgba(220, 53, 69, 0.5);
         }
 
         .logo {
@@ -553,7 +581,11 @@
             <div class="pista-box" id="pista"></div>
             <input type="text" class="answer-input" id="answerInput" placeholder="Escribe tu respuesta aquí..."
                 autofocus>
-            <button class="btn" id="passBtn">PASAR</button>
+            <div class="button-row">
+                <button class="btn" id="passBtn">PASAR</button>
+                <button class="btn btn-validate" id="validateBtn">VALIDAR</button>
+            </div>
+            <button class="btn btn-end" id="endBtn">TERMINAR INTENTO</button>
         </div>
     </div>
 
@@ -627,17 +659,15 @@
         function createBelt() {
             const belt = document.getElementById('belt');
 
-            // Crear tres copias para efecto infinito
-            for (let copy = 0; copy < 3; copy++) {
-                palabras.forEach((palabra, index) => {
-                    const circle = document.createElement('div');
-                    circle.className = 'letter-circle';
-                    circle.textContent = palabra.letra;
-                    circle.id = copy === 1 ? `letra-${index}` : `letra-${index}-copy${copy}`;
-                    circle.dataset.originalIndex = index;
-                    belt.appendChild(circle);
-                });
-            }
+            // Crear solo una copia (sin repeticiones)
+            palabras.forEach((palabra, index) => {
+                const circle = document.createElement('div');
+                circle.className = 'letter-circle';
+                circle.textContent = palabra.letra;
+                circle.id = `letra-${index}`;
+                circle.dataset.originalIndex = index;
+                belt.appendChild(circle);
+            });
 
             // Inicializar los contadores
             document.getElementById('pending').textContent = palabras.length;
@@ -655,20 +685,17 @@
                 circle.classList.remove('center', 'near', 'far');
 
                 const distanceFromCurrent = Math.abs(index - currentIndex);
-                const distanceFromEnd = Math.abs(index - (currentIndex - palabras.length));
-                const distanceFromStart = Math.abs(index - (currentIndex + palabras.length));
-                const minDistance = Math.min(distanceFromCurrent, distanceFromEnd, distanceFromStart);
 
-                if (index === currentIndex && circle.id === `letra-${index}`) {
+                if (index === currentIndex) {
                     circle.classList.add('center');
-                } else if (minDistance === 1) {
+                } else if (distanceFromCurrent === 1) {
                     circle.classList.add('near');
-                } else if (minDistance === 2) {
+                } else if (distanceFromCurrent === 2) {
                     circle.classList.add('far');
                 }
             });
 
-            const offset = -(palabras.length + currentIndex) * 220 - 60;
+            const offset = -currentIndex * 220 - 60;
             belt.style.transform = `translateX(${offset}px)`;
         }
 
@@ -805,6 +832,7 @@
             document.getElementById('answerInput').value = '';
             showQuestion();
         }
+
         function passQuestion() {
             if (!gameStarted) {
                 startGame();
@@ -814,6 +842,7 @@
             pendingQuestions.add(currentIndex);
 
             document.getElementById('answerInput').value = '';
+            document.getElementById('answerInput').focus(); // Activar el textbox automáticamente
             showQuestion();
         }
 
@@ -919,6 +948,12 @@
         });
 
         document.getElementById('passBtn').addEventListener('click', passQuestion);
+        document.getElementById('validateBtn').addEventListener('click', checkAnswer);
+        document.getElementById('endBtn').addEventListener('click', () => {
+            if (confirm('¿Estás seguro de que quieres terminar el intento? Se mostrarán los resultados actuales.')) {
+                endGame(false);
+            }
+        });
 
         createBelt();
         showQuestion(); // Mostrar la primera pregunta al cargar
