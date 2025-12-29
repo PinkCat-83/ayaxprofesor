@@ -552,6 +552,8 @@
         let totalErrors = 0;
         let selectedParagraphs = 1;
         let useAI = false;
+        let isAutoTyping = false; // Estado para auto-escritura
+        let autoTypeInterval = null;
 
         // Distractores
         let particlesEnabled = false;
@@ -586,6 +588,20 @@
                 .replace(/[\u2013\u2014]/g, '-')
                 .replace(/\[.*?\]/g, '')
                 .replace(/[\u200B-\u200D\uFEFF\t]/g, '')
+                // Eliminar símbolos de ordinal (º ª)
+                .replace(/[ºª]/g, '')
+                // Convertir superíndices a números normales
+                .replace(/[⁰¹²³⁴⁵⁶⁷⁸⁹]/g, (match) => {
+                    const superscripts = '⁰¹²³⁴⁵⁶⁷⁸⁹';
+                    return '0123456789'[superscripts.indexOf(match)];
+                })
+                // Convertir subíndices a números normales
+                .replace(/[₀₁₂₃₄₅₆₇₈₉]/g, (match) => {
+                    const subscripts = '₀₁₂₃₄₅₆₇₈₉';
+                    return '0123456789'[subscripts.indexOf(match)];
+                })
+                // Eliminar espacios antes de saltos de línea
+                .replace(/ +\n/g, '\n')
                 .trim();
         }
 
@@ -707,6 +723,91 @@
             targetTextElement.innerHTML = html;
         }
 
+        function generateTestText() {
+            const testParagraphs = [
+                "Texto de prueba con superíndices: X² Y³ Z⁴ y números 2 3 4 normales.",
+                "Texto con subíndices: H₂O CO₂ y también H2O CO2 normales.",
+                "Texto con ordinales: 1º lugar, 2ª posición, 3º puesto deberían verse como 1 2 3.",
+                "Prueba de espacios antes de salto:    \nEsta línea debería empezar sin espacios previos.",
+                "Combinación completa: Nº 5, fórmula H₂SO⁴ y resultado X² = 16. ¡Perfecto!"
+            ];
+
+            // Normalizar cada párrafo
+            const normalizedParagraphs = testParagraphs.map(p => normalizeText(p));
+
+            targetTextElement.innerHTML = `<div class="flex justify-center items-center h-full"><p class="text-center text-xl" style="color: #00ffff;">🧪 Modo Prueba Activado 🧪</p></div>`;
+
+            setTimeout(() => {
+                initGame(normalizedParagraphs);
+            }, 500);
+        }
+
+        function startAutoTyping() {
+            // Detener si ya está en modo auto
+            if (isAutoTyping) {
+                stopAutoTyping();
+                return;
+            }
+
+            // Solicitar velocidad al usuario (WPM)
+            const wpmInput = prompt("¿A qué velocidad quieres que escriba?\n\nIntroduce WPM (Palabras Por Minuto):\n\nSugerencias:\n• 40 WPM = Principiante\n• 60 WPM = Intermedio\n• 80 WPM = Avanzado\n• 100+ WPM = Experto", "60");
+
+            if (wpmInput === null) return; // Usuario canceló
+
+            const wpm = parseInt(wpmInput);
+
+            if (isNaN(wpm) || wpm <= 0 || wpm > 200) {
+                alert("Por favor, introduce un número válido entre 1 y 200 WPM.");
+                return;
+            }
+
+            // Calcular delay entre caracteres
+            // WPM = (caracteres/5) / minutos
+            // caracteres por minuto = WPM * 5
+            // milisegundos por carácter = 60000 / (WPM * 5)
+            const delayMs = Math.round(60000 / (wpm * 5));
+
+            isAutoTyping = true;
+            userInputElement.disabled = true;
+
+            let currentCharIndex = 0;
+
+            autoTypeInterval = setInterval(() => {
+                if (currentCharIndex >= targetText.length || !isAutoTyping) {
+                    stopAutoTyping();
+                    return;
+                }
+
+                const char = targetText[currentCharIndex];
+                userInputElement.value += char;
+
+                // Simular evento de input
+                const event = new Event('input', { bubbles: true });
+                event.inputType = 'insertText';
+                userInputElement.dispatchEvent(event);
+
+                currentCharIndex++;
+            }, delayMs);
+
+            // Mostrar notificación
+            targetTextElement.style.boxShadow = "0 0 20px rgba(0, 255, 255, 0.8)";
+            setTimeout(() => {
+                targetTextElement.style.boxShadow = "";
+            }, 1000);
+        }
+
+        function stopAutoTyping() {
+            isAutoTyping = false;
+            if (autoTypeInterval) {
+                clearInterval(autoTypeInterval);
+                autoTypeInterval = null;
+            }
+            if (!isFinished) {
+                userInputElement.disabled = false;
+                userInputElement.focus();
+            }
+        }
+
         function resetAppState() {
             userInputElement.value = '';
             targetTextElement.scrollTop = 0;
@@ -726,6 +827,8 @@
                 timerElement.textContent = 0;
                 rotationSpeed = 0.0005;
             }
+            // Si no es el primer párrafo, el timer debe seguir corriendo
+            // No reseteamos startTime ni el interval
         }
 
         function handleInput(e) {
@@ -815,16 +918,33 @@
             const elapsed = Math.floor((new Date().getTime() - startTime) / 1000);
             timerElement.textContent = elapsed;
 
-            const correctChars = document.querySelectorAll('.correct').length;
+            // Contar caracteres correctos en TODOS los párrafos completados + el actual
+            let totalCorrectChars = 0;
+
+            // Sumar caracteres de párrafos anteriores completados
+            for (let i = 0; i < currentParagraphIndex; i++) {
+                totalCorrectChars += allParagraphs[i].length;
+            }
+
+            // Sumar caracteres correctos del párrafo actual
+            totalCorrectChars += document.querySelectorAll('#target-text .correct').length;
+
             if (elapsed > 0) {
-                wpmElement.textContent = Math.round((correctChars / 5) / (elapsed / 60));
-                cpmElement.textContent = Math.round(correctChars / (elapsed / 60));
+                wpmElement.textContent = Math.round((totalCorrectChars / 5) / (elapsed / 60));
+                cpmElement.textContent = Math.round(totalCorrectChars / (elapsed / 60));
             }
             errorsElement.textContent = totalErrors;
 
-            // Error %
-            const total = userInputElement.value.length + totalErrors;
-            if (total > 0) errorPercentElement.textContent = ((totalErrors / total) * 100).toFixed(1) + "%";
+            // Error % considerando todos los caracteres escritos
+            let totalTyped = userInputElement.value.length + totalErrors;
+            // Sumar también los caracteres de párrafos anteriores
+            for (let i = 0; i < currentParagraphIndex; i++) {
+                totalTyped += allParagraphs[i].length;
+            }
+
+            if (totalTyped > 0) {
+                errorPercentElement.textContent = ((totalErrors / totalTyped) * 100).toFixed(1) + "%";
+            }
 
             // Velocidad estrellas
             const wpm = parseInt(wpmElement.textContent) || 0;
@@ -853,6 +973,18 @@
             if (isFinished && e.key === 'Enter') {
                 e.preventDefault();
                 fetchText();
+            }
+
+            // Ctrl + Ñ para generar texto de prueba con excepciones
+            if (e.ctrlKey && !e.shiftKey && e.key === 'ñ') {
+                e.preventDefault();
+                generateTestText();
+            }
+
+            // Ctrl + Shift + Ñ para activar auto-escritura
+            if (e.ctrlKey && e.shiftKey && e.key === 'Ñ') {
+                e.preventDefault();
+                startAutoTyping();
             }
         });
 
