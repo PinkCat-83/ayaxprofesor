@@ -1757,6 +1757,25 @@
             const debugControls = document.getElementById('debug-controls');
             debugControls.style.display = 'none';
 
+            // Activar modo debug en móviles con toque prolongado en el título
+            let touchTimer;
+            const header = document.querySelector('h1');
+
+            header.addEventListener('touchstart', (e) => {
+                touchTimer = setTimeout(() => {
+                    debugMode = !debugMode;
+                    debugControls.style.display = debugMode ? 'flex' : 'none';
+                    console.log(`Modo Debug: ${debugMode ? 'ACTIVADO' : 'DESACTIVADO'}`);
+                }, 2000); // 2 segundos de toque
+            });
+
+            header.addEventListener('touchend', () => {
+                clearTimeout(touchTimer);
+            });
+
+            header.addEventListener('touchmove', () => {
+                clearTimeout(touchTimer);
+            });
 
             // Activar/desactivar modo debug con Ctrl+Ñ
             let debugMode = false;
