@@ -707,25 +707,44 @@
                     'Foto16.jpg': { type: 'file' }
                 },
                 validate: (fs) => {
+                    // Función auxiliar para normalizar texto (quitar tildes y convertir a minúsculas)
+                    const normalizar = (texto) => texto.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+
+                    // Función para verificar si un texto contiene un color (incluyendo variaciones)
+                    const contieneColor = (texto, color) => {
+                        const textoNorm = normalizar(texto);
+                        if (color === 'azul') return /azul(es)?/.test(textoNorm);
+                        if (color === 'amarillo') return /amarill(o|a|os|as)/.test(textoNorm);
+                        if (color === 'rojo') return /roj(o|a|os|as)/.test(textoNorm);
+                        if (color === 'verde') return /verde(s)?/.test(textoNorm);
+                        return false;
+                    };
+
                     const colores = { 'azul': 0, 'amarillo': 0, 'rojo': 0, 'verde': 0 };
 
                     for (let folderName in fs) {
                         const folder = fs[folderName];
                         if (folder.type === 'folder') {
-                            const folderLower = folderName.toLowerCase();
+                            // Identificar qué color corresponde a esta carpeta
+                            let colorCarpeta = null;
                             for (let color in colores) {
-                                if (folderLower.includes(color)) {
-                                    for (let fileName in folder.children) {
-                                        // CAMBIO: Usar normalize para ignorar tildes (rojo/Rójo)
-                                        if (fileName.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').includes(color)) {
-                                            colores[color]++;
-                                        }
-                                    }
+                                if (contieneColor(folderName, color)) {
+                                    colorCarpeta = color;
                                     break;
+                                }
+                            }
+
+                            // Contar archivos que contienen ese color
+                            if (colorCarpeta) {
+                                for (let fileName in folder.children) {
+                                    if (contieneColor(fileName, colorCarpeta)) {
+                                        colores[colorCarpeta]++;
+                                    }
                                 }
                             }
                         }
                     }
+
                     return colores.azul === 4 && colores.amarillo === 4 && colores.rojo === 4 && colores.verde === 4;
                 }
             },
