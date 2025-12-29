@@ -1,0 +1,1750 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Voyage of the Marvelous Anne</title>
+    <style>
+        :root {
+            --od-paper: #f4ecd4;
+            --od-paper-dark: #e5dbc1;
+            --od-ink: #1a1919;
+            --od-highlight: #4a4a4a;
+            --sidebar-width: 260px;
+        }
+
+        /* ESTILOS DE SCROLLBAR - DEBE IR AQUÍ AL INICIO */
+        ::-webkit-scrollbar {
+            width: 14px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--od-paper-dark);
+            border-left: 2px solid var(--od-ink);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--od-ink);
+            border: 2px solid var(--od-paper-dark);
+            box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--od-highlight);
+            box-shadow: inset 0 0 8px rgba(0, 0, 0, 0.5);
+        }
+
+        ::-webkit-scrollbar-corner {
+            background: var(--od-paper-dark);
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: #0f0f0f;
+            font-family: 'Courier New', Courier, monospace;
+            color: var(--od-ink);
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        /* --- CONTENEDOR PRINCIPAL --- */
+        #game-container {
+            background-color: var(--od-paper);
+            width: 95%;
+            max-width: 1600px;
+            height: 90vh;
+            border: 4px solid var(--od-ink);
+            box-shadow: 0 0 0 6px #0f0f0f, 0 0 0 10px var(--od-paper);
+            display: flex;
+            overflow: hidden;
+        }
+
+        /* --- SIDEBAR (IZQUIERDA) --- */
+        #sidebar {
+            width: 280px;
+            background-color: var(--od-paper-dark);
+            border-right: 3px solid var(--od-ink);
+            display: flex;
+            flex-direction: column;
+            overflow-y: auto;
+        }
+
+        .sidebar-header {
+            background: var(--od-ink);
+            color: var(--od-paper);
+            padding: 15px;
+            text-align: center;
+            font-weight: bold;
+            text-transform: uppercase;
+            border-bottom: 3px solid var(--od-ink);
+            position: sticky;
+            top: 0;
+            z-index: 10;
+        }
+
+        /* --- CUADRÍCULA DE TRIPULANTES --- */
+        #crew-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 5px;
+            padding: 8px;
+        }
+
+        .crew-button {
+            aspect-ratio: 2 / 1;
+            border: 2px solid var(--od-ink);
+            background: #fff;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            font-size: 0.65rem;
+            font-weight: bold;
+            padding: 4px;
+            transition: all 0.2s;
+            word-wrap: break-word;
+            line-height: 1.1;
+            border-radius: 8px;
+        }
+
+        .crew-button:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 8px rgba(0, 0, 0, 0.3);
+        }
+
+        .crew-button.active {
+            box-shadow: 0 0 0 3px #ff1493, 0 0 15px #ff1493;
+            transform: scale(1.05);
+            border-color: #ff1493;
+        }
+
+        .crew-button.welcome {
+            background: #2563eb;
+            color: white;
+            font-size: 0.8rem;
+        }
+
+        .crew-button.solved {
+            background: #22c55e;
+            border-color: #16a34a;
+            color: white;
+            font-weight: bold;
+        }
+
+        .crew-button.ontrack {
+            background: #fb923c;
+            border-color: #ea580c;
+            color: white;
+            font-weight: bold;
+        }
+
+        /* --- ÁREA DE CONTENIDO (DERECHA) --- */
+        #main-content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            padding: 20px;
+            position: relative;
+            background-image: linear-gradient(var(--od-paper) 2px, transparent 2px);
+            background-size: 100% 30px;
+            min-width: 0;
+            overflow: hidden;
+        }
+
+        header {
+            text-align: center;
+            border-bottom: 3px double var(--od-ink);
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            background: var(--od-paper);
+        }
+
+        h1 {
+            margin: 0;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-size: 1.5rem;
+        }
+
+        .subtitle {
+            font-style: italic;
+            font-size: 0.9rem;
+            margin-top: 5px;
+        }
+
+        /* --- ZONA DE CARTAS --- */
+        #cards-stage {
+            flex-grow: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 20px;
+            overflow-y: auto;
+            overflow-x: hidden;
+            padding: 10px;
+            min-width: 0;
+            width: 100%;
+        }
+
+        /* Mensaje de bienvenida */
+        .welcome-message {
+            max-width: 700px;
+            padding: 40px;
+            background: #fff;
+            border: 3px solid var(--od-ink);
+            box-shadow: 5px 5px 0px rgba(26, 25, 25, 0.4);
+            text-align: center;
+            animation: deal-in 0.4s ease-out forwards;
+        }
+
+        .welcome-message h2 {
+            font-size: 2rem;
+            margin-bottom: 20px;
+            color: var(--od-ink);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .welcome-message p {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            margin: 15px 0;
+            color: var(--od-highlight);
+        }
+
+        /* --- DISEÑO DE LA CARTA --- */
+        .card {
+            width: 380px;
+            background: #fff;
+            border: 2px solid var(--od-ink);
+            box-shadow: 5px 5px 0px rgba(26, 25, 25, 0.4);
+            display: flex;
+            flex-direction: column;
+            opacity: 0;
+            transform: translateX(50px);
+            flex-shrink: 0;
+        }
+
+        @keyframes deal-in {
+            0% {
+                opacity: 0;
+                transform: translateY(30px) rotate(2deg);
+            }
+
+            100% {
+                opacity: 1;
+                transform: translateY(0) rotate(0deg);
+            }
+        }
+
+        .card-header {
+            background: var(--od-ink);
+            color: var(--od-paper);
+            padding: 8px;
+            text-align: center;
+            font-weight: bold;
+            text-transform: uppercase;
+            font-size: 1.1rem;
+            letter-spacing: 1px;
+        }
+
+        .data-row {
+            display: flex;
+            border-bottom: 1px dotted var(--od-ink);
+            font-size: 0.85rem;
+            min-height: 32px;
+        }
+
+        .data-row:last-child {
+            border-bottom: none;
+        }
+
+        .label {
+            background-color: var(--od-paper-dark);
+            width: 35%;
+            padding: 6px;
+            font-weight: bold;
+            border-right: 1px dotted var(--od-ink);
+            display: flex;
+            align-items: center;
+        }
+
+        .value {
+            width: 65%;
+            padding: 2px 6px;
+            background-color: #fffaf0;
+            display: flex;
+            align-items: center;
+            line-height: 1.1;
+        }
+
+        /* INPUTS Y SELECTS */
+        .manual-input {
+            width: 100%;
+            border: none;
+            border-bottom: 2px dashed var(--od-ink);
+            background: transparent;
+            font-family: inherit;
+            font-size: 0.9rem;
+            color: #0000AA;
+            font-weight: bold;
+        }
+
+        .manual-input:focus {
+            outline: none;
+            border-bottom: 2px solid #0000AA;
+        }
+
+        .card-select {
+            width: 100%;
+            background: transparent;
+            border: 1px solid var(--od-ink);
+            font-family: inherit;
+            color: #0000AA;
+            font-weight: bold;
+            cursor: pointer;
+            padding: 2px;
+            font-size: 0.8rem;
+        }
+
+        .card-select option.separator {
+            font-weight: bold;
+            background-color: #ddd;
+            color: var(--od-ink);
+        }
+
+        /* --- CONTROLES INFERIORES --- */
+        #controls {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 15px;
+            border-top: 2px solid var(--od-ink);
+            padding-top: 10px;
+            background: var(--od-paper);
+        }
+
+        #debug-controls {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 10px;
+            padding: 10px;
+            background: var(--od-paper);
+            border-top: 2px dashed #999;
+        }
+
+        .debug-btn {
+            background: #ff6b35;
+            color: white;
+            border: 2px solid #d94e28;
+            padding: 8px 15px;
+            font-family: inherit;
+            font-weight: bold;
+            cursor: pointer;
+            text-transform: uppercase;
+            font-size: 0.85rem;
+            transition: all 0.2s;
+        }
+
+        .debug-btn:hover {
+            background: #d94e28;
+            transform: scale(1.05);
+        }
+
+        .debug-btn-reset {
+            background: #6b7280;
+            border-color: #4b5563;
+        }
+
+        .debug-btn-reset:hover {
+            background: #4b5563;
+        }
+
+        .debug-btn-danger {
+            background: #dc2626;
+            border-color: #991b1b;
+        }
+
+        .debug-btn-danger:hover {
+            background: #991b1b;
+        }
+
+        .debug-btn-success {
+            background: #16a34a;
+            border-color: #15803d;
+        }
+
+        .debug-btn-success:hover {
+            background: #15803d;
+        }
+
+        .nav-btn {
+            background: var(--od-ink);
+            color: var(--od-paper);
+            border: none;
+            padding: 8px 15px;
+            font-family: inherit;
+            font-weight: bold;
+            cursor: pointer;
+            text-transform: uppercase;
+        }
+
+        .nav-btn:disabled {
+            background: #999;
+            cursor: not-allowed;
+        }
+
+        /* --- ESTADO DE ACIERTO (CON EFECTO DE CRISTAL ANIMADO) --- */
+
+        @keyframes shimmering-glass {
+            0% {
+                transform: translate(-100%, 100%) rotate(45deg);
+            }
+
+            100% {
+                transform: translate(300%, -300%) rotate(45deg);
+            }
+        }
+
+        .card.solved {
+            background-color: rgba(46, 125, 50, 0.15);
+            backdrop-filter: blur(5px) saturate(180%);
+            border-color: #2e7d32;
+            transition: all 0.5s ease;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .card.solved::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg,
+                    rgba(255, 255, 255, 0) 0%,
+                    rgba(255, 255, 255, 0.5) 30%,
+                    rgba(255, 255, 255, 0.5) 40%,
+                    rgba(255, 255, 255, 0) 70%);
+            animation: shimmering-glass 8s linear infinite;
+            pointer-events: none;
+            filter: blur(10px);
+            z-index: 1;
+        }
+
+        .card.solved .value {
+            background-color: rgba(241, 248, 241, 0.5);
+        }
+
+        .card.solved .label {
+            background-color: rgba(212, 231, 212, 0.5);
+        }
+
+        .card.solved .card-header {
+            background: #2e7d32;
+        }
+
+        /* --- ESTADO "BIEN ENCAMINADO" (NARANJA) --- */
+
+        .card.ontrack {
+            background-color: rgba(237, 108, 2, 0.15);
+            backdrop-filter: blur(5px) saturate(180%);
+            border-color: #ed6c02;
+            transition: all 0.5s ease;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .card.ontrack::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg,
+                    rgba(255, 255, 255, 0) 0%,
+                    rgba(255, 255, 255, 0.5) 30%,
+                    rgba(255, 255, 255, 0.5) 40%,
+                    rgba(255, 255, 255, 0) 70%);
+            animation: shimmering-glass 8s linear infinite;
+            pointer-events: none;
+            filter: blur(10px);
+            z-index: 1;
+        }
+
+        .card.ontrack .value {
+            background-color: rgba(255, 243, 224, 0.5);
+        }
+
+        .card.ontrack .label {
+            background-color: rgba(255, 224, 178, 0.5);
+        }
+
+        .card.ontrack .card-header {
+            background: #ed6c02;
+        }
+
+        /* Mensaje de solución correcta - Elemento independiente */
+        .solution-label {
+            background: #2e7d32;
+            color: white;
+            padding: 6px 12px;
+            font-size: 0.9rem;
+            font-weight: bold;
+            border-radius: 8px;
+            white-space: nowrap;
+            box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.25);
+            margin-top: 8px;
+            text-align: center;
+            display: inline-block;
+            animation: label-appear 0.4s ease-out forwards;
+        }
+
+        @keyframes label-appear {
+            0% {
+                opacity: 0;
+                transform: translateY(10px) scale(0.9);
+            }
+
+            100% {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        .solution-label.ontrack-label {
+            background: #ed6c02;
+        }
+
+        /* --- PANTALLA DE VICTORIA --- */
+        #victory-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: 9999;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            transition: opacity 0.5s ease;
+            background: #0a0e27;
+        }
+
+        #victory-canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+        }
+
+        .victory-content {
+            position: relative;
+            z-index: 2;
+            text-align: center;
+            animation: victoryFadeIn 2s ease-out forwards;
+        }
+
+        @keyframes victoryFadeIn {
+            0% {
+                opacity: 0;
+                transform: translateY(50px);
+            }
+
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .victory-title {
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 6rem;
+            font-weight: bold;
+            color: #f4f1de;
+            text-transform: uppercase;
+            letter-spacing: 15px;
+            margin: 0;
+            text-shadow:
+                0 0 20px rgba(244, 241, 222, 0.8),
+                0 0 40px rgba(244, 241, 222, 0.5),
+                0 0 60px rgba(244, 241, 222, 0.3),
+                3px 3px 0 rgba(0, 0, 0, 0.5);
+            animation: titleGlow 3s ease-in-out infinite;
+        }
+
+        @keyframes titleGlow {
+
+            0%,
+            100% {
+                text-shadow:
+                    0 0 20px rgba(244, 241, 222, 0.8),
+                    0 0 40px rgba(244, 241, 222, 0.5),
+                    0 0 60px rgba(244, 241, 222, 0.3),
+                    3px 3px 0 rgba(0, 0, 0, 0.5);
+            }
+
+            50% {
+                text-shadow:
+                    0 0 30px rgba(244, 241, 222, 1),
+                    0 0 60px rgba(244, 241, 222, 0.7),
+                    0 0 90px rgba(244, 241, 222, 0.5),
+                    3px 3px 0 rgba(0, 0, 0, 0.5);
+            }
+        }
+
+        .victory-subtitle {
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 1.5rem;
+            color: #c9c5b0;
+            margin-top: 20px;
+            letter-spacing: 3px;
+            text-shadow: 2px 2px 0 rgba(0, 0, 0, 0.5);
+        }
+
+        .victory-close {
+            margin-top: 40px;
+            padding: 15px 40px;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: #0a0e27;
+            background: #f4f1de;
+            border: 3px solid #c9c5b0;
+            cursor: pointer;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            transition: all 0.3s ease;
+            box-shadow: 0 0 20px rgba(244, 241, 222, 0.5);
+        }
+
+        .victory-close:hover {
+            background: #fff;
+            box-shadow: 0 0 40px rgba(244, 241, 222, 0.8);
+            transform: scale(1.05);
+        }
+
+        .victory-close:active {
+            transform: scale(0.95);
+        }
+    </style>
+</head>
+
+<body>
+
+    <div id="game-container">
+
+        <aside id="sidebar">
+            <div class="sidebar-header">Tripulación</div>
+            <div id="crew-grid"></div>
+        </aside>
+
+        <main id="main-content">
+            <header>
+                <h1>The Voyage of the Marvelous Anne</h1>
+                <div class="subtitle">Cuaderno de investigación</div>
+            </header>
+
+            <div id="cards-stage"></div>
+
+            <div id="controls">
+                <button id="btn-prev" class="nav-btn">&#8592; Anterior</button>
+                <div id="page-indicator" style="font-weight:bold;">Bienvenida</div>
+                <button id="btn-next" class="nav-btn">Siguiente &#8594;</button>
+            </div>
+            <div id="debug-controls">
+                <button id="btn-solve-current" class="debug-btn">🔧 Resolver Actual</button>
+                <button id="btn-reset-current" class="debug-btn debug-btn-reset">🔄 Resetear Actual</button>
+                <div style="width: 2px; background: #999; margin: 0 15px;"></div>
+                <button id="btn-solve-all" class="debug-btn debug-btn-success">✅ Resolver TODO</button>
+                <button id="btn-reset-all" class="debug-btn debug-btn-danger">⚠️ Resetear TODO</button>
+            </div>
+        </main>
+
+    </div>
+
+    <script>
+        // --- 1. DEFINICIÓN DE DATOS ---
+
+        const crewNames = [
+            "Adam Brown", "Ardyn Izunia", "Bastian Leroy", "Boris Ilankov", "Brandon Lewis",
+            "Charles Orange", "Cid Highwind", "Courtney Pink", "Cynthia Rogers", "Eric Palmer",
+            "Francesco Altonilli", "Fu Ling", "Fu Gang", "Gaspar Akbar", "Gregory Anderson",
+            "Jacob Dupont", "James García", "Juan Francisco González Álvarez", "Kri Dalton",
+            "Lacey Arnold", "Leonarda Highwind", "Leonid Ilankov", "Linda Smith", "Linda Anderson",
+            "Liu Chang", "Lucas Pope", "Michael Bender", "Neyen Darshan Kirpalani", "Paul Jenkins",
+            "Quina Quen", "Scott Barnes", "Sherezade Akbar", "Squall Lionheart", "Vincent Valentine",
+            "William Baker", "Polizón", "Fayna Macias Falcón", "Yeray Gil Suárez"
+        ];
+
+        const options = {
+            nationality: [
+                "Desconocido", "América", "Austria", "China", "Dinamarca", "Escocia", "España",
+                "Francia", "India", "Inglaterra", "Irlanda", "Italia", "Persia", "Polonia",
+                "Rusia", "Suecia"
+            ],
+            rank: [
+                "Desconocido", "Capitán", "Primer Oficial", "Segundo Oficial", "Tercer Oficial",
+                "Contramaestre", "Condestable", "Cirujano", "Ayte. del Cirujano", "Carpintero",
+                "Ayte. del Carpintero", "Cocinero", "Carnicero", "Maestro Armero", "Ayte. del Armero",
+                "Sobrecargo", "Timonel", "Artista", "Pasajero", "Alférez", "Gaviero", "Marinero"
+            ],
+            status: [
+                "Sano", "Enfermo", "Cuarentena", "Desaparecido", "Fallecido"
+            ],
+            illness: [
+                "Ninguna", "Desconocido", "Escorbuto", "Gripe", "Pulmonía", "Depresión", "Dengue",
+                "Peste", "Sarampión", "Viruela"
+            ],
+            fate: [
+                "<Vacío>", "Acuchillado", "Ahogado", "Ahorcado", "Aplastado", "Asfixiado", "Atrapado",
+                "Caída", "Capturado", "Congelado", "Decapitado", "Degollado", "Desaparecido",
+                "Deshidratado", "Desollado", "Destrozado/Desmembrado", "Devorado", "Disparo de cañón",
+                "Disparo de pistola", "Electrocutado", "Empalado", "Enfermedad", "Envenenado",
+                "Estrangulado", "Explosión", "Golpe fortuito", "Insolación", "Intoxicación",
+                "Mordido", "Paliza/Golpes", "Quemado", "Sacrificado", "Suicidio", "Viviseccionado",
+                "---", "Abandona el barco", "Llegó a puerto"
+            ],
+            killer: [
+                "<Vacío>", "Desconocido", "---",
+                ...crewNames,
+                "---",
+                "Animal de carga", "Animal de compañía", "Animal de granja", "Animal salvaje",
+                "Demonio", "Entidad Divina", "Fantasma", "Máquina futurista", "Monstruo", "Nicolas Cage"
+            ]
+        };
+
+
+        // soluciones
+        const solutions = {
+
+            // Adam Brown 
+            "Adam Brown": {
+                nationality: "Escocia",
+                rank: "Cirujano",
+                status: "Sano",
+                illness: "Ninguna",
+                fate: ["Llegó a puerto"],
+                killer: ["---", "<Vacío>"]
+            },
+
+            // Ardyn Izunia 
+            "Ardyn Izunia": {
+                nationality: "Irlanda",
+                rank: "Contramaestre",
+                status: "Fallecido",
+                illness: "Ninguna",
+                fate: ["Disparo de pistola"],
+                killer: ["Cid Highwind"]
+            },
+
+            // Bastian Leroy 
+            "Bastian Leroy": {
+                nationality: "Francia",
+                rank: "Timonel",
+                status: "Fallecido",
+                illness: "Ninguna",
+                fate: ["Disparo de pistola"],
+                killer: ["James García"]
+            },
+
+            // Boris Ilankov 
+            "Boris Ilankov": {
+                nationality: "Rusia",
+                rank: "Marinero",
+                status: "Fallecido",
+                illness: "Ninguna",
+                fate: ["Caída"],
+                killer: ["---", "<Vacío>"]
+            },
+
+            // Brandon Lewis 
+            "Brandon Lewis": {
+                nationality: "Irlanda",
+                rank: "Sobrecargo",
+                status: "Fallecido",
+                illness: "Desconocido",
+                fate: ["Destrozado/Desmembrado", "Desollado"],
+                killer: ["Bastian Leroy"]
+            },
+
+            // Charles Orange 
+            "Charles Orange": {
+                nationality: "Inglaterra",
+                rank: "Alférez",
+                status: "Fallecido",
+                illness: "Ninguna",
+                fate: ["Decapitado"],
+                killer: ["Gaspar Akbar"]
+            },
+
+            // Cid Highwind 
+            "Cid Highwind": {
+                nationality: "Inglaterra",
+                rank: "Capitán",
+                status: "Sano",
+                illness: "Ninguna",
+                fate: ["Llegó a puerto"],
+                killer: ["---", "<Vacío>"]
+            },
+
+            // Courtney Pink 
+            "Courtney Pink": {
+                nationality: "América",
+                rank: "Ayte. del Armero",
+                status: "Fallecido",
+                illness: "Ninguna",
+                fate: ["Paliza/Golpes"],
+                killer: ["Monstruo"]
+            },
+
+            // Cynthia Rogers 
+            "Cynthia Rogers": {
+                nationality: "Dinamarca",
+                rank: "Pasajero",
+                status: "Fallecido",
+                illness: "Ninguna",
+                fate: ["Estrangulado"],
+                killer: ["Cid Highwind"]
+            },
+
+            // Polizón
+            "Polizón": {
+                nationality: "Desconocido",
+                rank: "Desconocido",
+                status: "Fallecido",
+                illness: "Desconocido",
+                fate: ["Paliza/Golpes", "Golpe fortuito"],
+                killer: ["---", "<Vacío>"]
+            },
+
+            // Eric Palmer 
+            "Eric Palmer": {
+                nationality: "Inglaterra",
+                rank: "Marinero",
+                status: "Fallecido",
+                illness: "Escorbuto",
+                fate: ["Enfermedad"],
+                killer: ["---", "<Vacío>"]
+            },
+
+            // Fayna Macias Falcón 
+            "Fayna Macias Falcón": {
+                nationality: "España",
+                rank: "Pasajero",
+                status: "Desaparecido",
+                illness: "Ninguna",
+                fate: ["Ahogado", "Desaparecido"],
+                killer: ["---", "<Vacío>"]
+            },
+
+            // Francesco Altonilli 
+            "Francesco Altonilli": {
+                nationality: "Italia",
+                rank: "Tercer Oficial",
+                status: "Fallecido",
+                illness: "Pulmonía",
+                fate: ["Enfermedad"],
+                killer: ["---", "<Vacío>"]
+            },
+
+            // Fu Ling 
+            "Fu Ling": {
+                nationality: "China",
+                rank: "Carnicero",
+                status: "Fallecido",
+                illness: "Ninguna",
+                fate: ["Aplastado", "Golpe fortuito"],
+                killer: ["Animal de carga"]
+            },
+
+            // Fu Gang 
+            "Fu Gang": {
+                nationality: "China",
+                rank: "Gaviero",
+                status: "Fallecido",
+                illness: "Ninguna",
+                fate: ["Devorado"],
+                killer: ["Monstruo"]
+            },
+
+            // Gaspar Akbar 
+            "Gaspar Akbar": {
+                nationality: "Persia",
+                rank: "Pasajero",
+                status: "Fallecido",
+                illness: "Ninguna",
+                fate: ["Disparo de pistola"],
+                killer: ["---", "<Vacío>", "Desconocido"]
+            },
+
+            // Gregory Anderson 
+            "Gregory Anderson": {
+                nationality: "Suecia",
+                rank: "Pasajero",
+                status: "Sano",
+                illness: "Ninguna",
+                fate: ["Abandona el barco"],
+                killer: ["---", "<Vacío>"]
+            },
+
+            // Jacob Dupont 
+            "Jacob Dupont": {
+                nationality: "Francia",
+                rank: "Pasajero",
+                status: "Desaparecido",
+                illness: "Ninguna",
+                fate: ["Desaparecido"],
+                killer: ["---", "<Vacío>"]
+            },
+
+            // James García 
+            "James García": {
+                nationality: "España",
+                rank: "Artista",
+                status: "Cuarentena",
+                illness: "Viruela",
+                fate: ["Llegó a puerto"],
+                killer: ["---", "<Vacío>"]
+            },
+
+            // Juan Francisco González Álvarez 
+            "Juan Francisco González Álvarez": {
+                nationality: "España",
+                rank: "Marinero",
+                status: "Fallecido",
+                illness: "Desconocido",
+                fate: ["Enfermedad"],
+                killer: ["---", "<Vacío>"]
+            },
+
+            // Kri Dalton 
+            "Kri Dalton": {
+                nationality: "América",
+                rank: "Gaviero",
+                status: "Desaparecido",
+                illness: "Ninguna",
+                fate: ["Desaparecido", "Ahogado"],
+                killer: ["---", "<Vacío>"]
+            },
+
+            // Lacey Arnold 
+            "Lacey Arnold": {
+                nationality: "Inglaterra",
+                rank: "Segundo Oficial",
+                status: "Fallecido",
+                illness: "Escorbuto",
+                fate: ["Enfermedad"],
+                killer: ["---", "<Vacío>"]
+            },
+
+            // Leonarda Highwind 
+            "Leonarda Highwind": {
+                nationality: "Inglaterra",
+                rank: "Pasajero",
+                status: "Fallecido",
+                illness: "Desconocido",
+                fate: ["Suicidio", "Desaparecido", "Llegó a puerto"],
+                killer: ["---", "<Vacío>"]
+            },
+
+            // Leonid Ilankov 
+            "Leonid Ilankov": {
+                nationality: "Rusia",
+                rank: "Marinero",
+                status: "Fallecido",
+                illness: "Ninguna",
+                fate: ["Suicidio", "Paliza/Golpes"],
+                killer: ["---", "<Vacío>"]
+            },
+
+            // Linda Smith 
+            "Linda Smith": {
+                nationality: "Inglaterra",
+                rank: "Ayte. del Carpintero",
+                status: "Sano",
+                illness: "Ninguna",
+                fate: ["Llegó a puerto"],
+                killer: ["---", "<Vacío>"]
+            },
+
+            // Linda Anderson 
+            "Linda Anderson": {
+                nationality: "Suecia",
+                rank: "Pasajero",
+                status: "Sano",
+                illness: "Ninguna",
+                fate: ["Abandona el barco"],
+                killer: ["---", "<Vacío>"]
+            },
+
+            // Liu Chang 
+            "Liu Chang": {
+                nationality: "España",
+                rank: "Gaviero",
+                status: "Fallecido",
+                illness: "Ninguna",
+                fate: ["Destrozado/Desmembrado"],
+                killer: ["Monstruo"]
+            },
+
+            // Lucas Pope 
+            "Lucas Pope": {
+                nationality: "América",
+                rank: "Primer Oficial",
+                status: "Sano",
+                illness: "Ninguna",
+                fate: ["Llegó a puerto"],
+                killer: ["---", "<Vacío>"]
+            },
+
+            // Michael Bender 
+            "Michael Bender": {
+                nationality: "Inglaterra",
+                rank: "Carpintero",
+                status: "Sano",
+                illness: "Ninguna",
+                fate: ["Llegó a puerto"],
+                killer: ["---", "<Vacío>"]
+            },
+
+            // Neyen Darshan Kirpalani 
+            "Neyen Darshan Kirpalani": {
+                nationality: "India",
+                rank: "Marinero",
+                status: "Fallecido",
+                illness: "Viruela",
+                fate: ["Enfermedad"],
+                killer: ["---", "<Vacío>"]
+            },
+
+            // Paul Jenkins 
+            "Paul Jenkins": {
+                nationality: "Dinamarca",
+                rank: "Ayte. del Cirujano",
+                status: "Fallecido",
+                illness: "Viruela",
+                fate: ["Enfermedad"],
+                killer: ["---", "<Vacío>"]
+            },
+
+            // Quina Quen 
+            "Quina Quen": {
+                nationality: "China",
+                rank: "Cocinero",
+                status: "Sano",
+                illness: "Ninguna",
+                fate: ["Llegó a puerto"],
+                killer: ["---", "<Vacío>"]
+            },
+
+            // Scott Barnes 
+            "Scott Barnes": {
+                nationality: "Inglaterra",
+                rank: "Condestable",
+                status: "Fallecido",
+                illness: "Escorbuto",
+                fate: ["Enfermedad"],
+                killer: ["---", "<Vacío>"]
+            },
+
+            // Sherezade Akbar 
+            "Sherezade Akbar": {
+                nationality: "Inglaterra",
+                rank: "Pasajero",
+                status: "Fallecido",
+                illness: "Ninguna",
+                fate: ["Suicidio", "Ahogado", "Desaparecido"],
+                killer: ["---", "<Vacío>"]
+            },
+
+            // Squall Lionheart 
+            "Squall Lionheart": {
+                nationality: "Inglaterra",
+                rank: "Maestro Armero",
+                status: "Sano",
+                illness: "Ninguna",
+                fate: ["Llegó a puerto"],
+                killer: ["---", "<Vacío>"]
+            },
+
+            // Vincent Valentine 
+            "Vincent Valentine": {
+                nationality: "Polonia",
+                rank: "Alférez",
+                status: "Fallecido",
+                illness: "Pulmonía",
+                fate: ["Enfermedad"],
+                killer: ["---", "<Vacío>"]
+            },
+
+            // William Baker 
+            "William Baker": {
+                nationality: "Inglaterra",
+                rank: "Gaviero",
+                status: "Fallecido",
+                illness: "Ninguna",
+                fate: ["Paliza/Golpes"],
+                killer: ["Juan Francisco González Álvarez"]
+            },
+
+            // Yeray Gil Suárez 
+            "Yeray Gil Suárez": {
+                nationality: "España",
+                rank: "Marinero",
+                status: "Fallecido",
+                illness: "Ninguna",
+                fate: ["Degollado"],
+                killer: ["Ardyn Izunia"]
+            }
+        };
+
+        // --- FUNCIÓN DE VALIDACIÓN ---
+        function checkSolution(data) {
+            const correct = solutions[data.fullName];
+            if (!correct) return { status: 'incorrect', correctCount: 0 };
+
+            // Validación estricta de campos
+            const validateField = (field, currentVal) => {
+                if (!correct[field]) return false;
+                if (Array.isArray(correct[field])) {
+                    return correct[field].includes(currentVal);
+                }
+                return correct[field] === currentVal;
+            };
+
+            // Validar los 6 campos obligatorios
+            const nationalityOk = validateField('nationality', data.nationality);
+            const rankOk = validateField('rank', data.rank);
+            const statusOk = validateField('status', data.status);
+            const illnessOk = validateField('illness', data.illness);
+            const fateOk = validateField('fate', data.fate);
+            const killerOk = validateField('killer', data.killer);
+
+            // Contar cuántos campos son correctos
+            const correctCount = [nationalityOk, rankOk, statusOk, illnessOk, fateOk, killerOk].filter(Boolean).length;
+
+            // Determinar el estado
+            if (correctCount === 6) {
+                return { status: 'solved', correctCount: 6 };
+            } else if (correctCount >= 4) {
+                return { status: 'ontrack', correctCount: correctCount };
+            } else {
+                return { status: 'incorrect', correctCount: correctCount };
+            }
+        }
+
+        // --- ESTRUCTURA DE DATOS ---
+        const totalCases = 38;
+        let cases = [];
+
+        // Generar datos iniciales (Template)
+        for (let i = 0; i < totalCases; i++) {
+            let fullName = crewNames[i] || "Desconocido";
+            let firstName = fullName.split(' ')[0];
+
+            // Determinar el sexo
+            let sex = "Hombre";
+            if (["Courtney", "Cynthia", "Lacey", "Leonarda", "Linda", "Sherezade", "Quina", "Fayna"].includes(firstName)) {
+                sex = "Mujer";
+            }
+
+            cases.push({
+                id: i + 1,
+                headerName: firstName.toUpperCase(),
+                fullName: fullName,
+                sex: sex,
+                nationality: options.nationality[0],
+                rank: options.rank[0],
+                status: options.status[0],
+                illness: options.illness[0],
+                fate: options.fate[0],
+                killer: options.killer[0]
+            });
+        }
+
+        // --- SISTEMA DE GUARDADO (LOCALSTORAGE) ---
+        const STORAGE_KEY = 'marvelous_anne_savegame';
+
+        function loadGameData() {
+            const savedData = localStorage.getItem(STORAGE_KEY);
+            if (savedData) {
+                try {
+                    const parsedData = JSON.parse(savedData);
+                    cases = cases.map(c => {
+                        const savedCase = parsedData.find(s => s.id === c.id);
+                        if (savedCase) {
+                            // Preservar nombre y sexo originales, solo cargar los campos editables
+                            return {
+                                ...c,
+                                nationality: savedCase.nationality,
+                                rank: savedCase.rank,
+                                status: savedCase.status,
+                                illness: savedCase.illness,
+                                fate: savedCase.fate,
+                                killer: savedCase.killer
+                            };
+                        }
+                        return c;
+                    });
+                    console.log("Partida cargada correctamente.");
+                } catch (e) {
+                    console.error("Error cargando partida, usando datos por defecto.", e);
+                }
+            }
+        }
+
+        function saveGameData() {
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(cases));
+        }
+
+        // Inicializamos cargando datos
+        loadGameData();
+
+        // --- HELPER PARA CREAR SELECTS ---
+        function createSelect(fieldName, defaultValue, crewId) {
+            const list = options[fieldName] || [];
+            let html = `<select class="card-select data-input" data-id="${crewId}" data-field="${fieldName}">`;
+
+            list.forEach(opt => {
+                const isSeparator = opt === "---";
+                const isSelected = opt === defaultValue;
+
+                if (isSeparator) {
+                    html += `<option value="" disabled class="separator">─────</option>`;
+                } else {
+                    html += `<option value="${opt}" ${isSelected ? 'selected' : ''}>${opt}</option>`;
+                }
+            });
+
+            html += `</select>`;
+            return html;
+        }
+
+        // --- LÓGICA DE VISUALIZACIÓN ---
+        let currentIndex = -1; // -1 = bienvenida, 0-37 = tripulantes
+        const totalCrew = 38;
+
+        // Variables del DOM (se inicializarán cuando el DOM esté listo)
+        let stage, indicator, crewGrid, btnPrev, btnNext, btnSolveCurrent, btnResetCurrent, btnResetAll, btnSolveAll;
+
+        function renderCrewGrid() {
+            crewGrid.innerHTML = '';
+
+            // Botón de bienvenida
+            const welcomeBtn = document.createElement('button');
+            welcomeBtn.className = 'crew-button welcome';
+            welcomeBtn.textContent = 'Bienvenida';
+            welcomeBtn.onclick = () => selectCrew(-1);
+            if (currentIndex === -1) welcomeBtn.classList.add('active');
+            crewGrid.appendChild(welcomeBtn);
+
+            // Botones de tripulantes
+            cases.forEach((crewMember, index) => {
+                const btn = document.createElement('button');
+                btn.className = 'crew-button';
+
+                const result = checkSolution(crewMember);
+                if (result.status === 'solved') {
+                    btn.classList.add('solved');
+                } else if (result.status === 'ontrack') {
+                    btn.classList.add('ontrack');
+                }
+
+                if (currentIndex === index) {
+                    btn.classList.add('active');
+                }
+
+                const firstName = crewMember.fullName.split(' ')[0];
+                btn.textContent = firstName;
+                btn.onclick = () => selectCrew(index);
+
+                crewGrid.appendChild(btn);
+            });
+        }
+
+        function selectCrew(index) {
+            currentIndex = index;
+            render();
+        }
+
+        function changeCrew(direction) {
+            let newIndex = currentIndex + direction;
+
+            // Ciclar: de bienvenida (-1) a último (37) y viceversa
+            if (newIndex < -1) newIndex = totalCrew - 1;
+            if (newIndex >= totalCrew) newIndex = -1;
+
+            currentIndex = newIndex;
+            render();
+        }
+
+        function render() {
+            stage.innerHTML = '';
+
+            if (currentIndex === -1) {
+                // Mostrar mensaje de bienvenida
+                const welcome = document.createElement('div');
+                welcome.className = 'welcome-message';
+                welcome.innerHTML = `
+            <h2>Bienvenido al Marvelous Anne</h2>
+            <p>Este es el cuaderno que deberás rellenar para el seguro.</p>
+            <p>Investiga el destino de cada tripulante utilizando la cuadrícula de la izquierda.</p>
+            <p>Completa los datos de cada miembro de la tripulación averiguar el sino de cada tripulante.</p>
+        `;
+                stage.appendChild(welcome);
+                indicator.textContent = 'Bienvenida';
+                btnSolveCurrent.disabled = true;
+                btnResetCurrent.disabled = true;
+            } else {
+                // Mostrar carta del tripulante actual
+                const data = cases[currentIndex];
+                const wrapper = document.createElement('div');
+                wrapper.style.display = 'flex';
+                wrapper.style.flexDirection = 'column';
+                wrapper.style.alignItems = 'center';
+                wrapper.style.gap = '0';
+
+                const card = document.createElement('div');
+                const result = checkSolution(data);
+
+                let cardClass = 'card';
+                if (result.status === 'solved') {
+                    cardClass = 'card solved';
+                } else if (result.status === 'ontrack') {
+                    cardClass = 'card ontrack';
+                }
+
+                card.className = cardClass;
+                card.style.animation = `deal-in 0.4s ease-out forwards`;
+
+                let nameHtml = `<span class="value">${data.fullName}</span>`;
+                let sexHtml = `<span class="value">${data.sex}</span>`;
+
+                const nacHtml = `<span class="value">${createSelect('nationality', data.nationality, data.id)}</span>`;
+                const rankHtml = `<span class="value">${createSelect('rank', data.rank, data.id)}</span>`;
+                const estadoHtml = `<span class="value">${createSelect('status', data.status, data.id)}</span>`;
+                const enfHtml = `<span class="value">${createSelect('illness', data.illness, data.id)}</span>`;
+                const sinoHtml = `<span class="value">${createSelect('fate', data.fate, data.id)}</span>`;
+                const killerHtml = `<span class="value">${createSelect('killer', data.killer, data.id)}</span>`;
+
+                card.innerHTML = `
+            <div class="card-header">${data.headerName}</div>
+            <div class="data-row"><span class="label">Nombre</span> ${nameHtml}</div>
+            <div class="data-row"><span class="label">Sexo</span> ${sexHtml}</div>
+            <div class="data-row"><span class="label">Nac.</span> ${nacHtml}</div>
+            <div class="data-row"><span class="label">Rango</span> ${rankHtml}</div>
+            <div class="data-row"><span class="label">Estado</span> ${estadoHtml}</div>
+            <div class="data-row"><span class="label">Enfermedad</span> ${enfHtml}</div>
+            <div class="data-row"><span class="label">Sino</span> ${sinoHtml}</div>
+            <div class="data-row"><span class="label">Causante</span> ${killerHtml}</div>
+        `;
+
+                wrapper.appendChild(card);
+
+                if (result.status === 'solved') {
+                    const label = document.createElement('div');
+                    label.className = 'solution-label';
+                    label.textContent = '✓ CORRECTO';
+                    wrapper.appendChild(label);
+                } else if (result.status === 'ontrack') {
+                    const label = document.createElement('div');
+                    label.className = 'solution-label ontrack-label';
+                    label.textContent = '↗ BIEN ENCAMINADO';
+                    wrapper.appendChild(label);
+                }
+
+                stage.appendChild(wrapper);
+
+                // --- LISTENERS DE CAMBIO DE DATOS ---
+                const inputs = document.querySelectorAll('.data-input');
+                inputs.forEach(input => {
+                    input.addEventListener('change', (e) => {
+                        const id = parseInt(e.target.dataset.id);
+                        const field = e.target.dataset.field;
+                        const val = e.target.value;
+
+                        const crewMember = cases.find(c => c.id === id);
+                        if (crewMember) {
+                            crewMember[field] = val;
+                            saveGameData();
+
+                            const wrapper = e.target.closest('div[style*="flex"]');
+                            const cardElement = wrapper.querySelector('.card');
+                            const existingLabel = wrapper.querySelector('.solution-label');
+
+                            const result = checkSolution(crewMember);
+
+                            // Remover clases previas
+                            cardElement.classList.remove('solved', 'ontrack');
+
+                            // Remover label existente
+                            if (existingLabel) {
+                                existingLabel.remove();
+                            }
+
+                            // Aplicar nueva clase y label según el resultado
+                            if (result.status === 'solved') {
+                                cardElement.classList.add('solved');
+                                const label = document.createElement('div');
+                                label.className = 'solution-label';
+                                label.textContent = '✓ CORRECTO';
+                                wrapper.appendChild(label);
+                            } else if (result.status === 'ontrack') {
+                                cardElement.classList.add('ontrack');
+                                const label = document.createElement('div');
+                                label.className = 'solution-label ontrack-label';
+                                label.textContent = '↗ BIEN ENCAMINADO';
+                                wrapper.appendChild(label);
+                            }
+
+                            renderCrewGrid();
+                            checkVictory();
+                            console.log(`Guardado: ID ${id} - ${field} = ${val}`);
+                        }
+                    });
+                });
+
+                indicator.textContent = data.fullName;
+                btnSolveCurrent.disabled = false;
+                btnResetCurrent.disabled = false;
+            }
+
+            renderCrewGrid();
+
+            // Actualizar botones de navegación
+            btnPrev.disabled = false;
+            btnNext.disabled = false;
+        }
+
+        // --- FUNCIÓN PARA RESOLVER AUTOMÁTICAMENTE EL ACTUAL ---
+        function solveCurrent() {
+            if (currentIndex === -1) return; // No hacer nada en bienvenida
+
+            const crewMember = cases[currentIndex];
+            const solution = solutions[crewMember.fullName];
+
+            if (solution) {
+                if (solution.nationality) crewMember.nationality = solution.nationality;
+                if (solution.rank) crewMember.rank = solution.rank;
+                if (solution.status) crewMember.status = solution.status;
+                if (solution.illness) crewMember.illness = solution.illness;
+                if (solution.fate) {
+                    crewMember.fate = Array.isArray(solution.fate) ? solution.fate[0] : solution.fate;
+                }
+                if (solution.killer) {
+                    crewMember.killer = Array.isArray(solution.killer) ? solution.killer[0] : solution.killer;
+                }
+            }
+
+            saveGameData();
+            render();
+
+            console.log(`✓ ${crewMember.fullName} resuelto automáticamente`);
+        }
+
+        // --- FUNCIÓN PARA RESETEAR EL ACTUAL ---
+        function resetCurrent() {
+            if (currentIndex === -1) return; // No hacer nada en bienvenida
+
+            const crewMember = cases[currentIndex];
+
+            crewMember.nationality = options.nationality[0];
+            crewMember.rank = options.rank[0];
+            crewMember.status = options.status[0];
+            crewMember.illness = options.illness[0];
+            crewMember.fate = options.fate[0];
+            crewMember.killer = options.killer[0];
+
+            saveGameData();
+            render();
+
+            console.log(`🔄 ${crewMember.fullName} reseteado a valores por defecto`);
+        }
+
+        // --- FUNCIÓN PARA RESETEAR TODOS LOS CASOS ---
+        function resetAllCases() {
+            if (!confirm('⚠️ ¿Estás seguro de que quieres resetear TODOS los casos? Esta acción no se puede deshacer.')) {
+                return;
+            }
+
+            cases.forEach(crewMember => {
+                crewMember.nationality = options.nationality[0];
+                crewMember.rank = options.rank[0];
+                crewMember.status = options.status[0];
+                crewMember.illness = options.illness[0];
+                crewMember.fate = options.fate[0];
+                crewMember.killer = options.killer[0];
+            });
+
+            saveGameData();
+            render();
+
+
+            console.log('🔄 TODOS los casos han sido reseteados');
+
+
+        }// --- FUNCIÓN PARA RESOLVER TODOS LOS CASOS ---
+        function solveAllCases() {
+            if (!confirm('✅ ¿Quieres resolver TODOS los casos automáticamente?')) {
+                return;
+            }
+
+
+            cases.forEach(crewMember => {
+                const solution = solutions[crewMember.fullName];
+
+                if (solution) {
+                    crewMember.nationality = solution.nationality || crewMember.nationality;
+                    crewMember.rank = solution.rank || crewMember.rank;
+                    crewMember.status = solution.status || crewMember.status;
+                    crewMember.illness = solution.illness || crewMember.illness;
+                    crewMember.fate = Array.isArray(solution.fate) ? solution.fate[0] : solution.fate;
+                    crewMember.killer = Array.isArray(solution.killer) ? solution.killer[0] : solution.killer;
+                }
+            });
+
+            saveGameData();
+            render();
+            checkVictory();
+
+            console.log('✅ TODOS los casos han sido resueltos automáticamente');
+        }
+
+
+        // Event listeners para los botones de navegación
+        document.addEventListener('DOMContentLoaded', function () {
+            // Inicializar variables del DOM
+            stage = document.getElementById('cards-stage');
+            indicator = document.getElementById('page-indicator');
+            crewGrid = document.getElementById('crew-grid');
+            btnPrev = document.getElementById('btn-prev');
+            btnNext = document.getElementById('btn-next');
+            btnSolveCurrent = document.getElementById('btn-solve-current');
+            btnResetCurrent = document.getElementById('btn-reset-current');
+            btnResetAll = document.getElementById('btn-reset-all');
+            btnSolveAll = document.getElementById('btn-solve-all');
+
+            // Configurar event listeners
+            btnPrev.addEventListener('click', () => changeCrew(-1));
+            btnNext.addEventListener('click', () => changeCrew(1));
+            btnSolveCurrent.addEventListener('click', solveCurrent);
+            btnResetCurrent.addEventListener('click', resetCurrent);
+            btnResetAll.addEventListener('click', resetAllCases);
+            btnSolveAll.addEventListener('click', solveAllCases);
+
+            // Navegación con teclado (flechas)
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'ArrowLeft') {
+                    e.preventDefault();
+                    changeCrew(-1);
+                } else if (e.key === 'ArrowRight') {
+                    e.preventDefault();
+                    changeCrew(1);
+                }
+            });
+
+            // Ocultar controles de debug por defecto
+            const debugControls = document.getElementById('debug-controls');
+            debugControls.style.display = 'none';
+
+
+            // Activar/desactivar modo debug con Ctrl+Ñ
+            let debugMode = false;
+            document.addEventListener('keydown', (e) => {
+                if (e.ctrlKey && e.key === 'ñ') {
+                    e.preventDefault();
+                    debugMode = !debugMode;
+                    debugControls.style.display = debugMode ? 'flex' : 'none';
+                    console.log(`Modo Debug: ${debugMode ? 'ACTIVADO' : 'DESACTIVADO'}`);
+                }
+            });
+
+
+            // Verificar victoria al cargar
+            checkVictory();
+
+            // Render inicial
+            render();
+        });
+
+        // Función para verificar victoria
+        function checkVictory() {
+            const solvedCases = cases.filter(c => checkSolution(c).status === 'solved');
+            if (solvedCases.length === totalCases) {
+                showVictoryScreen();
+            }
+        }
+
+        // --- PANTALLA DE VICTORIA ---
+        function showVictoryScreen() {
+            // Verificar si ya existe para no duplicar
+            if (document.getElementById('victory-screen')) return;
+
+            const victoryScreen = document.createElement('div');
+            victoryScreen.id = 'victory-screen';
+            victoryScreen.innerHTML = `
+        <canvas id="victory-canvas"></canvas>
+        <div class="victory-content">
+            <h1 class="victory-title">¡HAS GANADO!</h1>
+            <p class="victory-subtitle">Has resuelto los 38 casos del Marvelous Anne</p>
+            <button class="victory-close" onclick="closeVictoryScreen()">Cerrar</button>
+        </div>
+    `;
+
+            document.body.appendChild(victoryScreen);
+
+            // Iniciar animación del océano
+            initOceanAnimation();
+
+            // Fade in
+            setTimeout(() => {
+                victoryScreen.style.opacity = '1';
+            }, 10);
+        }
+
+        function closeVictoryScreen() {
+            const victoryScreen = document.getElementById('victory-screen');
+            if (victoryScreen) {
+                victoryScreen.style.opacity = '0';
+                setTimeout(() => {
+                    victoryScreen.remove();
+                }, 500);
+            }
+        }
+
+        function initOceanAnimation() {
+            const canvas = document.getElementById('victory-canvas');
+            const ctx = canvas.getContext('2d');
+
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+
+            let time = 0;
+
+            function drawScene() {
+                // Cielo nocturno con degradado
+                const skyGradient = ctx.createLinearGradient(0, 0, 0, canvas.height * 0.6);
+                skyGradient.addColorStop(0, '#0a0e27');
+                skyGradient.addColorStop(1, '#1a1f3a');
+                ctx.fillStyle = skyGradient;
+                ctx.fillRect(0, 0, canvas.width, canvas.height * 0.6);
+
+                // Estrellas
+                ctx.fillStyle = 'rgba(255, 255, 255, 0.8)';
+                for (let i = 0; i < 100; i++) {
+                    const x = (i * 137.5) % canvas.width;
+                    const y = (i * 271.3) % (canvas.height * 0.5);
+                    const size = Math.random() * 2;
+                    const twinkle = Math.sin(time * 0.01 + i) * 0.5 + 0.5;
+                    ctx.globalAlpha = twinkle;
+                    ctx.fillRect(x, y, size, size);
+                }
+                ctx.globalAlpha = 1;
+
+                // Luna
+                const moonX = canvas.width * 0.75;
+                const moonY = canvas.height * 0.25;
+                const moonRadius = 60;
+
+                // Brillo de la luna
+                const moonGlow = ctx.createRadialGradient(moonX, moonY, moonRadius * 0.5, moonX, moonY, moonRadius * 3);
+                moonGlow.addColorStop(0, 'rgba(255, 255, 200, 0.3)');
+                moonGlow.addColorStop(1, 'rgba(255, 255, 200, 0)');
+                ctx.fillStyle = moonGlow;
+                ctx.fillRect(moonX - moonRadius * 3, moonY - moonRadius * 3, moonRadius * 6, moonRadius * 6);
+
+                // Luna
+                ctx.fillStyle = '#f4f1de';
+                ctx.beginPath();
+                ctx.arc(moonX, moonY, moonRadius, 0, Math.PI * 2);
+                ctx.fill();
+
+                // Cráteres de la luna
+                ctx.fillStyle = 'rgba(200, 195, 180, 0.3)';
+                ctx.beginPath();
+                ctx.arc(moonX - 15, moonY - 10, 12, 0, Math.PI * 2);
+                ctx.fill();
+                ctx.beginPath();
+                ctx.arc(moonX + 20, moonY + 5, 8, 0, Math.PI * 2);
+                ctx.fill();
+                ctx.beginPath();
+                ctx.arc(moonX - 5, moonY + 20, 10, 0, Math.PI * 2);
+                ctx.fill();
+
+                // Reflejo de la luna en el agua
+                const reflectionY = canvas.height * 0.6 + 50;
+                const reflectionGradient = ctx.createLinearGradient(moonX, reflectionY, moonX, canvas.height);
+                reflectionGradient.addColorStop(0, 'rgba(244, 241, 222, 0.4)');
+                reflectionGradient.addColorStop(0.5, 'rgba(244, 241, 222, 0.2)');
+                reflectionGradient.addColorStop(1, 'rgba(244, 241, 222, 0)');
+
+                ctx.fillStyle = reflectionGradient;
+                for (let i = 0; i < 20; i++) {
+                    const y = reflectionY + i * 15;
+                    const width = 30 + Math.sin(time * 0.02 + i * 0.5) * 10;
+                    const x = moonX - width / 2;
+                    ctx.fillRect(x, y, width, 8);
+                }
+
+                // Mar
+                const seaGradient = ctx.createLinearGradient(0, canvas.height * 0.6, 0, canvas.height);
+                seaGradient.addColorStop(0, '#1a2332');
+                seaGradient.addColorStop(1, '#0f1419');
+                ctx.fillStyle = seaGradient;
+                ctx.fillRect(0, canvas.height * 0.6, canvas.width, canvas.height * 0.4);
+
+                // Olas
+                ctx.strokeStyle = 'rgba(100, 120, 150, 0.3)';
+                ctx.lineWidth = 2;
+
+                for (let layer = 0; layer < 5; layer++) {
+                    ctx.beginPath();
+                    const yBase = canvas.height * 0.6 + layer * 60;
+                    const amplitude = 20 + layer * 5;
+                    const frequency = 0.01 - layer * 0.001;
+
+                    for (let x = 0; x <= canvas.width; x += 5) {
+                        const y = yBase + Math.sin(x * frequency + time * 0.02 + layer) * amplitude;
+                        if (x === 0) {
+                            ctx.moveTo(x, y);
+                        } else {
+                            ctx.lineTo(x, y);
+                        }
+                    }
+                    ctx.stroke();
+                }
+
+                time++;
+                requestAnimationFrame(drawScene);
+            }
+
+            drawScene();
+
+            // Redimensionar canvas si cambia el tamaño de la ventana
+            window.addEventListener('resize', () => {
+                canvas.width = window.innerWidth;
+                canvas.height = window.innerHeight;
+            });
+        }
+
+
+    </script>
+</body>
+
+</html>

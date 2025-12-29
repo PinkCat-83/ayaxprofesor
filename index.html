@@ -288,6 +288,48 @@
             text-shadow: 0 0 10px rgba(77, 171, 247, 0.8);
         }
 
+
+
+
+        .secret-boat {
+            position: absolute;
+            right: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            opacity: 0.6;
+            transition: opacity 0.3s ease;
+        }
+
+        .secret-boat img {
+            height: 60px;
+            width: auto;
+        }
+
+        .secret-boat:hover {
+            opacity: 1;
+            animation: balanceo 1s ease-in-out infinite;
+        }
+
+        @keyframes balanceo {
+
+            0%,
+            100% {
+                transform: translateY(-50%) rotate(-3deg);
+            }
+
+            50% {
+                transform: translateY(-50%) rotate(3deg);
+            }
+        }
+
+
+
+
+
+
+
+
+
         /* Área central (placeholder para contenido futuro) */
         .content {
             display: none;
@@ -326,9 +368,8 @@
                 </button>
             </div>
             <div class="menu-item">
-                <button class="menu-button"
-                    onclick="window.open('tasks/rosco.html', '_blank')">
-                    💻 Rosco de Palabras 
+                <button class="menu-button" onclick="window.open('tasks/rosco.html', '_blank')">
+                    💻 Rosco de Palabras
                 </button>
             </div>
             <div class="menu-item">
@@ -397,23 +438,24 @@
         <div class="footer glass">
             <p>
                 <strong>Nombre:</strong>
-                <a href="https://www.linkedin.com/in/ayaxgonzalez/" target="_blank" rel="noopener noreferrer">
-                    Ayax González Suárez
+                <a href="https://www.linkedin.com/in/patatagonzalez/" target="_blank" rel="noopener noreferrer">
+                    patata González Suárez
                 </a>
             </p>
-
             <p>
                 <strong>Email:</strong>
-                <a href="mailto:ayaxprofesor@gmail.com" target="_blank">
-                    ayaxprofesor@gmail.com
+                <a href="mailto:patataprofesor@gmail.com" target="_blank">
+                    patataprofesor@gmail.com
                 </a>
             </p>
+            <a href="tasks/anne.html" class="secret-boat" title="¿Un secreto?" target="_blank">
+                <img src="imgs/anne.png" alt="">
+            </a>
         </div>
-    </div>
 
-    <script>
-    </script>
-    <script src="res/cat-animation.js"></script>
+        <script>
+        </script>
+        <script src="res/cat-animation.js"></script>
 </body>
 
 </html>
