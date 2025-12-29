@@ -592,9 +592,9 @@
                 title: "Carpeta 01 - Viaje",
                 description: "Coloca los archivos de cada viaje en la carpeta correspondiente.",
                 tasks: [
-                    "Abre cada carpeta (Francia, Italia, Japón)",
                     "Mueve los 4 archivos de cada país a su carpeta correspondiente",
-                    "Por ejemplo: Francia 01.jpg debe estar dentro de la carpeta Francia"
+                    "Por ejemplo: Francia 01.jpg debe estar dentro de la carpeta Francia",
+                    "Recuerda que deberás CORTAR primero cada archivo y luego ENTRAR en cada carpeta"
                 ],
                 hints: [
                     "Primero, haz clic en el archivo para seleccionarlo",
@@ -914,6 +914,8 @@
                     'Imagen8.jpg': { type: 'file' }
                 },
                 validate: (fs) => {
+                    const normalizar = (texto) => texto.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+
                     const estaciones = {
                         'primavera': { folder: null },
                         'verano': { folder: null },
@@ -923,9 +925,10 @@
 
                     for (let folderName in fs) {
                         if (fs[folderName].type === 'folder') {
-                            const nameLower = folderName.toLowerCase();
+                            const folderNorm = normalizar(folderName);
                             for (let estacion in estaciones) {
-                                if (nameLower.includes(estacion)) {
+                                const estacionNorm = normalizar(estacion);
+                                if (folderNorm.includes(estacionNorm)) {
                                     estaciones[estacion].folder = fs[folderName];
                                     break;
                                 }
@@ -937,10 +940,9 @@
                         const folder = estaciones[estacion].folder;
                         if (!folder) return false;
 
-                        // CAMBIO: Ahora busca que el archivo incluya el nombre de la estación (ej: "verano")
-                        // en lugar de la palabra genérica "foto". También ignora extensiones.
+                        const estacionNorm = normalizar(estacion);
                         const correctFiles = Object.keys(folder.children).filter(
-                            name => name.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').includes(estacion)
+                            name => normalizar(name).includes(estacionNorm)
                         ).length;
 
                         if (correctFiles !== 2) return false;
