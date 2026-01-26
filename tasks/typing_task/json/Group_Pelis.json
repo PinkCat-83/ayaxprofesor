@@ -1,0 +1,150 @@
+{
+  "class": "Sinopsis de Cine",
+  "option": [
+    {
+      "id": "film_01",
+      "title": "El Señor de los Anillos: La Comunidad del Anillo",
+      "text": "En la Tierra Media, el joven hobbit Frodo Bolsón hereda un anillo mágico de su tío Bilbo. Pronto descubre que se trata del Anillo Único, un instrumento de poder absoluto creado por el Señor Oscuro Sauron para esclavizar al mundo. Junto a una comunidad formada por hobbits, hombres, un elfo, un enano y un mago, Frodo debe emprender un peligroso viaje hacia el Monte del Destino para destruirlo."
+    },
+    {
+      "id": "film_02",
+      "title": "The Imitation Game (Descifrando Enigma)",
+      "text": "Durante la Segunda Guerra Mundial, el brillante matemático Alan Turing es reclutado por la inteligencia británica para una misión imposible: descifrar los códigos de la máquina alemana Enigma. Mientras lucha contra el tiempo para salvar millones de vidas y acortar la guerra, Turing también debe ocultar su propia homosexualidad en una época en la que era considerada un delito, enfrentándose a la presión social y militar."
+    },
+    {
+      "id": "film_03",
+      "title": "Interestelar",
+      "text": "En un futuro donde la Tierra está siendo devastada por plagas y tormentas de polvo, la humanidad se enfrenta a la extinción. Cooper, un ex piloto convertido en granjero, es reclutado para liderar una misión suicida a través de un agujero de gusano cerca de Saturno. Su objetivo es encontrar un nuevo hogar habitable en otra galaxia, dejando atrás a sus hijos con la promesa incierta de volver."
+    },
+    {
+      "id": "film_04",
+      "title": "Contact",
+      "text": "La doctora Ellie Arroway ha dedicado su vida a buscar señales de inteligencia extraterrestre. Su perseverancia da fruto cuando capta un mensaje de radio proveniente de la estrella Vega que contiene instrucciones para construir una misteriosa máquina de transporte. Ellie debe luchar contra el escepticismo de la comunidad científica y los fanáticos religiosos para convertirse en la primera humana en establecer contacto."
+    },
+    {
+      "id": "film_05",
+      "title": "K-PAX",
+      "text": "Un hombre que se hace llamar Prot es ingresado en un hospital psiquiátrico tras afirmar que proviene del planeta K-PAX. Su médico, el doctor Mark Powell, intenta demostrar que su paciente sufre un delirio, pero se ve desconcertado por el conocimiento astronómico imposible de Prot y su efecto curativo en otros pacientes. La línea entre la locura y la realidad extraterrestre comienza a desdibujarse."
+    },
+    {
+      "id": "film_06",
+      "title": "El Padrino",
+      "text": "Vito Corleone es el respetado y temido jefe de una de las cinco familias de la mafia de Nueva York en los años 40. Cuando se niega a entrar en el negocio de las drogas, estalla una violenta guerra entre bandas. Su hijo menor, Michael, un héroe de guerra que quería mantenerse alejado del crimen, se ve arrastrado inevitablemente al oscuro mundo familiar para proteger a los suyos."
+    },
+    {
+      "id": "film_07",
+      "title": "Matrix",
+      "text": "Neo, un pirata informático, descubre que la vida que conoce no es más que una simulación virtual llamada Matrix, creada por máquinas que esclavizan a la humanidad para usarla como fuente de energía. Reclutado por el misterioso Morfeo y la experta Trinity, Neo debe decidir si tomar la pastilla roja para despertar a la dura realidad o la azul para seguir viviendo en la ignorancia."
+    },
+    {
+      "id": "film_08",
+      "title": "Pulp Fiction",
+      "text": "La vida de dos asesinos a sueldo, un boxeador, la esposa de un gánster y una pareja de atracadores de poca monta se entrelaza en cuatro historias de violencia y redención. Con diálogos afilados y una narrativa no lineal, la película explora los bajos fondos de Los Ángeles a través de situaciones absurdas, maletines misteriosos y bailes improvisados en un restaurante temático."
+    },
+    {
+      "id": "film_09",
+      "title": "Cadena Perpetua",
+      "text": "Andy Dufresne es encarcelado en la prisión de Shawshank por el asesinato de su esposa, un crimen que niega haber cometido. A lo largo de dos décadas, forja una profunda amistad con Red, otro recluso veterano. A pesar de la brutalidad de la vida carcelaria, Andy mantiene viva la esperanza y utiliza su inteligencia financiera para ganarse el favor de los guardias mientras planea su futuro."
+    },
+    {
+      "id": "film_10",
+      "title": "Blade Runner",
+      "text": "En un futuro distópico y lluvioso en Los Ángeles, Rick Deckard es un Blade Runner, un policía encargado de cazar y retirar a replicantes rebeldes: bioandroides idénticos a los humanos utilizados para trabajos peligrosos en las colonias exteriores. Mientras persigue a un grupo liderado por Roy Batty, Deckard comienza a cuestionar su propia humanidad y la ética de su misión."
+    },
+    {
+      "id": "film_11",
+      "title": "Casablanca",
+      "text": "Durante la Segunda Guerra Mundial, Rick Blaine, un cínico expatriado estadounidense, regenta un café en Casablanca. Su vida se complica cuando su antiguo amor, Ilsa, entra en su local junto a su esposo, un líder de la resistencia perseguido por los nazis. Rick debe decidir entre sus sentimientos por ella o ayudar a la pareja a escapar para continuar la lucha contra el fascismo."
+    },
+    {
+      "id": "film_12",
+      "title": "Parásitos",
+      "text": "La familia Kim, desempleada y viviendo en un sótano precario, ve una oportunidad de oro cuando el hijo comienza a dar clases de inglés a la hija de la adinerada familia Park. Mediante astucia y engaños, logran infiltrarse poco a poco en la vida de los ricos ocupando diferentes puestos de servicio, hasta que un incidente inesperado amenaza con destruir su frágil esquema."
+    },
+    {
+      "id": "film_13",
+      "title": "El Caballero Oscuro",
+      "text": "Batman, con la ayuda del teniente Gordon y el fiscal Harvey Dent, logra mantener a raya el crimen organizado en Gotham. Sin embargo, la aparición del Joker, un criminal anarquista que busca sumir la ciudad en el caos, pone a prueba los límites morales del héroe. El Caballero Oscuro deberá enfrentarse a su mayor desafío psicológico para salvar la ciudad de la locura."
+    },
+    {
+      "id": "film_14",
+      "title": "El Viaje de Chihiro",
+      "text": "Durante una mudanza, la niña Chihiro queda atrapada en un mundo mágico dominado por la bruja Yubaba, quien convierte a sus padres en cerdos. Para sobrevivir y rescatarlos, Chihiro debe trabajar en una casa de baños termales para dioses y espíritus. En este viaje de madurez, tendrá que recordar su verdadero nombre y encontrar el valor para enfrentarse a la hechicera."
+    },
+    {
+      "id": "film_15",
+      "title": "Origen (Inception)",
+      "text": "Dom Cobb es un ladrón experto en el arte de la extracción: robar secretos del subconsciente durante el sueño. Se le ofrece una oportunidad para recuperar su vida anterior a cambio de realizar un trabajo imposible: la incepción, que consiste en implantar una idea en la mente de un heredero corporativo en lugar de robarla, navegando a través de múltiples niveles de sueños."
+    },
+    {
+      "id": "film_16",
+      "title": "La Lista de Schindler",
+      "text": "Oskar Schindler, un empresario alemán miembro del partido nazi, llega a Polonia con la intención de hacer fortuna empleando mano de obra judía barata en su fábrica. Sin embargo, al ser testigo de los horrores del Holocausto, su motivación cambia drásticamente. Arriesgando su vida y su fortuna, convierte su fábrica en un refugio para salvar a más de mil judíos de los campos de exterminio."
+    },
+    {
+      "id": "film_17",
+      "title": "Gladiator",
+      "text": "El general romano Máximo Décimo Meridio es traicionado por Cómodo, el ambicioso hijo del emperador, quien asesina a su propia familia y toma el poder. Reducido a la esclavitud y convertido en gladiador, Máximo gana fama en la arena del Coliseo. Su objetivo es sobrevivir para vengarse del usurpador y cumplir el último deseo del antiguo emperador de devolver el poder al pueblo."
+    },
+    {
+      "id": "film_18",
+      "title": "2001: Una Odisea del Espacio",
+      "text": "Tras el descubrimiento de un misterioso monolito enterrado en la Luna, la humanidad envía una expedición hacia Júpiter a bordo de la nave Discovery. La misión está controlada por HAL 9000, una inteligencia artificial avanzada que comienza a mostrar un comportamiento errático. La película explora la evolución humana, la tecnología y la vida extraterrestre en un viaje visualmente impactante."
+    },
+    {
+      "id": "film_19",
+      "title": "Star Wars: Una Nueva Esperanza",
+      "text": "En una galaxia muy lejana, el joven granjero Luke Skywalker se ve envuelto en la guerra civil entre el malvado Imperio Galáctico y la Alianza Rebelde. Tras encontrar dos droides con los planos de la Estrella de la Muerte, Luke se une al maestro Jedi Obi-Wan Kenobi y al contrabandista Han Solo para rescatar a la princesa Leia y salvar la galaxia."
+    },
+    {
+      "id": "film_20",
+      "title": "Coco",
+      "text": "Miguel es un niño que sueña con ser músico, pero su familia tiene una estricta prohibición sobre la música desde hace generaciones. Desesperado por probar su talento, Miguel viaja accidentalmente a la colorida Tierra de los Muertos. Allí, emprende una aventura para encontrar a su tatarabuelo, un legendario cantante, y descubrir la verdad oculta tras la historia de su familia antes del amanecer."
+    },
+    {
+      "id": "film_21",
+      "title": "Dune",
+      "text": "Paul Atreides, un joven brillante nacido con un gran destino, debe viajar al planeta más peligroso del universo: Arrakis. Este desierto es la única fuente de la especia, la sustancia más valiosa de la galaxia. Cuando fuerzas malévolas traicionan a su familia para hacerse con el control del recurso, Paul debe liderar a los nativos Fremen para asegurar el futuro de su pueblo."
+    },
+    {
+      "id": "film_22",
+      "title": "Oppenheimer",
+      "text": "La película narra la historia del físico J. Robert Oppenheimer, elegido para liderar el Proyecto Manhattan durante la Segunda Guerra Mundial. En una carrera contra los nazis, reúne a las mentes más brillantes en un laboratorio secreto en el desierto para construir la primera bomba atómica. El filme explora el peso moral de su creación y las consecuencias políticas que enfrentó tras la guerra."
+    },
+    {
+      "id": "film_23",
+      "title": "Titanic",
+      "text": "Jack, un joven artista sin recursos, y Rose, una joven de alta sociedad prometida a un millonario arrogante, se conocen a bordo del R.M.S. Titanic. A pesar de sus diferencias sociales, se enamoran profundamente mientras el barco, considerado insumergible, navega hacia su destino. Su romance se convierte en una lucha por la supervivencia cuando el transatlántico choca fatalmente contra un iceberg."
+    },
+    {
+      "id": "film_24",
+      "title": "La La Land",
+      "text": "En la ciudad de Los Ángeles, Mia, una aspirante a actriz que sirve café entre audiciones, y Sebastian, un músico de jazz dedicado a preservar la tradición, se enamoran mientras persiguen sus sueños. A medida que alcanzan el éxito, deben enfrentarse a decisiones difíciles que amenazan con separar sus caminos y poner a prueba su relación frente a la ambición artística."
+    },
+    {
+      "id": "film_25",
+      "title": "Avatar",
+      "text": "En el año 2154, Jake Sully, un ex marine en silla de ruedas, viaja a la luna Pandora para participar en el programa Avatar, que le permite controlar un cuerpo biológico de la especie nativa Na'vi. Su misión inicial es infiltrarse para facilitar la extracción de un mineral valioso, pero al conocer su cultura, debe elegir entre cumplir sus órdenes o luchar para proteger su nuevo hogar."
+    },
+    {
+      "id": "film_26",
+      "title": "La Princesa Mononoke",
+      "text": "En un Japón medieval fantástico, el joven príncipe Ashitaka es maldecido tras defender a su aldea de un jabalí demoníaco. En busca de una cura, viaja al oeste y se encuentra en medio de una guerra entre los humanos de la Ciudad del Hierro y los dioses del bosque, liderados por San, una joven humana criada por lobos. Ashitaka deberá encontrar una forma de que humanos y naturaleza coexistan antes de que la maldición consuma su vida."
+    },
+    {
+      "id": "film_27",
+      "title": "Hércules (Disney)",
+      "text": "Hércules, hijo de Zeus, es convertido en mortal por el malvado Hades pero conserva su fuerza sobrehumana. Para recuperar su divinidad y regresar al Olimpo, debe demostrar que es un héroe verdadero en la Tierra. Acompañado por el sátiro Phil, se enfrenta a monstruos y titanes mientras descubre que ser un héroe no es solo cuestión de fuerza física, sino de la nobleza del corazón y el sacrificio personal."
+    },
+    {
+      "id": "film_28",
+      "title": "Sr. Holmes",
+      "text": "En 1947, un Sherlock Holmes de noventa y tres años vive retirado en una remota granja criando abejas. Con su mente empezando a fallar, el famoso detective intenta recordar los detalles de su último caso sin resolver, aquel que lo llevó al retiro definitivo. Con la ayuda del joven hijo de su ama de llaves, Holmes se enfrenta a la fragilidad de su propia memoria para cerrar el capítulo más personal de su legendaria carrera."
+    },
+    {
+      "id": "film_29",
+      "title": "El Show de Truman",
+      "text": "Truman Burbank vive una vida aparentemente perfecta en una pequeña isla paradisíaca donde todo parece seguir un orden impecable. Sin embargo, tras una serie de incidentes extraños y encuentros inexplicables con personas que parecen conocerlo demasiado bien, comienza a sospechar que su existencia está siendo manipulada por fuerzas invisibles. Decidido a descubrir la verdad, Truman deberá desafiar sus miedos más profundos y los límites de su propio mundo para averiguar qué se esconde realmente tras el horizonte de su ciudad."
+    }
+  ]
+}

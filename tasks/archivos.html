@@ -282,18 +282,6 @@
             animation: bounce 0.5s;
         }
 
-        @keyframes bounce {
-
-            0%,
-            100% {
-                transform: scale(1);
-            }
-
-            50% {
-                transform: scale(1.1);
-            }
-        }
-
         .back-menu-btn {
             padding: 10px 20px;
             background: #666;
@@ -352,6 +340,54 @@
 
         .rename-dialog .cancel {
             background: #e0e0e0;
+        }
+
+        .task-checklist {
+            background: #f8f8f8;
+            padding: 15px;
+            border-radius: 8px;
+            border: 1px solid #e0e0e0;
+        }
+
+        .task-checklist h3 {
+            color: #0067C0;
+            margin-bottom: 10px;
+            font-size: 18px;
+        }
+
+        .checklist-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 8px;
+        }
+
+        .checklist-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 6px 8px;
+            border-radius: 4px;
+            transition: background 0.3s;
+        }
+
+        .checklist-item.completed {
+            background: #e8f5e9;
+        }
+
+        .checklist-icon {
+            font-size: 18px;
+            min-width: 20px;
+        }
+
+        .checklist-text {
+            flex: 1;
+            font-size: 13px;
+            line-height: 1.3;
+        }
+
+        .checklist-item.completed .checklist-text {
+            color: #2e7d32;
+            font-weight: 500;
         }
     </style>
 </head>
@@ -469,7 +505,10 @@
     </div>
 
     <div class="bottom-panel">
-        <div class="task-description" id="taskDescription"></div>
+        <div style="display: flex; gap: 20px;">
+            <div class="task-description" id="taskDescription" style="flex: 1.2;"></div>
+            <div class="task-checklist" id="taskChecklist" style="flex: 1;"></div>
+        </div>
         <div class="task-status">
             <button class="hint-btn" onclick="showHint()">💡 Mostrar Pista</button>
             <div class="hint-text" id="hintText"></div>
@@ -596,6 +635,29 @@
                     "Por ejemplo: Francia 01.jpg debe estar dentro de la carpeta Francia",
                     "Recuerda que deberás CORTAR primero cada archivo y luego ENTRAR en cada carpeta"
                 ],
+                checklist: [
+                    {
+                        text: "4 archivos en la carpeta Francia",
+                        check: (fs) => {
+                            const francia = fs['Francia']?.children || {};
+                            return Object.keys(francia).filter(k => k.startsWith('Francia')).length === 4;
+                        }
+                    },
+                    {
+                        text: "4 archivos en la carpeta Italia",
+                        check: (fs) => {
+                            const italia = fs['Italia']?.children || {};
+                            return Object.keys(italia).filter(k => k.startsWith('Italia')).length === 4;
+                        }
+                    },
+                    {
+                        text: "4 archivos en la carpeta Japón",
+                        check: (fs) => {
+                            const japon = fs['Japón']?.children || {};
+                            return Object.keys(japon).filter(k => k.startsWith('Japón')).length === 4;
+                        }
+                    }
+                ],
                 hints: [
                     "Primero, haz clic en el archivo para seleccionarlo",
                     "Luego, haz clic en el botón 'Cortar' (las tijeras)",
@@ -640,6 +702,51 @@
                     "Luego mueve cada foto a la carpeta Grecia",
                     "También mueve los archivos de Estados Unidos y Polo Norte a sus carpetas"
                 ],
+                checklist: [
+                    {
+                        text: "3 archivos renombrados con 'Grecia'",
+                        check: (fs) => {
+                            let count = 0;
+                            for (let name in fs) {
+                                if (fs[name].type === 'file' && name.toLowerCase().includes('grecia')) {
+                                    count++;
+                                }
+                            }
+                            // También contar dentro de carpetas
+                            for (let folderName in fs) {
+                                if (fs[folderName].type === 'folder') {
+                                    for (let fileName in fs[folderName].children) {
+                                        if (fileName.toLowerCase().includes('grecia')) {
+                                            count++;
+                                        }
+                                    }
+                                }
+                            }
+                            return count === 3;
+                        }
+                    },
+                    {
+                        text: "3 archivos en la carpeta Estados Unidos",
+                        check: (fs) => {
+                            const eeuu = fs['Estados Unidos']?.children || {};
+                            return Object.keys(eeuu).filter(k => k.includes('Estados Unidos')).length === 3;
+                        }
+                    },
+                    {
+                        text: "3 archivos en la carpeta Grecia",
+                        check: (fs) => {
+                            const grecia = fs['Grecia']?.children || {};
+                            return Object.keys(grecia).filter(k => k.toLowerCase().includes('grecia')).length === 3;
+                        }
+                    },
+                    {
+                        text: "3 archivos en la carpeta Polo Norte",
+                        check: (fs) => {
+                            const polo = fs['Polo Norte']?.children || {};
+                            return Object.keys(polo).filter(k => k.includes('Polo Norte')).length === 3;
+                        }
+                    }
+                ],
                 hints: [
                     "Selecciona un archivo y haz clic en 'Cambiar Nombre'",
                     "Escribe el nuevo nombre y pulsa Enter",
@@ -681,6 +788,116 @@
                     "Renombra cada archivo poniendo su color en el nombre (ej: Manzana Roja.jpg)",
                     "Crea 4 carpetas: Azul, Amarillo, Rojo y Verde",
                     "Mueve 4 archivos a cada carpeta según su color"
+                ],
+                checklist: [
+                    {
+                        text: "Carpeta 'Azul' creada",
+                        check: (fs) => {
+                            const normalizar = (texto) => texto.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+                            for (let name in fs) {
+                                if (fs[name].type === 'folder' && normalizar(name).includes('azul')) {
+                                    return true;
+                                }
+                            }
+                            return false;
+                        }
+                    },
+                    {
+                        text: "4 archivos azules renombrados y en carpeta Azul",
+                        check: (fs) => {
+                            const normalizar = (texto) => texto.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+                            for (let folderName in fs) {
+                                if (fs[folderName].type === 'folder' && normalizar(folderName).includes('azul')) {
+                                    const count = Object.keys(fs[folderName].children).filter(
+                                        k => /azul(es)?/.test(normalizar(k))
+                                    ).length;
+                                    return count === 4;
+                                }
+                            }
+                            return false;
+                        }
+                    },
+                    {
+                        text: "Carpeta 'Amarillo' creada",
+                        check: (fs) => {
+                            const normalizar = (texto) => texto.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+                            for (let name in fs) {
+                                if (fs[name].type === 'folder' && /amarill(o|a|os|as)/.test(normalizar(name))) {
+                                    return true;
+                                }
+                            }
+                            return false;
+                        }
+                    },
+                    {
+                        text: "4 archivos amarillos renombrados y en carpeta Amarillo",
+                        check: (fs) => {
+                            const normalizar = (texto) => texto.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+                            for (let folderName in fs) {
+                                if (fs[folderName].type === 'folder' && /amarill(o|a|os|as)/.test(normalizar(folderName))) {
+                                    const count = Object.keys(fs[folderName].children).filter(
+                                        k => /amarill(o|a|os|as)/.test(normalizar(k))
+                                    ).length;
+                                    return count === 4;
+                                }
+                            }
+                            return false;
+                        }
+                    },
+                    {
+                        text: "Carpeta 'Rojo' creada",
+                        check: (fs) => {
+                            const normalizar = (texto) => texto.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+                            for (let name in fs) {
+                                if (fs[name].type === 'folder' && /roj(o|a|os|as)/.test(normalizar(name))) {
+                                    return true;
+                                }
+                            }
+                            return false;
+                        }
+                    },
+                    {
+                        text: "4 archivos rojos renombrados y en carpeta Rojo",
+                        check: (fs) => {
+                            const normalizar = (texto) => texto.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+                            for (let folderName in fs) {
+                                if (fs[folderName].type === 'folder' && /roj(o|a|os|as)/.test(normalizar(folderName))) {
+                                    const count = Object.keys(fs[folderName].children).filter(
+                                        k => /roj(o|a|os|as)/.test(normalizar(k))
+                                    ).length;
+                                    return count === 4;
+                                }
+                            }
+                            return false;
+                        }
+                    },
+                    {
+                        text: "Carpeta 'Verde' creada",
+                        check: (fs) => {
+                            const normalizar = (texto) => texto.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+                            for (let name in fs) {
+                                if (fs[name].type === 'folder' && /verde(s)?/.test(normalizar(name))) {
+                                    return true;
+                                }
+                            }
+                            return false;
+                        }
+                    },
+                    {
+                        text: "4 archivos verdes renombrados y en carpeta Verde",
+                        check: (fs) => {
+                            const normalizar = (texto) => texto.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+                            for (let folderName in fs) {
+                                if (fs[folderName].type === 'folder' && /verde(s)?/.test(normalizar(folderName))) {
+                                    const count = Object.keys(fs[folderName].children).filter(
+                                        k => /verde(s)?/.test(normalizar(k))
+                                    ).length;
+                                    return count === 4;
+                                }
+                            }
+                            return false;
+                        }
+                    }
                 ],
                 hints: [
                     "Haz clic en 'Nueva Carpeta' para crear las carpetas",
@@ -756,6 +973,83 @@
                     "Crea 3 carpetas: Joyas, Gafas y Relojes",
                     "Mueve 3 archivos a cada carpeta según corresponda"
                 ],
+                checklist: [
+                    {
+                        text: "Carpeta 'Joyas' creada",
+                        check: (fs) => {
+                            for (let name in fs) {
+                                if (fs[name].type === 'folder' && name.toLowerCase().includes('joya')) {
+                                    return true;
+                                }
+                            }
+                            return false;
+                        }
+                    },
+                    {
+                        text: "3 archivos renombrados y en carpeta Joyas",
+                        check: (fs) => {
+                            for (let folderName in fs) {
+                                if (fs[folderName].type === 'folder' && folderName.toLowerCase().includes('joya')) {
+                                    const count = Object.keys(fs[folderName].children).filter(
+                                        k => k.toLowerCase().includes('joya')
+                                    ).length;
+                                    return count === 3;
+                                }
+                            }
+                            return false;
+                        }
+                    },
+                    {
+                        text: "Carpeta 'Gafas' creada",
+                        check: (fs) => {
+                            for (let name in fs) {
+                                if (fs[name].type === 'folder' && name.toLowerCase().includes('gafa')) {
+                                    return true;
+                                }
+                            }
+                            return false;
+                        }
+                    },
+                    {
+                        text: "3 archivos renombrados y en carpeta Gafas",
+                        check: (fs) => {
+                            for (let folderName in fs) {
+                                if (fs[folderName].type === 'folder' && folderName.toLowerCase().includes('gafa')) {
+                                    const count = Object.keys(fs[folderName].children).filter(
+                                        k => k.toLowerCase().includes('gafa')
+                                    ).length;
+                                    return count === 3;
+                                }
+                            }
+                            return false;
+                        }
+                    },
+                    {
+                        text: "Carpeta 'Relojes' creada",
+                        check: (fs) => {
+                            for (let name in fs) {
+                                if (fs[name].type === 'folder' && name.toLowerCase().includes('reloj')) {
+                                    return true;
+                                }
+                            }
+                            return false;
+                        }
+                    },
+                    {
+                        text: "3 archivos renombrados y en carpeta Relojes",
+                        check: (fs) => {
+                            for (let folderName in fs) {
+                                if (fs[folderName].type === 'folder' && folderName.toLowerCase().includes('reloj')) {
+                                    const count = Object.keys(fs[folderName].children).filter(
+                                        k => k.toLowerCase().includes('reloj')
+                                    ).length;
+                                    return count === 3;
+                                }
+                            }
+                            return false;
+                        }
+                    }
+                ],
                 hints: [
                     "Observa cada emoticono y decide qué producto es",
                     "Crea 3 carpetas para agrupar: Joyas, Gafas, Relojes",
@@ -804,6 +1098,58 @@
                     "Crea dos carpetas: Documentos y Facturas",
                     "Mueve 4 archivos a cada carpeta según su tipo"
                 ],
+                checklist: [
+                    {
+                        text: "Carpeta 'Documentos' creada",
+                        check: (fs) => {
+                            for (let name in fs) {
+                                if (fs[name].type === 'folder' && name.toLowerCase().includes('documento')) {
+                                    return true;
+                                }
+                            }
+                            return false;
+                        }
+                    },
+                    {
+                        text: "4 archivos renombrados con 'documento' y en carpeta",
+                        check: (fs) => {
+                            for (let folderName in fs) {
+                                if (fs[folderName].type === 'folder' && folderName.toLowerCase().includes('documento')) {
+                                    const count = Object.keys(fs[folderName].children).filter(
+                                        k => k.toLowerCase().includes('documento')
+                                    ).length;
+                                    return count === 4;
+                                }
+                            }
+                            return false;
+                        }
+                    },
+                    {
+                        text: "Carpeta 'Facturas' creada",
+                        check: (fs) => {
+                            for (let name in fs) {
+                                if (fs[name].type === 'folder' && name.toLowerCase().includes('factura')) {
+                                    return true;
+                                }
+                            }
+                            return false;
+                        }
+                    },
+                    {
+                        text: "4 archivos renombrados con 'factura' y en carpeta",
+                        check: (fs) => {
+                            for (let folderName in fs) {
+                                if (fs[folderName].type === 'folder' && folderName.toLowerCase().includes('factura')) {
+                                    const count = Object.keys(fs[folderName].children).filter(
+                                        k => k.toLowerCase().includes('factura')
+                                    ).length;
+                                    return count === 4;
+                                }
+                            }
+                            return false;
+                        }
+                    }
+                ],
                 hints: [
                     "Primero crea las dos carpetas: Documentos y Facturas",
                     "Mira cada imagen para decidir si es factura o documento",
@@ -849,6 +1195,88 @@
                     "Renombra los archivos a Brasil 001.jpg, Brasil 002.jpg, Brasil 003.jpg, etc.",
                     "Crea dos carpetas: 'Copia para Andrea' y 'Copia para Carlos'",
                     "COPIA (no cortes) los 5 archivos en AMBAS carpetas"
+                ],
+                checklist: [
+                    {
+                        text: "5 archivos renombrados con 'Brasil'",
+                        check: (fs) => {
+                            let count = 0;
+                            // Contar en raíz
+                            for (let name in fs) {
+                                if (fs[name].type === 'file' && name.toLowerCase().includes('brasil')) {
+                                    count++;
+                                }
+                            }
+                            // Contar en carpetas
+                            for (let folderName in fs) {
+                                if (fs[folderName].type === 'folder') {
+                                    for (let fileName in fs[folderName].children) {
+                                        if (fileName.toLowerCase().includes('brasil')) {
+                                            count++;
+                                        }
+                                    }
+                                }
+                            }
+                            return count >= 5;
+                        }
+                    },
+                    {
+                        text: "Carpeta 'Copia para Andrea' creada",
+                        check: (fs) => {
+                            for (let name in fs) {
+                                if (fs[name].type === 'folder' && name.toLowerCase().includes('andrea')) {
+                                    return true;
+                                }
+                            }
+                            return false;
+                        }
+                    },
+                    {
+                        text: "5 archivos de Brasil en carpeta de Andrea",
+                        check: (fs) => {
+                            for (let folderName in fs) {
+                                if (fs[folderName].type === 'folder' && folderName.toLowerCase().includes('andrea')) {
+                                    const count = Object.keys(fs[folderName].children).filter(
+                                        k => k.toLowerCase().includes('brasil')
+                                    ).length;
+                                    return count === 5;
+                                }
+                            }
+                            return false;
+                        }
+                    },
+                    {
+                        text: "Carpeta 'Copia para Carlos' creada",
+                        check: (fs) => {
+                            for (let name in fs) {
+                                if (fs[name].type === 'folder' && name.toLowerCase().includes('carlos')) {
+                                    return true;
+                                }
+                            }
+                            return false;
+                        }
+                    },
+                    {
+                        text: "5 archivos de Brasil en carpeta de Carlos",
+                        check: (fs) => {
+                            for (let folderName in fs) {
+                                if (fs[folderName].type === 'folder' && folderName.toLowerCase().includes('carlos')) {
+                                    const count = Object.keys(fs[folderName].children).filter(
+                                        k => k.toLowerCase().includes('brasil')
+                                    ).length;
+                                    return count === 5;
+                                }
+                            }
+                            return false;
+                        }
+                    },
+                    {
+                        text: "Archivos originales siguen en la raíz (usaste COPIAR)",
+                        check: (fs) => {
+                            const rootFiles = Object.keys(fs).filter(k => fs[k].type === 'file').length;
+                            return rootFiles >= 5;
+                        }
+                    }
                 ],
                 hints: [
                     "Primero renombra todos los archivos con nombres de Brasil",
@@ -896,6 +1324,116 @@
                     "Renombra cada archivo con el nombre de la estación (ej: Primavera 01.jpg)",
                     "Crea 4 carpetas: Primavera, Verano, Otoño, Invierno",
                     "Mueve 2 archivos a cada carpeta según la estación correspondiente"
+                ],
+                checklist: [
+                    {
+                        text: "Carpeta 'Primavera' creada",
+                        check: (fs) => {
+                            const normalizar = (texto) => texto.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+                            for (let name in fs) {
+                                if (fs[name].type === 'folder' && normalizar(name).includes('primavera')) {
+                                    return true;
+                                }
+                            }
+                            return false;
+                        }
+                    },
+                    {
+                        text: "2 archivos de primavera renombrados y en carpeta",
+                        check: (fs) => {
+                            const normalizar = (texto) => texto.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+                            for (let folderName in fs) {
+                                if (fs[folderName].type === 'folder' && normalizar(folderName).includes('primavera')) {
+                                    const count = Object.keys(fs[folderName].children).filter(
+                                        k => normalizar(k).includes('primavera')
+                                    ).length;
+                                    return count === 2;
+                                }
+                            }
+                            return false;
+                        }
+                    },
+                    {
+                        text: "Carpeta 'Verano' creada",
+                        check: (fs) => {
+                            const normalizar = (texto) => texto.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+                            for (let name in fs) {
+                                if (fs[name].type === 'folder' && normalizar(name).includes('verano')) {
+                                    return true;
+                                }
+                            }
+                            return false;
+                        }
+                    },
+                    {
+                        text: "2 archivos de verano renombrados y en carpeta",
+                        check: (fs) => {
+                            const normalizar = (texto) => texto.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+                            for (let folderName in fs) {
+                                if (fs[folderName].type === 'folder' && normalizar(folderName).includes('verano')) {
+                                    const count = Object.keys(fs[folderName].children).filter(
+                                        k => normalizar(k).includes('verano')
+                                    ).length;
+                                    return count === 2;
+                                }
+                            }
+                            return false;
+                        }
+                    },
+                    {
+                        text: "Carpeta 'Otoño' creada",
+                        check: (fs) => {
+                            const normalizar = (texto) => texto.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+                            for (let name in fs) {
+                                if (fs[name].type === 'folder' && normalizar(name).includes('otono')) {
+                                    return true;
+                                }
+                            }
+                            return false;
+                        }
+                    },
+                    {
+                        text: "2 archivos de otoño renombrados y en carpeta",
+                        check: (fs) => {
+                            const normalizar = (texto) => texto.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+                            for (let folderName in fs) {
+                                if (fs[folderName].type === 'folder' && normalizar(folderName).includes('otono')) {
+                                    const count = Object.keys(fs[folderName].children).filter(
+                                        k => normalizar(k).includes('otono')
+                                    ).length;
+                                    return count === 2;
+                                }
+                            }
+                            return false;
+                        }
+                    },
+                    {
+                        text: "Carpeta 'Invierno' creada",
+                        check: (fs) => {
+                            const normalizar = (texto) => texto.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+                            for (let name in fs) {
+                                if (fs[name].type === 'folder' && normalizar(name).includes('invierno')) {
+                                    return true;
+                                }
+                            }
+                            return false;
+                        }
+                    },
+                    {
+                        text: "2 archivos de invierno renombrados y en carpeta",
+                        check: (fs) => {
+                            const normalizar = (texto) => texto.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+                            for (let folderName in fs) {
+                                if (fs[folderName].type === 'folder' && normalizar(folderName).includes('invierno')) {
+                                    const count = Object.keys(fs[folderName].children).filter(
+                                        k => normalizar(k).includes('invierno')
+                                    ).length;
+                                    return count === 2;
+                                }
+                            }
+                            return false;
+                        }
+                    }
                 ],
                 hints: [
                     "Observa los emoticonos: flores y mariposas = primavera, sol y playa = verano",
@@ -959,6 +1497,68 @@
                     "Crea 2 carpetas: Peliculas y Dibujos",
                     "Mueve cada archivo a su carpeta correspondiente"
                 ],
+                checklist: [
+                    {
+                        text: "Carpeta 'Peliculas' creada",
+                        check: (fs) => {
+                            const normalizar = (texto) => texto.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+                            for (let name in fs) {
+                                if (fs[name].type === 'folder' && normalizar(name).includes('pelicula')) {
+                                    return true;
+                                }
+                            }
+                            return false;
+                        }
+                    },
+                    {
+                        text: "4 archivos renombrados (sin nombres basura) en Peliculas",
+                        check: (fs) => {
+                            const normalizar = (texto) => texto.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+                            const originalGarbageNames = ['qwe.jpg', 'asd.jpg', 'zxc.jpg', 'wer.jpg', 'sdf.jpg', 'xcv.jpg', '123.jpg', '234.jpg'];
+
+                            for (let folderName in fs) {
+                                if (fs[folderName].type === 'folder' && normalizar(folderName).includes('pelicula')) {
+                                    const files = Object.keys(fs[folderName].children);
+                                    if (files.length !== 4) return false;
+
+                                    const hasGarbage = files.some(name => originalGarbageNames.includes(name));
+                                    return !hasGarbage;
+                                }
+                            }
+                            return false;
+                        }
+                    },
+                    {
+                        text: "Carpeta 'Dibujos' creada",
+                        check: (fs) => {
+                            const normalizar = (texto) => texto.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+                            for (let name in fs) {
+                                if (fs[name].type === 'folder' && normalizar(name).includes('dibujo')) {
+                                    return true;
+                                }
+                            }
+                            return false;
+                        }
+                    },
+                    {
+                        text: "4 archivos renombrados (sin nombres basura) en Dibujos",
+                        check: (fs) => {
+                            const normalizar = (texto) => texto.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+                            const originalGarbageNames = ['qwe.jpg', 'asd.jpg', 'zxc.jpg', 'wer.jpg', 'sdf.jpg', 'xcv.jpg', '123.jpg', '234.jpg'];
+
+                            for (let folderName in fs) {
+                                if (fs[folderName].type === 'folder' && normalizar(folderName).includes('dibujo')) {
+                                    const files = Object.keys(fs[folderName].children);
+                                    if (files.length !== 4) return false;
+
+                                    const hasGarbage = files.some(name => originalGarbageNames.includes(name));
+                                    return !hasGarbage;
+                                }
+                            }
+                            return false;
+                        }
+                    }
+                ],
                 hints: [
                     "Mira las imágenes y decide si son Peliculas normales o dibujos animados",
                     "Crea dos carpetas: una para Peliculas y otra para Dibujos",
@@ -1008,6 +1608,116 @@
                     "Observa la extensión de cada archivo (.mp3, .mp4, .pdf, .jpg)",
                     "Crea 4 carpetas: Musica, Video, Documento y Foto",
                     "Mueve 3 archivos de cada tipo a su carpeta correspondiente"
+                ],
+                checklist: [
+                    {
+                        text: "Carpeta 'Musica' creada",
+                        check: (fs) => {
+                            const normalizar = (texto) => texto.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+                            for (let name in fs) {
+                                if (fs[name].type === 'folder' && normalizar(name).includes('musica')) {
+                                    return true;
+                                }
+                            }
+                            return false;
+                        }
+                    },
+                    {
+                        text: "3 archivos .mp3 en carpeta Musica",
+                        check: (fs) => {
+                            const normalizar = (texto) => texto.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+                            for (let folderName in fs) {
+                                if (fs[folderName].type === 'folder' && normalizar(folderName).includes('musica')) {
+                                    const count = Object.keys(fs[folderName].children).filter(
+                                        k => k.toLowerCase().endsWith('.mp3')
+                                    ).length;
+                                    return count === 3;
+                                }
+                            }
+                            return false;
+                        }
+                    },
+                    {
+                        text: "Carpeta 'Video' creada",
+                        check: (fs) => {
+                            const normalizar = (texto) => texto.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+                            for (let name in fs) {
+                                if (fs[name].type === 'folder' && normalizar(name).includes('video')) {
+                                    return true;
+                                }
+                            }
+                            return false;
+                        }
+                    },
+                    {
+                        text: "3 archivos .mp4 en carpeta Video",
+                        check: (fs) => {
+                            const normalizar = (texto) => texto.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+                            for (let folderName in fs) {
+                                if (fs[folderName].type === 'folder' && normalizar(folderName).includes('video')) {
+                                    const count = Object.keys(fs[folderName].children).filter(
+                                        k => k.toLowerCase().endsWith('.mp4')
+                                    ).length;
+                                    return count === 3;
+                                }
+                            }
+                            return false;
+                        }
+                    },
+                    {
+                        text: "Carpeta 'Documento' creada",
+                        check: (fs) => {
+                            const normalizar = (texto) => texto.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+                            for (let name in fs) {
+                                if (fs[name].type === 'folder' && normalizar(name).includes('documento')) {
+                                    return true;
+                                }
+                            }
+                            return false;
+                        }
+                    },
+                    {
+                        text: "3 archivos .pdf en carpeta Documento",
+                        check: (fs) => {
+                            const normalizar = (texto) => texto.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+                            for (let folderName in fs) {
+                                if (fs[folderName].type === 'folder' && normalizar(folderName).includes('documento')) {
+                                    const count = Object.keys(fs[folderName].children).filter(
+                                        k => k.toLowerCase().endsWith('.pdf')
+                                    ).length;
+                                    return count === 3;
+                                }
+                            }
+                            return false;
+                        }
+                    },
+                    {
+                        text: "Carpeta 'Foto' creada",
+                        check: (fs) => {
+                            const normalizar = (texto) => texto.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+                            for (let name in fs) {
+                                if (fs[name].type === 'folder' && normalizar(name).includes('foto')) {
+                                    return true;
+                                }
+                            }
+                            return false;
+                        }
+                    },
+                    {
+                        text: "3 archivos .jpg en carpeta Foto",
+                        check: (fs) => {
+                            const normalizar = (texto) => texto.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+                            for (let folderName in fs) {
+                                if (fs[folderName].type === 'folder' && normalizar(folderName).includes('foto')) {
+                                    const count = Object.keys(fs[folderName].children).filter(
+                                        k => k.toLowerCase().endsWith('.jpg')
+                                    ).length;
+                                    return count === 3;
+                                }
+                            }
+                            return false;
+                        }
+                    }
                 ],
                 hints: [
                     "La extensión son las letras después del punto: .mp3 = música, .mp4 = vídeo",
@@ -1084,11 +1794,11 @@
             clipboard = null;
             clipboardMode = null;
 
-            // Inicializar el mapeo de íconos para este ejercicio
             iconMapping = {};
             buildIconMapping(fileSystem, []);
 
             updateTaskDescription(exercise);
+            updateChecklist(exercise);
             render();
         }
 
@@ -1176,6 +1886,34 @@
             });
             html += '</ul>';
             taskDesc.innerHTML = html;
+        }
+
+        function updateChecklist(exercise) {
+            const checklistDiv = document.getElementById('taskChecklist');
+
+            if (!exercise.checklist) {
+                checklistDiv.innerHTML = '';
+                return;
+            }
+
+            let html = '<h3>✓ Progreso</h3>';
+            html += '<div class="checklist-grid">';
+
+            exercise.checklist.forEach((item, index) => {
+                const isCompleted = item.check(fileSystem);
+                const icon = isCompleted ? '✅' : '⬜';
+                const completedClass = isCompleted ? 'completed' : '';
+
+                html += `
+            <div class="checklist-item ${completedClass}">
+                <span class="checklist-icon">${icon}</span>
+                <span class="checklist-text">${item.text}</span>
+            </div>
+        `;
+            });
+
+            html += '</div>';
+            checklistDiv.innerHTML = html;
         }
 
         function getCurrentFolder() {
@@ -1272,7 +2010,12 @@
 
             updateAddressBar();
             updateButtons();
-            checkCompletion();
+            // checkCompletion(); //Con la checklist ya no hace falta.
+
+            // AÑADIR ESTA LÍNEA:
+            if (currentExercise) {
+                updateChecklist(exercises[currentExercise]);
+            }
         }
 
         function updateAddressBar() {
@@ -1378,6 +2121,11 @@
             if (!clipboard) return;
 
             const currentFolder = getCurrentFolder();
+
+            if (currentExercise === 1 && currentPath.length === 0 && clipboardMode === 'cut') {
+                alert('Debes ENTRAR en una carpeta para pegar el archivo cortado');
+                return;
+            }
 
             // Obtener la carpeta de origen
             let sourceFolder = fileSystem;

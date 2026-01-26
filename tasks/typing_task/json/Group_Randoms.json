@@ -1,0 +1,80 @@
+{
+    "class": "Palabras Aleatorias",
+    "option":[
+        {
+            "id": "text_01",
+            "title": "Gatos",
+            "text": "gato rosa ronroneo bigotes garras miau arena felino rascador siesta gato cola ovillo maullido ágil suave cazador orejas ronroneo patas pelaje salto juguete minino almohadillas bigotes nocturno arañar curiosidad leche ronroneo"
+        },
+        {
+            "id": "text_02",
+            "title": "Física y Química",
+            "text": "átomo fuerza electrón masa reacción protón gravedad mol energía átomo enlace calor inercia ácido base isótopo vacío energía fricción molécula cuantum plasma fusión núcleo presión orbital carga materia aceleración densidad"
+        },
+        {
+            "id": "text_03",
+            "title": "Videojuegos",
+            "text": "consola nivel mando pixel aventura sigilo inventario pausa plataforma multijugador jefe final puntos guardado textura glitch teclado ratón botín cinemática misión mapa dificultad online spawn lag recarga habilidad combo arcade trofeo partida"
+        },
+        {
+            "id": "text_04",
+            "title": "Repostería",
+            "text": "harina azúcar huevo horno levadura batido crema molde bizcocho chocolate glasé mantequilla vainilla amasar hornear fondant canela merengue glaseado receta tarta frosting galleta almíbar ganache caramelo muffin tamizar batidora dulce relleno"
+        },
+        {
+            "id": "text_05",
+            "title": "Programación",
+            "text": "código variable función bucle compilador depuración clase objeto cadena matriz entero booleano algoritmo script repositorio rama fusión terminal servidor base datos error sintaxis marco interfaz puntero memoria constante compilar despliegue nube binario"
+        },
+        {
+            "id": "text_06",
+            "title": "Astronomía",
+            "text": "estrella planeta galaxia órbita cometa asteroide nebulosa vacío satélite telescopio universo gravedad eclipse constelación cosmos luz radiación meteorito supernova lunar solar atmósfera horizonte evento agujero negro estelar vacío sonda polvo"
+        },
+        {
+            "id": "text_07",
+            "title": "Cine y Rodaje",
+            "text": "director guion cámara actor escena foco claqueta montaje sonido foco producción encuadre guionista plató efectos maquillaje vestuario guion reparto película secuencia tráiler estreno butaca palomitas rodaje toma acción corte zoom"
+        },
+        {
+            "id": "text_08",
+            "title": "Música",
+            "text": "ritmo melodía acorde nota compás tempo silencio armonía estribillo concierto partitura clave piano guitarra batería bajo violín voz coro ensayo solista orquesta sintetizador pedal distorsión acústico volumen escala metrónomo bafle"
+        },
+        {
+            "id": "text_09",
+            "title": "Jardinería",
+            "text": "tierra semilla raíz tallo hoja flor fruto riego abono maceta brote poda jardín huerto pala rastrillo abejas polen pétalo arbusto sombra podar cultivar naturaleza abono sustrato trasplante invernadero riego espina"
+        },
+        {
+            "id": "text_10",
+            "title": "Piratas y Mar",
+            "text": "barco tesoro mapa loro brújula parche sable galeón isla ron ancla babor estribor mástil vela cubierta motín pirata océano coral marea abordaje calavera tesoro botella ron catalejo horizonte tormenta bodega"
+        },
+        {
+            "id": "text_11",
+            "title": "Cocina Italiana",
+            "text": "pasta pizza tomate albahaca queso orégano lasaña harina aceite oliva risotto focaccia harina mozzarella parmesano ravioli espagueti pesto ajo masa hornear sartén gnocchi gourmet cena masa harina horno sabroso napolitana"
+        },
+        {
+            "id": "text_12",
+            "title": "Mitología",
+            "text": "dios héroe mito olimpo trueno rayo inframundo ninfa titán oráculo templo sacrificio leyenda monstruo esfinge hidra pegaso centauro sirena épico destino profecía inmortal laberinto gloria guerra sabiduría triunfo panteón"
+        },
+        {
+            "id": "text_13",
+            "title": "Deportes",
+            "text": "balón meta equipo carrera estadio dorsal árbitro silbato trofeo medalla récord entrenamiento esfuerzo victoria derrota saltar correr natación ciclismo raqueta red portería canasta cancha marcador tiempo suplemento final gimnasio"
+        },
+        {
+            "id": "text_14",
+            "title": "Viajes y Aeropuertos",
+            "text": "vuelo maleta pasaporte escala avión destino hotel mapa mochila turista aduana billete ventana asiento despegar aterrizar aventura guía brújula cámara viaje fotos explorar mundo salida llegada transbordo cabina embarque"
+        },
+        {
+            "id": "text_15",
+            "title": "Arte y Pintura",
+            "text": "lienzo pincel óleo acuarela boceto color matiz sombra caballete galería exposición trazo barniz paleta retrato paisaje técnica escultura grabado dibujo estética diseño inspiración abstracto realismo museo pigmento carboncillo"
+        }
+    ]
+}

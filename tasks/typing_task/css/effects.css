@@ -1,0 +1,473 @@
+/* ============================================================
+   css/effects.css
+   Animaciones, keyframes, efectos visuales, distractores
+   ============================================================ */
+
+/* ============================================================
+   CANVAS DE FONDO (ESTRELLAS 3D)
+   ============================================================ */
+#bg-canvas {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+  transition: opacity var(--transition-normal);
+  pointer-events: none;
+}
+
+#bg-canvas.hidden {
+  opacity: 0;
+}
+
+/* ============================================================
+   PARTÍCULAS FLOTANTES
+   ============================================================ */
+.particle {
+  position: fixed;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 100;
+  opacity: 0.6;
+  box-shadow: 0 0 8px currentColor;
+}
+
+/* ============================================================
+   EFECTO ONDA (CANVAS)
+   ============================================================ */
+.wave-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 100;
+  display: none;
+}
+
+.wave-overlay.active {
+  display: block;
+}
+
+/* ============================================================
+   LLUVIA DE EMOJIS
+   ============================================================ */
+.emoji-rain {
+  position: fixed;
+  font-size: 3rem;
+  pointer-events: none;
+  z-index: 100;
+  opacity: 0.7;
+  animation: emoji-rotate 2s linear infinite;
+}
+
+@keyframes emoji-rotate {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+@media (max-width: 768px) {
+  .emoji-rain {
+    font-size: 2rem;
+  }
+}
+
+/* ============================================================
+   TORMENTA - OVERLAY DE LLUVIA
+   ============================================================ */
+.rain-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 100;
+  display: none;
+  background: linear-gradient(
+    transparent 0%, 
+    rgba(100, 150, 200, 0.15) 100%
+  );
+}
+
+.rain-overlay.active {
+  display: block;
+}
+
+/* ============================================================
+   TORMENTA - GOTAS DE LLUVIA (MEJORADAS) 🌧️
+   ============================================================ */
+.raindrop {
+  position: fixed;
+  width: 2px;
+  height: 80px; /* 🔧 Duplicado de 40px a 80px */
+  background: linear-gradient(
+    to bottom, 
+    rgba(174, 194, 224, 0.1) 0%,
+    rgba(174, 194, 224, 0.8) 30%,
+    rgba(174, 194, 224, 1) 100%
+  );
+  pointer-events: none;
+  z-index: 100;
+  opacity: 0.85; /* 🔧 Aumentado de 0.7 */
+  box-shadow: 0 0 1px rgba(174, 194, 224, 0.5); /* 🔧 Sutil brillo */
+  filter: blur(0.3px); /* 🔧 Motion blur sutil */
+}
+
+/* ============================================================
+   TORMENTA - FLASH DE TRUENO
+   ============================================================ */
+.thunder-flash {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(255, 255, 255, 0.7);
+  pointer-events: none;
+  z-index: 150;
+  display: none;
+}
+
+.thunder-flash.active {
+  display: block;
+  animation: flash 0.3s ease-out;
+}
+
+@keyframes flash {
+  0%, 100% {
+    opacity: 0;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+/* ============================================================
+   ANIMACIONES GLOBALES
+   ============================================================ */
+
+/* Fade In/Out */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes fadeOut {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
+/* Slide In/Out */
+@keyframes slideInLeft {
+  from {
+    transform: translateX(-100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@keyframes slideOutLeft {
+  from {
+    transform: translateX(0);
+    opacity: 1;
+  }
+  to {
+    transform: translateX(-100%);
+    opacity: 0;
+  }
+}
+
+/* Bounce */
+@keyframes bounce {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+/* Glow Pulse */
+@keyframes glowPulse {
+  0%, 100% {
+    box-shadow: 0 0 10px rgba(255, 0, 127, 0.5);
+  }
+  50% {
+    box-shadow: 0 0 30px rgba(255, 0, 127, 0.8), 
+                0 0 50px rgba(255, 0, 127, 0.5);
+  }
+}
+
+/* Scale Pulse */
+@keyframes scalePulse {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.05);
+  }
+}
+
+/* Shake más suave para mobile */
+@media (max-width: 768px) {
+  @keyframes shake {
+    0%, 100% {
+      transform: translateX(0);
+    }
+    25% {
+      transform: translateX(-3px);
+    }
+    75% {
+      transform: translateX(3px);
+    }
+  }
+}
+
+/* ============================================================
+   EFECTOS DE HOVER Y FOCUS
+   ============================================================ */
+
+/* Glow on hover */
+.glow-on-hover {
+  transition: all var(--transition-normal);
+}
+
+.glow-on-hover:hover {
+  box-shadow: 0 0 20px currentColor;
+}
+
+/* ============================================================
+   UTILIDADES DE ANIMACIÓN
+   ============================================================ */
+
+/* Clases de utilidad para animar elementos */
+.animate-fade-in {
+  animation: fadeIn 0.3s ease-in;
+}
+
+.animate-slide-in {
+  animation: slideInLeft 0.3s ease-out;
+}
+
+.animate-bounce {
+  animation: bounce 0.5s ease-in-out;
+}
+
+.animate-pulse {
+  animation: pulse 2s ease-in-out infinite;
+}
+
+.animate-glow {
+  animation: glowPulse 2s ease-in-out infinite;
+}
+
+/* ============================================================
+   EFECTOS ESPECIALES PARA ESTADOS
+   ============================================================ */
+
+/* Efecto de éxito */
+.success-flash {
+  animation: successFlash 0.5s ease-out;
+}
+
+@keyframes successFlash {
+  0% {
+    background-color: transparent;
+  }
+  50% {
+    background-color: rgba(74, 222, 128, 0.3);
+  }
+  100% {
+    background-color: transparent;
+  }
+}
+
+/* Efecto de error */
+.error-flash {
+  animation: errorFlash 0.5s ease-out;
+}
+
+@keyframes errorFlash {
+  0% {
+    background-color: transparent;
+  }
+  50% {
+    background-color: rgba(248, 113, 113, 0.3);
+  }
+  100% {
+    background-color: transparent;
+  }
+}
+
+/* ============================================================
+   PERFORMANCE - REDUCIR MOVIMIENTO PARA ACCESIBILIDAD
+   ============================================================ */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+  
+  .particle,
+  .emoji-rain,
+  .raindrop,
+  #bg-canvas {
+    display: none !important;
+  }
+}
+
+/* ============================================================
+   RESPONSIVE - AJUSTES PARA MÓVIL
+   ============================================================ */
+@media (max-width: 768px) {
+  /* Reducir intensidad de efectos en móvil */
+  .particle {
+    width: 6px;
+    height: 6px;
+    opacity: 0.4;
+  }
+  
+  .raindrop {
+    width: 1.5px;
+    height: 60px; /* 🔧 También más largas en móvil */
+    opacity: 0.65;
+  }
+  
+  /* Desactivar algunos efectos pesados en móvil */
+  @media (max-width: 480px) {
+    .wave-overlay {
+      display: none !important;
+    }
+    
+    .raindrop {
+      height: 50px; /* 🔧 Un poco más cortas en pantallas muy pequeñas */
+    }
+  }
+}
+
+/* ============================================================
+   DARK MODE (FUTURO)
+   ============================================================ */
+@media (prefers-color-scheme: light) {
+  /* Por ahora mantenemos solo dark mode */
+  /* Aquí se pueden añadir ajustes para light mode si se desea */
+}
+
+/* ============================================================
+   😈 ANIMACIONES DEL CAOS TOTAL
+   ============================================================ */
+
+/* Explosión de texto */
+@keyframes chaosTextExplode {
+  0% {
+    transform: scale(0) rotate(0deg);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.5) rotate(180deg);
+    opacity: 0.8;
+  }
+  100% {
+    transform: scale(0.5) rotate(360deg) translateY(100px);
+    opacity: 0;
+  }
+}
+
+/* Forma giratoria cayendo */
+@keyframes chaosSpin {
+  0% {
+    transform: translateY(0) rotate(0deg) scale(1);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(calc(100vh + 100px)) rotate(1080deg) scale(0.3);
+    opacity: 0;
+  }
+}
+
+/* Fantasma del cursor */
+@keyframes ghostFade {
+  0% {
+    transform: scale(1);
+    opacity: 0.8;
+  }
+  100% {
+    transform: scale(4);
+    opacity: 0;
+  }
+}
+
+/* Mensaje molesto - rebote */
+@keyframes chaosMessageBounce {
+  0%, 100% {
+    transform: translateX(-50%) translateY(0) scale(1);
+  }
+  50% {
+    transform: translateX(-50%) translateY(-30px) scale(1.2);
+  }
+}
+
+/* Mensaje molesto - desvanecimiento */
+@keyframes chaosMessageFade {
+  0% {
+    opacity: 1;
+  }
+  60% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+/* Flash de overlay */
+@keyframes chaosFlash {
+  0% {
+    opacity: 0;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+/* Pared de texto */
+@keyframes chaosTextWall {
+  0% {
+    opacity: 0;
+    transform: scale(0.5);
+  }
+  30% {
+    opacity: 0.8;
+    transform: scale(1.1);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(1.5);
+  }
+}

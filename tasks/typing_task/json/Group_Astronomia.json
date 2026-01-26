@@ -1,0 +1,95 @@
+{
+  "class": "Astronomía y el Cosmos",
+  "option": [
+    {
+      "id": "astro_01",
+      "title": "Mercurio: El Mensajero",
+      "text": "Mercurio es el planeta más pequeño y el más cercano al Sol. Al carecer de una atmósfera significativa para retener el calor, su superficie experimenta cambios de temperatura brutales, pasando de un calor abrasador durante el día a un frío glacial por la noche. Su superficie llena de cráteres se asemeja mucho a la de nuestra Luna."
+    },
+    {
+      "id": "astro_02",
+      "title": "Venus: El Lucero del Alba",
+      "text": "A menudo llamado el gemelo de la Tierra por su tamaño, Venus es un infierno volcánico. Posee una atmósfera densa de dióxido de carbono que provoca un efecto invernadero desbocado, convirtiéndolo en el planeta más caliente del sistema. Curiosamente, gira en dirección opuesta a la mayoría de los planetas, por lo que el Sol sale por el oeste."
+    },
+    {
+      "id": "astro_03",
+      "title": "La Tierra: El Planeta Azul",
+      "text": "Nuestro hogar es el único lugar conocido hasta ahora que alberga vida. Su posición en la zona habitable permite la existencia de agua líquida en la superficie, vital para la biología. La atmósfera terrestre, rica en nitrógeno y oxígeno, nos protege de la radiación solar dañina y de los meteoritos, actuando como un escudo invisible."
+    },
+    {
+      "id": "astro_04",
+      "title": "Marte: El Planeta Rojo",
+      "text": "Marte debe su color característico al óxido de hierro que cubre su superficie. Es el hogar del Monte Olimpo, el volcán más grande de todo el sistema solar, tres veces más alto que el Everest. Aunque hoy es un desierto frío, los cauces secos sugieren que en el pasado remoto el agua fluyó libremente por sus valles."
+    },
+    {
+      "id": "astro_05",
+      "title": "Júpiter: El Gigante Gaseoso",
+      "text": "Júpiter es tan masivo que podría contener a todos los demás planetas en su interior. Su característica más famosa es la Gran Mancha Roja, una tormenta anticiclónica más grande que la Tierra que lleva siglos activa. Posee docenas de lunas, incluidas Europa y Ganimedes, y actúa como un escudo gravitatorio desviando cometas peligrosos."
+    },
+    {
+      "id": "astro_06",
+      "title": "Saturno: El Señor de los Anillos",
+      "text": "Reconocible por su espectacular sistema de anillos formados por millones de partículas de hielo y roca, Saturno es un gigante gaseoso de baja densidad; de hecho, flotaría en una piscina lo suficientemente grande. Sus vientos pueden alcanzar velocidades supersónicas y cuenta con una luna fascinante llamada Titán, que posee atmósfera propia y lagos de metano."
+    },
+    {
+      "id": "astro_07",
+      "title": "Urano: El Gigante de Hielo",
+      "text": "Urano es único porque su eje de rotación está tan inclinado que orbita prácticamente de lado, rodando alrededor del Sol. Su atmósfera contiene metano, lo que le da un color azul verdoso pálido. Es el planeta más frío del sistema solar y fue el primero en ser descubierto con la ayuda de un telescopio en el siglo dieciocho."
+    },
+    {
+      "id": "astro_08",
+      "title": "Neptuno: El Ventoso",
+      "text": "Neptuno es el planeta más lejano y oscuro, un gigante de hielo azotado por los vientos más rápidos del sistema solar, que superan los dos mil kilómetros por hora. Su color azul intenso es llamativo y posee una gran mancha oscura similar a la de Júpiter. Su existencia fue predicha matemáticamente antes de ser observado directamente."
+    },
+    {
+      "id": "astro_09",
+      "title": "El caso de Plutón",
+      "text": "En 2006, la Unión Astronómica Internacional redefinió qué es un planeta, dejando a Plutón fuera de la lista principal. Para ser un planeta, un cuerpo debe orbitar al Sol, ser esférico y haber limpiado su órbita de otros objetos. Plutón falló en el tercer punto, ya que comparte su vecindario en el Cinturón de Kuiper con muchos otros cuerpos helados."
+    },
+    {
+      "id": "astro_10",
+      "title": "Carl Sagan",
+      "text": "Carl Sagan fue un astrónomo y divulgador científico legendario que acercó el cosmos al público general con su serie \"Cosmos\". Fue un defensor del pensamiento crítico y la búsqueda de vida extraterrestre. Su reflexión sobre el \"Punto Azul Pálido\", una foto de la Tierra tomada desde la sonda Voyager, nos recuerda nuestra fragilidad y responsabilidad de cuidar nuestro pequeño hogar."
+    },
+    {
+      "id": "astro_11",
+      "title": "El Sol: Nuestra Estrella",
+      "text": "El Sol es una enorme esfera de plasma caliente en el centro de nuestro sistema. Su gravedad mantiene a todos los planetas en órbita. A través de la fusión nuclear, convierte el hidrógeno en helio, liberando la energía inmensa que hace posible la vida en la Tierra. Aunque nos parece gigantesco, es solo una estrella de tamaño medio."
+    },
+    {
+      "id": "astro_12",
+      "title": "La Luna",
+      "text": "La Luna es el único satélite natural de la Tierra y el quinto más grande del sistema solar. Su gravedad es la responsable de las mareas en nuestros océanos. Se cree que se formó tras un gran impacto contra la Tierra primitiva. Es el único cuerpo celeste, aparte de nuestro planeta, que ha sido pisado por el ser humano."
+    },
+    {
+      "id": "astro_13",
+      "title": "Cinturón de Asteroides",
+      "text": "Situado entre las órbitas de Marte y Júpiter, el cinturón de asteroides contiene millones de rocas espaciales de formas irregulares. Son los restos sobrantes de la formación del sistema solar que nunca llegaron a unirse para formar un planeta debido a la fuerte gravedad de Júpiter. Ceres, un planeta enano, es el objeto más grande de esta región."
+    },
+    {
+      "id": "astro_14",
+      "title": "Cometas",
+      "text": "Los cometas son cuerpos celestes compuestos de hielo, polvo y rocas que orbitan alrededor del Sol en trayectorias elípticas. Cuando se acercan a la estrella, el calor sublima sus hielos creando una atmósfera brillante llamada coma y una cola característica que siempre apunta en dirección opuesta al Sol. Son considerados bolas de nieve sucia cósmicas."
+    },
+    {
+      "id": "astro_15",
+      "title": "La Nube de Oort",
+      "text": "La Nube de Oort es una gigantesca y teórica esfera de objetos transneptunianos que rodea nuestro sistema solar en sus límites más lejanos, casi a un año luz de distancia. Se cree que es el reservorio de donde provienen los cometas de largo periodo. Es la frontera final donde la influencia gravitatoria del Sol apenas llega a sentirse."
+    },
+    {
+      "id": "astro_16",
+      "title": "Años Luz y Próxima Centauri",
+      "text": "El año luz es una unidad que a menudo se confunde con tiempo, pero mide distancia: exactamente la longitud que recorre la luz en un año viajando a trescientos mil kilómetros por segundo. La estrella más cercana a nosotros después del Sol es Próxima Centauri, situada a 4,2 años luz. Esto significa que la luz que vemos hoy salió de esa estrella hace más de cuatro años."
+    },
+    {
+      "id": "astro_17",
+      "title": "Las Sondas Voyager",
+      "text": "Lanzadas en 1977, las sondas Voyager 1 y 2 han protagonizado la mayor odisea espacial de la historia. Aprovecharon una alineación planetaria única para visitar los gigantes gaseosos. La Voyager 1 es actualmente el objeto fabricado por el ser humano más alejado de la Tierra, navegando por el espacio interestelar. Ambas portan un Disco de Oro con sonidos e imágenes de la humanidad para posibles civilizaciones alienígenas."
+    },
+    {
+      "id": "astro_18",
+      "title": "Gigante Roja: El Fin del Sol",
+      "text": "Dentro de unos cinco mil millones de años, el Sol agotará su combustible de hidrógeno y comenzará su agonía. Se expandirá monstruosamente convirtiéndose en una Gigante Roja, creciendo tanto que engullirá las órbitas de Mercurio, Venus y probablemente la Tierra. Finalmente, expulsará sus capas exteriores creando una nebulosa planetaria y su núcleo quedará expuesto como una pequeña y densa enana blanca, de un tamaño similar al de la Tierra."
+    }
+  ]
+}

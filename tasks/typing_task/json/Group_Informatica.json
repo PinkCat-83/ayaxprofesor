@@ -1,0 +1,80 @@
+{
+    "class": "Informática Básica",
+    "option": [
+        {
+            "id": "info_01",
+            "title": "El Hardware",
+            "text": "El hardware es el conjunto de componentes físicos que integran un ordenador o dispositivo electrónico. Es la parte tangible, todo aquello que podemos tocar y ver. Algunos ejemplos fundamentales son la placa base, el procesador o CPU, la memoria RAM y el disco duro. También incluye periféricos externos como la pantalla, el teclado, el ratón o la impresora. Sin el hardware, el software no tendría un soporte físico donde ejecutarse, funcionando como el cuerpo de la máquina que procesa toda la información."
+        },
+        {
+            "id": "info_02",
+            "title": "El Software",
+            "text": "El software representa la parte lógica e intangible de un sistema informático. Son las instrucciones, datos y programas que le indican al hardware qué tareas debe realizar y cómo ejecutarlas. Se divide principalmente en software de sistema, como los controladores, y software de aplicación, que incluye programas que usamos a diario como Microsoft Word, aplicaciones de retoque fotográfico o videojuegos. A diferencia del hardware, el software no se desgasta físicamente, pero requiere actualizaciones constantes para mejorar su seguridad y funciones."
+        },
+        {
+            "id": "info_03",
+            "title": "Sistema Operativo",
+            "text": "El sistema operativo es el software principal que gestiona todos los recursos del hardware y permite la comunicación entre el usuario y el ordenador. Actúa como un intermediario o director de orquesta que organiza los archivos, administra la memoria y permite que las aplicaciones funcionen correctamente. Los ejemplos más conocidos en ordenadores son Windows, macOS y Linux, mientras que en dispositivos móviles predominan Android e iOS. Es el primer programa que se carga al encender el dispositivo y sin él sería imposible usarlo."
+        },
+        {
+            "id": "info_04",
+            "title": "Internet",
+            "text": "Internet es una inmensa red global de computadoras interconectadas entre sí que permite el intercambio libre de información. Funciona mediante protocolos de comunicación estandarizados que aseguran que los datos lleguen a su destino sin importar la ubicación geográfica. Gracias a Internet, tenemos acceso a servicios como el correo electrónico, la transferencia de archivos, las redes sociales y la World Wide Web. Es considerada una de las infraestructuras más importantes de la era moderna, transformando por completo la educación, el comercio y la comunicación personal."
+        },
+        {
+            "id": "info_05",
+            "title": "El Navegador",
+            "text": "Un navegador es una aplicación o programa informático que nos permite acceder y visualizar páginas web en Internet. Su función principal es interpretar el código en el que están escritas las webs, generalmente HTML, para mostrar el contenido de forma visual y comprensible para el usuario. Ejemplos populares son Google Chrome, Mozilla Firefox, Safari y Microsoft Edge. Los navegadores ofrecen herramientas como marcadores, historial de navegación y pestañas, facilitando la exploración de los millones de sitios que existen en la red mundial."
+        },
+        {
+            "id": "info_06",
+            "title": "Los Buscadores",
+            "text": "Un buscador o motor de búsqueda es un sistema informático diseñado para localizar información almacenada en la web de forma rápida y eficiente. A diferencia del navegador, que es la herramienta de acceso, el buscador es un índice gigante donde introducimos palabras clave para obtener una lista de resultados relevantes. Google es el buscador más utilizado del mundo, seguido por otros como Bing, Yahoo o DuckDuckGo. Estos sistemas utilizan algoritmos complejos y rastreadores automáticos para organizar la información y ofrecernos las respuestas más precisas."
+        },
+        {
+            "id": "info_07",
+            "title": "Extensiones de Navegador",
+            "text": "Las extensiones son pequeños programas o módulos de software que se instalan dentro del navegador para añadir funciones específicas o personalizar la experiencia de navegación. Sirven para ampliar las capacidades del navegador sin necesidad de instalar un programa completo en el ordenador. Podemos encontrar extensiones para bloquear anuncios, traducir textos automáticamente, gestionar contraseñas o incluso mejorar la productividad. Sin embargo, es importante instalarlas con precaución y solo desde tiendas oficiales para mantener la seguridad y el rendimiento del equipo."
+        },
+        {
+            "id": "info_08",
+            "title": "Archivos y Carpetas",
+            "text": "En informática, un archivo es la unidad básica de almacenamiento que contiene información, ya sea un texto, una imagen, una canción o un video. Para mantener estos archivos organizados, utilizamos carpetas, que actúan como contenedores similares a los archivadores físicos. Una carpeta puede contener miles de archivos e incluso otras subcarpetas, permitiendo crear una estructura jerárquica clara. El uso correcto de nombres y la clasificación adecuada de los archivos en sus respectivas carpetas es vital para encontrar nuestra información rápidamente y evitar el caos digital. Esta práctica se conoce como \"Organización digital\"."
+        },
+        {
+            "id": "info_09",
+            "title": "Explorador de Archivos",
+            "text": "El explorador de archivos es una herramienta del sistema operativo que permite gestionar, organizar y navegar por todos los documentos guardados en el dispositivo. A través de su interfaz, podemos copiar, mover, renombrar y eliminar archivos o carpetas de manera intuitiva. En Windows se conoce como Explorador de Archivos y tiene forma de carpeta amarilla con un detalle azul. Es fundamental para conocer la ubicación de nuestros datos, gestionar el espacio libre en el disco duro y acceder a unidades externas como memorias USB o discos portátiles de forma segura."
+        },
+        {
+            "id": "info_10",
+            "title": "El Phishing",
+            "text": "El phishing es una técnica de engaño utilizada por ciberdelincuentes para robar información confidencial como contraseñas o datos bancarios. Se suelen hacer pasar por empresas legítimas mediante correos electrónicos o mensajes fraudulentos que incluyen enlaces a sitios web falsos. La prevención y la desconfianza ante mensajes sospechosos son claves para no caer en esta estafa digital y proteger nuestra identidad."
+        },
+        {
+            "id": "info_11",
+            "title": "Extensiones de Archivos",
+            "text": "Una extensión de archivo es el sufijo situado al final del nombre de un documento, precedido por un punto. Sirve para que el sistema operativo identifique de qué tipo de archivo se trata y con qué programa debe abrirlo. Ejemplos comunes son el formato punto doc equis para textos, punto jota pe ge para imágenes, punto eme pe tres para audio y punto exe para programas ejecutables."
+        },
+        {
+            "id": "info_12",
+            "title": "La Nube",
+            "text": "La computación en la nube permite guardar archivos y ejecutar aplicaciones a través de Internet en lugar de usar el disco duro local. Esto facilita el acceso a la información desde cualquier dispositivo con conexión y permite el trabajo colaborativo en tiempo real. Servicios como Google Drive, iCloud o Dropbox son ejemplos populares de esta tecnología que ha revolucionado el almacenamiento de datos moderno."
+        },
+        {
+            "id": "info_13",
+            "title": "Seguridad de Contraseñas",
+            "text": "Una contraseña segura es la primera línea de defensa para proteger nuestras cuentas en línea. Debe ser larga y combinar letras mayúsculas, minúsculas, números y símbolos especiales, evitando siempre usar información personal obvia. El uso de gestores de contraseñas y la activación de la verificación en dos pasos son prácticas esenciales hoy en día para mantener nuestra privacidad a salvo de accesos no autorizados."
+        },
+        {
+            "id": "info_14",
+            "title": "Memoria RAM",
+            "text": "La memoria RAM es el componente donde el ordenador almacena los datos de los programas que se están utilizando en ese preciso momento. Es una memoria volátil, lo que significa que su información se borra completamente al apagar el equipo. Cuanta más RAM tenga un dispositivo, más aplicaciones podrá ejecutar simultáneamente de forma fluida, evitando que el sistema se ralentice o se bloquee durante el trabajo."
+        },
+        {
+            "id": "info_15",
+            "title": "El Procesador (CPU)",
+            "text": "El procesador o CPU es considerado el cerebro del ordenador. Su función es interpretar las instrucciones de los programas y procesar los datos de las aplicaciones. Se encarga de realizar todas las operaciones lógicas y matemáticas necesarias para que el sistema funcione. Su potencia se mide generalmente en gigahercios y el número de núcleos determina su capacidad para realizar múltiples tareas complejas de forma eficiente."
+        }
+    ]
+}

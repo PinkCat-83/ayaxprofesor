@@ -1,0 +1,347 @@
+/* ============================================================
+   css/controls.css
+   Estilos del panel lateral y controles - TEMA ROSA NEÃ"N
+   ============================================================ */
+
+/* PANEL LATERAL */
+.control-panel {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 280px;
+    height: 100vh;
+    background: rgba(10, 10, 10, 0.95);
+    border-right: 2px solid var(--color-primary); /* Rosa neón */
+    padding: 1.5rem;
+    overflow-y: auto;
+    transition: transform 0.3s ease;
+    z-index: 1000;
+    box-shadow: 4px 0 20px rgba(255, 0, 127, 0.3); /* Rosa neón */
+}
+
+.control-panel.collapsed {
+    transform: translateX(-100%);
+}
+
+/* Botón Toggle Panel */
+.toggle-panel-btn {
+    position: absolute;
+    top: 1rem;
+    right: -40px;
+    width: 40px;
+    height: 40px;
+    background: var(--color-primary); /* Rosa neón */
+    border: none;
+    border-radius: 0 8px 8px 0;
+    color: #000;
+    font-size: 1.5rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 0 15px rgba(255, 0, 127, 0.5);
+}
+
+.toggle-panel-btn:hover {
+    background: var(--color-secondary); /* Cian */
+    box-shadow: 0 0 20px rgba(0, 255, 255, 0.6);
+    transform: translateX(5px);
+}
+
+/* Contenido del Panel */
+.control-content {
+    padding-top: 1rem;
+}
+
+.control-section {
+    margin-bottom: 2rem;
+    padding-bottom: 1.5rem;
+    border-bottom: 1px solid rgba(255, 0, 127, 0.3); /* Rosa neón */
+}
+
+.control-section:last-child {
+    border-bottom: none;
+}
+
+.control-title {
+    font-size: 0.9rem;
+    font-weight: bold;
+    color: var(--color-primary); /* Rosa neón */
+    margin-bottom: 1rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    text-shadow: 0 0 8px rgba(255, 0, 127, 0.6);
+}
+
+/* SELECT */
+.neon-select {
+    width: 100%;
+    padding: 0.75rem;
+    background: rgba(0, 0, 0, 0.6);
+    border: 2px solid var(--color-primary); /* Rosa neón */
+    border-radius: 8px;
+    color: var(--color-text);
+    font-family: 'Courier New', monospace;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.neon-select:hover {
+    border-color: var(--color-secondary); /* Cian */
+    box-shadow: 0 0 15px rgba(255, 0, 127, 0.4);
+}
+
+.neon-select:focus {
+    outline: none;
+    border-color: var(--color-secondary);
+    box-shadow: 0 0 20px rgba(0, 255, 255, 0.5);
+}
+
+.neon-select option {
+    background: #000;
+    color: var(--color-text);
+}
+
+/* BOTONES */
+.neon-button {
+    padding: 0.75rem 1.5rem;
+    background: rgba(255, 0, 127, 0.1); /* Fondo rosa sutil */
+    border: 2px solid var(--color-primary); /* Rosa neón */
+    border-radius: 8px;
+    color: var(--color-primary);
+    font-family: 'Courier New', monospace;
+    font-size: 0.9rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    box-shadow: 0 0 8px rgba(255, 0, 127, 0.2);
+}
+
+.neon-button:hover {
+    background: var(--color-primary); /* Rosa sólido */
+    color: #000;
+    box-shadow: 0 0 25px rgba(255, 0, 127, 0.8), 
+                0 0 40px rgba(255, 0, 127, 0.5); /* Halo rosa intenso */
+    transform: translateY(-3px);
+}
+
+.neon-button:active {
+    transform: translateY(-1px);
+    box-shadow: 0 0 15px rgba(255, 0, 127, 0.6);
+}
+
+/* Botones pequeños (párrafos) */
+.paragraph-buttons {
+    display: flex;
+    gap: 0.5rem;
+    justify-content: space-between;
+}
+
+.neon-button.small {
+    padding: 0.5rem 1rem;
+    font-size: 0.85rem;
+    flex: 1;
+}
+
+.neon-button.small.selected {
+    background: var(--color-primary);
+    color: #000;
+    box-shadow: 0 0 15px rgba(255, 0, 127, 0.6);
+}
+
+/* TOGGLES (Interruptores) */
+.toggle-item {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.75rem 0;
+    cursor: pointer;
+    position: relative;
+}
+
+.toggle-item input[type="checkbox"] {
+    position: absolute;
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+/* El slider (interruptor visual) */
+.toggle-slider {
+    position: relative;
+    display: inline-block;
+    width: 50px;
+    height: 26px;
+    background-color: rgba(255, 255, 255, 0.1);
+    border: 2px solid rgba(255, 0, 127, 0.4); /* Rosa neón */
+    border-radius: 13px;
+    transition: all 0.3s ease;
+    flex-shrink: 0;
+}
+
+.toggle-slider::before {
+    content: "";
+    position: absolute;
+    height: 18px;
+    width: 18px;
+    left: 2px;
+    top: 2px;
+    background-color: rgba(255, 255, 255, 0.5);
+    border-radius: 50%;
+    transition: all 0.3s ease;
+}
+
+/* Cuando está activado */
+.toggle-item input:checked+.toggle-slider {
+    background-color: var(--color-primary); /* Rosa neón */
+    border-color: var(--color-primary);
+    box-shadow: 0 0 15px rgba(255, 0, 127, 0.6);
+}
+
+.toggle-item input:checked+.toggle-slider::before {
+    transform: translateX(24px);
+    background-color: #000;
+}
+
+/* Hover effect */
+.toggle-item:hover .toggle-slider {
+    border-color: var(--color-secondary); /* Cian al hover */
+    box-shadow: 0 0 10px rgba(0, 255, 255, 0.3);
+}
+
+/* Label del toggle */
+.toggle-label {
+    color: var(--color-text);
+    font-size: 0.9rem;
+    user-select: none;
+    transition: color 0.3s ease;
+}
+
+.toggle-item:hover .toggle-label {
+    color: var(--color-secondary); /* Cian al hover */
+}
+
+.toggle-item input:checked~.toggle-label {
+    color: var(--color-primary); /* Rosa cuando activo */
+}
+
+/* RESPONSIVE */
+@media (max-width: 768px) {
+    .control-panel {
+        width: 100%;
+        max-width: 280px;
+    }
+
+    .toggle-panel-btn {
+        right: -45px;
+    }
+}
+
+/* Scrollbar del panel */
+.control-panel::-webkit-scrollbar {
+    width: 8px;
+}
+
+.control-panel::-webkit-scrollbar-track {
+    background: rgba(0, 0, 0, 0.3);
+}
+
+.control-panel::-webkit-scrollbar-thumb {
+    background: var(--color-primary); /* Rosa neón */
+    border-radius: 4px;
+}
+
+.control-panel::-webkit-scrollbar-thumb:hover {
+    background: var(--color-secondary); /* Cian al hover */
+}
+
+/* ===== CONTROLES DE ZOOM ===== */
+.zoom-controls {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.5rem;
+    margin-top: 0.5rem;
+}
+
+.zoom-btn {
+    flex: 0 0 auto;
+    width: 2.5rem;
+    height: 2.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    background: rgba(255, 0, 127, 0.1); /* Rosa sutil */
+    border: 1px solid var(--color-primary); /* Rosa neón */
+    border-radius: 0.5rem;
+    color: var(--color-primary);
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-size: 1.4rem;
+    font-weight: bold;
+    line-height: 1;
+}
+
+.zoom-btn:hover {
+    background: var(--color-primary); /* Rosa sólido */
+    border-color: var(--color-primary);
+    color: #000;
+    box-shadow: 0 0 20px rgba(255, 0, 127, 0.7); /* Halo rosa */
+    transform: translateY(-2px);
+}
+
+.zoom-btn:active {
+    transform: translateY(0);
+}
+
+.zoom-display {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.5rem;
+    background: rgba(0, 0, 0, 0.3);
+    border: 2px solid var(--color-primary); /* Rosa neón */
+    border-radius: 0.5rem;
+    color: var(--color-primary);
+    font-size: 0.95rem;
+    font-weight: bold;
+    text-align: center;
+    box-shadow: 0 0 10px rgba(255, 0, 127, 0.3);
+    min-width: 3.5rem;
+}
+
+/* Animación de feedback */
+@keyframes zoomPulse {
+    0%, 100% {
+        transform: scale(1);
+        box-shadow: 0 0 10px rgba(255, 0, 127, 0.3);
+    }
+    50% {
+        transform: scale(1.05);
+        box-shadow: 0 0 25px rgba(255, 0, 127, 0.7);
+    }
+}
+
+.zoom-pulse {
+    animation: zoomPulse 0.3s ease;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .zoom-btn {
+        width: 2rem;
+        height: 2rem;
+        font-size: 1.2rem;
+    }
+
+    .zoom-display {
+        font-size: 0.85rem;
+        min-width: 3rem;
+    }
+}

@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="/favicon.ico">
+    <title>Mecanografía</title>
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/controls.css">
+    <link rel="stylesheet" href="css/effects.css">
+</head>
+
+<body>
+    <!-- EFECTOS DE FONDO -->
+    <canvas id="bg-canvas" class="hidden"></canvas>
+    <canvas id="wave-canvas" class="wave-overlay"></canvas>
+    <div id="rain-overlay" class="rain-overlay"></div>
+    <div id="thunder-flash" class="thunder-flash"></div>
+
+    <!-- PANEL LATERAL -->
+    <aside id="control-panel" class="control-panel">
+
+        <!-- 👇 NUEVA SECCIÓN DE ZOOM -->
+        <div class="control-section">
+            <h3>🔍 Zoom</h3>
+            <div class="zoom-controls">
+                <button class="zoom-btn" id="zoom-out" title="Reducir zoom (Ctrl + -)">−</button>
+                <div class="zoom-display" id="zoom-level">100%</div>
+                <button class="zoom-btn" id="zoom-in" title="Aumentar zoom (Ctrl + +)">+</button>
+            </div>
+        </div>
+
+        <div class="control-content">
+            <!-- SELECTOR DE CATEGORÍA -->
+            <div class="control-section">
+                <div class="control-title">Categoría</div>
+                <select id="category-select" class="neon-select">
+                    <option value="">Cargando categorías...</option>
+                </select>
+                <button id="load-text-btn" class="neon-button" style="margin-top: 0.5rem; width: 100%;">
+                    🎲 Nuevo Texto
+                </button>
+            </div>
+
+            <!-- AUTO-ESCRITURA -->
+            <div id="auto-type-section" class="control-section" style="display: none;">
+                <div class="control-title">🤖 Auto-Escritura ACTIVA</div>
+                <div style="margin-top: 0.5rem;">
+                    <label style="display: block; margin-bottom: 0.25rem; font-size: 0.85rem; color: #9ca3af;">
+                        Velocidad: <span id="auto-type-speed-value" style="color: #00ffff;">20ms</span>
+                    </label>
+                    <input type="range" id="auto-type-speed" min="1" max="500" value="20" step="1" style="width: 100%;">
+                    <div
+                        style="display: flex; justify-content: space-between; font-size: 0.7rem; color: #6b7280; margin-top: 0.25rem;">
+                        <span>Rápido</span>
+                        <span>Lento</span>
+                    </div>
+                </div>
+                <div
+                    style="margin-top: 0.75rem; padding: 0.5rem; background: rgba(0, 255, 255, 0.1); border-radius: 0.25rem; font-size: 0.75rem; color: #00ffff; text-align: center;">
+                    Presiona Ctrl+Shift+T para detener
+                </div>
+            </div>
+
+            <!-- DISTRACTORES -->
+            <div class="control-section">
+                <div class="control-title">Distractores</div>
+
+
+
+                <label class="toggle-item">
+                    <input type="checkbox" id="particles-toggle">
+                    <span class="toggle-slider"></span>
+                    <span class="toggle-label">🎉 Partículas N1</span>
+                </label>
+
+                <label class="toggle-item">
+                    <input type="checkbox" id="wave-toggle">
+                    <span class="toggle-slider"></span>
+                    <span class="toggle-label">🌊 Onda N2</span>
+                </label>
+
+                <label class="toggle-item">
+                    <input type="checkbox" id="emoji-toggle">
+                    <span class="toggle-slider"></span>
+                    <span class="toggle-label">🐱 Animales N3</span>
+                </label>
+
+                <label class="toggle-item">
+                    <input type="checkbox" id="stars-toggle">
+                    <span class="toggle-slider"></span>
+                    <span class="toggle-label">🌟 Estrellas N4</span>
+                </label>
+
+                <label class="toggle-item">
+                    <input type="checkbox" id="storm-toggle">
+                    <span class="toggle-slider"></span>
+                    <span class="toggle-label">⚡ Tormenta N5</span>
+                </label>
+
+                <!-- 😈 NUEVO: CAOS TOTAL -->
+                <label class="toggle-item"
+                    style="border: 2px solid #ff0080; background: rgba(255, 0, 128, 0.1); margin-top: 0.5rem;">
+                    <input type="checkbox" id="chaos-toggle">
+                    <span class="toggle-slider"
+                        style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);"></span>
+                    <span class="toggle-label" style="color: #ff0080; font-weight: bold;">😈 CAOS TOTAL</span>
+                </label>
+                <div
+                    style="font-size: 0.7rem; color: #ff0080; text-align: center; margin-top: 0.25rem; font-style: italic;">
+                    ⚠️ El más molesto de todos
+                </div>
+            </div>
+        </div>
+    </aside>
+
+    <!-- CONTENEDOR PRINCIPAL -->
+    <main class="app-container">
+        <!-- MÉTRICAS -->
+        <div class="metrics-grid">
+            <div class="metric-item">
+                <span class="metric-label">Palabras / minuto</span>
+                <p id="wpm" class="metric-value">0</p>
+            </div>
+            <div class="metric-item">
+                <span class="metric-label">Pulsaciones / minuto</span>
+                <p id="cpm" class="metric-value">0</p>
+            </div>
+            <div class="metric-item">
+                <span class="metric-label">Errores</span>
+                <p id="errors" class="metric-value">0</p>
+            </div>
+            <div class="metric-item">
+                <span class="metric-label">% Errores</span>
+                <p id="error-percent" class="metric-value">0%</p>
+            </div>
+            <div class="metric-item">
+                <span class="metric-label">Tiempo (s)</span>
+                <p id="timer" class="metric-value">0</p>
+            </div>
+        </div>
+
+        <!-- TÍTULO DEL TEXTO -->
+        <h2 id="text-title" class="text-title"></h2>
+
+        <!-- TEXTO OBJETIVO -->
+        <div id="target-text" class="text-display">
+            <div class="loading-state">
+                <div class="loader"></div>
+                <span class="loading-text">Cargando texto...</span>
+            </div>
+        </div>
+
+        <!-- ÁREA DE ESCRITURA -->
+        <textarea id="user-input" class="text-input" placeholder="Empieza a escribir aquí..." spellcheck="false"
+            autofocus aria-label="Área de escritura"></textarea>
+    </main>
+
+    <!-- JAVASCRIPT - Orden importa! -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="js/textLoader.js"></script>
+    <script src="js/metrics.js"></script>
+    <script src="js/ui.js"></script>
+    <script src="js/game.js"></script>
+    <script src="js/distractors.js"></script>
+    <script src="js/app.js"></script>
+    <script src="js/zoom-controls.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,85 @@
+{
+  "class": "Curiosidades",
+  "option": [
+    {
+      "id": "text_01",
+      "title": "El ojo humano",
+      "text": "El ojo humano puede distinguir aproximadamente diez millones de colores diferentes. Esta increíble capacidad se debe a las células fotorreceptoras llamadas conos que se encuentran en la retina. Existen tres tipos de conos, cada uno sensible a diferentes longitudes de onda de luz: rojo, verde y azul. La combinación de señales de estos tres tipos permite percibir toda la gama cromática. Curiosamente, algunas mujeres poseen un cuarto tipo de cono, lo que les permite ver aún más variaciones de color que la mayoría de las personas. Los ojos también pueden detectar una vela encendida a una distancia de más de dos kilómetros en completa oscuridad."
+    },
+    {
+      "id": "text_02",
+      "title": "El rayo",
+      "text": "Un rayo puede alcanzar temperaturas de hasta treinta mil grados Celsius, cinco veces más caliente que la superficie del Sol. Esta descarga eléctrica viaja a una velocidad aproximada de trescientos veinte mil kilómetros por hora. El trueno que escuchamos después del relámpago es el sonido del aire expandiéndose rápidamente debido al calor extremo. La luz del rayo viaja mucho más rápido que el sonido, por eso vemos el relámpago antes de escuchar el trueno. Cada segundo de diferencia entre ambos equivale aproximadamente a trescientos metros de distancia. Un solo rayo puede contener suficiente energía eléctrica para iluminar una bombilla de cien vatios durante más de tres meses."
+    },
+    {
+      "id": "text_03",
+      "title": "Corazón Gigante",
+      "text": "El corazón de una ballena azul puede pesar hasta seiscientos kilogramos y es del tamaño de un automóvil pequeño. Este órgano masivo late entre cuatro y ocho veces por minuto cuando la ballena está en la superficie, pero puede reducirse a solo dos latidos por minuto durante las inmersiones profundas. Las arterias principales son tan grandes que un ser humano adulto podría nadar a través de ellas. A pesar de su tamaño colosal, la ballena azul se alimenta principalmente de krill, pequeños crustáceos de apenas unos centímetros de longitud. Puede consumir hasta cuatro toneladas de krill en un solo día durante la temporada de alimentación."
+    },
+    {
+      "id": "text_04",
+      "title": "Bombeo triple para 8 patas",
+      "text": "Los pulpos tienen tres corazones y sangre de color azul debido al cobre en su hemocianina. Dos corazones bombean sangre a las branquias mientras que el tercero la distribuye al resto del cuerpo. Estos fascinantes moluscos poseen aproximadamente quinientos millones de neuronas, la mayoría distribuidas en sus ocho brazos, lo que les permite realizar múltiples tareas simultáneamente. Son capaces de cambiar de color y textura en menos de un segundo para camuflarse perfectamente con su entorno. Los pulpos también pueden resolver problemas complejos, abrir frascos con tapa de rosca y recordar soluciones a desafíos que enfrentaron semanas antes. Además pueden regenerar sus brazos si los pierden."
+    },
+    {
+      "id": "text_05",
+      "title": "La miel",
+      "text": "La miel es el único alimento que nunca se echa a perder. Los arqueólogos han encontrado tarros de miel en tumbas egipcias de más de tres mil años de antigüedad que aún eran perfectamente comestibles. Esta increíble longevidad se debe a su baja humedad y alta acidez que crean un ambiente hostil para las bacterias y microorganismos. Las abejas añaden una enzima especial que descompone el néctar en glucosa y peróxido de hidrógeno, un agente antibacteriano natural. Para producir un kilogramo de miel, las abejas deben visitar aproximadamente cuatro millones de flores y volar una distancia equivalente a tres vueltas alrededor de la Tierra."
+    },
+    {
+      "id": "text_06",
+      "title": "El tiempo en Venus",
+      "text": "El planeta Venus tiene un día que dura más que su propio año. Tarda aproximadamente doscientos cuarenta y tres días terrestres en completar una sola rotación sobre su eje, mientras que su órbita alrededor del Sol dura solo doscientos veinticinco días. Además, Venus gira en dirección opuesta a la mayoría de los planetas del sistema solar, lo que significa que allí el Sol sale por el oeste y se pone por el este. Es el planeta más caliente de nuestro sistema debido a un efecto invernadero extremo provocado por su densa atmósfera de dióxido de carbono que atrapa el calor solar de forma implacable."
+    },
+    {
+      "id": "text_07",
+      "title": "Huesos cambiantes",
+      "text": "Los bebés nacen con aproximadamente trescientos huesos en su cuerpo, pero los adultos solo tienen doscientos seis. Esta diferencia se debe a que, a medida que crecemos, muchos de los huesos pequeños de un bebé se fusionan para formar huesos más grandes y fuertes. El fémur, situado en el muslo, es el hueso más largo y resistente del cuerpo humano, mientras que el estribo, ubicado en el oído medio, es el más pequeño, midiendo apenas tres milímetros. El esqueleto humano se renueva casi por completo cada diez años a través de un proceso biológico constante donde el tejido viejo es reemplazado por uno nuevo."
+    },
+    {
+      "id": "text_08",
+      "title": "Hormigas incansables",
+      "text": "Las hormigas no tienen pulmones ni oídos, pero son unas de las criaturas más fuertes y organizadas del planeta. Respiran a través de pequeños orificios en sus costados llamados espiráculos y detectan vibraciones en el suelo para orientarse. Se estima que por cada ser humano en la Tierra hay más de un millón de hormigas. Algunas especies pueden levantar hasta cincuenta veces su propio peso corporal con sus mandíbulas. Además, no duermen de la misma forma que nosotros; las obreras suelen tomar cientos de micro-siestas de apenas un minuto para descansar sin descuidar nunca la seguridad del hormiguero."
+    },
+    {
+      "id": "text_09",
+      "title": "El Everest crece",
+      "text": "El Monte Everest, el pico más alto del mundo, crece aproximadamente cuatro milímetros cada año. Este crecimiento vertical es el resultado del movimiento de las placas tectónicas, específicamente el choque constante de la placa india contra la placa euroasiática. Aunque su altura oficial es de ocho mil ochocientos cuarenta y ocho metros, la cima en realidad se encuentra en movimiento lateral hacia el noreste. Debido a la baja presión de oxígeno en la zona de la muerte, por encima de los ocho mil metros, el cuerpo humano no puede aclimatarse y las células comienzan a morir lentamente si no se utiliza oxígeno suplementario."
+    },
+    {
+      "id": "text_10",
+      "title": "La red de los árboles",
+      "text": "Los árboles en un bosque pueden comunicarse y compartir nutrientes entre sí a través de una red subterránea de hongos conocida como micorrizas. Esta red, apodada cariñosamente como la Internet del bosque, permite que los árboles más antiguos y grandes ayuden a los retoños más pequeños que no reciben suficiente luz solar. Incluso pueden enviar señales químicas de advertencia si detectan una plaga de insectos o una enfermedad, permitiendo que sus vecinos fortalezcan sus defensas químicas. Es un ecosistema cooperativo donde la supervivencia individual depende directamente de la salud de toda la comunidad forestal que los rodea."
+    },
+    {
+      "id": "text_11",
+      "title": "ADN infinito",
+      "text": "Si pudieras desenrollar y unir todas las moléculas de ADN presentes en las células de un cuerpo humano adulto, la cadena resultante mediría unos cien mil millones de kilómetros. Esa distancia es suficiente para viajar desde la Tierra hasta Plutón y regresar varias veces. El ADN almacena toda la información genética necesaria para construir y mantener a un ser vivo en un espacio microscópico. Curiosamente, los seres humanos compartimos aproximadamente el sesenta por ciento de nuestro código genético con los plátanos y más del noventa y ocho por ciento con los chimpancés, nuestros parientes evolutivos más cercanos en el reino animal."
+    },
+    {
+      "id": "text_12",
+      "title": "Padres caballitos",
+      "text": "En el mundo de los caballitos de mar, son los machos quienes quedan embarazados y dan a luz a las crías. Durante el apareamiento, la hembra deposita sus huevos en una bolsa especial que el macho tiene en su abdomen. El macho fecunda los huevos internamente y los incuba durante un periodo de entre diez días y seis semanas, dependiendo de la especie y la temperatura del agua. Cuando llega el momento, el macho sufre contracciones musculares para expulsar a cientos de diminutos caballitos de mar al océano. Son una de las pocas especies donde el rol reproductivo masculino es tan predominante y dedicado."
+    },
+    {
+      "id": "text_13",
+      "title": "La muralla invisible",
+      "text": "Contrario a la creencia popular, la Gran Muralla China no se puede ver a simple vista desde el espacio exterior sin ayuda de equipos especiales. Desde una órbita terrestre baja, la muralla es muy difícil de distinguir porque su color y materiales se mezclan con el entorno natural. Los astronautas han confirmado que es más fácil ver grandes aeropuertos, ciudades iluminadas o incluso algunas carreteras principales que la propia muralla. Sin embargo, su importancia histórica y arquitectónica es indiscutible, extendiéndose por más de veintiún mil kilómetros a través de diversas provincias y regiones autónomas de China desde hace siglos."
+    },
+    {
+      "id": "text_14",
+      "title": "El cristal fluye",
+      "text": "El vidrio no es exactamente un sólido ni un líquido, sino que los científicos lo clasifican como un sólido amorfo. A diferencia de los cristales, donde los átomos están organizados en patrones perfectos, los átomos del vidrio están desordenados, de manera similar a como estarían en un líquido, pero están fijos en su lugar. Existe el mito de que el vidrio de las catedrales antiguas es más grueso abajo porque fluye con el tiempo, pero en realidad se debe a las técnicas de fabricación medievales que producían láminas desiguales. El vidrio es infinitamente reciclable y puede fundirse una y otra vez sin perder calidad."
+    },
+    {
+      "id": "text_15",
+      "title": "Huellas de Koala",
+      "text": "Los koalas tienen huellas dactilares que son prácticamente idénticas a las de los seres humanos. Incluso bajo un microscopio electrónico de alta potencia, es extremadamente difícil distinguir entre la huella de un koala y la de una persona debido a sus patrones de crestas y arcos únicos. A lo largo de la historia, se han reportado casos en Australia donde las huellas de estos marsupiales han confundido a los investigadores en escenas de crímenes. Este rasgo es un ejemplo asombroso de evolución convergente, ya que los koalas y los primates desarrollaron huellas dactilares de forma independiente para mejorar el agarre al trepar."
+    },
+    {
+      "id": "text_16",
+      "title": "Doblado Exponencial",
+      "text": "Doblar una hoja de papel parece una tarea sencilla, pero esconde un poder matemático asombroso llamado crecimiento exponencial. Si tomamos una hoja estándar de cero coma un milímetros y logramos doblarla por la mitad cuarenta y dos veces, el grosor resultante sería suficiente para llegar a la Luna. Esto ocurre porque cada doblez duplica el espesor del anterior. Tras solo veintitrés dobleces, el papel tendría un kilómetro de altura, y si llegáramos a los cincuenta y un dobleces, alcanzaría el Sol. El límite físico suele ser de siete u ocho pliegues, aunque el récord mundial es de doce, logrado usando una tira de papel higiénico de más de un kilómetro de largo."
+    }
+  ]
+}
