@@ -1,86 +1,113 @@
-## Descripción
+# 🎓 Ayax Profesor
 
-Proyecto orientado a alumnos que están empezando con la informática.  
-Incluye actividades interactivas **sin publicidad**, diseñadas específicamente para mis clases y adaptadas a mi metodología de enseñanza.
+Un entorno educativo web diseñado para actividades de informática, completamente **libre de publicidad** y con todo a un solo clic.
 
----
+![Ayax Logo](imgs/logo.png)
 
-## Tareas por realizar
+## ✨ Características
 
-La página está actualmente mal estructurada, ya que **no sigue la convención estándar de separar HTML, CSS y JavaScript**.
+- **Sin distracciones**: Entorno limpio sin publicidad ni barreras
+- **Acceso rápido**: Todas las actividades a un solo clic
+- **Variedad de contenidos**: Desde mecanografía hasta ofimática
+- **Actividades interactivas**: Juegos educativos y ejercicios prácticos
 
-Por tanto, quedan pendientes las siguientes tareas:
+## 📚 Actividades Disponibles
 
-- Separar lógicas (HTML / CSS / JS)
-- Unificar el diseño visual de todas las actividades
+### Principales
+- **Mecanografía** - Práctica de escritura con múltiples textos temáticos.
+- **Anne** - Actividad interactiva
+- **Archivos** - Gestión de archivos, simulando el `explorador de archivos` en un entorno controlado.
+- **Extensiones** - Aprendizaje sobre extensiones de archivo
+- **Rosco** - Juego tipo pasapalabra pensado para determinar el nivel del alumnado.
 
-📝 TODO List - Organización del Proyecto
-📁 Estructura de carpetas a crear
+### Enlaces Externos
+- Recursos adicionales organizados
 
- Crear carpeta raíz del proyecto
- Crear /css/ para estilos compartidos
- Crear /js/ para scripts compartidos (opcional)
- Crear /assets/ para recursos globales (logos, iconos)
- Crear /tasks/ para los ejercicios
- Crear /tasks/archivos/ para el ejercicio actual
- Crear /tasks/archivos/imgs/ para las imágenes del ejercicio
+## 🚀 Acceso
 
-🎨 CSS y Recursos Compartidos
+Visita la web en: [ayaxprofesor.es]
 
- Crear css/shared.css con:
+## 🛠️ Tecnologías
 
-Variables CSS (colores, fuentes)
-Estilos de botones comunes
-Navegación/layouts comunes
+- HTML5
+- CSS3
+- JavaScript Vanilla
+- JSON para gestión de contenidos
 
+## 📋 Estado del Proyecto
 
- Añadir Tailwind CDN a ejercicios nuevos: <script src="https://cdn.tailwindcss.com"></script>
- Copiar favicon.ico a la raíz
+**En desarrollo activo** 🚧
 
-🏠 Página Principal
+### Completadas ✅
+- Sistema de mecanografía modular
+- Múltiples actividades interactivas
+- Diseño responsive
 
- Crear index.html con menú de ejercicios
- Diseñar con Tailwind
- Añadir enlaces a cada ejercicio (/tasks/[nombre]/index.html)
+### Pendientes 📝
+- Modularizar actividades individuales (actualmente en archivos únicos)
+- Centralizar estilos CSS
+- Integrar actividades de periféricos (actualmente externas)
 
-📂 Migrar Ejercicio de Archivos
+*Nota: Las actividades marcadas con asterisco (*) en la web están en periodo de adaptación*
 
- Mover archivos.html a /tasks/archivos/index.html
- Mover imágenes a /tasks/archivos/imgs/
- Actualizar rutas de imágenes en el HTML
- Actualizar ruta del favicon: ../../favicon.ico
- Añadir enlace "Volver al inicio" que apunte a ../../index.html
- (Opcional) Separar CSS y JS en archivos independientes
+## 📁 Estructura del Proyecto
 
-🔧 Ajustes Finales
-
- Verificar que todos los enlaces funcionen
- Probar navegación entre páginas
- Verificar que las imágenes carguen correctamente
- Documentar estructura en README.md (opcional)
-
-🚀 Para Ejercicios Futuros
-
- Crear nueva carpeta en /tasks/[nombre]/
- Incluir Tailwind CDN + shared.css
- Crear estructura: index.html, style.css (si necesario), script.js
- Añadir al menú principal
-
-
-Estructura final esperada:
-proyecto/
-├── index.html
+```
+ayaxprofesor/
+├── css/
+│   └── redirect_css.css     # CSS para páginas de redirecciones externas (temporales generalmente)
+├── imgs/
+│   ├── fileexplorer5/       # Imágenes del ejercicio de explorador de archivos.
+│   │   ├── 01.jpg - 08.jpg
+│   ├── fileexplorer8/       # Imágenes del ejercicio de explorador de archivos.
+│   │   ├── 01.jpg - 08.jpg
+│   ├── anne.png
+│   ├── externallinks.png
+│   ├── logo.png
+│   └── title.png
+├── res/
+│   ├── cat-animation.js
+│   └── cat-bouncing.css
+├── tasks/
+│   ├── typing_task/         # Actividad de mecanografía (modular)
+│   │   ├── css/
+│   │   │   ├── controls.css
+│   │   │   ├── effects.css
+│   │   │   └── main.css
+│   │   ├── js/
+│   │   │   ├── app.js
+│   │   │   ├── distractors.js
+│   │   │   ├── game.js
+│   │   │   ├── metrics.js
+│   │   │   ├── textloader.js
+│   │   │   ├── ui.js
+│   │   │   └── zoom-controls.js
+│   │   ├── json/            # Textos temáticos curados
+│   │   │   ├── Group_Astronomia.json
+│   │   │   ├── Group_Ayax.json
+│   │   │   ├── Group_Curiosidades.json
+│   │   │   ├── Group_Historias_IA.json
+│   │   │   ├── Group_Informatica.json
+│   │   │   ├── Group_Pelis.json
+│   │   │   ├── Group_Randoms.json
+│   │   │   ├── Group_Tramposos.json
+│   │   │   └── loader.json
+│   │   └── typing.html
+│   ├── anne.html            # Página de soluciones al ejercicio "The Voyage of the Marvelous Anne"
+│   ├── archivos.html        # Explorador de archivos con checklist
+│   ├── extensiones.html     # Unir extensión con su uso
+│   ├── ofimatica.html       # Explicación de los distintos tipos de programas de ofimática que existen
+│   └── rosco.html           # Rosco de palabras para comprobar el nivel del alumnado
+├── CNAME
 ├── favicon.ico
-├── css/shared.css
-├── assets/
-└── tasks/
-    └── archivos/
-        ├── index.html
-        └── imgs/
+├── index.html               # Página principal
+└── README.md
+```
 
+## 👨‍🏫 Propósito Educativo
+
+Este proyecto nace con el objetivo de proporcionar un espacio seguro y accesible para el aprendizaje de informática, eliminando las distracciones típicas de internet y centrándose en la experiencia educativa.
 
 ---
 
-## Nuevas actividades
-
-Las actividades marcadas con un `*` son actividades que se espera **modificar en un futuro cercano**, sustituyendo el uso de páginas externas por un **diseño propio**.
+Desarrollado con 😻 rosas para facilitar el aprendizaje en informática
