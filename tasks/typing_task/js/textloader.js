@@ -9,6 +9,19 @@ const TextLoader = {
   currentCategoryData: null,
   allCategoriesData: {}, // 🎲 NUEVO: Cache de todas las categorías
   
+  // 🔧 NUEVO: Configurar base path según el entorno
+  basePath: (() => {
+    // Detectar si estamos en la carpeta typing_task o en raíz
+    const currentPath = window.location.pathname;
+    if (currentPath.includes('/typing_task/')) {
+      return './json/'; // Ruta relativa desde typing.html
+    } else if (currentPath.includes('/tasks/')) {
+      return './typing_task/json/'; // Ruta desde carpeta tasks
+    } else {
+      return './json/'; // Default
+    }
+  })(),
+  
   /**
    * Cargar la lista de archivos JSON disponibles desde loader.json
    * @returns {Promise<Array>} Array con nombres de archivos
@@ -17,10 +30,10 @@ const TextLoader = {
     //console.log('📋 Cargando lista de archivos desde loader.json...');
     
     try {
-      const response = await fetch('json/loader.json');
+      const response = await fetch(this.basePath + 'loader.json');
       
       if (!response.ok) {
-        throw new Error(`HTTP ${response.status} - No se pudo cargar loader.json`);
+        throw new Error(`HTTP ${response.status} - No se pudo cargar loader.json desde ${this.basePath}loader.json`);
       }
       
       const fileList = await response.json();
@@ -29,11 +42,12 @@ const TextLoader = {
         throw new Error('loader.json está vacío o no es un array');
       }
       
-      //console.log(`✅ ${fileList.length} archivos encontrados en loader.json:`, fileList);
+      console.log(`✅ ${fileList.length} archivos encontrados en loader.json desde ${this.basePath}`);
       return fileList;
       
     } catch (error) {
-      //console.error('❌ Error al cargar loader.json:', error);
+      console.error('❌ Error al cargar loader.json:', error);
+      console.error('Ruta intentada:', this.basePath + 'loader.json');
       throw error;
     }
   },
@@ -53,10 +67,10 @@ const TextLoader = {
       // Luego cargamos cada archivo
       for (const fileName of fileList) {
         try {
-          const response = await fetch(`json/${fileName}`);
+          const response = await fetch(this.basePath + fileName);
           
           if (!response.ok) {
-            //console.warn(`⚠️ No se pudo cargar json/${fileName} (HTTP ${response.status})`);
+            console.warn(`⚠️ No se pudo cargar ${this.basePath}${fileName} (HTTP ${response.status})`);
             continue;
           }
           
@@ -119,10 +133,10 @@ const TextLoader = {
       }
       
       // Si no, cargarla
-      const response = await fetch(`json/${fileName}`);
+      const response = await fetch(this.basePath + fileName);
       
       if (!response.ok) {
-        throw new Error(`HTTP ${response.status}`);
+        throw new Error(`HTTP ${response.status} desde ${this.basePath}${fileName}`);
       }
       
       const data = await response.json();
