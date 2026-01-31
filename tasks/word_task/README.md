@@ -9,6 +9,7 @@ word_task/
 ├── css/
 │   ├── main.css         # Estilos principales (header, cinta, controles)
 │   ├── animations.css   # Animaciones (shake, heart-falling)
+│   ├── background.css   # Animaciones del fondo
 │   └── modal.css        # Estilos del modal de resultados
 ├── js/
 │   ├── data.js          # Datos: palabras, preguntas y respuestas
@@ -19,7 +20,7 @@ word_task/
 ## 🎯 Características
 
 - **Sistema de vidas**: 10 corazones, se pierde uno por cada error
-- **Temporizador**: 15 minutos para completar el rosco
+- **Temporizador**: 15 minutos para completar el rosco (hay que cambiarlo a 30)
 - **Puntuación dinámica**: 100 puntos máximo, con penalización por errores
 - **Múltiples respuestas válidas**: Acepta variaciones ortográficas
 - **Normalización de respuestas**: Ignora acentos y capitalización
@@ -125,13 +126,5 @@ El rosco se desplaza automáticamente para centrar la pregunta actual:
 ## 🔜 Mejoras Futuras
 
 - [ ] Diseño responsive completo
-- [ ] Modo oscuro/claro
+        El modo responsive está casi completo. En móviles hace falta hacer los botones de pasar, validar y terminar más pequeños. Hacer que la cinta de letras se mueva hacia arriba. Y reducir y bajar la pista (descripción) de la palabra a averiguar.
 - [ ] Sonidos y efectos
-- [ ] Guardado de récords locales
-- [ ] Categorías temáticas
-- [ ] Dificultad ajustable
-- [ ] Modo multijugador
-
----
-
-**Desarrollado con 😻 para Ayax Profesor**
