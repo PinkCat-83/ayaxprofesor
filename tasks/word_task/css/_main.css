@@ -734,35 +734,35 @@ body::before {
     }
     
     .question-box {
-        font-size: 18px;  /* Reducido de 22px a 18px */
-        padding: 15px 20px;  /* Reducido padding */
-        min-height: 60px;  /* Reducido min-height */
+        font-size: 22px;
+        padding: 20px 25px;
+        min-height: 80px;
     }
     
     .game-container {
-        padding: 20px 15px;  /* Reducido padding vertical */
+        padding: 30px 15px;
     }
     
     .belt-container {
-        height: 220px;  /* Reducido de 290px a 220px */
-        margin-bottom: 20px;  /* Reducido margen */
-        padding: 30px 0;  /* Reducido padding */
+        height: 290px;  /* Aumentado de 250px a 290px */
+        margin-bottom: 40px;
+        padding: 40px 0;  /* Padding para el glow */
     }
     
     .belt {
-        gap: 60px;  /* Reducido de 80px a 60px */
+        gap: 80px;
     }
     
     .letra {
-        width: 70px;  /* Reducido de 90px a 70px */
-        height: 70px;
-        min-width: 70px;
-        font-size: 32px;  /* Reducido de 40px a 32px */
+        width: 90px;
+        height: 90px;
+        min-width: 90px;
+        font-size: 40px;
         border-width: 2px;
     }
     
     .letra.current {
-        transform: scale(1.5);  /* Aumentado de 1.4 a 1.5 */
+        transform: scale(1.4);
     }
     
     .pista-box {

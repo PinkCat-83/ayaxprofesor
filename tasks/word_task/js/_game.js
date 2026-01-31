@@ -55,20 +55,10 @@ function updateBeltPosition() {
     });
 
     // Calcular el desplazamiento para centrar la letra actual
-    // Valores responsive según el ancho de pantalla
-    let letterWidth = 130;
-    let gapWidth = 120;
-    
-    // Ajustar valores según breakpoints del CSS
-    if (window.innerWidth <= 768) {
-        letterWidth = 70;   // Móvil
-        gapWidth = 60;
-    } else if (window.innerWidth <= 1024) {
-        letterWidth = 110;  // Tablet
-        gapWidth = 100;
-    }
-    
-    const totalWidthPerLetter = letterWidth + gapWidth;
+    // Valores del CSS: ancho letra = 130px, gap = 120px
+    const letterWidth = 130;
+    const gapWidth = 120;
+    const totalWidthPerLetter = letterWidth + gapWidth; // 250px
     
     // La cinta tiene left: 50% en CSS, así que ya empieza centrada
     // Solo necesitamos mover según el índice y centrar la letra actual
@@ -376,9 +366,4 @@ document.addEventListener('DOMContentLoaded', () => {
     createBelt();
     initializeEvents();
     showQuestion(); // Mostrar la primera pregunta al cargar
-    
-    // Recalcular posición al redimensionar ventana
-    window.addEventListener('resize', () => {
-        updateBeltPosition();
-    });
 });
