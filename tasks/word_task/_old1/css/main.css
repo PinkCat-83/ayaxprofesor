@@ -121,12 +121,12 @@ body::before {
     display: flex;
     flex-direction: column;
     gap: 8px;
-    background: transparent;
-    backdrop-filter: none;
+    background: transparent;  /* Sin fondo */
+    backdrop-filter: none;  /* Sin blur */
     padding: 16px 20px;
     border-radius: 12px;
     border: none;
-    box-shadow: none;
+    box-shadow: none;  /* Sin sombras */
     transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
     position: relative;
     overflow: hidden;
@@ -154,6 +154,33 @@ body::before {
 
 .header-item:hover {
     transform: translateY(-2px);
+}
+
+/* Estilo especial para el contenedor de vidas */
+.header-item:first-child {
+    /* Sin estilos especiales */
+}
+
+.header-item:first-child:hover {
+    /* Sin efectos especiales */
+}
+
+/* Estilos específicos para aciertos (verde neón) */
+.header-item:nth-child(2) {
+    /* Sin borde */
+}
+
+.header-item:nth-child(2):hover {
+    /* Sin efectos especiales */
+}
+
+/* Estilos específicos para pendientes (azul neón) */
+.header-item:nth-child(3) {
+    /* Sin borde */
+}
+
+.header-item:nth-child(3):hover {
+    /* Sin efectos especiales */
 }
 
 /* Labels del header */
@@ -218,7 +245,7 @@ body::before {
 
 .heart {
     color: var(--neon-red);
-    font-size: 32px;
+    font-size: 32px;  /* Aumentado de 24px a 32px */
     filter: drop-shadow(0 0 8px var(--neon-red-glow))
             drop-shadow(0 0 15px var(--neon-red-glow));
     transition: all 0.3s ease;
@@ -249,18 +276,18 @@ body::before {
     backdrop-filter: blur(15px);
     border-top: 1px solid rgba(255, 0, 127, 0.3);
     border-bottom: 3px solid var(--neon-pink);
-    padding: 20px 30px;
+    padding: 30px 40px;
     width: 100%;
     text-align: center;
-    font-size: 26px;
+    font-size: 32px;
     font-weight: 600;
     font-family: var(--font-body);
-    line-height: 1.4;
+    line-height: 1.5;
     box-shadow: 
         0 8px 32px rgba(0, 0, 0, 0.4),
         0 0 60px var(--neon-pink-glow);
     color: white;
-    min-height: 80px;
+    min-height: 100px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -275,22 +302,21 @@ body::before {
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    padding: 20px;
+    padding: 40px 20px;
     position: relative;
     z-index: 2;
-    overflow: hidden;
-    max-height: calc(100vh - 200px);
+    overflow-x: hidden;  /* Evitar scroll horizontal de la cinta */
 }
 
-/* Cinta de letras - Layout HORIZONTAL (Desktop/Tablet) */
+/* Cinta de letras */
 .belt-container {
     width: 100%;
     max-width: 1400px;
-    height: 200px;
-    overflow: hidden;
+    height: 400px;  /* Aumentado de 350px a 400px para el glow */
+    overflow: visible;  /* Cambiar a visible completamente */
     position: relative;
-    margin-bottom: 20px;
-    padding: 30px 0;
+    margin-bottom: 50px;
+    padding: 60px 0;  /* Padding vertical para dar espacio al glow */
     perspective: 1200px;
     display: flex;
     align-items: center;
@@ -298,7 +324,7 @@ body::before {
 
 .belt {
     display: flex;
-    gap: 80px;
+    gap: 120px;
     position: absolute;
     left: 50%;
     transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
@@ -307,23 +333,23 @@ body::before {
 
 /* Letras del rosco con efecto neón mejorado */
 .letra {
-    width: 90px;
-    height: 90px;
-    min-width: 90px;
+    width: 130px;
+    height: 130px;
+    min-width: 130px;
     border-radius: 50%;
     background: radial-gradient(circle at 30% 30%, rgba(26, 26, 36, 0.9), rgba(19, 19, 26, 0.95));
     border: 3px solid var(--neon-pink);
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 42px;
+    font-size: 56px;
     font-weight: 900;
     font-family: var(--font-display);
     transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
     cursor: default;
     box-shadow: 
-        0 0 15px var(--neon-pink-glow),
-        inset 0 0 15px rgba(0, 0, 0, 0.5);
+        0 0 20px var(--neon-pink-glow),
+        inset 0 0 20px rgba(0, 0, 0, 0.5);
     opacity: 0.4;
     transform: scale(0.7);
     color: var(--neon-pink);
@@ -331,152 +357,181 @@ body::before {
     position: relative;
 }
 
-/* Letra actual - destacada con brillo */
-.letra.current {
-    opacity: 1;
-    transform: scale(1.4);
-    border-color: var(--neon-pink-bright);
-    color: white;
-    background: radial-gradient(circle at 30% 30%, rgba(255, 0, 127, 0.3), rgba(255, 0, 127, 0.1));
-    box-shadow: 
-        0 0 30px var(--neon-pink-glow),
-        0 0 40px var(--neon-pink-glow),
-        0 0 50px rgba(255, 0, 127, 0.4),
-        inset 0 0 20px rgba(255, 0, 127, 0.2);
-    z-index: 10;
+.letra::before {
+    content: '';
+    position: absolute;
+    top: -3px;
+    left: -3px;
+    right: -3px;
+    bottom: -3px;
+    border-radius: 50%;
+    background: linear-gradient(45deg, var(--neon-pink), transparent);
+    opacity: 0;
+    transition: opacity 0.5s ease;
+    z-index: -1;
 }
 
-/* Letra correcta - verde neón */
-.letra.correct {
-    opacity: 0.7;
-    border-color: var(--neon-green);
-    color: var(--neon-green);
-    background: radial-gradient(circle at 30% 30%, rgba(0, 255, 136, 0.2), rgba(0, 255, 136, 0.05));
+.letra:hover::before {
+    opacity: 0.3;
+}
+
+/* Letra actual con efecto espectacular */
+.letra.current {
+    opacity: 1;
+    transform: scale(1.6);
+    background: radial-gradient(circle at 30% 30%, var(--neon-pink-bright), var(--neon-pink-dark));
+    color: #fff;
     box-shadow: 
-        0 0 20px var(--neon-green-glow),
-        inset 0 0 20px rgba(0, 0, 0, 0.5);
+        0 0 60px var(--neon-pink-glow),
+        0 0 100px var(--neon-pink-glow),
+        0 0 140px rgba(255, 0, 127, 0.4),
+        inset 0 0 40px rgba(255, 255, 255, 0.2);
+    border-color: #fff;
+    border-width: 4px;
+    z-index: 10;
+    animation: currentPulse 2s ease-in-out infinite;
+}
+
+@keyframes currentPulse {
+    0%, 100% {
+        box-shadow: 
+            0 0 60px var(--neon-pink-glow),
+            0 0 100px var(--neon-pink-glow),
+            0 0 140px rgba(255, 0, 127, 0.4),
+            inset 0 0 40px rgba(255, 255, 255, 0.2);
+    }
+    50% {
+        box-shadow: 
+            0 0 80px var(--neon-pink-glow),
+            0 0 120px var(--neon-pink-glow),
+            0 0 160px rgba(255, 0, 127, 0.6),
+            inset 0 0 50px rgba(255, 255, 255, 0.3);
+    }
+}
+
+/* Letra correcta */
+.letra.correct {
+    background: radial-gradient(circle at 30% 30%, var(--neon-green), #00cc6f);
+    border-color: var(--neon-green);
+    box-shadow: 
+        0 0 30px var(--neon-green-glow),
+        0 0 50px var(--neon-green-glow),
+        inset 0 0 30px rgba(255, 255, 255, 0.2);
+    color: #000;
+    opacity: 1;
+    transform: scale(0.8);
 }
 
 .letra.correct.current {
-    opacity: 1;
-    transform: scale(1.4);
+    background: radial-gradient(circle at 30% 30%, var(--neon-green), #00cc6f);
+    border-color: #fff;
     box-shadow: 
-        0 0 30px var(--neon-green-glow),
-        0 0 40px var(--neon-green-glow),
-        inset 0 0 20px rgba(0, 255, 136, 0.2);
+        0 0 60px var(--neon-green-glow),
+        0 0 100px var(--neon-green-glow),
+        0 0 140px rgba(0, 255, 136, 0.4),
+        inset 0 0 40px rgba(255, 255, 255, 0.3);
+    transform: scale(1.6);
 }
 
-/* Letra incorrecta - rojo neón */
+/* Letra incorrecta */
 .letra.incorrect {
-    opacity: 0.6;
+    background: radial-gradient(circle at 30% 30%, var(--neon-red), #cc0044);
     border-color: var(--neon-red);
-    color: var(--neon-red);
-    background: radial-gradient(circle at 30% 30%, rgba(255, 0, 85, 0.2), rgba(255, 0, 85, 0.05));
     box-shadow: 
-        0 0 20px var(--neon-red-glow),
-        inset 0 0 20px rgba(0, 0, 0, 0.5);
+        0 0 30px var(--neon-red-glow),
+        0 0 50px var(--neon-red-glow),
+        inset 0 0 30px rgba(255, 255, 255, 0.2);
+    color: #000;
+    opacity: 1;
+    transform: scale(0.8);
 }
 
 .letra.incorrect.current {
-    opacity: 1;
-    transform: scale(1.4);
+    background: radial-gradient(circle at 30% 30%, var(--neon-red), #cc0044);
+    border-color: #fff;
     box-shadow: 
-        0 0 30px var(--neon-red-glow),
-        0 0 40px var(--neon-red-glow),
-        inset 0 0 20px rgba(255, 0, 85, 0.2);
+        0 0 60px var(--neon-red-glow),
+        0 0 100px var(--neon-red-glow),
+        0 0 140px rgba(255, 0, 85, 0.4),
+        inset 0 0 40px rgba(255, 255, 255, 0.3);
+    transform: scale(1.6);
 }
 
-/* Contenedor de entrada */
+/* Área de controles */
 .input-container {
-    width: 100%;
-    max-width: 700px;
     display: flex;
     flex-direction: column;
-    gap: 15px;
-    background: linear-gradient(135deg, rgba(19, 19, 26, 0.95) 0%, rgba(26, 26, 36, 0.9) 100%);
-    backdrop-filter: blur(20px);
-    padding: 25px;
-    border-radius: 20px;
-    border: 2px solid var(--neon-pink);
-    box-shadow: 
-        0 0 40px var(--neon-pink-glow),
-        0 0 80px rgba(255, 0, 127, 0.3),
-        inset 0 0 60px rgba(0, 0, 0, 0.5);
+    gap: 20px;
+    max-width: 700px;
+    width: 100%;
 }
 
-/* Caja de pista */
 .pista-box {
-    background: rgba(0, 212, 255, 0.1);
-    border: 2px solid var(--neon-blue);
-    border-radius: 12px;
-    padding: 12px 20px;
+    padding: 16px 24px;
     text-align: center;
-    font-size: 18px;
-    font-weight: 600;
-    color: var(--neon-blue);
-    box-shadow: 
-        0 0 20px var(--neon-blue-glow),
-        inset 0 0 20px rgba(0, 0, 0, 0.3);
-    text-shadow: 0 0 10px var(--neon-blue-glow);
+    color: var(--neon-pink);
+    font-size: 24px;
+    font-weight: 700;
+    font-family: var(--font-display);
+    text-shadow: 
+        0 0 10px var(--neon-pink-glow),
+        0 2px 4px rgba(0, 0, 0, 0.5);
+    letter-spacing: 1px;
 }
 
-/* Input de respuesta con animación de enfoque */
+/* Input con efecto glassmorphism y neón */
 .answer-input {
     width: 100%;
-    padding: 16px 22px;
-    font-size: 20px;
+    padding: 20px 24px;
+    font-size: 22px;
     font-weight: 600;
-    text-align: center;
-    color: white;
-    background: rgba(0, 0, 0, 0.5);
-    border: 3px solid var(--neon-pink);
-    border-radius: 15px;
-    outline: none;
-    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-    box-shadow: 
-        0 0 20px var(--neon-pink-glow),
-        inset 0 0 20px rgba(0, 0, 0, 0.5);
     font-family: var(--font-body);
-    letter-spacing: 1px;
+    border: 3px solid var(--neon-pink);
+    border-radius: 12px;
+    outline: none;
+    background: rgba(19, 19, 26, 0.8);
+    backdrop-filter: blur(10px);
+    color: white;
+    text-align: center;
+    box-shadow: 
+        0 0 30px var(--neon-pink-glow),
+        inset 0 2px 20px rgba(0, 0, 0, 0.5);
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .answer-input::placeholder {
     color: rgba(255, 255, 255, 0.3);
-    font-style: italic;
 }
 
 .answer-input:focus {
     border-color: var(--neon-pink-bright);
     box-shadow: 
-        0 0 40px var(--neon-pink-glow),
-        0 0 60px rgba(255, 0, 127, 0.4),
-        inset 0 0 30px rgba(0, 0, 0, 0.3);
+        0 0 50px var(--neon-pink-glow),
+        0 0 80px rgba(255, 0, 127, 0.3),
+        inset 0 2px 20px rgba(0, 0, 0, 0.3);
     transform: translateY(-2px);
 }
 
-/* Fila de botones */
+/* Botones con diseño neón moderno */
 .button-row {
     display: flex;
     gap: 20px;
-    justify-content: space-between;
+    justify-content: center;
 }
 
-/* Estilos base de botones */
 .btn {
-    flex: 1;
-    padding: 14px 30px;
-    font-size: 16px;
+    padding: 18px 40px;
+    font-size: 18px;
     font-weight: 700;
     font-family: var(--font-display);
-    text-transform: uppercase;
-    letter-spacing: 2px;
     border: 3px solid;
-    border-radius: 12px;
+    border-radius: 10px;
     cursor: pointer;
     transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    text-transform: uppercase;
+    letter-spacing: 2px;
     position: relative;
     overflow: hidden;
-    background: rgba(0, 0, 0, 0.3);
 }
 
 .btn::before {
@@ -487,7 +542,7 @@ body::before {
     width: 0;
     height: 0;
     border-radius: 50%;
-    background: rgba(255, 255, 255, 0.1);
+    background: rgba(255, 255, 255, 0.2);
     transform: translate(-50%, -50%);
     transition: width 0.6s ease, height 0.6s ease;
 }
@@ -562,6 +617,25 @@ body::before {
     transform: translateY(-3px);
 }
 
+/* Logo */
+.logo {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    z-index: 100;
+    transition: all 0.3s ease;
+}
+
+.logo:hover {
+    transform: scale(1.1) rotate(5deg);
+}
+
+.logo img {
+    width: 100px;
+    height: 100px;
+    filter: drop-shadow(0 0 20px rgba(255, 0, 127, 0.5));
+}
+
 /* ============================================
    RESPONSIVE DESIGN
    ============================================ */
@@ -583,196 +657,154 @@ body::before {
     }
     
     .question-box {
-        font-size: 22px;
-        padding: 18px 25px;
-        min-height: 70px;
-    }
-    
-    .game-container {
-        padding: 15px;
-        max-height: calc(100vh - 220px);
+        font-size: 26px;
+        padding: 25px 30px;
+        min-height: 90px;
     }
     
     .belt-container {
-        height: 180px;
-        padding: 25px 0;
-        margin-bottom: 15px;
+        height: 350px;  /* Aumentado de 300px a 350px */
+        padding: 50px 0;  /* Padding para el glow */
     }
     
     .belt {
-        gap: 70px;
+        gap: 100px;
     }
     
     .letra {
-        width: 85px;
-        height: 85px;
-        min-width: 85px;
-        font-size: 40px;
+        width: 110px;
+        height: 110px;
+        min-width: 110px;
+        font-size: 48px;
     }
     
     .letra.current {
-        transform: scale(1.35);
+        transform: scale(1.5);
     }
     
     .input-container {
         max-width: 600px;
-        padding: 20px;
-        gap: 12px;
     }
     
     .answer-input {
-        font-size: 18px;
-        padding: 14px 18px;
-    }
-    
-    .pista-box {
-        font-size: 16px;
-        padding: 10px 16px;
+        font-size: 20px;
+        padding: 18px 20px;
     }
     
     .btn {
-        padding: 14px 30px;
-        font-size: 15px;
+        padding: 16px 35px;
+        font-size: 16px;
     }
 }
 
-/* Tablets pequeñas */
+/* Móviles grandes y tablets pequeñas */
 @media (max-width: 768px) {
     .header {
         flex-wrap: wrap;
-        padding: 12px;
-        gap: 8px;
+        padding: 15px;
+        gap: 10px;
     }
     
     .header-item {
-        min-width: calc(50% - 4px);
-        flex: 1 1 calc(50% - 4px);
-        padding: 10px 14px;
+        min-width: calc(50% - 5px);
+        flex: 1 1 calc(50% - 5px);
+        padding: 12px 16px;
     }
     
     .header-item:first-child {
-        flex: 1 1 100%;
-        min-width: 100%;
-    }
-    
-    /* Ocultar aciertos (segundo item) y sin contestar (tercer item) */
-    .header-item:nth-child(2),
-    .header-item:nth-child(3) {
-        display: none;
-    }
-    
-    /* El timer ahora ocupa todo el ancho disponible */
-    .header-item:nth-child(4) {
         flex: 1 1 100%;
         min-width: 100%;
     }
     
     .header-label {
-        font-size: 9px;
+        font-size: 10px;
         letter-spacing: 1.5px;
     }
     
     .header-value {
-        font-size: 20px;
+        font-size: 22px;
     }
     
     .lives {
-        gap: 7px;
+        gap: 8px;
     }
     
     .heart {
-        font-size: 24px;
+        font-size: 26px;  /* Aumentado de 20px a 26px */
     }
     
     .question-box {
-        font-size: 18px;
-        padding: 15px 20px;
-        min-height: 65px;
+        font-size: 18px;  /* Reducido de 22px a 18px */
+        padding: 15px 20px;  /* Reducido padding */
+        min-height: 60px;  /* Reducido min-height */
     }
     
     .game-container {
-        padding: 12px;
-        max-height: calc(100vh - 240px);
+        padding: 20px 15px;  /* Reducido padding vertical */
     }
     
     .belt-container {
-        height: 160px;
-        margin-bottom: 12px;
-        padding: 20px 0;
+        height: 220px;  /* Reducido de 290px a 220px */
+        margin-bottom: 20px;  /* Reducido margen */
+        padding: 30px 0;  /* Reducido padding */
     }
     
     .belt {
-        gap: 55px;
+        gap: 60px;  /* Reducido de 80px a 60px */
     }
     
     .letra {
-        width: 75px;
-        height: 75px;
-        min-width: 75px;
-        font-size: 35px;
+        width: 70px;  /* Reducido de 90px a 70px */
+        height: 70px;
+        min-width: 70px;
+        font-size: 32px;  /* Reducido de 40px a 32px */
         border-width: 2px;
     }
     
     .letra.current {
-        transform: scale(1.3);
-    }
-    
-    .input-container {
-        padding: 18px;
-        gap: 12px;
+        transform: scale(1.5);  /* Aumentado de 1.4 a 1.5 */
     }
     
     .pista-box {
-        font-size: 16px;
-        padding: 10px 16px;
+        font-size: 20px;
+        padding: 14px 20px;
     }
     
     .answer-input {
-        font-size: 17px;
-        padding: 14px 18px;
+        font-size: 18px;
+        padding: 16px 20px;
     }
     
     .button-row {
-        gap: 12px;
+        gap: 15px;
+        flex-direction: column;
     }
     
     .btn {
-        padding: 13px 25px;
-        font-size: 14px;
+        width: 100%;
+        padding: 16px 30px;
+        font-size: 15px;
+    }
+    
+    .logo {
+        bottom: 20px;
+        right: 20px;
+    }
+    
+    .logo img {
+        width: 70px;
+        height: 70px;
     }
 }
 
-/* ============================================
-   MÓVILES - LAYOUT ESPECIAL CON ROSCO VERTICAL
-   ============================================ */
-
-@media (max-width: 600px) {
-    /* Header más compacto */
+/* Móviles pequeños */
+@media (max-width: 480px) {
     .header {
-        padding: 10px;
-        gap: 8px;
+        padding: 12px;
     }
     
     .header-item {
-        padding: 8px 10px;
-        min-width: calc(50% - 4px);
-    }
-    
-    .header-item:first-child {
-        flex: 1 1 100%;
-        min-width: 100%;
-    }
-    
-    /* Ocultar aciertos (segundo item) y sin contestar (tercer item) */
-    .header-item:nth-child(2),
-    .header-item:nth-child(3) {
-        display: none;
-    }
-    
-    /* El timer ahora ocupa todo el ancho disponible */
-    .header-item:nth-child(4) {
-        flex: 1 1 100%;
-        min-width: 100%;
+        padding: 10px 12px;
     }
     
     .header-label {
@@ -781,243 +813,93 @@ body::before {
     }
     
     .header-value {
-        font-size: 18px;
+        font-size: 20px;
     }
     
     .heart {
-        font-size: 22px;
-        gap: 6px;
+        font-size: 24px;  /* Aumentado de 18px a 24px */
     }
     
-    /* Pregunta más compacta */
     .question-box {
-        font-size: 15px;
-        padding: 12px 15px;
-        min-height: 60px;
-        line-height: 1.3;
+        font-size: 18px;
+        padding: 18px 20px;
+        min-height: 70px;
     }
     
-    /* CAMBIO PRINCIPAL: Layout con rosco vertical a la izquierda */
-    .game-container {
-        flex-direction: row;
-        align-items: flex-start;
-        padding: 10px;
-        gap: 10px;
-        max-height: calc(100vh - 180px);
-        overflow: hidden;
-    }
-    
-    /* Rosco VERTICAL a la izquierda - SIN SCROLL */
     .belt-container {
-        width: 70px;
-        height: 100%;
-        max-height: 100%;
-        overflow: hidden;
-        margin-bottom: 0;
-        padding: 5px 0;
-        flex-shrink: 0;
-        display: flex;
-        align-items: center;
-        justify-content: center;
+        height: 240px;  /* Aumentado de 200px a 240px */
+        padding: 35px 0;  /* Padding para el glow */
     }
     
-    /* Belt vertical - centrado en el contenedor */
     .belt {
-        position: static;
-        flex-direction: column;
-        gap: 8px;
-        left: auto;
-        transform: none !important;
-        align-items: center;
-        padding: 0;
+        gap: 60px;
     }
     
-    /* Letras MÁS pequeñas para que quepan todas sin scroll */
     .letra {
-        width: 45px;
-        height: 45px;
-        min-width: 45px;
-        min-height: 45px;
-        font-size: 20px;
-        border-width: 2px;
-        opacity: 0.5;
-        transform: scale(1);
-        box-shadow: 0 0 8px var(--neon-pink-glow);
+        width: 70px;
+        height: 70px;
+        min-width: 70px;
+        font-size: 32px;
     }
     
     .letra.current {
-        transform: scale(1.15);
-        opacity: 1;
-        box-shadow: 
-            0 0 15px var(--neon-pink-glow),
-            0 0 25px var(--neon-pink-glow);
-    }
-    
-    .letra.correct {
-        opacity: 0.7;
-    }
-    
-    .letra.correct.current {
-        transform: scale(1.15);
-        opacity: 1;
-    }
-    
-    .letra.incorrect {
-        opacity: 0.6;
-    }
-    
-    .letra.incorrect.current {
-        transform: scale(1.15);
-        opacity: 1;
-    }
-    
-    /* Contenedor de input ocupa el resto del espacio */
-    .input-container {
-        flex: 1;
-        padding: 15px 12px;
-        gap: 12px;
-        min-width: 0;
+        transform: scale(1.3);
     }
     
     .pista-box {
-        font-size: 14px;
-        padding: 10px 14px;
+        font-size: 18px;
+        padding: 12px 16px;
     }
     
     .answer-input {
-        font-size: 15px;
-        padding: 12px 14px;
-    }
-    
-    .button-row {
-        flex-direction: column;
-        gap: 10px;
+        font-size: 16px;
+        padding: 14px 18px;
     }
     
     .btn {
-        width: 100%;
-        padding: 12px 18px;
-        font-size: 13px;
+        padding: 14px 25px;
+        font-size: 14px;
         letter-spacing: 1.5px;
     }
     
-    .btn-end {
-        margin-top: 5px;
-        padding: 10px 18px;
-        font-size: 12px;
+    .logo {
+        bottom: 15px;
+        right: 15px;
     }
-}
-
-/* Ajuste para móviles muy pequeños */
-@media (max-width: 380px) {
-    .belt-container {
+    
+    .logo img {
         width: 60px;
-    }
-    
-    .letra {
-        width: 40px;
-        height: 40px;
-        min-width: 40px;
-        min-height: 40px;
-        font-size: 18px;
-        gap: 6px;
-    }
-    
-    .input-container {
-        padding: 12px 10px;
-        gap: 10px;
-    }
-    
-    .question-box {
-        font-size: 13px;
-        padding: 10px 12px;
-        min-height: 50px;
-    }
-    
-    .answer-input {
-        font-size: 14px;
-        padding: 10px 12px;
-    }
-    
-    .pista-box {
-        font-size: 13px;
-        padding: 8px 12px;
-    }
-    
-    .btn {
-        padding: 10px 16px;
-        font-size: 12px;
+        height: 60px;
     }
 }
 
-/* Landscape en móviles - mantener layout vertical */
-@media (max-height: 600px) and (orientation: landscape) and (max-width: 900px) {
+/* Landscape en móviles */
+@media (max-height: 600px) and (orientation: landscape) {
     .header {
-        padding: 6px 12px;
+        padding: 10px 15px;
     }
     
     .header-item {
-        padding: 5px 8px;
-    }
-    
-    .header-value {
-        font-size: 15px;
-    }
-    
-    .header-label {
-        font-size: 8px;
-    }
-    
-    .question-box {
-        font-size: 14px;
-        padding: 10px 15px;
-        min-height: 45px;
-    }
-    
-    .game-container {
-        padding: 8px;
-        max-height: calc(100vh - 180px);
-    }
-    
-    .belt-container {
-        height: 100%;
-        padding: 5px 0;
-    }
-    
-    .belt {
-        gap: 6px;
-    }
-    
-    .letra {
-        width: 40px;
-        height: 40px;
-        min-width: 40px;
-        min-height: 40px;
-        font-size: 18px;
-    }
-    
-    .input-container {
-        padding: 12px 10px;
-        gap: 8px;
-    }
-    
-    .pista-box {
-        font-size: 13px;
         padding: 8px 12px;
     }
     
-    .answer-input {
-        font-size: 14px;
-        padding: 10px 12px;
+    .header-value {
+        font-size: 18px;
     }
     
-    .btn {
-        padding: 8px 16px;
-        font-size: 12px;
+    .question-box {
+        font-size: 16px;
+        padding: 15px 20px;
+        min-height: 60px;
     }
     
-    .btn-end {
-        padding: 7px 16px;
-        font-size: 11px;
+    .belt-container {
+        height: 220px;  /* Aumentado de 180px a 220px */
+        margin-bottom: 20px;
+        padding: 30px 0;  /* Padding para el glow */
+    }
+    
+    .game-container {
+        padding: 20px 15px;
     }
 }

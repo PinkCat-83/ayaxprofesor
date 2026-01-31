@@ -56,19 +56,16 @@ function updateBeltPosition() {
 
     // Calcular el desplazamiento para centrar la letra actual
     // Valores responsive según el ancho de pantalla
-    let letterWidth = 90;  // Tamaño de letra actualizado
-    let gapWidth = 80;
+    let letterWidth = 130;
+    let gapWidth = 120;
     
     // Ajustar valores según breakpoints del CSS
-    if (window.innerWidth <= 600) {
-        // En móvil con rosco vertical, no hacemos scroll horizontal
-        return;
-    } else if (window.innerWidth <= 768) {
-        letterWidth = 75;
-        gapWidth = 55;
+    if (window.innerWidth <= 768) {
+        letterWidth = 70;   // Móvil
+        gapWidth = 60;
     } else if (window.innerWidth <= 1024) {
-        letterWidth = 85;
-        gapWidth = 70;
+        letterWidth = 110;  // Tablet
+        gapWidth = 100;
     }
     
     const totalWidthPerLetter = letterWidth + gapWidth;
