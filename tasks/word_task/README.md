@@ -127,4 +127,5 @@ El rosco se desplaza automáticamente para centrar la pregunta actual:
 
 - [ ] Diseño responsive completo
         El modo responsive está casi completo. En móviles hace falta hacer los botones de pasar, validar y terminar más pequeños. Hacer que la cinta de letras se mueva hacia arriba. Y reducir y bajar la pista (descripción) de la palabra a averiguar.
+        Además, ya que los móviles suelen mover el "textbox" a la parte superior al pulsar sobre este para escribir, lo ideal es que la descripción esté debajo, no arriba. Así siempre estará a la vista.
 - [ ] Sonidos y efectos
