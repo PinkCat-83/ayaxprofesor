@@ -65,6 +65,7 @@ ayaxprofesor/
 │   ├── externallinks.png
 │   ├── logo.png
 │   └── title.png
+├── moodle/                 # Instrucciones para trabajar en Moodle, para no repetir código html en enunciados.
 ├── res/
 │   ├── cat-animation.js
 │   └── cat-bouncing.css
