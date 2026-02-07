@@ -1,0 +1,22 @@
+{
+  "id": "orientatione",
+  "name": "Asi se inserta orienta una pagina",
+  "category": "formato",
+  "list": [
+    {
+      "program": "word",
+      "desc": "aasdasd",
+      "imgs": []
+    },
+    {
+      "program": "googledocs",
+      "desc": "sdfsdf",
+      "imgs": []
+    },
+    {
+      "program": "writer",
+      "desc": "con eli vbnmvbnm office patatata",
+      "imgs": []
+    }
+  ]
+}

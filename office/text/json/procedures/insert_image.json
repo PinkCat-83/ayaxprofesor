@@ -1,0 +1,22 @@
+{
+  "id": "inser_image",
+  "name": "Asi se inserta uina imagen",
+  "category": "formato",
+  "list": [
+    {
+      "program": "word",
+      "desc": "aaaaaa",
+      "imgs": []
+    },
+    {
+      "program": "googledocs",
+      "desc": "b",
+      "imgs": []
+    },
+    {
+      "program": "writer",
+      "desc": "con eli libre office patatata",
+      "imgs": []
+    }
+  ]
+}

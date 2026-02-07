@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Diccionario Ofimático - Ayax Profesor</title>
+    <link rel="stylesheet" href="css/dictionary.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <h1>📚 Diccionario Ofimático</h1>
+            <p>Encuentra rápidamente cómo realizar tareas en diferentes programas</p>
+        </header>
+
+        <!-- Search Bar -->
+        <div class="search-container">
+            <input 
+                type="text" 
+                id="search-input" 
+                class="search-input" 
+                placeholder="🔍 Buscar procedimiento..."
+                autocomplete="off"
+            >
+        </div>
+
+        <!-- Program Filters -->
+        <div class="filters-container">
+            <h2>Filtrar por programa:</h2>
+            <div id="program-filters">
+                <!-- Los filtros se generan dinámicamente -->
+            </div>
+        </div>
+
+        <!-- Procedures Container -->
+        <div id="procedures-container">
+            <!-- Los procedimientos se cargan dinámicamente -->
+        </div>
+    </div>
+
+    <!-- Image Modal -->
+    <div id="image-modal" class="image-modal">
+        <div class="modal-content">
+            <span class="modal-close">&times;</span>
+            <img id="modal-image" class="modal-image" src="" alt="Vista ampliada">
+        </div>
+    </div>
+
+    <script src="js/dictionary.js"></script>
+</body>
+</html>

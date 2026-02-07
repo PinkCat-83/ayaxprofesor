@@ -1,0 +1,19 @@
+{
+  "programList": [
+    {
+      "code": "word",
+      "realName": "Microsoft Office Word 365",
+      "img": "wordlogo.png"
+    },
+    {
+      "code": "googledocs",
+      "realName": "Google Documents",
+      "img": "GoogleDocs.png"
+    },
+    {
+      "code": "writer",
+      "realName": "LibreOffice Writer",
+      "img": "LibreOffice.png"
+    }
+  ]
+}
