@@ -2,7 +2,9 @@
 
 Un entorno educativo web diseñado para actividades de informática, completamente **libre de publicidad** y con todo a un solo clic.
 
-![Ayax Logo](imgs/logo.png)
+<p align="center">
+  <img src="imgs/logo.png" width="200" alt="Ayax Logo">
+</p>
 
 ## ✨ Características
 
@@ -26,7 +28,7 @@ Un entorno educativo web diseñado para actividades de informática, completamen
 
 ## 🚀 Acceso
 
-Visita la web en: [ayaxprofesor.es]
+Visita la web en: [ayaxprofesor.es](https://ayaxprofesor.es)
 
 ## 🚧 En desarrollo activo 🚧
 
@@ -52,7 +54,7 @@ ayaxprofesor/
 │   ├── logo.png
 │   └── title.png
 ├── moodle/                 # Instrucciones para trabajar en Moodle, para no repetir código html en enunciados. Técnicamente, no tiene nada que ver con la página.
-├── office/                 # Proyecto en pruebas, que será un "diccionario" de "dónde encotnrar tal herramienta en cada programa de ofimática". Modulable con json.
+├── office/                 # Proyecto en pruebas, que será un "diccionario" de "dónde encontrar tal herramienta en cada programa de ofimática". Modulable con json.
 ├── res/
 │   ├── cat-animation.js    # Habrá que moverlo más adelante, cuando la página principal se modulice.
 │   └── cat-bouncing.css    # Habrá que moverlo más adelante, cuando la página principal se modulice.
@@ -89,7 +91,3 @@ Este proyecto nace con el objetivo de proporcionar un espacio seguro y accesible
 ---
 
 Desarrollado con 😻 rosas para facilitar el aprendizaje en informática
-
-## Cambios efectuados
-
-08/02/2026 - Introducido foot.html y tinyfoot.html, restructuración de algunos archivos y carpetas. Estreno de esta sección.
