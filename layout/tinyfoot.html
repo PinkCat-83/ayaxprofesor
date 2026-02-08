@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="/css/tinyfoot.css">
+</head>
+
+<body>
+    <div class="tinyfoot glass" id="tinyfoot">
+        <span>👨‍🏫 - Ayax González Suárez</span>
+        <span>📧 - ayaxprofesor@gmail.com</span>
+    </div>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const tinyfoot = document.getElementById('tinyfoot');
+
+            if (tinyfoot) {
+                tinyfoot.style.cursor = 'pointer';
+
+                tinyfoot.addEventListener('click', function () {
+                    // Enviar mensaje a la página padre
+                    window.parent.postMessage('closeTinyfoot', '*');
+                });
+            }
+        });
+    </script>
+
+</body>
+
+</html>

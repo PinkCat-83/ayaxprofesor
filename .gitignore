@@ -1,9 +1,6 @@
-# Carpetas de trabajo local
-/_Proceso creación/
-/_Recursos sin Modificar/
-
-# Archivos de configuración o notas personales
-URL.txt
+# Todos los archivos y carpetas (y su contenido)
+# que empiecen por _ se ignorarán
+_*
 
 # Scripts de automatización
 *.bat

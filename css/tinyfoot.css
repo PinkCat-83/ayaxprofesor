@@ -1,0 +1,41 @@
+/* Estilo Aero Glass */
+.glass {
+    background: rgba(255, 192, 203, 0.85);
+    backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.6);
+    border-radius: 8px;
+    box-shadow:
+        0 4px 20px rgba(255, 105, 180, 0.5),
+        inset 0 1px 0 rgba(255, 255, 255, 0.7),
+        inset 0 -1px 0 rgba(255, 255, 255, 0.3);
+}
+
+/* Tiny footer - esquina inferior derecha */
+.tinyfoot {
+    z-index: 9999;
+    padding: 8px 16px;
+    font-size: 1rem;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 5px;
+    opacity: 0.95;
+    transition: opacity 0.3s ease, transform 0.3s ease;
+    cursor: pointer;
+}
+
+.tinyfoot:hover {
+    opacity: 1;
+    transform: translateY(-2px);
+}
+
+.tinyfoot:active {
+    transform: translateY(0px);
+    opacity: 0.8;
+}
+
+.tinyfoot span {
+    color: #000;
+    font-weight: 500;
+    text-shadow: 0 1px 1px rgba(255, 255, 255, 0.3);
+}
