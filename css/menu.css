@@ -1,0 +1,477 @@
+/* ============================================================
+   VARIABLES & RESET
+   ============================================================ */
+:root {
+  --neon: #ff2d9b;
+  --neon2: #ff6ec7;
+  --dark: #0a0a0f;
+  --card: #10101a;
+  --glow: 0 0 8px #ff2d9b, 0 0 24px #ff2d9b55;
+  --glow-strong: 0 0 12px #ff2d9b, 0 0 40px #ff2d9b88, 0 0 80px #ff2d9b33;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+/* ============================================================
+   BODY BASE
+   ============================================================ */
+body {
+  background: var(--dark);
+  font-family: 'Share Tech Mono', monospace;
+  min-height: 100vh;
+  position: relative;
+}
+
+/* Grid background — z-index: -1 para que quede detrás del canvas */
+body::before {
+  content: '';
+  position: fixed; inset: 0;
+  background-image:
+    linear-gradient(rgba(255,45,155,0.06) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,45,155,0.06) 1px, transparent 1px);
+  background-size: 40px 40px;
+  pointer-events: none;
+  z-index: -1;
+}
+
+/* Ambient glow orb — z-index: -1 para que quede detrás del canvas */
+body::after {
+  content: '';
+  position: fixed;
+  width: 600px; height: 600px;
+  background: radial-gradient(circle, rgba(255,45,155,0.12) 0%, transparent 70%);
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+  z-index: -1;
+}
+
+/* ============================================================
+   SCANLINE
+   ============================================================ */
+.scanline {
+  position: fixed; inset: 0;
+  background: repeating-linear-gradient(
+    to bottom,
+    transparent 0px,
+    transparent 3px,
+    rgba(0,0,0,0.08) 3px,
+    rgba(0,0,0,0.08) 4px
+  );
+  pointer-events: none;
+  z-index: 9999;
+}
+
+/* ============================================================
+   STANDALONE MENU (menu.html)
+   ============================================================ */
+.standalone-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  position: relative;
+  z-index: 10;
+  gap: 2rem;
+  padding: 2rem 1rem;
+  width: min(480px, 92vw);
+  margin: 0 auto;
+}
+
+.header { text-align: center; animation: fadeDown 0.8s ease both; }
+
+.header h1 {
+  font-family: 'Orbitron', sans-serif;
+  font-weight: 900;
+  font-size: clamp(1.6rem, 5vw, 2.4rem);
+  color: #fff;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  text-shadow: var(--glow-strong);
+}
+
+.header .subtitle {
+  color: var(--neon2);
+  font-size: 0.72rem;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  margin-top: 0.4rem;
+  opacity: 0.8;
+}
+
+.divider {
+  width: 100%;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--neon), transparent);
+  box-shadow: var(--glow);
+  animation: fadeIn 1s ease 0.3s both;
+}
+
+nav {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+}
+
+.footer-label {
+  font-size: 0.65rem;
+  color: rgba(255,45,155,0.4);
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  animation: fadeIn 1s ease 0.8s both;
+}
+
+/* ============================================================
+   BUTTONS (.btn)
+   ============================================================ */
+.btn {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 0.9rem 1.4rem;
+  background: var(--card);
+  border: 1px solid var(--neon);
+  border-radius: 4px;
+  color: #fff;
+  text-decoration: none;
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 0.95rem;
+  letter-spacing: 0.08em;
+  position: relative;
+  overflow: hidden;
+  transition: all 0.25s ease;
+  box-shadow: 0 0 8px rgba(255,45,155,0.2);
+  cursor: pointer;
+  width: 100%;
+  text-align: left;
+}
+
+.btn::before {
+  content: '';
+  position: absolute;
+  top: -1px; right: -1px;
+  width: 12px; height: 12px;
+  border-top: 2px solid var(--neon2);
+  border-right: 2px solid var(--neon2);
+  transition: all 0.3s ease;
+}
+.btn::after {
+  content: '';
+  position: absolute;
+  bottom: -1px; left: -1px;
+  width: 12px; height: 12px;
+  border-bottom: 2px solid var(--neon2);
+  border-left: 2px solid var(--neon2);
+  transition: all 0.3s ease;
+}
+
+.btn:hover {
+  background: rgba(255,45,155,0.1);
+  box-shadow: var(--glow-strong), inset 0 0 20px rgba(255,45,155,0.08);
+  transform: translateX(4px);
+  color: #fff;
+}
+
+.btn:hover::before,
+.btn:hover::after { width: 20px; height: 20px; }
+
+.btn-icon {
+  font-size: 1.2rem;
+  min-width: 1.5rem;
+  text-align: center;
+  filter: drop-shadow(0 0 6px var(--neon));
+}
+
+.btn-label {
+  flex: 1;
+  min-width: 0;
+}
+
+.btn-label span {
+  display: block;
+  font-size: 0.68rem;
+  color: var(--neon2);
+  opacity: 0.7;
+  letter-spacing: 0.15em;
+  margin-top: 0.1rem;
+}
+
+.btn-arrow {
+  color: var(--neon);
+  font-size: 1rem;
+  opacity: 0;
+  transform: translateX(-6px);
+  transition: all 0.25s ease;
+}
+
+.btn:hover .btn-arrow { opacity: 1; transform: translateX(0); }
+
+/* ============================================================
+   INDEX LAYOUT
+   ============================================================ */
+#catCanvas {
+  position: fixed; top: 0; left: 0;
+  width: 100%; height: 100%;
+  z-index: 1;
+  pointer-events: none;
+}
+
+.logo-container {
+  position: fixed;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 2;
+  pointer-events: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.logo-wrapper {
+  animation: float 3s ease-in-out infinite;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.logo-wrapper img {
+  min-width: 35vw;
+  max-width: 100%;
+  max-height: 70vh;
+  object-fit: contain;
+  filter:
+    drop-shadow(0 0 10px rgba(255,255,255,0.6))
+    drop-shadow(0 0 25px rgba(255,20,147,0.5));
+}
+
+/* Columna de paneles — anclada a la izquierda */
+.side-panels {
+  position: fixed;
+  top: 20px;
+  left: 20px;
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  overflow: visible;
+  padding: 12px;
+}
+
+/* ============================================================
+   COLLAPSIBLE GROUP
+   ============================================================ */
+
+/* El grupo solo ocupa el trigger — el panel flota absolutamente */
+.group {
+  position: relative;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+/* Barra trigger */
+.group-trigger {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 16px;
+  background: var(--card);
+  border: 1px solid var(--neon);
+  border-radius: 6px;
+  cursor: pointer;
+  font-family: 'Orbitron', sans-serif;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #fff;
+  text-shadow: var(--glow);
+  box-shadow: 0 0 10px rgba(255,45,155,0.25);
+  white-space: nowrap;
+  transition: transform 0.25s ease, background 0.25s ease, box-shadow 0.25s ease;
+  user-select: none;
+  position: relative;
+  z-index: 2;
+  width: 240px;
+  height: 52px;
+}
+
+/* Título dentro del trigger */
+.group-title {
+  flex: 1;
+  min-width: 0;
+}
+
+/* Variante con imagen */
+.group-trigger.has-image { padding: 8px 16px; }
+
+.group-trigger.has-image img {
+  height: 36px;
+  width: auto;
+  filter: drop-shadow(0 0 6px rgba(255,45,155,0.6));
+  flex: 1;
+}
+
+.group-trigger:hover {
+  background: rgba(255,45,155,0.12);
+  box-shadow: var(--glow-strong);
+  transform: scale(1.03);
+}
+
+/* Trigger abierto: se desplaza a la derecha */
+.group.open .group-trigger {
+  transform: translateX(8px);
+  background: rgba(255,45,155,0.12);
+  box-shadow: var(--glow-strong);
+}
+
+/* Flecha */
+.group-arrow {
+  font-size: 0.85rem;
+  color: var(--neon);
+  transition: transform 0.35s ease;
+  flex-shrink: 0;
+  margin-left: auto;
+}
+
+.group.open .group-arrow { transform: rotate(90deg); }
+
+/* Conector visual trigger → panel (absoluto, sale del trigger) */
+.group-connector {
+  position: absolute;
+  left: 248px; /* ancho trigger (240) + desplazamiento (8) */
+  top: 50%;
+  transform: translateY(-50%);
+  width: 0;
+  height: 4px;
+  background: linear-gradient(90deg, var(--neon), rgba(255,45,155,0.4));
+  box-shadow: var(--glow-strong);
+  transition: width 0.3s ease;
+  z-index: 3;
+  border-radius: 2px;
+}
+
+.group.open .group-connector {
+  width: 18px;
+  height: 6px;
+}
+
+/* Panel desplegable — absolutamente posicionado, no afecta al flujo */
+.group-panel {
+  position: absolute;
+  left: 266px; /* 240 trigger + 8 desplazamiento + 18 conector */
+  top: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  background: rgba(10,10,15,0.94);
+  border: 1px solid transparent;
+  border-radius: 6px;
+  width: 400x;
+  z-index: 5;
+
+  /* Estado cerrado */
+  max-height: 0;
+  opacity: 0;
+  padding: 0 12px;
+  overflow: hidden;
+  transition:
+    max-height 0.4s ease,
+    opacity 0.3s ease,
+    padding 0.3s ease,
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.group.open .group-panel {
+  max-height: 700px;
+  opacity: 1;
+  padding: 12px;
+  border-color: var(--neon);
+  box-shadow: var(--glow-strong), inset 0 0 20px rgba(255,45,155,0.04);
+}
+
+/* Los .btn dentro del panel no necesitan animación de entrada */
+.group-panel .btn { animation: none; }
+
+/* ============================================================
+   FOOTER DEL INDEX
+   ============================================================ */
+.index-footer {
+  position: fixed;
+  bottom: 0; left: 0; right: 0;
+  z-index: 20;
+  padding: 10px 30px;
+  text-align: center;
+  background: rgba(10,10,15,0.75);
+  backdrop-filter: blur(10px);
+  border-top: 1px solid rgba(255,45,155,0.25);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 24px;
+}
+
+.index-footer p {
+  color: #fff;
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 0.95rem;
+}
+
+.index-footer strong { color: var(--neon); }
+
+.index-footer a {
+  color: #4dabf7;
+  font-weight: 700;
+  text-decoration: none;
+  transition: all 0.3s ease;
+}
+
+.index-footer a:hover {
+  color: #74c0fc;
+  text-shadow: 0 0 10px rgba(77,171,247,0.8);
+}
+
+.secret-boat { opacity: 0.6; transition: opacity 0.3s ease; }
+.secret-boat img { height: 48px; width: auto; }
+.secret-boat:hover {
+  opacity: 1;
+  animation: balanceo 1s ease-in-out infinite;
+}
+
+/* ============================================================
+   KEYFRAMES
+   ============================================================ */
+@keyframes fadeDown {
+  from { opacity: 0; transform: translateY(-20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+@keyframes slideIn {
+  from { opacity: 0; transform: translateX(-20px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50%       { transform: translateY(-20px); }
+}
+@keyframes balanceo {
+  0%, 100% { transform: rotate(-3deg); }
+  50%       { transform: rotate(3deg); }
+}
+
+
+/* ============================================================
+   Imagen como icono
+   ============================================================ */
+.btn-icon img {
+  height: 1.2rem;
+  width: auto;
+  display: block;
+  filter: drop-shadow(0 0 6px var(--neon));
+}

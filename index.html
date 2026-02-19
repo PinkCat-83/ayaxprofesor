@@ -2,455 +2,221 @@
 <html lang="es">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <link rel="icon" href="favicon.ico">
-    <title>Informática con el Gato Rosa</title>
-    <link rel="stylesheet" href="res/cat-bouncing.css">
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <link rel="icon" href="favicon.ico">
+  <title>Informática con el Gato Rosa</title>
 
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: #000;
-            min-height: 100vh;
-            height: 100vh;
-            min-width: 1100px;
-            overflow-x: auto;
-            overflow-y: hidden;
-        }
+  <!-- Fuentes del tema neón -->
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Share+Tech+Mono&display=swap"
+    rel="stylesheet" />
 
-
-        /* Canvas de gatos rebotando en fondo */
-        #catCanvas {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: 0;
-            pointer-events: none;
-        }
-
-        /* Logo en el centro del fondo */
-        .logo-container {
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            z-index: 0;
-            pointer-events: none;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        /* Contenedor principal */
-        .container {
-            position: relative;
-            z-index: 1;
-            display: grid;
-            grid-template-columns: 40px 400px 1fr 400px 40px;
-            grid-template-rows: auto 1fr;
-            height: 90vh;
-            gap: 20px;
-            padding: 20px 0;
-            padding-bottom: 80px;
-        }
-
-        /* Título superior */
-        .header {
-            grid-column: 2;
-            grid-row: 1;
-            text-align: center;
-            padding: 20px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .header img {
-            max-width: 100%;
-            height: auto;
-            filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.8)) drop-shadow(0 0 20px rgba(255, 20, 147, 0.6)) drop-shadow(0 0 30px rgba(255, 20, 147, 0.4)) drop-shadow(3px 3px 6px rgba(0, 0, 0, 0.2));
-            animation: glow 2s ease-in-out infinite alternate;
-        }
-
-        /* Encabezados de menús izquierdo y derecho */
-        .menu-left-header,
-        .menu-right-header {
-            grid-row: 1;
-            text-align: center;
-            padding: 20px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .menu-left-header {
-            grid-column: 2;
-        }
-
-        .menu-right-header {
-            grid-column: 4;
-        }
-
-        .menu-left-header img,
-        .menu-right-header img {
-            max-width: 100%;
-            height: auto;
-            transform: scale(1.2);
-            filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.6)) drop-shadow(0 0 15px rgba(255, 20, 147, 0.5));
-        }
-
-        .menu-left-header img {
-            transform: scale(1.2) translateX(50px);
-        }
-
-        @keyframes glow {
-            from {
-                filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.8)) drop-shadow(0 0 20px rgba(255, 20, 147, 0.6)) drop-shadow(0 0 30px rgba(255, 20, 147, 0.4)) drop-shadow(3px 3px 6px rgba(0, 0, 0, 0.2));
-            }
-
-            to {
-                filter: drop-shadow(0 0 20px rgba(255, 255, 255, 1)) drop-shadow(0 0 30px rgba(255, 20, 147, 0.8)) drop-shadow(0 0 40px rgba(255, 20, 147, 0.6)) drop-shadow(3px 3px 8px rgba(0, 0, 0, 0.3));
-            }
-        }
-
-        /* Estilo Aero Glass */
-        .glass {
-            background: rgba(255, 192, 203, 0.3);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.3);
-            border-radius: 15px;
-            box-shadow:
-                0 8px 32px rgba(255, 105, 180, 0.3),
-                inset 0 1px 0 rgba(255, 255, 255, 0.5),
-                inset 0 -1px 0 rgba(255, 255, 255, 0.2);
-        }
-
-        /* Menú izquierdo */
-        .menu {
-            grid-column: 2;
-            grid-row: 2;
-            padding: 20px;
-            max-height: 100%;
-            overflow-y: auto;
-            align-self: start;
-            z-index: 1;
-        }
-
-        /* Menú derecho */
-        .menu-right {
-            grid-column: 4;
-            grid-row: 2;
-            padding: 20px;
-            max-height: 100%;
-            overflow-y: auto;
-            align-self: start;
-            z-index: 1;
-        }
-
-        .menu::-webkit-scrollbar {
-            width: 8px;
-        }
-
-        .menu::-webkit-scrollbar-track {
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 10px;
-        }
-
-        .menu::-webkit-scrollbar-thumb {
-            background: rgba(255, 105, 180, 0.5);
-            border-radius: 10px;
-        }
-
-        .menu-item {
-            margin-bottom: 15px;
-        }
-
-        .menu-button {
-            width: 100%;
-            padding: 15px 20px;
-            border: none;
-            border-radius: 10px;
-            cursor: pointer;
-            font-size: 1rem;
-            font-weight: 600;
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 15px rgba(255, 105, 180, 0.3);
-            background: rgba(255, 105, 180, 0.4);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.4);
-            color: #fff;
-        }
-
-        .menu-button:hover {
-            background: rgba(255, 105, 180, 0.6);
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(255, 105, 180, 0.5);
-        }
-
-        /* Logo derecha */
-        .logo-container {
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            z-index: 0;
-            pointer-events: none;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .logo-wrapper {
-            position: relative;
-            animation: float 3s ease-in-out infinite;
-            max-width: 90%;
-            max-height: 90%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .logo-wrapper img {
-            min-width: 35vw;
-            max-width: 100%;
-            max-height: 70vh;
-            width: auto;
-            height: auto;
-            object-fit: contain;
-        }
-
-        @keyframes float {
-
-            0%,
-            100% {
-                transform: translateY(0px);
-            }
-
-            50% {
-                transform: translateY(-20px);
-            }
-        }
-
-        @keyframes pulse {
-
-            0%,
-            100% {
-                opacity: 0.5;
-                transform: translate(-50%, -50%) scale(1);
-            }
-
-            50% {
-                opacity: 0.8;
-                transform: translate(-50%, -50%) scale(1.1);
-            }
-        }
-
-        /* Footer con datos personales */
-        .footer {
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            z-index: 10;
-            padding: 15px 30px;
-            text-align: center;
-        }
-
-        .footer p {
-            color: #fff;
-            font-size: 1.3rem;
-            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
-            margin: 1px 0;
-        }
-
-        .footer strong {
-            color: #ff1493;
-            font-weight: 700;
-        }
-
-        .footer a {
-            color: #4dabf7;
-            font-weight: 700;
-            text-decoration: none;
-            transition: all 0.3s ease;
-        }
-
-        .footer a:hover {
-            color: #74c0fc;
-            text-shadow: 0 0 10px rgba(77, 171, 247, 0.8);
-        }
-
-
-
-
-        .secret-boat {
-            position: absolute;
-            right: 15px;
-            top: 50%;
-            transform: translateY(-50%);
-            opacity: 0.6;
-            transition: opacity 0.3s ease;
-        }
-
-        .secret-boat img {
-            height: 60px;
-            width: auto;
-        }
-
-        .secret-boat:hover {
-            opacity: 1;
-            animation: balanceo 1s ease-in-out infinite;
-        }
-
-        @keyframes balanceo {
-
-            0%,
-            100% {
-                transform: translateY(-50%) rotate(-3deg);
-            }
-
-            50% {
-                transform: translateY(-50%) rotate(3deg);
-            }
-        }
-
-
-
-
-
-
-
-
-
-        /* Área central (placeholder para contenido futuro) */
-        .content {
-            display: none;
-        }
-    </style>
+  <!-- CSS externo compartido -->
+  <link rel="stylesheet" href="css/cat-bouncing.css">
+  <link rel="stylesheet" href="css/menu.css">
 </head>
 
 <body>
-    <!-- Canvas para gatos rebotando -->
-    <canvas id="catCanvas"></canvas>
 
-    <!-- Logo flotante en el centro del fondo -->
-    <div class="logo-container">
-        <div class="logo-wrapper">
-            <div class="logo-glow"></div>
-            <img src="imgs/logo.png" alt="Logo Empresa">
-        </div>
+  <!-- Scanlines -->
+  <div class="scanline"></div>
+
+  <!-- Canvas gatos rebotando -->
+  <canvas id="catCanvas"></canvas>
+
+  <!-- Logo flotante central -->
+  <div class="logo-container">
+    <div class="logo-wrapper">
+      <img src="imgs/logo.png" alt="Logo">
+    </div>
+  </div>
+
+  <!-- =====================================================
+       PANELES COLAPSABLES — anclados a la izquierda
+       =====================================================
+
+       Para usar IMAGEN en vez de texto en el trigger:
+         1. Añade la clase "has-image" al .group-trigger
+         2. Sustituye el span.group-title por un <img src="...">
+
+       Ejemplo:
+         <div class="group-trigger has-image" onclick="toggleGroup(this)">
+           <img src="imgs/title.png" alt="Informática">
+           <span class="group-arrow">▶</span>
+         </div>
+  -->
+  <div class="side-panels">
+
+    <!-- ── GRUPO 1: Informática (trigger con TEXTO) ── -->
+    <div class="group" id="group-informatica">
+      <div class="group-trigger" onclick="toggleGroup(this)">
+        <span class="group-title">💻 Informática</span>
+        <span class="group-arrow">▶</span>
+      </div>
+      <div class="group-connector"></div>
+      <div class="group-panel">
+
+        <a class="btn" href="tasks/word_task/word.html" target="_blank">
+          <span class="btn-icon">💻</span>
+          <span class="btn-label">Rosco de Palabras</span>
+          <span class="btn-arrow">→</span>
+        </a>
+
+        <a class="btn" href="https://es.educaplay.com/recursos-educativos/19796883-perifericos_de_entrada_o_salida.html"
+          target="_blank">
+          <span class="btn-icon">🖱</span>
+          <span class="btn-label">
+            Periféricos - Nivel 1
+            <span>(*) Recurso externo</span>
+          </span>
+          <span class="btn-arrow">→</span>
+        </a>
+
+        <a class="btn" href="https://es.educaplay.com/recursos-educativos/17524961-perifericos_de_entrada_o_salida.html"
+          target="_blank">
+          <span class="btn-icon">🖱</span>
+          <span class="btn-label">
+            Periféricos - Nivel 2
+            <span>(*) Recurso externo</span>
+          </span>
+          <span class="btn-arrow">→</span>
+        </a>
+
+        <a class="btn" href="tasks/typing_task/typing.html" target="_blank">
+          <span class="btn-icon">⌨️</span>
+          <span class="btn-label">Mecanografía</span>
+          <span class="btn-arrow">→</span>
+        </a>
+
+        <a class="btn" href="tasks/extensiones.html" target="_blank">
+          <span class="btn-icon">📄</span>
+          <span class="btn-label">Extensiones de Archivos</span>
+          <span class="btn-arrow">→</span>
+        </a>
+
+        <a class="btn" href="tasks/archivos.html" target="_blank">
+          <span class="btn-icon">📁</span>
+          <span class="btn-label">Explorador de Archivos</span>
+          <span class="btn-arrow">→</span>
+        </a>
+
+      </div>
     </div>
 
-    <div class="container">
-        <!-- Header menú izquierdo -->
-        <div class="menu-left-header">
-            <img src="imgs/title.png" alt="Informática">
-        </div>
+    <!-- ── GRUPO 2: Ofimática ── -->
+    <div class="group" id="group-ofimatica">
+      <div class="group-trigger" onclick="toggleGroup(this)">
+        <span class="group-title">⌨ Ofimática</span>
+        <span class="group-arrow">▶</span>
+      </div>
+      <div class="group-connector"></div>
+      <div class="group-panel">
 
-        <!-- Header menú derecho -->
-        <div class="menu-right-header">
-            <img src="imgs/externallinks.png" alt="Enlaces Externos">
-        </div>
+        <a class="btn" href="tasks/ofimatica.html" target="_blank">
+          <span class="btn-icon">📦</span>
+          <span class="btn-label">Paquetes de Ofimática</span>
+          <span class="btn-arrow">→</span>
+        </a>
 
-        <!-- Menú izquierdo -->
-        <div class="menu glass">
-            <div class="menu-item">
-                <button class="menu-button" onclick="window.open('tasks/ofimatica.html', '_blank')">
-                    📦 Paquetes de Ofimática
-                </button>
-            </div>
-            <div class="menu-item">
-                <button class="menu-button" onclick="window.open('tasks/word_task/word.html', '_blank')">
-                    💻 Rosco de Palabras
-                </button>
-            </div>
-            <div class="menu-item">
-                <button class="menu-button"
-                    onclick="window.open('https://es.educaplay.com/recursos-educativos/19796883-perifericos_de_entrada_o_salida.html', '_blank')">
-                    🖱 Periféricos - Nivel 1 (*)
-                </button>
-            </div>
-            <div class="menu-item">
-                <button class="menu-button"
-                    onclick="window.open('https://es.educaplay.com/recursos-educativos/17524961-perifericos_de_entrada_o_salida.html', '_blank')">
-                    🖱 Periféricos - Nivel 2 (*)
-                </button>
-            </div>
-            <div class="menu-item">
-                <button class="menu-button" onclick="window.open('tasks/typing_task/typing.html', '_blank')">
-                    ⌨️ Mecanografía
-                </button>
-            </div>
-            <div class="menu-item">
-                <button class="menu-button" onclick="window.open('tasks/extensiones.html', '_blank')">
-                    📄 Extensiones de Archivos
-                </button>
-            </div>
-            <div class="menu-item">
-                <button class="menu-button" onclick="window.open('tasks/archivos.html', '_blank')">
-                    📁 Explorador de Archivos
-                </button>
-            </div>
-        </div>
 
-        <!-- Logo flotante en el centro -->
-        <div class="logo-container">
-            <div class="logo-wrapper">
-                <div class="logo-glow"></div>
-                <img src="imgs/logo.png" alt="Logo Empresa">
-            </div>
-        </div>
+        <a class="btn" href="http://localhost:8000/office/text/dictionary.html" target="_blank">
+          <span class="btn-icon"><img src="imgs/icons/docx.png" alt=""></span>
+          <span class="btn-label">
+            🚧Procesadores de Texto🚧 
+            <span>Buscador y Guía de Procedimientos</span>
+          </span>
+          <span class="btn-arrow">→</span>
+        </a>
+      </div>
+    </div>
 
-        <!-- Menú derecho -->
-        <div class="menu-right glass">
-            <div class="menu-item">
-                <button class="menu-button" onclick="window.open('https://www.typingclub.com/mecanografia', '_blank')">
-                    ⌨️ Curso completo de mecanografía
-                </button>
-            </div>
-            <div class="menu-item">
-                <button class="menu-button" onclick="window.open('https://www.cursomeca.com/test.php', '_blank')">
-                    ⌨️ Pruebas de mecanografía externas
-                </button>
-            </div>
-            <div class="menu-item">
-                <button class="menu-button"
-                    onclick="window.open('https://www.flippity.net/vg.php?k=14V2bylt9wSAnt7S90SWpRwNKIDrAWaap', '_blank')">
-                    👽 El ataque de las extensiones (*)
-                </button>
-            </div>
-        </div>
+    <!-- ── GRUPO 3: Enlaces externos (trigger con IMAGEN) ── -->
+    <!-- <div class="group" id="group-externos">
+      <div class="group-trigger has-image" onclick="toggleGroup(this)">
+        <img src="imgs/externallinks.png" alt="Enlaces Externos">
+        <span class="group-arrow">▶</span>
+      </div>
+      <div class="group-connector"></div>
+      <div class="group-panel">-->
 
-        <!-- Footer con datos personales -->
-        <div class="footer glass">
-            <p>
-                <strong>Nombre:</strong>
-                <a href="https://www.linkedin.com/in/ayaxgonzalez/" target="_blank" rel="noopener noreferrer">
-                    Ayax González Suárez
-                </a>
-            </p>
-            <p>
-                <strong>Email:</strong>
-                <a href="mailto:ayaxprofesor@gmail.com" target="_blank">
-                    ayaxprofesor@gmail.com
-                </a>
-            </p>
-            <a href="tasks/anne.html" class="secret-boat" title="¿Un secreto?" target="_blank">
-                <img src="imgs/anne.png" alt="">
-            </a>
-        </div>
+    <!-- ── GRUPO 3: Enlaces externos ── -->
+    <div class="group" id="group-externos">
+      <div class="group-trigger" onclick="toggleGroup(this)">
+        <span class="group-title">✈ Enlaces Externos</span>
+        <span class="group-arrow">▶</span>
+      </div>
+      <div class="group-connector"></div>
+      <div class="group-panel">
 
-        <script>
-        </script>
-        <script src="res/cat-animation.js"></script>
+        <a class="btn" href="https://www.typingclub.com/mecanografia" target="_blank">
+          <span class="btn-icon">⌨️</span>
+          <span class="btn-label">
+            Curso completo de mecanografía
+            <span>typingclub.com</span>
+          </span>
+          <span class="btn-arrow">→</span>
+        </a>
+
+        <a class="btn" href="https://www.cursomeca.com/test.php" target="_blank">
+          <span class="btn-icon">⌨️</span>
+          <span class="btn-label">
+            Pruebas de mecanografía
+            <span>cursomeca.com</span>
+          </span>
+          <span class="btn-arrow">→</span>
+        </a>
+
+        <a class="btn" href="https://www.flippity.net/vg.php?k=14V2bylt9wSAnt7S90SWpRwNKIDrAWaap" target="_blank">
+          <span class="btn-icon">👽</span>
+          <span class="btn-label">
+            El ataque de las extensiones
+            <span>(*) flippity.net</span>
+          </span>
+          <span class="btn-arrow">→</span>
+        </a>
+
+      </div>
+    </div>
+
+  </div>
+  <!-- /side-panels -->
+
+  <!-- Footer -->
+  <div class="index-footer">
+    <p>
+      <strong>Nombre:</strong>
+      <a href="https://www.linkedin.com/in/ayaxgonzalez/" target="_blank" rel="noopener noreferrer">
+        Ayax González Suárez
+      </a>
+    </p>
+    <p>
+      <strong>Email:</strong>
+      <a href="mailto:ayaxprofesor@gmail.com">ayaxprofesor@gmail.com</a>
+    </p>
+    <a href="tasks/anne.html" class="secret-boat" title="¿Un secreto?" target="_blank">
+      <img src="imgs/anne.png" alt="">
+    </a>
+  </div>
+
+  <!-- Scripts originales -->
+  <script src="js/cat-animation.js"></script>
+
+  <!-- Script grupos colapsables -->
+  <script>
+    function toggleGroup(trigger) {
+      const group = trigger.closest('.group');
+      const isOpen = group.classList.contains('open');
+
+      // Cierra todos los grupos abiertos
+      document.querySelectorAll('.group.open').forEach(g => g.classList.remove('open'));
+
+      // Si no estaba abierto, ábrelo
+      if (!isOpen) group.classList.add('open');
+    }
+
+  </script>
+  <script src="js/glitch.js"></script>
+  <script src="js/textfit.js"></script>
 </body>
 
 </html>
