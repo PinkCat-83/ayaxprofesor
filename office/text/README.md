@@ -151,13 +151,17 @@ Edita las variables CSS en `css/dictionary.css`:
 }
 ```
 
+## 🚀 Implementaciones necesarias importantes
+
+- Permitir saltos de línea en la descripción
+- Quizás sustituir automáticamente -> por ▶
+- Permitir formatos dentro de desc como color de texto, subrayado, negrita o itálica. ¿Quizás con html?
+
 ## 🚀 Futuras mejoras
 
 - [ ] Sistema de categorías con navegación
 - [ ] Exportar a PDF
 - [ ] Modo oscuro
-- [ ] Favoritos del usuario (localStorage)
-- [ ] Atajos de teclado
 - [ ] Versión para hojas de cálculo (`/office/calc/`)
 - [ ] Versión para presentaciones (`/office/slides/`)
 

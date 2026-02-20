@@ -1,0 +1,22 @@
+{
+  "id": "savefile",
+  "name": "Cómo guardar tu documento",
+  "category": "formato",
+  "list": [
+    {
+      "program": "word",
+      "desc": "Archivo ▶ Guardar ▶ Examinar ▶ Seleccionar en el 'Explorador de Archivos' dónde guardarlo Es importante que tengas en cuenta pulsar en examinar o puede que guardes el archivo en la nube.",
+      "imgs": ["examinar.png"]
+    },
+    {
+      "program": "googledocs",
+      "desc": "Se guarda automáticamente, pero en la parte superior puedes cambiar el nombre.",
+      "imgs": ["guardargoogle.png"]
+    },
+    {
+      "program": "writer",
+      "desc": "Archivo ▶ Guardar ▶ Seleccionar en el 'Explorador de Archivos' dónde guardarlo.",
+      "imgs": []
+    }
+  ]
+}

@@ -1,6 +1,6 @@
 {
-  "id": "inser_image",
-  "name": "Asi se inserta uina imagen",
+  "id": "insert_image",
+  "name": "Insertar una imagen",
   "category": "formato",
   "list": [
     {
