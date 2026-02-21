@@ -5,7 +5,7 @@ import { renderDesc } from './pdf-render.js';
 
 export async function exportToPDF(manager) {
     const { jsPDF } = window.jspdf;
-    const doc = new jsPDF();
+    const doc = new jsPDF({ compress: true });
 
     const pageWidth = doc.internal.pageSize.getWidth();
     const pageHeight = doc.internal.pageSize.getHeight();
@@ -43,8 +43,8 @@ export async function exportToPDF(manager) {
         : baseTitle;
 
     // ── Colores ──────────────────────────────────────────
-    const blue  = [74, 144, 226];
-    const gray  = [100, 100, 100];
+    const blue = [74, 144, 226];
+    const gray = [100, 100, 100];
     const light = [245, 247, 250];
 
     // ── Helpers ──────────────────────────────────────────
@@ -57,8 +57,25 @@ export async function exportToPDF(manager) {
         doc.text(headerText, margin, 12);
     };
 
-    // Convierte una imagen a base64 mediante un canvas sin redimensionar
-    // El tamaño en el PDF se controla al dibujarlo con addImage, no aquí
+    // Convierte una imagen a JPEG comprimido para reducir el peso del PDF.
+    // quality: 0-1 (0.75 es un buen equilibrio calidad/peso)
+    // maxPx: dimension maxima en pixeles; imagenes mas pequenas no se escalan
+    /*const compressImage = (url, quality = 0.85, maxPx = 1600) => new Promise((resolve, reject) => {
+        const img = new Image();
+        img.crossOrigin = 'anonymous';
+        img.onload = () => {
+            const scale = Math.min(1, maxPx / Math.max(img.width, img.height));
+            const canvas = document.createElement('canvas');
+            canvas.width  = Math.round(img.width  * scale);
+            canvas.height = Math.round(img.height * scale);
+            canvas.getContext('2d').drawImage(img, 0, 0, canvas.width, canvas.height);
+            resolve(canvas.toDataURL('image/jpeg', quality));
+        };
+        img.onerror = reject;
+        img.src = url;
+    });*/
+
+    // Para imágenes con transparencia (logo PNG del pie de página)
     const toBase64 = (url) => new Promise((resolve, reject) => {
         const img = new Image();
         img.crossOrigin = 'anonymous';
@@ -72,6 +89,18 @@ export async function exportToPDF(manager) {
         img.onerror = reject;
         img.src = url;
     });
+
+    // Para capturas de contenido: inserta el PNG original sin pasar por el canvas
+    const fetchBase64 = async (url) => {
+        const response = await fetch(url);
+        const blob = await response.blob();
+        return new Promise((resolve, reject) => {
+            const reader = new FileReader();
+            reader.onload = () => resolve(reader.result);
+            reader.onerror = reject;
+            reader.readAsDataURL(blob);
+        });
+    };
 
     // Cargar logo para el pie de página
     let logoBase64 = null;
@@ -196,7 +225,8 @@ export async function exportToPDF(manager) {
             if (item.imgs && item.imgs.length > 0) {
                 for (const imgPath of item.imgs) {
                     try {
-                        const b64 = await toBase64(`imgs/${imgPath}`);
+                        //const b64 = await compressImage(`imgs/${imgPath}`);
+                        const b64 = await fetchBase64(`imgs/${imgPath}`);
                         const imgProps = doc.getImageProperties(b64);
                         const maxImgW = Math.min(usableW, 80);
                         const imgW = imgProps.width > imgProps.height ? maxImgW : maxImgW * 0.6;
@@ -214,7 +244,7 @@ export async function exportToPDF(manager) {
                 doc.setFont('helvetica', 'bold');
                 const rutaLabelW = doc.getTextWidth('Ruta: ');
                 doc.setFont('helvetica', 'normal');
-                const routePlain = item.route.replace(/\*\*(.*?)\*\*/g,'$1').replace(/\*(.*?)\*/g,'$1').replace(/>>/g,'»').replace(/->/g,'»');
+                const routePlain = item.route.replace(/\*\*(.*?)\*\*/g, '$1').replace(/\*(.*?)\*/g, '$1').replace(/>>/g, '»').replace(/->/g, '»');
                 const routeLines = doc.splitTextToSize(routePlain, usableW - rutaLabelW - 4);
                 blockH += routeLines.length * lineH + 10;
             }
@@ -238,12 +268,12 @@ export async function exportToPDF(manager) {
                 blockH += 10;
                 if (hasGeneraldesc) {
                     doc.setFont('helvetica', 'normal');
-                    const gPlain = proc.generaldesc.replace(/\/\//g,' ').replace(/<[^>]*>/g,'').replace(/\*\*(.*?)\*\*/g,'$1').replace(/\*(.*?)\*/g,'$1');
+                    const gPlain = proc.generaldesc.replace(/\/\//g, ' ').replace(/<[^>]*>/g, '').replace(/\*\*(.*?)\*\*/g, '$1').replace(/\*(.*?)\*/g, '$1');
                     blockH += doc.splitTextToSize(gPlain, usableW).length * lineH + 4;
                 }
                 if (hasDesc) {
                     doc.setFont('helvetica', 'normal');
-                    const dPlain = item.desc.replace(/\/\//g,' ').replace(/<[^>]*>/g,'').replace(/\*\*(.*?)\*\*/g,'$1').replace(/\*(.*?)\*/g,'$1');
+                    const dPlain = item.desc.replace(/\/\//g, ' ').replace(/<[^>]*>/g, '').replace(/\*\*(.*?)\*\*/g, '$1').replace(/\*(.*?)\*/g, '$1');
                     blockH += doc.splitTextToSize(dPlain, usableW).length * lineH + 4;
                 }
             }
@@ -284,7 +314,7 @@ export async function exportToPDF(manager) {
                 const rutaLabelW = doc.getTextWidth('Ruta: ');
                 doc.setFont('helvetica', 'normal');
                 const routeMaxW = contentWidth - 12 - rutaLabelW;
-                const routePlain = item.route.replace(/\*\*(.*?)\*\*/g,'$1').replace(/\*(.*?)\*/g,'$1').replace(/>>/g,'»').replace(/->/g,'»');
+                const routePlain = item.route.replace(/\*\*(.*?)\*\*/g, '$1').replace(/\*(.*?)\*/g, '$1').replace(/>>/g, '»').replace(/->/g, '»');
                 const routeLines = doc.splitTextToSize(routePlain, routeMaxW);
                 const routeBoxH = routeLines.length * lineH + 8;
                 doc.setFillColor(232, 236, 240);
@@ -382,6 +412,7 @@ export async function exportToPDF(manager) {
                     doc.setDrawColor(...blue);
                     doc.setLineWidth(0.4);
                     doc.roundedRect(margin + 3, cy, imgW + 2, imgH + 2, 2, 2, 'S');
+                    //doc.addImage(b64, 'JPEG', margin + 4, cy + 1, imgW, imgH);
                     doc.addImage(b64, 'PNG', margin + 4, cy + 1, imgW, imgH);
                     cy += imgH + 8;
                 }

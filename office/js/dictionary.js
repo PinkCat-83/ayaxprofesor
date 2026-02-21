@@ -6,7 +6,7 @@ class DictionaryManager {
     constructor() {
         this.programs = [];
         this.procedures = [];
-        this.currentFilter = 'all';
+        this.currentFilter = null;
         this.searchTerm = '';
     }
 
@@ -76,7 +76,7 @@ class DictionaryManager {
 
         // Botón "Todos"
         const allButton = document.createElement('button');
-        allButton.className = 'filter-btn active';
+        allButton.className = 'filter-btn';
         allButton.textContent = 'Todos';
         allButton.dataset.program = 'all';
         filtersContainer.appendChild(allButton);
@@ -99,6 +99,11 @@ class DictionaryManager {
         if (!container) return;
 
         container.innerHTML = '';
+
+        if (this.currentFilter === null && !this.searchTerm) {
+            container.innerHTML = '<p class="no-results">Selecciona algún filtro o busca un procedimiento para empezar.</p>';
+            return;
+        }
 
         const filtered = this.getFilteredProcedures();
 
@@ -124,7 +129,7 @@ class DictionaryManager {
         }
 
         // Filtrar por programa
-        if (this.currentFilter !== 'all') {
+        if (this.currentFilter !== null && this.currentFilter !== 'all') {
             filtered = filtered.filter(proc =>
                 proc.list.some(item => item.program === this.currentFilter)
             );
@@ -173,8 +178,10 @@ class DictionaryManager {
             }
 
             // Atajo de teclado (opcional) — admite string o array
-            if (item.shortcut) {
-                const shortcuts = Array.isArray(item.shortcut) ? item.shortcut : [item.shortcut];
+            const shortcuts = Array.isArray(item.shortcut)
+                ? item.shortcut.filter(s => s && s.trim())
+                : (item.shortcut && item.shortcut.trim() ? [item.shortcut] : []);
+            if (shortcuts.length > 0) {
                 const shortcutDiv = document.createElement('div');
                 shortcutDiv.className = 'procedure-shortcut';
                 const codesHtml = shortcuts.map(s => `<code>${s}</code>`).join('');
@@ -270,7 +277,7 @@ class DictionaryManager {
             btn.addEventListener('click', () => {
                 filterButtons.forEach(b => b.classList.remove('active'));
                 btn.classList.add('active');
-                this.currentFilter = btn.dataset.program;
+                this.currentFilter = btn.dataset.program === 'all' ? 'all' : btn.dataset.program;
                 this.renderProcedures();
             });
         });
