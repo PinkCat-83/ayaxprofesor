@@ -2,27 +2,34 @@
   "id": "font-style",
   "name": "Fuente y tamaño de fuente",
   "category": "formato",
+  "generaldesc": "Permite modificar el tipo de letra y su cuerpo (tamaño) para adaptar el texto al estilo deseado.//Recuerda que __debes seleccionar el texto__ para aplicar los cambios a un texto ya escrito.//__Recuerda:__ Puedes cambiar tanto la *fuente* como el *tamaño* manualmente, simplemente haz *clic* en la casilla y escribe.",
   "list": [
     {
       "program": "word",
-      "route": "",
-      "shortcut": "Ctrl + Mayús + F",
-      "desc": "Permite modificar el tipo de letra y su cuerpo (tamaño) para adaptar el texto al estilo deseado.//Es recomendable seleccionar el texto previamente para aplicar los cambios de forma directa.",
-      "imgs": ["font-style-word.png"]
+      "route": "Inicio >> Fuente",
+      "shortcut": ["Ctrl + Shift + F (menú de fuente clásico)", "Ctrl + < (+ tamaño)", "Ctrl + Shift + > (- tamaño)"],
+      "desc": "**Word** también ofrece unos iconos para *aumentar* o *disminuir* el tamaño de la fuente (representado con una letra **A**) para realizar ajustes rápidos. Puedes ver dichos botones también en la imagen adjunta.",
+      "imgs": [
+        "font-style-word.png"
+      ]
     },
     {
       "program": "googledocs",
       "route": "",
-      "shortcut": "",
-      "desc": "Permite modificar el tipo de letra y su cuerpo (tamaño) para adaptar el texto al estilo deseado.//Es recomendable seleccionar el texto previamente para aplicar los cambios de forma directa.",
-      "imgs": ["font-style-docs.png"]
+      "shortcut": ["Ctrl + Shift + . (+ tamaño)", "Ctrl + , (- tamaño)"],
+      "desc": "",
+      "imgs": [
+        "font-style-docs.png"
+      ]
     },
     {
       "program": "writer",
       "route": "",
-      "shortcut": "Ctrl + Mayús + P",
-      "desc": "Permite modificar el tipo de letra y su cuerpo (tamaño) para adaptar el texto al estilo deseado.//Es recomendable seleccionar el texto previamente para aplicar los cambios de forma directa.",
-      "imgs": ["font-style-writer.png"]
+      "shortcut": "Ctrl + Shift + P",
+      "desc": "",
+      "imgs": [
+        "font-style-writer.png"
+      ]
     }
   ]
 }

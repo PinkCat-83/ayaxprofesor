@@ -1,0 +1,41 @@
+{
+  "id": "text-style",
+  "name": "Negrita, cursiva y subrayado",
+  "category": "formato",
+  "generaldesc": "Aplica estilos de énfasis al texto seleccionado para resaltar información.//La **negrita** se usa para conceptos clave, la *cursiva* para títulos o tecnicismos y el __subrayado__ para marcar partes específicas.",
+  "list": [
+    {
+      "program": "word",
+      "route": "Inicio >> Fuente",
+      "shortcut": [
+        "Ctrl + N (Negrita)",
+        "Ctrl + K (Cursiva)",
+        "Ctrl + S (Subrayado)"
+      ],
+      "desc": "",
+      "imgs": ["text-styleword.png"]
+    },
+    {
+      "program": "googledocs",
+      "route": "",
+      "shortcut": [
+        "Ctrl + B (Negrita)",
+        "Ctrl + I (Cursiva)",
+        "Ctrl + U (Subrayado)"
+      ],
+      "desc": "",
+      "imgs": ["text-styledocs.png"]
+    },
+    {
+      "program": "writer",
+      "route": "",
+      "shortcut": [
+        "Ctrl + N (Negrita)",
+        "Ctrl + K (Cursiva)",
+        "Ctrl + S (Subrayado)"
+      ],
+      "desc": "",
+      "imgs": ["text-stylewriter.png"]
+    }
+  ]
+}

@@ -1,0 +1,29 @@
+{
+  "id": "font-color",
+  "name": "Color de la fuente o Color de letras",
+  "category": "formato",
+  "generaldesc": "Permite modificar el color del texto seleccionado para destacar conceptos o mejorar la estética visual.//*Ten en cuenta que el color representado en la imagen podría no ser exactamente igual",
+  "list": [
+    {
+      "program": "word",
+      "route": "Inicio >> Color de fuente",
+      "shortcut": [],
+      "desc": "",
+      "imgs": ["font-colorword.png"]
+    },
+    {
+      "program": "googledocs",
+      "route": "",
+      "shortcut": [],
+      "desc": "",
+      "imgs": ["font-colordocs.png"]
+    },
+    {
+      "program": "writer",
+      "route": "",
+      "shortcut": [],
+      "desc": "",
+      "imgs": ["font-colorwriter.png"]
+    }
+  ]
+}

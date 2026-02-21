@@ -1,0 +1,29 @@
+{
+  "id": "text-highlight",
+  "name": "Resaltado de texto o Color de fondo de Carácter",
+  "category": "formato",
+  "generaldesc": "Funciona como un __rotulador fluorescente__ digital sobre el texto seleccionado.//Es una herramienta ideal para resaltar ideas clave o revisar documentos sin modificar el color real de la fuente.",
+  "list": [
+    {
+      "program": "word",
+      "route": "Inicio >> Fuente",
+      "shortcut": [],
+      "desc": "",
+      "imgs": ["text-highlightword.png"]
+    },
+    {
+      "program": "googledocs",
+      "route": "Formato >> Texto >> Color de resaltado",
+      "shortcut": [],
+      "desc": "",
+      "imgs": ["text-highlightdocs.png"]
+    },
+    {
+      "program": "writer",
+      "route": "Formato >> Carácter >> Resaltado",
+      "shortcut": [],
+      "desc": "",
+      "imgs": ["text-highlightwriter.png"]
+    }
+  ]
+}

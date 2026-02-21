@@ -1,0 +1,29 @@
+{
+  "id": "page-break",
+  "name": "Inserta un Salto de Página",
+  "category": "formato",
+  "generaldesc": "Finaliza la página actual de forma inmediata y desplaza el cursor al inicio de la siguiente.//Es la forma correcta de separar secciones sin pulsar repetidamente la tecla *Intro*.//Esto te ayudará cuando necesites maquetar una gran cantidad de información ya que te ayudará a respetar la estructura general de los capítulos o secciones.",
+  "list": [
+    {
+      "program": "word",
+      "route": "Insertar >> Salto de página",
+      "shortcut": ["Ctrl + Enter"],
+      "desc": "",
+      "imgs": ["page-breakword.png"]
+    },
+    {
+      "program": "googledocs",
+      "route": "Insertar >> Saltos >> Salto de página",
+      "shortcut": ["Ctrl + Enter"],
+      "desc": "",
+      "imgs": ["page-breakdocs.png"]
+    },
+    {
+      "program": "writer",
+      "route": "Insertar >> Salto de página",
+      "shortcut": ["Ctrl + Enter"],
+      "desc": "",
+      "imgs": ["page-breakwriter.png"]
+    }
+  ]
+}

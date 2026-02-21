@@ -1,0 +1,29 @@
+{
+  "id": "text-effects",
+  "name": "Efectos de texto y tipografía",
+  "category": "formato",
+  "generaldesc": "",
+  "list": [
+    {
+      "program": "word",
+      "route": "Inicio >> Fuente",
+      "shortcut": [],
+      "desc": "Permite aplicar efectos visuales avanzados al texto como **contornos**, *sombras*, __reflejos__, iluminados y estilos de ligaduras.//Es una herramienta ideal para resaltar encabezados o crear diseños tipográficos más elaborados que van más allá del simple formato de fuente, permitiendo una personalización detallada de la apariencia del carácter.",
+      "imgs": ["text-effects-word.png"]
+    },
+    {
+      "program": "googledocs",
+      "route": "",
+      "shortcut": [],
+      "desc": "Esta herramienta no existe de forma nativa en Google Docs.",
+      "imgs": ["x.png"]
+    },
+    {
+      "program": "writer",
+      "route": "",
+      "shortcut": [],
+      "desc": "Esta herramienta no existe de forma nativa en LibreOffice Writer.",
+      "imgs": ["x.png"]
+    }
+  ]
+}

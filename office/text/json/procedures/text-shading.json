@@ -1,0 +1,29 @@
+{
+  "id": "text-shading",
+  "name": "Sombreado / Color de párrafo / Color de línea",
+  "category": "formato",
+  "generaldesc": "Permite aplicar un color de fondo a un párrafo o selección de texto para resaltar información importante.//Se diferencia del resaltador común en que el sombreado suele aplicarse a todo el bloque o contenedor del párrafo, incluso ante la ausencia de texto./En inglés esta herramienta se conoce como *shading* pero, al traducirlo al español, puede llevar a errores de interpretación y confundirlo con una __sombra__, de ahí que se especifique otros nombres más acordes a su efecto como **Color de párrafo** o **Color de línea**.",
+  "list": [
+    {
+      "program": "word",
+      "route": "Inicio >> Párrafo",
+      "shortcut": [],
+      "desc": "Es importante destacar que ",
+      "imgs": ["text-shading-word.png"]
+    },
+    {
+      "program": "googledocs",
+      "route": "Formato >> Estilos de párrafo >> Bordes y sombreado",
+      "shortcut": [],
+      "desc": "",
+      "imgs": ["text-shading-googledocs.png"]
+    },
+    {
+      "program": "writer",
+      "route": "Formato >> Párrafo >> Área",
+      "shortcut": [],
+      "desc": "",
+      "imgs": ["text-shading-writer.png"]
+    }
+  ]
+}

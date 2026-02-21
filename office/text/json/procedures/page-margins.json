@@ -1,0 +1,29 @@
+{
+  "id": "page-margins",
+  "name": "Cambiar los márgenes de la página",
+  "category": "formato",
+  "generaldesc": "Define el espacio en blanco entre el borde del papel y el contenido del documento.//Es esencial para cumplir con normas de estilo o para facilitar la encuadernación.",
+  "list": [
+    {
+      "program": "word",
+      "route": "Disposición >> Márgenes",
+      "shortcut": [],
+      "desc": "Además, puedes escoger unos *márgenes personalizados* en la última opción de abajo de la lista que acabas de observar.",
+      "imgs": ["page-marginsword.png"]
+    },
+    {
+      "program": "googledocs",
+      "route": "Archivo >> Configuración de página",
+      "shortcut": [],
+      "desc": "",
+      "imgs": ["page-marginsdocs.png"]
+    },
+    {
+      "program": "writer",
+      "route": "Formato >> Estilo de página >> Página",
+      "shortcut": [],
+      "desc": "",
+      "imgs": ["page-marginswriter.png"]
+    }
+  ]
+}

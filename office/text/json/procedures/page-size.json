@@ -1,0 +1,29 @@
+{
+  "id": "page-size",
+  "name": "Cambiar tamaño de página",
+  "category": "formato",
+  "generaldesc": "Permite definir las dimensiones físicas del papel para el documento, como __A4__, __Carta__ u __Oficio__.//Es un ajuste esencial para que el contenido se adapte correctamente al soporte de impresión final.",
+  "list": [
+    {
+      "program": "word",
+      "route": "Disposición >> Tamaño",
+      "shortcut": [],
+      "desc": "",
+      "imgs": ["page-sizeword.png"]
+    },
+    {
+      "program": "googledocs",
+      "route": "Archivo >> Configuración de página",
+      "shortcut": [],
+      "desc": "",
+      "imgs": ["page-sizedocs.png"]
+    },
+    {
+      "program": "writer",
+      "route": "Formato >> Estilo de página >> Página",
+      "shortcut": [],
+      "desc": "",
+      "imgs": ["page-sizewriter.png"]
+    }
+  ]
+}

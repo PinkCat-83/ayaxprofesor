@@ -1,0 +1,29 @@
+{
+  "id": "page-orientation",
+  "name": "Cambiar la orientación de la página",
+  "category": "formato",
+  "generaldesc": "Permite ajustar la disposición del papel entre vertical u horizontal *(también se le llama __apaisado__)*.//Este ajuste es fundamental para adaptar el diseño según el tipo de contenido que se esté creando.",
+  "list": [
+    {
+      "program": "word",
+      "route": "Disposición >> Orientación",
+      "shortcut": [],
+      "desc": "",
+      "imgs": ["page-orientationword.png"]
+    },
+    {
+      "program": "googledocs",
+      "route": "Archivo >> Configuración de página",
+      "shortcut": [],
+      "desc": "",
+      "imgs": ["page-orientationdocs.png"]
+    },
+    {
+      "program": "writer",
+      "route": "Formato >> Estilo de página >> Página",
+      "shortcut": [],
+      "desc": "",
+      "imgs": ["page-orientationwriter.png"]
+    }
+  ]
+}
