@@ -1,28 +1,27 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Diccionario Ofimático - Ayax Profesor</title>
-    <link rel="stylesheet" href="css/dictionary.css">
+    <title>Procesadores de Texto</title>
+    <link rel="stylesheet" href="../css/dictionary.css">
 </head>
+
 <body>
     <div class="container">
         <!-- Header -->
         <header class="header">
-            <h1>📚 Diccionario Ofimático</h1>
-            <p>Encuentra rápidamente cómo realizar tareas en diferentes programas</p>
+            <h1>📚 Guía de Procedimientos para Procesadores de Texto</h1>
+            <!-- <p>Encuentra rápidamente cómo realizar tareas en diferentes programas</p>-->
         </header>
 
-        <!-- Search Bar -->
+        <!-- Search Bar + Download PDF button -->
         <div class="search-container">
-            <input 
-                type="text" 
-                id="search-input" 
-                class="search-input" 
-                placeholder="🔍 Buscar procedimiento..."
-                autocomplete="off"
-            >
+            <button id="clear-search-btn" class="clear-btn" title="Borrar búsqueda">✕</button>
+            <input type="text" id="search-input" class="search-input" placeholder="🔍 Buscar procedimiento..."
+                autocomplete="off">
+            <button id="export-pdf-btn" class="export-btn">⬇ Exportar PDF</button>
         </div>
 
         <!-- Program Filters -->
@@ -47,6 +46,7 @@
         </div>
     </div>
 
-    <script src="js/dictionary.js"></script>
+    <script src="../js/loader.js"></script>
 </body>
+
 </html>

@@ -1,0 +1,28 @@
+{
+  "id": "font-style",
+  "name": "Fuente y tamaño de fuente",
+  "category": "formato",
+  "list": [
+    {
+      "program": "word",
+      "route": "",
+      "shortcut": "Ctrl + Mayús + F",
+      "desc": "Permite modificar el tipo de letra y su cuerpo (tamaño) para adaptar el texto al estilo deseado.//Es recomendable seleccionar el texto previamente para aplicar los cambios de forma directa.",
+      "imgs": ["font-style-word.png"]
+    },
+    {
+      "program": "googledocs",
+      "route": "",
+      "shortcut": "",
+      "desc": "Permite modificar el tipo de letra y su cuerpo (tamaño) para adaptar el texto al estilo deseado.//Es recomendable seleccionar el texto previamente para aplicar los cambios de forma directa.",
+      "imgs": ["font-style-docs.png"]
+    },
+    {
+      "program": "writer",
+      "route": "",
+      "shortcut": "Ctrl + Mayús + P",
+      "desc": "Permite modificar el tipo de letra y su cuerpo (tamaño) para adaptar el texto al estilo deseado.//Es recomendable seleccionar el texto previamente para aplicar los cambios de forma directa.",
+      "imgs": ["font-style-writer.png"]
+    }
+  ]
+}

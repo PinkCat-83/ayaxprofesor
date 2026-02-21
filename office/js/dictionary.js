@@ -1,4 +1,7 @@
-// Dictionary Manager - Gestión del diccionario ofimático
+
+// dictionary.js — Clase principal del diccionario ofimático
+import { exportToPDF } from './pdf-export.js';
+
 class DictionaryManager {
     constructor() {
         this.programs = [];
@@ -13,6 +16,10 @@ class DictionaryManager {
         this.renderProgramFilters();
         this.renderProcedures();
         this.setupEventListeners();
+        const exportBtn = document.getElementById('export-pdf-btn');
+        if (exportBtn) {
+            exportBtn.addEventListener('click', () => exportToPDF(this));
+        }
     }
 
     async loadPrograms() {
@@ -30,9 +37,9 @@ class DictionaryManager {
             // Cargar el índice de procedimientos (array simple)
             const loaderResponse = await fetch('json/loader.json');
             const fileList = await loaderResponse.json();
-            
+
             // Cargar cada archivo individual (ruta completa desde json/)
-            const procedurePromises = fileList.map(filepath => 
+            const procedurePromises = fileList.map(filepath =>
                 fetch(`json/${filepath}`)
                     .then(response => response.json())
                     .catch(error => {
@@ -40,13 +47,13 @@ class DictionaryManager {
                         return null;
                     })
             );
-            
+
             const procedures = await Promise.all(procedurePromises);
             this.procedures = procedures.filter(proc => proc !== null);
-            
+
         } catch (error) {
             console.error('Error cargando procedimientos:', error);
-            
+
             // Fallback: intentar cargar el archivo content.json antiguo
             try {
                 const response = await fetch('json/content.json');
@@ -111,14 +118,14 @@ class DictionaryManager {
 
         // Filtrar por búsqueda
         if (this.searchTerm) {
-            filtered = filtered.filter(proc => 
+            filtered = filtered.filter(proc =>
                 proc.name.toLowerCase().includes(this.searchTerm.toLowerCase())
             );
         }
 
         // Filtrar por programa
         if (this.currentFilter !== 'all') {
-            filtered = filtered.filter(proc => 
+            filtered = filtered.filter(proc =>
                 proc.list.some(item => item.program === this.currentFilter)
             );
         }
@@ -140,10 +147,7 @@ class DictionaryManager {
         list.className = 'procedure-list';
 
         procedure.list.forEach(item => {
-            // Filtrar si hay un programa seleccionado
-            if (this.currentFilter !== 'all' && item.program !== this.currentFilter) {
-                return;
-            }
+            if (this.currentFilter !== 'all' && item.program !== this.currentFilter) return;
 
             const programData = this.getProgramData(item.program);
             if (!programData) return;
@@ -151,6 +155,7 @@ class DictionaryManager {
             const itemDiv = document.createElement('div');
             itemDiv.className = 'procedure-item';
 
+            // Header: logo + nombre programa
             const header = document.createElement('div');
             header.className = 'procedure-item-header';
             header.innerHTML = `
@@ -159,16 +164,58 @@ class DictionaryManager {
             `;
             itemDiv.appendChild(header);
 
-            const desc = document.createElement('div');
-            desc.className = 'procedure-desc';
-            desc.textContent = item.desc;
-            itemDiv.appendChild(desc);
+            // Ruta (opcional)
+            if (item.route) {
+                const routeDiv = document.createElement('div');
+                routeDiv.className = 'procedure-route';
+                routeDiv.innerHTML = `<strong>Ruta:</strong> <code>${this.parseDesc(item.route)}</code>`;
+                itemDiv.appendChild(routeDiv);
+            }
 
-            // Mostrar imágenes si existen
+            // Atajo de teclado (opcional) — admite string o array
+            if (item.shortcut) {
+                const shortcuts = Array.isArray(item.shortcut) ? item.shortcut : [item.shortcut];
+                const shortcutDiv = document.createElement('div');
+                shortcutDiv.className = 'procedure-shortcut';
+                const codesHtml = shortcuts.map(s => `<code>${s}</code>`).join('');
+                shortcutDiv.innerHTML = `<strong>Atajo de teclado:</strong> ${codesHtml}`;
+                itemDiv.appendChild(shortcutDiv);
+            }
+
+            // Anotaciones: generaldesc + desc dentro de un cuadro con borde
+            const hasGeneraldesc = procedure.generaldesc && procedure.generaldesc.trim();
+            const hasDesc = item.desc && item.desc.trim();
+            if (hasGeneraldesc || hasDesc) {
+                const annotationsBox = document.createElement('div');
+                annotationsBox.className = 'procedure-annotations';
+
+                const annotationsTitle = document.createElement('div');
+                annotationsTitle.className = 'procedure-annotations-title';
+                annotationsTitle.textContent = 'Anotaciones';
+                annotationsBox.appendChild(annotationsTitle);
+
+                if (hasGeneraldesc) {
+                    const generalDescDiv = document.createElement('div');
+                    generalDescDiv.className = 'procedure-annotations-text';
+                    generalDescDiv.innerHTML = this.parseDesc(procedure.generaldesc);
+                    annotationsBox.appendChild(generalDescDiv);
+                }
+
+                if (hasDesc) {
+                    const descDiv = document.createElement('div');
+                    descDiv.className = 'procedure-annotations-text';
+                    descDiv.innerHTML = this.parseDesc(item.desc);
+                    annotationsBox.appendChild(descDiv);
+                }
+
+                itemDiv.appendChild(annotationsBox);
+            }
+
+            // Imágenes (opcional)
             if (item.imgs && item.imgs.length > 0) {
                 const imgsContainer = document.createElement('div');
                 imgsContainer.className = 'procedure-imgs';
-                
+
                 item.imgs.forEach(imgPath => {
                     const img = document.createElement('img');
                     img.src = `imgs/${imgPath}`;
@@ -204,11 +251,23 @@ class DictionaryManager {
         }
     }
 
+    // Parseador de simbología a código html, mezcla de md y preferencias personales
+    // Se puede usar html directo en json si se prefiere
+    parseDesc(text) {
+        return text
+            .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')    // **negrita**
+            .replace(/\*(.*?)\*/g, '<em>$1</em>')                // *itálica*
+            .replace(/__(.*?)__/g, '<u>$1</u>')                  // __subrayado__
+            .replace(/>>/g, '▶')                                 // >> como ▶
+            .replace(/->/g, '▶')                                 // -> como ▶
+            .replace(/\/\//g, '<br>')                            // // como salto de línea
+    }
+
     setupEventListeners() {
         // Filtros de programa
         const filterButtons = document.querySelectorAll('.filter-btn');
         filterButtons.forEach(btn => {
-            btn.addEventListener('click', (e) => {
+            btn.addEventListener('click', () => {
                 filterButtons.forEach(b => b.classList.remove('active'));
                 btn.classList.add('active');
                 this.currentFilter = btn.dataset.program;
@@ -225,10 +284,19 @@ class DictionaryManager {
             });
         }
 
-        // Modal de imagen
+        // Botón borrar búsqueda
+        const clearBtn = document.getElementById('clear-search-btn');
+        if (clearBtn && searchInput) {
+            clearBtn.addEventListener('click', () => {
+                searchInput.value = '';
+                this.searchTerm = '';
+                this.renderProcedures();
+                searchInput.focus();
+            });
+        }
         const modal = document.getElementById('image-modal');
         const closeBtn = document.querySelector('.modal-close');
-        
+
         if (closeBtn) {
             closeBtn.addEventListener('click', () => this.closeImageModal());
         }
@@ -251,7 +319,5 @@ class DictionaryManager {
 }
 
 // Inicializar cuando el DOM esté listo
-document.addEventListener('DOMContentLoaded', () => {
-    const dictionary = new DictionaryManager();
-    dictionary.init();
-});
+const dictionary = new DictionaryManager();
+dictionary.init();

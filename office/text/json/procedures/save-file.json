@@ -1,0 +1,28 @@
+{
+  "id": "save-doc",
+  "name": "Cómo guardar tu documento",
+  "category": "archivo",
+  "list": [
+    {
+      "program": "word",
+      "route": "Archivo >> Guardar >> Examinar >> Selecciona dónde guardarlo.",
+      "shortcut": "Ctrl + G",
+      "desc": "Es importante que tengas en cuenta pulsar en *examinar* o puede que guardes el archivo en la nube por defecto.//Este paso es clave si usas una cuenta de la que podrías perder acceso en el futuro.",
+      "imgs": ["save-doc-examinar.png"]
+    },
+    {
+      "program": "googledocs",
+      "route": "",
+      "shortcut": "",
+      "desc": "Se guarda automáticamente, pero en la parte superior puedes cambiar el nombre.",
+      "imgs": ["save-doc-guardargoogle.png"]
+    },
+    {
+      "program": "writer",
+      "route": "Archivo >> Guardar >> Selecciona en el **Explorador de Archivos** dónde guardarlo.",
+      "shortcut": "Ctrl + G",
+      "desc": "Al igual que en otros procesadores locales, asegúrate de elegir una carpeta que tengas sincronizada o localizada.",
+      "imgs": ["save-doc-writer.png"]
+    }
+  ]
+}
