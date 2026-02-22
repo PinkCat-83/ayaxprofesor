@@ -1,0 +1,29 @@
+{
+  "id": "resize-element",
+  "name": "Cambiar el tamaño de una imagen o forma",
+  "category": "edicion",
+  "generaldesc": "Permite modificar las dimensiones de un elemento gráfico para ajustarlo al espacio disponible en el documento.//Es fundamental mantener la __proporción de aspecto__ cambiando el tamaño únicamente desde las esquina. De esta forma evitaremos que nuestra imagen se deforme.",
+  "list": [
+    {
+      "program": "word",
+      "route": "Seleccionar imagen o forma",
+      "shortcut": "",
+      "desc": "Para cambiar el tamaño *arrastra* desde los círculos blancos alrededor de la imagen.",
+      "imgs": ["resize-element-word.png"]
+    },
+    {
+      "program": "googledocs",
+      "route": "Selecciona la imagen forma",
+      "shortcut": "",
+      "desc": "Para cambiar el tamaño *arrastra* desde los cuadros azules alrededor de la imagen.",
+      "imgs": ["resize-element-googledocs.png"]
+    },
+    {
+      "program": "writer",
+      "route": "Seleccionar imagen o forma",
+      "shortcut": "",
+      "desc": "Para cambiar el tamaño *arrastra* desde los cuadrados blancos alrededor de la imagen.",
+      "imgs": ["resize-element-writer.png"]
+    }
+  ]
+}

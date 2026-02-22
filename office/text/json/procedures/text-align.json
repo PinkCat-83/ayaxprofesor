@@ -2,27 +2,27 @@
   "id": "text-align",
   "name": "Alineación (horizontal) de texto",
   "category": "formato",
-  "generaldesc": "Permite ajustar la posición del texto respecto a los márgenes laterales del documento.//Recuerda que el texto *justificado* distribuye el espacio de forma uniforme.",
+  "generaldesc": "Permite ajustar la posición del texto respecto a los márgenes laterales del documento.// //-**Izquierda**: El texto se escribirá de izquierda a derecha.//-**Centro**: El texto se escrbirá desde el centro hacia afuera.//-**Derecha**: El texto se escribirá de derecha a izquierda.//-**Justificado**: El texto se escribirá de izquierda a derecha, pero el programa se asegurará de distribuir el espacio uniformememente, haciendo que quede *cuadradito*.",
   "list": [
     {
       "program": "word",
       "route": "Inicio >> Sección Párrafo >> Selecciona el icono de alineación",
       "shortcut": ["Ctrl + Q (Izq)", "Ctrl + T (Centro)", "Ctrl + D (Der)", "Ctrl + J (Justificado)"],
-      "desc": "Mi pie está jodido",
+      "desc": "",
       "imgs": ["text-align-word.png"]
     },
     {
       "program": "googledocs",
       "route": "",
       "shortcut": ["Ctrl + Shift + L (Izq)", "Ctrl + Shift + E (Centro)", "Ctrl + Shift + R (Der)", "Ctrl + Shift + J (Justificado)"],
-      "desc": "Y asdasd asdasd as d",
+      "desc": "",
       "imgs": ["text-align-docs.png"]
     },
     {
       "program": "writer",
       "route": "",
       "shortcut": ["Ctrl + L (Izq)", "Ctrl + E (Centro)", "Ctrl + R (Der)", "Ctrl + J (Justificado)"],
-      "desc": " sdfa asdf asdf asfd",
+      "desc": "",
       "imgs": ["text-align-writer.png"]
     }
   ]

@@ -1,0 +1,29 @@
+{
+  "id": "page-color",
+  "name": "Cambiar el Color de la Página / Diseño de fondo de página",
+  "category": "formato",
+  "generaldesc": "Permite modificar el color de fondo de toda la página para personalizar la estética del documento.//Es una opción útil para reducir la fatiga visual o crear documentos con un diseño más creativo.",
+  "list": [
+    {
+      "program": "word",
+      "route": "Diseño >> Color de página",
+      "shortcut": [],
+      "desc": "Además, también te ofrece **Más colores** para buscar un color específico que no aparezca o bien **Efectos de relleno** para otras opciones de diseño de fondo de página (como el __degradado__, __trama__ o __imagen__).",
+      "imgs": ["page-color-word.png"]
+    },
+    {
+      "program": "googledocs",
+      "route": "Archivo >> Configuración de página",
+      "shortcut": [],
+      "desc": "",
+      "imgs": ["page-color-docs.png"]
+    },
+    {
+      "program": "writer",
+      "route": "Formato >> Estilo de Página >> Área",
+      "shortcut": [],
+      "desc": "Además, también te ofrece **Más colores** para buscar un color específico que no aparezca o bien **Efectos de relleno** para otras opciones de diseño de fondo de página (como el __degradado__, __trama__ o __imagen__).",
+      "imgs": ["page-color-writer.png"]
+    }
+  ]
+}

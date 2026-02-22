@@ -1,0 +1,29 @@
+{
+  "id": "shape-design",
+  "name": "Modificar el diseño general de una forma (relleno, línea o contorno y efectos)",
+  "category": "formato",
+  "generaldesc": "Permite personalizar la apariencia visual de un objeto mediante el cambio de sus atributos de relleno, borde y otros efectos.//Es la forma más eficaz de resaltar información o hacer que los elementos gráficos sigan la **identidad visual** del documento.",
+  "list": [
+    {
+      "program": "word",
+      "route": "Selecciona la forma >> Formato de forma >> Estilos de forma",
+      "shortcut": [],
+      "desc": "Desde aquí puedes acceder a **Relleno de forma**, **Contorno de forma** y **Efectos de forma** para un control total.",
+      "imgs": ["shape-design-word.png"]
+    },
+    {
+      "program": "googledocs",
+      "route": "Doble clic en la forma",
+      "shortcut": [],
+      "desc": "Si ya habías insertado la forma, deberás hacer *doble clic* para entrar en *Google Draw* y, desde ahí, en el menú superior verás las opciones que te permitirán modificar el relleno y contorno.",
+      "imgs": ["shape-design-googledocs.png"]
+    },
+    {
+      "program": "writer",
+      "route": "Clic derecho en la forma >> Área... / Línea...",
+      "shortcut": [],
+      "desc": "En Writer, en las últimas versiones, puedes encontrar que en la parte superior aparece un menú con las opciones más comunes (como las nombradas). Si por un casual no las ves, puedes seguir la *ruta* que se nombró para encontrarlo",
+      "imgs": ["shape-design-writer.png"]
+    }
+  ]
+}

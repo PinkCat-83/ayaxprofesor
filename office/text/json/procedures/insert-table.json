@@ -1,0 +1,29 @@
+{
+  "id": "insert-table",
+  "name": "Insertar una tabla",
+  "category": "insercion",
+  "generaldesc": "Permite organizar la información de forma clara y estructurada mediante celdas dispuestas en cuadrícula.//Para generarla, basta con **marcar las *columnas* y *filas*** que necesites en el selector visual.",
+  "list": [
+    {
+      "program": "word",
+      "route": "Insertar >> Tabla",
+      "shortcut": [],
+      "desc": "",
+      "imgs": ["insert-table-word.png"]
+    },
+    {
+      "program": "googledocs",
+      "route": "Insertar >> Tabla",
+      "shortcut": [],
+      "desc": "",
+      "imgs": ["insert-table-googledocs.png"]
+    },
+    {
+      "program": "writer",
+      "route": "Tabla >> Insertar tabla",
+      "shortcut": [],
+      "desc": "",
+      "imgs": ["insert-table-writer.png"]
+    }
+  ]
+}

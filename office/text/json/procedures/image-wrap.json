@@ -1,0 +1,35 @@
+{
+  "id": "image-wrap",
+  "name": "Cómo mover una imagen en un documento / Ajuste de imagen",
+  "category": "formato",
+  "generaldesc": "Permite definir la relación entre la imagen y el texto circundante. // Cambiar el ajuste es el paso necesario para poder arrastrar la imagen con total libertad a cualquier parte de la página sin que el texto restrinja su posición.",
+  "list": [
+    {
+      "program": "word",
+      "route": "Selecciona la imagen >> Icono de Opciones de diseño",
+      "shortcut": [],
+      "desc": "Cuando pulses sobre el *Icono de Opciones de diseño* podrás elegir.// //-**En línea con el texto**: Es la opción que viene *por defecto*. Mientras esta opciones esté marcada, el programa tratará la imagen como si fuera __una letra muy grande__, lo que te permitirá incluso subrayarlo o alinearlo y podrá ser colocado en medio de una oración.//-**Cuadrado**: Te permitirá mover la imagen libremente, el texto rodeará la imagen.//-**Estrecho**: Parecido al anterior, pero si la imagen es transparente el texto rodeará el contorno exterior de la imagen.//-**Transparente**: Parecido al anterior, pero el texto aparecerá en toda la parte de la imagen que sea transparente.//-**Arriba y Abajo**: El texto se adaptará para colocarse por encima o por debajo de la imagen.//-**Detrás del texto**: La imagen se colocará detrás del texto (haciendo su manipulación bastante complicada).//-**Delante del texto**: La imagen se colocará delante del texto, lo que hará que le texto quede oculto.",
+      "imgs": [
+        "image-wrap-word.png"
+      ]
+    },
+    {
+      "program": "googledocs",
+      "route": "Selecciona la imagen >> Menú de ajuste inferior",
+      "shortcut": [],
+      "desc": "Cuando pulses sobre *la iamgen* podrás elegir.// //-**Intercalado**: Es la opción que viene *por defecto*. Mientras esta opciones esté marcada, el programa tratará la imagen como si fuera __una letra muy grande__, lo que te permitirá incluso subrayarlo o alinearlo y podrá ser colocado en medio de una oración.//-**Ajustar texto**: Te permitirá mover la imagen libremente, el texto rodeará la imagen.//-**Dividir Texto**: El texto se adaptará para colocarse por encima o por debajo de la imagen.//-**Detrás del texto**: La imagen se colocará detrás del texto (haciendo su manipulación bastante complicada).//-**Delante del texto**: La imagen se colocará delante del texto, lo que hará que le texto quede oculto.//-**Tres puntos**: Permitirá acceder a otras opciones sobre la imagen.",
+      "imgs": [
+        "image-wrap-googledocs.png"
+      ]
+    },
+    {
+      "program": "writer",
+      "route": "Botón derecho encima de la imagen >> Ajuste",
+      "shortcut": [],
+      "desc": "Cuando pulses el **botón derecho** sobre *la imagen* podrás elegir.// //-**Ninguno**:El texto se adaptará para colocarse por encima o por debajo de la imagen.//-**Paralelo**: Es la opción que viene marcada por defecto, te permitirá mover la imagen libremente, el texto rodeará la imagen.//-**Ideal**: Parecido al anterior, pero el sistema interpretará si el texto debe ajustarse por la izquierda o derecha de la imagen.//-**Antes**: Parecido al anterior, pero el sistema obligará al texto a estar sólo a la izquierda de la imagen.//-**Después**: Parecido al anterior, pero el sistema obligará al texto a estar sólo a la derecha de la iamgen.//-**Continuo**: La imagen se colocará delante del texto, lo que hará que le texto quede oculto.//-**En fondo**: La imagen se colocará detrás del texto (haciendo su manipulación bastante complicada).//-**Contorno**: Si la imagen es transparente el texto rodeará el contorno exterior de la imagen.//-**Editar contorno**: Permite editar los contornos aplicados en la opción anterior.",
+      "imgs": [
+        "image-wrap-writer.png"
+      ]
+    }
+  ]
+}

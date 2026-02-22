@@ -1,0 +1,29 @@
+{
+  "id": "table-fill-color",
+  "name": "Color de relleno de la tabla",
+  "category": "tablas",
+  "generaldesc": "Permite aplicar un fondo de color a las celdas, filas o columnas para resaltar información importante o mejorar la estética del documento.//Se recomienda usar colores con buen contraste respecto al texto para asegurar la legibilidad.",
+  "list": [
+    {
+      "program": "word",
+      "route": "Selecciona la tabla o celda >> Inicio >> Párrafo >> Sombreado",
+      "shortcut": [],
+      "desc": "Al seleccionar la tabla, aparece la pestaña contextual de __Diseño de tabla__ donde se encuentra el icono del bote de pintura.//También puedes ir a través del menú contextual **Diseño de tabla** donde podrás ver más opciones de diseño, además del relleno.",
+      "imgs": ["table-fill-color-word-01.png", "table-fill-color-word-02.png"]
+    },
+    {
+      "program": "googledocs",
+      "route": "Selecciona la tabla o celda >> Color de fondo",
+      "shortcut": [],
+      "desc": "El icono suele aparecer directamente en la barra de herramientas superior cuando el cursor está dentro de una celda. Si no aparece, puede que la resolución de pantalla sea demasiado pequeña, por lo que estará oculta detrás de **el botón de los tres puntos**",
+      "imgs": ["table-fill-color-docs.png"]
+    },
+    {
+      "program": "writer",
+      "route": "Selecciona la tabla o celda >> Menú inferior >> Color de fondo de celda de tablas",
+      "shortcut": [],
+      "desc": "Utiliza la barra de herramientas específica de tablas que se activa automáticamente en la parte inferior de la interfaz.",
+      "imgs": ["table-fill-color-writer.png"]
+    }
+  ]
+}

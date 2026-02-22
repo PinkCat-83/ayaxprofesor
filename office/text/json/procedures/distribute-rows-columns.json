@@ -1,0 +1,29 @@
+{
+  "id": "distribute-rows-columns",
+  "name": "Distribuir filas o columnas equitativamente",
+  "category": "tablas",
+  "generaldesc": "Ajusta automáticamente el alto de las filas o el ancho de las columnas para que todas tengan exactamente la misma medida entre sí.//Es una función esencial para lograr un diseño equilibrado y profesional en tablas.",
+  "list": [
+    {
+      "program": "word",
+      "route": "Selecciona tu tabla >> Disposición de tabla >> Distribuir filas / Distribuir columnas",
+      "shortcut": [],
+      "desc": "",
+      "imgs": ["distribute-rows-columns-word.png"]
+    },
+    {
+      "program": "googledocs",
+      "route": "Formato >> Tablas >> Distribuir filas / Distribuir columnas",
+      "shortcut": [],
+      "desc": "",
+      "imgs": ["distribute-rows-columns-docs.png"]
+    },
+    {
+      "program": "writer",
+      "route": "Tabla >> Tamaño >> Distribuir filas uniformemente / Distribuir columnas uniformemente",
+      "shortcut": [],
+      "desc": "",
+      "imgs": ["distribute-rows-columns-writer.png"]
+    }
+  ]
+}

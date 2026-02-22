@@ -1,0 +1,29 @@
+{
+  "id": "insert-image",
+  "name": "Cómo insertar una imagen",
+  "category": "inserción",
+  "generaldesc": "Permite añadir archivos visuales al documento para enriquecer el contenido y facilitar la comprensión.//Es fundamental conocer los formatos compatibles para asegurar que las imágenes se visualicen correctamente en cualquier plataforma.//No te olvides de revisar también la sección sobre el __ajuste de imagen__.",
+  "list": [
+    {
+      "program": "word",
+      "route": "Insertar >> Imágenes",
+      "shortcut": [],
+      "desc": "Word permite insertar imágenes desde tres fuentes distintas://-**Este Dispositivo**: Sirve para buscar un archivo __alojado en tu PC__.//-**Imágenes de archivo**: Te permitirá entrar a las imágenes en línea que vienen junto al programa.//-**Imágenes en línea**: Se abrirá un buscador de *Bing* donde podrás buscar imágenes e insertarlas automáticamente, sin necesidad de descargar el archivo previamente.",
+      "imgs": ["insert-image-word.png", "image-comp-word.png"]
+    },
+    {
+      "program": "googledocs",
+      "route": "Insertar >> Imagen",
+      "shortcut": [],
+      "desc": "Docs permite insertar imágenes desde varias fuentes distintas://-**Subir del ordenador**: Sirve para buscar un archivo __alojado en tu PC__.//-**Buscar en la Web**: Se abrirá un buscador de *Google* donde podrás buscar imágenes e insertarlas automáticamente, sin necesidad de descargar el archivo previamente (¡__Cuidado__! Si eliges una imagen en webp el sistema te dirá *formato no soportado* pero no especificará el por qué).//-**Drive** y **Fotos**: Te permitirá buscar y seleccionar imágenes alojadas en tu __almacenamiento en la nube__ asociados a tu cuenta de *Google*.//-**Cámara**: Pedirá permiso para usar la *webcam* para realizar una captura de imagen.//-**Por URL**: Si conoces la dirección de una imagen, puedes pegar la *URL* aquí y se insertará.",
+      "imgs": ["insert-image-docs.png", "image-comp-docs.png"]
+    },
+    {
+      "program": "writer",
+      "route": "Insertar >> Imagen",
+      "shortcut": [],
+      "desc": "En Writer, sólo podrás insertar imágenes __alojadas en tu PC__.//Ten en cuenta que verás unas **líneas negras** alrededor de la imagen. Es solo una ayuda visual para que veas cuánto ocupa realmente la imagen, pero no se mostrarán en el resultado final después de pasarlo a PDF o imprimirlo.",
+      "imgs": ["insert-image-writer.png", "image-comp-writer.png"]
+    }
+  ]
+}

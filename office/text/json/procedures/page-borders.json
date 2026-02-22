@@ -1,0 +1,29 @@
+{
+  "id": "page-borders",
+  "name": "Añadir Bordes a la página",
+  "category": "formato",
+  "generaldesc": "Permite añadir un marco decorativo o profesional alrededor de los márgenes de la página. // Es útil para dar un acabado más definido a portadas, diplomas o documentos que requieran una distinción visual clara.",
+  "list": [
+    {
+      "program": "word",
+      "route": "Diseño >> Bordes de página",
+      "shortcut": [],
+      "desc": "En el menú que aparece puedes elegir el estilo de línea, el color y el ancho, o incluso usar diseños de 'Arte' para bordes infantiles o festivos.//Asegúrate de escoger un **valor** en el menú de la izquierda o no verás ningún cambio.",
+      "imgs": ["page-borders-word.png"]
+    },
+    {
+      "program": "googledocs",
+      "route": "X (No disponible)",
+      "shortcut": [],
+      "desc": "Esta función no existe de forma nativa en Google Docs.//Para conseguir un efecto similar, se suele insertar una __tabla de una sola celda__ y ajustar sus bordes al tamaño de la página, o insertar un __rectángulo__ desde el menú de Dibujo.//Sin embargo **no se recomienda hacerlo** pues el resultado no es muy satisfactorio",
+      "imgs": ["x.png"]
+    },
+    {
+      "program": "writer",
+      "route": "Formato >> Estilo de página >> Bordes",
+      "shortcut": [],
+      "desc": "Permite configurar bordes individuales o para todo el contorno, además de ajustar la distancia del borde al texto para que no quede muy pegado.",
+      "imgs": ["page-borders-writer.png"]
+    }
+  ]
+}

@@ -1,0 +1,29 @@
+{
+  "id": "save-pdf",
+  "name": "Guardar documento como PDF",
+  "category": "archivo",
+  "generaldesc": "Permite convertir el documento a un formato de __de difícil manipulación__ que mantiene el diseño, las fuentes y las imágenes intactas sin importar en qué dispositivo se abra. // Es el estándar ideal para enviar documentos finales, facturas o currículums para evitar que el diseño se desconfigure.//Es importante destacar que puede que haya más opciones para convertir el documento a PDF, pero aquí ponemos la más rápida y compatible.",
+  "list": [
+    {
+      "program": "word",
+      "route": "Archivo >> Guardar como >> Examinar >> Cambiar el tipo a PDF",
+      "shortcut": ["F12 (Abrir 'Guardar como')", "FN + F12 (Si estás usando un portátil)"],
+      "desc": "Al usar el atajo **F12**, se abrirá directamente la ventana del *explorador de archivos*. Solo tendrás que desplegar la lista de **Tipo** y seleccionar **PDF (*.pdf)** antes de pulsar en Guardar.",
+      "imgs": ["save-pdf-word.png"]
+    },
+    {
+      "program": "googledocs",
+      "route": "Archivo >> Descargar >> Documento PDF",
+      "shortcut": [],
+      "desc": "A diferencia de otros programas, aquí no eliges la ruta al principio; el archivo se descargará directamente en la carpeta de __Descargas__ de tu ordenador.",
+      "imgs": ["save-pdf-googledocs.png"]
+    },
+    {
+      "program": "writer",
+      "route": "Archivo >> Exportar como >> Exportar directamente a PDF",
+      "shortcut": [],
+      "desc": "También puedes usar el **icono directo** que aparece en la barra de herramientas estándar (un folio con el logo rojo de PDF). // Esta opción omite los ajustes avanzados y genera el archivo de forma instantánea.",
+      "imgs": ["save-pdf-writer.png"]
+    }
+  ]
+}

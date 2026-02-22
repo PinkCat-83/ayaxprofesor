@@ -1,0 +1,29 @@
+{
+  "id": "rotate-element",
+  "name": "Girar / rotar una imagen o forma",
+  "category": "edicion",
+  "generaldesc": "Permite rotar/girar una imagen a nuestro gusto, ideal para composiciones estéticas.",
+  "list": [
+    {
+      "program": "word",
+      "route": "Seleccionar imagen o forma",
+      "shortcut": "",
+      "desc": "Para rotar el elemento *arrastra* desde la flecha circular en la parte superior.",
+      "imgs": ["rotate-element-word.png"]
+    },
+    {
+      "program": "googledocs",
+      "route": "Selecciona la imagen forma",
+      "shortcut": "",
+      "desc": "Para rotar el elemento *arrastra* desde el punto azul en la parte superior.",
+      "imgs": ["rotate-element-googledocs.png"]
+    },
+    {
+      "program": "writer",
+      "route": "Botón derecho encima de la imagen >> Girar o voltear",
+      "shortcut": "",
+      "desc": "Writer permite girarlo de dos formas:\\-**Mediante la ruta arriba nombrada**: Al pulsar en *girar* aparecerán unos círculos rojos desde los que podremos arrastrar para girar la imagen o forma.\\-**Menú lateral**: En el menú lateral hay una rueda que podremos usar para girar la imagen manualmente.",
+      "imgs": ["rotate-element-writer-01.png", "rotate-element-writer-02.png"]
+    }
+  ]
+}

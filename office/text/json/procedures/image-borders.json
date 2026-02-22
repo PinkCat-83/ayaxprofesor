@@ -1,0 +1,29 @@
+{
+  "id": "image-borders",
+  "name": "Bordes y efectos de imagen",
+  "category": "formato",
+  "generaldesc": "Permite definir el contorno de una imagen o forma mediante colores, grosores y estilos de línea, además de añadir sombras básicas.//Personalizar los bordes ayuda a **separar visualmente** el objeto del fondo y mejorar la legibilidad del documento.",
+  "list": [
+    {
+      "program": "word",
+      "route": "Selecciona la imagen >> Formato de imagen >> Borde de imagen / Efectos de la imagen",
+      "shortcut": [],
+      "desc": "**Bordes de imagen ** permite elegir el color, el grosor (en puntos) y el tipo de raya (puntos, guiones, etc.) mientras que **Efectos de la imagen** permite escoger efectos específicos para esta como *reflejos*, *sombras*, etc.",
+      "imgs": ["image-borders-word.png"]
+    },
+    {
+      "program": "googledocs",
+      "route": "Seleccionar imagen >> Barra de herramientas superior",
+      "shortcut": [],
+      "desc": "Utiliza los iconos del **lápiz** (color), las **líneas de grosor** y el **tipo de línea** que aparecen al seleccionar el objeto.",
+      "imgs": ["image-borders-googledocs.png"]
+    },
+    {
+      "program": "writer",
+      "route": "Clic derecho >> Propiedades >> Bordes",
+      "shortcut": [],
+      "desc": "Aunque desde el menú principal puedes encontrar parte de estas opciones, estas están muy limitadas. Lo mejor es que vayas a la ruta antes especificada.//En esta pestaña, mucho más completa,  puedes definir la disposición de las líneas, su anchura y la distancia exacta al contenido de la imagen además de otros efectos como sombras.",
+      "imgs": ["image-borders-writer.png"]
+    }
+  ]
+}

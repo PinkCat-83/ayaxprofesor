@@ -1,0 +1,29 @@
+{
+  "id": "insert-shapes",
+  "name": "Insertar Formas / Autoformas",
+  "category": "insercion",
+  "generaldesc": "Permite añadir elementos gráficos predefinidos como rectángulos, círculos, flechas, líneas entre otros para enriquecer el documento visualmente.//Estas figuras son __totalmente editables__, permitiendo cambiar su color de relleno, contorno y tamaño.//Cuando selecciones la forma que quieras añadir, recuerda que deberás __pulsar el botón izquierdo del ratón **sin soltarlo** y luego arrastrar el ratón hasta tener el tamaño deseado__.",
+  "list": [
+    {
+      "program": "word",
+      "route": "Insertar >> Formas",
+      "shortcut": [],
+      "desc": "Además, cuando insertes tu forma podrás ver que algunas poseen un **círculo amarillo** desde la que podrás cambiar parte del diseño.",
+      "imgs": ["insert-shapes-word-01.png", "insert-shapes-word-02.png"]
+    },
+    {
+      "program": "googledocs",
+      "route": "Insertar >> Dibujo >> Nuevo",
+      "shortcut": [],
+      "desc": "A diferencia de otros programas, necesitamos acceder a *Google Draws* para insertar formas a través de la ruta facilitada.//Si quieres realizar alguna modificación en dicho *dibujo* deberás realizar un **doble clic** encima.//Además, cuando insertes tu forma podrás ver que algunas poseen un **rombo amarillo** desde la que podrás cambiar parte del diseño.",
+      "imgs": ["insert-shapes-googledocs-01.png", "insert-shapes-googledocs-02.png"]
+    },
+    {
+      "program": "writer",
+      "route": "Insertar >> Forma",
+      "shortcut": ["Ver >> Barras de Herramientas >> Dibujo (para mostrar un acceso rápido)"],
+      "desc": "Además, cuando insertes tu forma podrás ver que algunas poseen un **círculo gris** desde la que podrás cambiar parte del diseño.",
+      "imgs": ["insert-shapes-writer-01.png", "insert-shapes-writer-02.png"]
+    }
+  ]
+}

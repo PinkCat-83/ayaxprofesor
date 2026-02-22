@@ -1,0 +1,29 @@
+{
+  "id": "table-text-alignment",
+  "name": "Alineación de texto / contenido en tablas",
+  "category": "tablas",
+  "generaldesc": "Permite ajustar la ubicación del contenido dentro de las celdas para que el texto se sitúe en la parte superior, central o inferior.//Es una herramienta clave para mejorar la estética visual de las tablas.",
+  "list": [
+    {
+      "program": "word",
+      "route": "Selecciona la tabla o celdas >> Disposición de tabla >> Alineación",
+      "shortcut": [],
+      "desc": "Word utiliza una cuadrícula de 9 botones que permiten controlar la posición vertical y horizontal de forma simultánea, aunque los botones de la *alineación horizontal* normales también funcionan para el contenido de las celdas de la tabla.",
+      "imgs": ["table-text-alignment-word.png"]
+    },
+    {
+      "program": "googledocs",
+      "route": "Selecciona la tabla o celdas >> Los tres puntos de la barra >> Opciones de Tabla >> Celda >> Alineación vertical de celda",
+      "shortcut": [],
+      "desc": "Si quieres que esté a la izquierda, centrado o derecha deberás hacerlo como se hace normalmente.",
+      "imgs": ["table-text-alignment-docs-01.png", "table-text-alignment-docs-02.png"]
+    },
+    {
+      "program": "writer",
+      "route": "Selecciona la tabla o celdas >> Menú inferior",
+      "shortcut": [],
+      "desc": "Si quieres que esté a la izquierda, centrado o derecha deberás hacerlo como se hace normalmente.",
+      "imgs": ["table-text-alignment-writer.png"]
+    }
+  ]
+}

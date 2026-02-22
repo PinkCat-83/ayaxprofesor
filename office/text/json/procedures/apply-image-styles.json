@@ -1,0 +1,29 @@
+{
+  "id": "apply-image-styles",
+  "name": "Aplicar estilos de imagen",
+  "category": "formato",
+  "generaldesc": "",
+  "list": [
+    {
+      "program": "word",
+      "route": "Selecciona tu imagen >> Formato de imagen >> Estilos de imagen",
+      "shortcut": [],
+      "desc": "Permite aplicar un conjunto de efectos visuales predefinidos como marcos, sombras, reflejos o bordes suavizados a una fotografía.//Es la forma más rápida de otorgar un **acabado profesional** y cohesivo a todas las imágenes del documento.// //Incluye una galería con vistas previas en directo para elegir marcos y efectos 3D rápidamente.",
+      "imgs": ["apply-image-styles-word.png"]
+    },
+    {
+      "program": "googledocs",
+      "route": "",
+      "shortcut": [],
+      "desc": "Google Documents no tiene opciones de ***estilos de imagen** avanzados y predefinidos.",
+      "imgs": ["x.png"]
+    },
+    {
+      "program": "writer",
+      "route": "",
+      "shortcut": [],
+      "desc": "Libre Office Writer no tiene opciones de ***estilos de imagen** avanzados y predefinidos.",
+      "imgs": ["x.png"]
+    }
+  ]
+}
