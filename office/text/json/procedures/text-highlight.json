@@ -3,6 +3,7 @@
   "name": "Resaltado de texto o Color de fondo de Carácter",
   "category": "formato",
   "generaldesc": "Funciona como un __rotulador fluorescente__ digital sobre el texto seleccionado.//Es una herramienta ideal para resaltar ideas clave o revisar documentos sin modificar el color real de la fuente.",
+  "tags": ["resaltado", "color de fondo", "carácter", "rotulador", "fluorescente", "destacar", "marcar", "revisión", "formato"],
   "list": [
     {
       "program": "word",

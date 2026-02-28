@@ -56,6 +56,7 @@ ayaxprofesor/
 │   ├── iframeanimation.js  # Animación para esconder el layout tinyfoot.html
 │   ├── glitych.js          # Animación de "glitch" para index.html
 │   ├── Textfit.js          # Script para manejar el tamaño de la fuente en index.html
+│   ├── catwaiting.js       # Animación de un gato esperando.
 │   └── cat-animation.js    # Animación de gatos revotando de index.html
 │
 ├── layout/

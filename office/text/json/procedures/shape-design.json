@@ -3,6 +3,7 @@
   "name": "Modificar el diseño general de una forma (relleno, línea o contorno y efectos)",
   "category": "formato",
   "generaldesc": "Permite personalizar la apariencia visual de un objeto mediante el cambio de sus atributos de relleno, borde y otros efectos.//Es la forma más eficaz de resaltar información o hacer que los elementos gráficos sigan la **identidad visual** del documento.",
+  "tags": ["formas", "diseño", "relleno", "contorno", "línea", "bordes", "colores", "estilos de forma", "objetos gráficos", "formato de forma", "personalizar"],
   "list": [
     {
       "program": "word",

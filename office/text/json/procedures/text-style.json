@@ -3,6 +3,7 @@
   "name": "Negrita, cursiva y subrayado",
   "category": "formato",
   "generaldesc": "Aplica estilos de énfasis al texto seleccionado para resaltar información.//La **negrita** se usa para conceptos clave, la *cursiva* para títulos o tecnicismos y el __subrayado__ para marcar partes específicas.",
+  "tags": ["negrita", "cursiva", "subrayado", "énfasis", "formato de texto", "resaltar", "estilo de fuente", "fuente", "carácter"],
   "list": [
     {
       "program": "word",

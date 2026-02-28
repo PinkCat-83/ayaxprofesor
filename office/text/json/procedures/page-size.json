@@ -3,6 +3,7 @@
   "name": "Cambiar tamaño de página",
   "category": "formato",
   "generaldesc": "Permite definir las dimensiones físicas del papel para el documento, como __A4__, __Carta__ u __Oficio__.//Es un ajuste esencial para que el contenido se adapte correctamente al soporte de impresión final.",
+  "tags": ["tamaño de papel", "dimensiones", "A4", "carta", "oficio", "impresión", "formato de página", "medidas", "A5"],
   "list": [
     {
       "program": "word",

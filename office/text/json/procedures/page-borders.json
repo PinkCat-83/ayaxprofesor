@@ -3,6 +3,7 @@
   "name": "Añadir Bordes a la página",
   "category": "formato",
   "generaldesc": "Permite añadir un marco decorativo o profesional alrededor de los márgenes de la página. // Es útil para dar un acabado más definido a portadas, diplomas o documentos que requieran una distinción visual clara.",
+  "tags": ["bordes", "página", "marcos", "diseño", "portadas", "diplomas", "contorno", "decoración", "estilo de página", "márgenes", "acabado"],
   "list": [
     {
       "program": "word",

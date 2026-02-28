@@ -3,6 +3,7 @@
   "name": "Insertar Formas / Autoformas",
   "category": "insercion",
   "generaldesc": "Permite añadir elementos gráficos predefinidos como rectángulos, círculos, flechas, líneas entre otros para enriquecer el documento visualmente.//Estas figuras son __totalmente editables__, permitiendo cambiar su color de relleno, contorno y tamaño.//Cuando selecciones la forma que quieras añadir, recuerda que deberás __pulsar el botón izquierdo del ratón **sin soltarlo** y luego arrastrar el ratón hasta tener el tamaño deseado__.",
+  "tags": ["formas", "autoformas", "figuras", "dibujo", "gráficos", "ilustración", "rectángulos", "círculos", "flechas", "líneas", "esquemas", "diseño"],
   "list": [
     {
       "program": "word",

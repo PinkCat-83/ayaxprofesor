@@ -27,8 +27,9 @@ office/
   │   └── dictionary.css           # Estilos del diccionario
   |
   ├── js/
-  │   ├── loader.js                # Único script en el HTML, carga jsPDF e importa los módulos
+  │   ├── loader.js                # Único script en el HTML, carga jsPDF, fuse e importa los módulos
   │   ├── dictionary.js            # Clase principal: datos, renderizado y eventos
+  │   ├── normalizetext.js         # Lógica de normalización exhaustiva de texto
   │   ├── pdf-export.js            # Lógica de exportación a PDF
   │   └── pdf-render.js            # Renderizador de texto enriquecido para PDF
   |
@@ -81,6 +82,7 @@ Crea un archivo JSON en `json/procedures/` y añade su nombre a `json/loader.jso
 - **name**: Título que verá el usuario
 - **category**: Categoría opcional (para futuras mejoras)
 - **generaldesc**: *(opcional)* Descripción común a todos los programas. Aparece en la sección **Anotaciones** de cada bloque, antes de `desc`.
+- **tags**: *(opcional)* Array de palabras clave para mejorar la búsqueda. No hace falta seguir ninguna convención especial; el sistema normaliza el texto automáticamente.
 - **list**: Array con los pasos para cada programa
 
 **Campos de cada paso** — solo `program` es obligatorio, el resto es opcional:
@@ -120,6 +122,7 @@ Los campos `desc`, `generaldesc` y `route` admiten una mezcla de Markdown simpli
   "name": "Cómo guardar tu documento",
   "category": "archivo",
   "generaldesc": "Guarda el documento en el disco local con el nombre y ubicación que elijas.",
+  "tags": ["guardar", "salvar", "almacenar", "archivo"]
   "list": [
     {
       "program": "word",
@@ -154,7 +157,8 @@ Edita `js/pdf-export.js` para personalizar:
 
 ## 🚀 Modificaciones necesarias
 
-Ninguna pendiente.
+# En el PDF que se imprime
+- [ ] Imágenes que son prácticamente cuadradas, un 50% más pequeñas.
 
 ## 🚀 Futuras mejoras no importantes
 
@@ -188,4 +192,9 @@ Solo necesitas adaptar los archivos JSON y los textos del HTML.
 - No requiere servidor (funciona con `file://`)
 - El JS está dividido en módulos ES6 cargados dinámicamente por `loader.js`
 - La exportación a PDF usa [jsPDF 2.5.1](https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js) cargado desde CDN
+- La búsqueda usa [Fuse.js 7.0.0](https://cdnjs.cloudflare.com/ajax/libs/fuse.js/7.0.0/fuse.min.js) cargado desde CDN, con búsqueda difusa (*fuzzy*) tolerante a errores tipográficos
+- Antes de llegar a Fuse, el texto pasa por `normalizetext.js`, que elimina tildes, mayúsculas, plurales, variaciones de género y monosílabos irrelevantes. Esta normalización se aplica tanto al input del usuario como a los campos de los JSON, por lo que al redactar `tags` no hace falta preocuparse por tildes, plurales ni mayúsculas
 - Los emojis no son compatibles con la fuente helvetica de jsPDF; en el PDF se sustituyen por `»`
+
+## Notas para la IA
+- No crees archivos nuevos sin permiso y no partas de cero. El proyecto ya tiene una base. Si se necesita alguna modificación, pide dichos archivos para trabajar sobre ellos.

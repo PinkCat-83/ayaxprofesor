@@ -3,6 +3,7 @@
   "name": "Bordes y efectos de imagen",
   "category": "formato",
   "generaldesc": "Permite definir el contorno de una imagen o forma mediante colores, grosores y estilos de línea, además de añadir sombras básicas.//Personalizar los bordes ayuda a **separar visualmente** el objeto del fondo y mejorar la legibilidad del documento.",
+  "tags": ["bordes", "contorno", "imágenes", "líneas", "grosor", "sombras", "reflejos", "diseño"],
   "list": [
     {
       "program": "word",

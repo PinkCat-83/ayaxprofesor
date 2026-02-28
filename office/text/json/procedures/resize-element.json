@@ -3,6 +3,7 @@
   "name": "Cambiar el tamaño de una imagen o forma",
   "category": "edicion",
   "generaldesc": "Permite modificar las dimensiones de un elemento gráfico para ajustarlo al espacio disponible en el documento.//Es fundamental mantener la __proporción de aspecto__ cambiando el tamaño únicamente desde las esquina. De esta forma evitaremos que nuestra imagen se deforme.",
+  "tags": ["redimensionar", "escalar", "dimensiones", "proporción de aspecto", "imagen", "forma", "objeto", "ajustar tamaño"],
   "list": [
     {
       "program": "word",

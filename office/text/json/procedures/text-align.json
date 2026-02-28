@@ -3,6 +3,7 @@
   "name": "Alineación (horizontal) de texto",
   "category": "formato",
   "generaldesc": "Permite ajustar la posición del texto respecto a los márgenes laterales del documento.// //-**Izquierda**: El texto se escribirá de izquierda a derecha.//-**Centro**: El texto se escrbirá desde el centro hacia afuera.//-**Derecha**: El texto se escribirá de derecha a izquierda.//-**Justificado**: El texto se escribirá de izquierda a derecha, pero el programa se asegurará de distribuir el espacio uniformememente, haciendo que quede *cuadradito*.",
+  "tags": ["alineación", "párrafo", "centrar", "justificar", "izquierda", "derecha", "formato de texto", "márgenes", "posición", "distribución"],
   "list": [
     {
       "program": "word",

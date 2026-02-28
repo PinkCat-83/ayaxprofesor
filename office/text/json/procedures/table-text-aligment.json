@@ -3,6 +3,7 @@
   "name": "Alineación de texto / contenido en tablas",
   "category": "tablas",
   "generaldesc": "Permite ajustar la ubicación del contenido dentro de las celdas para que el texto se sitúe en la parte superior, central o inferior.//Es una herramienta clave para mejorar la estética visual de las tablas.",
+  "tags": ["tablas", "alineación", "texto", "celdas", "alineación vertical", "alineación horizontal", "centrar", "disposición", "formato de tabla", "diseño"],
   "list": [
     {
       "program": "word",

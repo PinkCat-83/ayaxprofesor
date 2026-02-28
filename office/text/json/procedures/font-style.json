@@ -3,6 +3,7 @@
   "name": "Fuente y tamaño de fuente",
   "category": "formato",
   "generaldesc": "Permite modificar el tipo de letra y su cuerpo (tamaño) para adaptar el texto al estilo deseado.//Recuerda que __debes seleccionar el texto__ para aplicar los cambios a un texto ya escrito.//__Recuerda:__ Puedes cambiar tanto la *fuente* como el *tamaño* manualmente, simplemente haz *clic* en la casilla y escribe.",
+  "tags": ["tipografía", "letra", "tamaño", "fuente", "formato de texto", "cuerpo", "estilo"],
   "list": [
     {
       "program": "word",

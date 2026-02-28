@@ -3,6 +3,7 @@
   "name": "Insertar una tabla",
   "category": "insercion",
   "generaldesc": "Permite organizar la información de forma clara y estructurada mediante celdas dispuestas en cuadrícula.//Para generarla, basta con **marcar las *columnas* y *filas*** que necesites en el selector visual.",
+  "tags": ["tablas", "celdas", "filas", "columnas", "cuadrícula", "organización", "datos", "estructura", "formato de tabla"],
   "list": [
     {
       "program": "word",

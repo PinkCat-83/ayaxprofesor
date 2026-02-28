@@ -3,6 +3,7 @@
   "name": "Cambiar el Color de la Página / Diseño de fondo de página",
   "category": "formato",
   "generaldesc": "Permite modificar el color de fondo de toda la página para personalizar la estética del documento.//Es una opción útil para reducir la fatiga visual o crear documentos con un diseño más creativo.",
+  "tags": ["color de página", "fondo", "diseño", "degradado", "trama", "relleno", "estética", "personalización", "fondo de página"],
   "list": [
     {
       "program": "word",

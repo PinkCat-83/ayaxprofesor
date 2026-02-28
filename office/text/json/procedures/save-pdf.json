@@ -3,6 +3,7 @@
   "name": "Guardar documento como PDF",
   "category": "archivo",
   "generaldesc": "Permite convertir el documento a un formato de __de difícil manipulación__ que mantiene el diseño, las fuentes y las imágenes intactas sin importar en qué dispositivo se abra. // Es el estándar ideal para enviar documentos finales, facturas o currículums para evitar que el diseño se desconfigure.//Es importante destacar que puede que haya más opciones para convertir el documento a PDF, pero aquí ponemos la más rápida y compatible.",
+  "tags": ["pdf", "exportar", "guardar como", "convertir", "archivo", "formato", "currículum", "factura", "documento final", "compatibilidad"],
   "list": [
     {
       "program": "word",

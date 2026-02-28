@@ -3,6 +3,7 @@
   "name": "Cómo mover una imagen en un documento / Ajuste de imagen",
   "category": "formato",
   "generaldesc": "Permite definir la relación entre la imagen y el texto circundante. // Cambiar el ajuste es el paso necesario para poder arrastrar la imagen con total libertad a cualquier parte de la página sin que el texto restrinja su posición.",
+  "tags": ["mover imágenes", "diseño", "distribución", "envoltura", "organización", "posición", "alineación", "ajuste de imagen"],
   "list": [
     {
       "program": "word",

@@ -1,18 +1,24 @@
 
 // dictionary.js — Clase principal del diccionario ofimático
 import { exportToPDF } from './pdf-export.js';
+import { normalizeText } from './normalizetext.js';
+import { showCatWaiting, hideCatWaiting } from '../../js/catwaiting.js';
 
 class DictionaryManager {
     constructor() {
         this.programs = [];
         this.procedures = [];
+        this.fuseIndex = null;
         this.currentFilter = null;
         this.searchTerm = '';
     }
 
     async init() {
+        showCatWaiting('procedures-container');
         await this.loadPrograms();
         await this.loadProcedures();
+        this.buildFuseIndex();
+        hideCatWaiting();
         this.renderProgramFilters();
         this.renderProcedures();
         this.setupEventListeners();
@@ -118,14 +124,39 @@ class DictionaryManager {
         });
     }
 
+    buildFuseIndex() {
+        // Colección normalizada para que Fuse opere sobre texto ya procesado.
+        // Los datos originales (this.procedures) se mantienen intactos para el renderizado.
+        const normalizedCollection = this.procedures.map(proc => ({
+            id: proc.id,
+            _name: normalizeText(proc.name),
+            _id:   normalizeText(proc.id),
+            _tags: Array.isArray(proc.tags) ? proc.tags.map(t => normalizeText(t)).join(' ') : ''
+        }));
+
+        this.fuseIndex = new Fuse(normalizedCollection, {
+            includeScore: true,
+            threshold: 0.35,
+            minMatchCharLength: 2,
+            keys: [
+                { name: '_name', weight: 1.0 },
+                { name: '_tags', weight: 0.7 },
+                { name: '_id',   weight: 0.3 }
+            ]
+        });
+    }
+
     getFilteredProcedures() {
         let filtered = this.procedures;
 
-        // Filtrar por búsqueda
-        if (this.searchTerm) {
-            filtered = filtered.filter(proc =>
-                proc.name.toLowerCase().includes(this.searchTerm.toLowerCase())
-            );
+        // Filtrar por búsqueda con Fuse.js
+        if (this.searchTerm && this.fuseIndex) {
+            const normalizedTerm = normalizeText(this.searchTerm);
+            if (normalizedTerm.length > 0) {
+                const fuseResults = this.fuseIndex.search(normalizedTerm);
+                const matchedIds = new Set(fuseResults.map(r => r.item.id));
+                filtered = filtered.filter(proc => matchedIds.has(proc.id));
+            }
         }
 
         // Filtrar por programa

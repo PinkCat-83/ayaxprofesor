@@ -3,6 +3,7 @@
   "name": "Color de la fuente o Color de letras",
   "category": "formato",
   "generaldesc": "Permite modificar el color del texto seleccionado para destacar conceptos o mejorar la estética visual.//Ten en cuenta que el color representado en la imagen podría no ser el mismo.",
+  "tags": ["texto", "letras", "fuente", "colorear", "diseño", "apariencia", "énfasis"],
   "list": [
     {
       "program": "word",

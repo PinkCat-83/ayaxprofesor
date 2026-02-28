@@ -3,6 +3,7 @@
   "name": "Girar / rotar una imagen o forma",
   "category": "edicion",
   "generaldesc": "Permite rotar/girar una imagen a nuestro gusto, ideal para composiciones estéticas.",
+  "tags": ["girar", "rotar", "voltear", "ángulo", "orientación de imagen", "edición de imagen", "composición", "giro"],
   "list": [
     {
       "program": "word",

@@ -2,6 +2,7 @@
   "id": "save-doc",
   "name": "Cómo guardar tu documento",
   "category": "archivo",
+  "tags": ["guardar", "almacenar", "archivo", "salvar", "disco duro", "nube", "autoguardado", "copia de seguridad"],
   "list": [
     {
       "program": "word",

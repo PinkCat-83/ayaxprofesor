@@ -2,8 +2,15 @@
 // Depende de pdf-render.js (renderDesc) y de que window.jspdf esté disponible
 
 import { renderDesc } from './pdf-render.js';
+import { showCatOverlay, hideCatOverlay } from '../../js/catwaiting.js';
 
 export async function exportToPDF(manager) {
+    showCatOverlay(
+        `Este PDF se genera automáticamente a partir del contenido de la página.<br>
+         El diseño, el orden y la presentación visual pueden diferir ligeramente respecto a la versión web.<br>
+         <strong>Para una experiencia óptima, le recomendamos consultar la página directamente.</strong>`
+    );
+    try {
     const { jsPDF } = window.jspdf;
     const doc = new jsPDF({ compress: true });
 
@@ -216,6 +223,8 @@ export async function exportToPDF(manager) {
             if (!programData) continue;
 
             const lineH = 6;
+            const smallFontSize = 8.1;   // ~10% menos que 9
+            const smallLineH = 5.4;      // ~10% menos que 6
             const usableW = contentWidth - 8;
             const hasGeneraldesc = proc.generaldesc && proc.generaldesc.trim();
             const hasDesc = item.desc && item.desc.trim();
@@ -228,8 +237,12 @@ export async function exportToPDF(manager) {
                         //const b64 = await compressImage(`imgs/${imgPath}`);
                         const b64 = await fetchBase64(`imgs/${imgPath}`);
                         const imgProps = doc.getImageProperties(b64);
-                        const maxImgW = Math.min(usableW, 80);
-                        const imgW = imgProps.width > imgProps.height ? maxImgW : maxImgW * 0.6;
+                        const maxImgW = Math.min(usableW, 68); // 80 × 0.85 ≈ 68 (−15%)
+                        const ratio = imgProps.width / imgProps.height;
+                        const isSquarish = ratio >= 0.85 && ratio <= 1.15;
+                        const imgW = isSquarish
+                            ? maxImgW * 0.5
+                            : imgProps.width > imgProps.height ? maxImgW : maxImgW * 0.6;
                         const imgH = (imgProps.height * imgW) / imgProps.width;
                         imgData.push({ b64, imgW, imgH });
                     } catch { console.warn(`No se pudo cargar imagen: ${imgPath}`); }
@@ -237,7 +250,7 @@ export async function exportToPDF(manager) {
             }
 
             // ── Pre-calcular altura del bloque completo ───────
-            doc.setFontSize(9);
+            doc.setFontSize(smallFontSize);
             let blockH = 19; // cabecera programa
 
             if (item.route) {
@@ -246,7 +259,7 @@ export async function exportToPDF(manager) {
                 doc.setFont('helvetica', 'normal');
                 const routePlain = item.route.replace(/\*\*(.*?)\*\*/g, '$1').replace(/\*(.*?)\*/g, '$1').replace(/>>/g, '»').replace(/->/g, '»');
                 const routeLines = doc.splitTextToSize(routePlain, usableW - rutaLabelW - 4);
-                blockH += routeLines.length * lineH + 10;
+                blockH += routeLines.length * smallLineH + 10;
             }
 
             if (item.shortcut) {
@@ -261,7 +274,7 @@ export async function exportToPDF(manager) {
                     if (i > 0 && curX + sw + 3 > pageWidth - margin - 4) { lines++; curX = margin + 6 + labelW; }
                     curX += sw + 3;
                 });
-                blockH += lines * (lineH + 2) + 10;
+                blockH += lines * (smallLineH + 2) + 10;
             }
 
             if (hasGeneraldesc || hasDesc) {
@@ -303,31 +316,30 @@ export async function exportToPDF(manager) {
             doc.setTextColor(...blue);
             doc.setFontSize(10);
             doc.setFont('helvetica', 'bold');
-            doc.text(programData.realName, margin + 10, cy + 7);
+            doc.text(`${programData.realName} · ${proc.name}`, margin + 10, cy + 7);
 
             cy += headerH + 3;
 
             // ── Ruta ──────────────────────────────────────────
             if (item.route) {
-                doc.setFontSize(9);
+                doc.setFontSize(smallFontSize);
                 doc.setFont('helvetica', 'bold');
                 const rutaLabelW = doc.getTextWidth('Ruta: ');
                 doc.setFont('helvetica', 'normal');
                 const routeMaxW = contentWidth - 12 - rutaLabelW;
                 const routePlain = item.route.replace(/\*\*(.*?)\*\*/g, '$1').replace(/\*(.*?)\*/g, '$1').replace(/>>/g, '»').replace(/->/g, '»');
                 const routeLines = doc.splitTextToSize(routePlain, routeMaxW);
-                const routeBoxH = routeLines.length * lineH + 8;
+                const routeBoxH = routeLines.length * smallLineH + 8;
                 doc.setFillColor(232, 236, 240);
                 doc.roundedRect(margin + 2, cy, contentWidth - 4, routeBoxH, 2, 2, 'F');
                 doc.setFont('helvetica', 'bold');
                 doc.setTextColor(...gray);
-                // Centro vertical: mitad del box + ajuste de línea base
-                const routeTextStartY = cy + (routeBoxH - (routeLines.length - 1) * lineH) / 2 + 1.5;
+                const routeTextStartY = cy + (routeBoxH - (routeLines.length - 1) * smallLineH) / 2 + 1.5;
                 doc.text('Ruta:', margin + 6, routeTextStartY);
                 doc.setFont('helvetica', 'normal');
                 doc.setTextColor(...blue);
                 routeLines.forEach((line, i) => {
-                    doc.text(line, margin + 6 + rutaLabelW, routeTextStartY + i * lineH);
+                    doc.text(line, margin + 6 + rutaLabelW, routeTextStartY + i * smallLineH);
                 });
                 cy += routeBoxH + 2;
             }
@@ -335,14 +347,13 @@ export async function exportToPDF(manager) {
             // ── Atajos en línea con badges ────────────────────
             if (item.shortcut) {
                 const shortcuts = Array.isArray(item.shortcut) ? item.shortcut : [item.shortcut];
-                doc.setFontSize(9);
+                doc.setFontSize(smallFontSize);
                 doc.setFont('helvetica', 'bold');
                 const labelText = 'Atajo de teclado: ';
                 const labelW = doc.getTextWidth(labelText);
                 const badgePadX = 4;
-                const badgeH = lineH + 2;
+                const badgeH = smallLineH + 2;
                 const gap = 3;
-                // Calcular altura del cuadro
                 let curX = margin + 6 + labelW;
                 let curY = cy + 7;
                 shortcuts.forEach((s, i) => {
@@ -356,10 +367,8 @@ export async function exportToPDF(manager) {
                 doc.roundedRect(margin + 2, cy, contentWidth - 4, shortcutBoxH, 2, 2, 'F');
                 doc.setFont('helvetica', 'bold');
                 doc.setTextColor(...gray);
-                // Centro vertical primera línea
                 const shortcutTextY = cy + shortcutBoxH / 2 - ((shortcutLineCount - 1) * (badgeH + gap)) / 2 + 1.5;
                 doc.text(labelText, margin + 6, shortcutTextY);
-                // Dibujar badges
                 curX = margin + 6 + labelW;
                 curY = shortcutTextY;
                 doc.setFont('helvetica', 'normal');
@@ -369,7 +378,7 @@ export async function exportToPDF(manager) {
                     doc.setFillColor(255, 255, 255);
                     doc.setDrawColor(...blue);
                     doc.setLineWidth(0.3);
-                    doc.roundedRect(curX, curY - lineH + 1, sw, badgeH, 1, 1, 'FD');
+                    doc.roundedRect(curX, curY - smallLineH + 1, sw, badgeH, 1, 1, 'FD');
                     doc.setTextColor(...blue);
                     doc.text(s, curX + badgePadX, curY);
                     curX += sw + gap;
@@ -454,4 +463,7 @@ export async function exportToPDF(manager) {
     // ── Guardar ───────────────────────────────────────────
     const safeName = title.replace(/\s+/g, '_').toLowerCase();
     doc.save(`${safeName}.pdf`);
+    } finally {
+        hideCatOverlay();
+    }
 }

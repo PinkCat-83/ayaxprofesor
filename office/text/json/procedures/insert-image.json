@@ -3,6 +3,7 @@
   "name": "Cómo insertar una imagen",
   "category": "inserción",
   "generaldesc": "Permite añadir archivos visuales al documento para enriquecer el contenido y facilitar la comprensión.//Es fundamental conocer los formatos compatibles para asegurar que las imágenes se visualicen correctamente en cualquier plataforma.//No te olvides de revisar también la sección sobre el __ajuste de imagen__.",
+  "tags": ["insertar", "imágenes", "fotos", "archivos", "multimedia", "ilustración", "gráficos", "importar"],
   "list": [
     {
       "program": "word",

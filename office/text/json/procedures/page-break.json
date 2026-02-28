@@ -3,6 +3,7 @@
   "name": "Inserta un Salto de Página",
   "category": "formato",
   "generaldesc": "Finaliza la página actual de forma inmediata y desplaza el cursor al inicio de la siguiente.//Es la forma correcta de separar secciones sin pulsar repetidamente la tecla *Intro*.//Esto te ayudará cuando necesites maquetar una gran cantidad de información ya que te ayudará a respetar la estructura general de los capítulos o secciones.",
+  "tags": ["salto de página", "secciones", "capítulos", "maquetación", "organización", "nueva página", "diseño de página", "espaciado", "estructura", "formato"],
   "list": [
     {
       "program": "word",

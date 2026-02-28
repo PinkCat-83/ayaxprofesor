@@ -3,6 +3,7 @@
   "name": "Cambiar los márgenes de la página",
   "category": "formato",
   "generaldesc": "Define el espacio en blanco entre el borde del papel y el contenido del documento.//Es esencial para cumplir con normas de estilo o para facilitar la encuadernación.",
+  "tags": ["márgenes", "espaciado", "diseño de página", "encuadernación", "configuración de página", "maquetación", "bordes de papel", "formato"],
   "list": [
     {
       "program": "word",
