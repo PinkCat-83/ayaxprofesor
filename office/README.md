@@ -157,14 +157,10 @@ Edita `js/pdf-export.js` para personalizar:
 
 ## 🚀 Modificaciones necesarias
 
-# En el PDF que se imprime
-- [ ] Imágenes que son prácticamente cuadradas, un 50% más pequeñas.
-
 ## 🚀 Futuras mejoras no importantes
 
 - [ ] Dividir el archivo `css` para un mejor mantenimiento
 - [ ] Modo oscuro
-- [ ] Sistema de categorías con navegación
 
 
 ## 🚀 Diccionarios futuros a añadir

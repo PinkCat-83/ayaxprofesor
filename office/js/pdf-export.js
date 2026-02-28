@@ -5,10 +5,10 @@ import { renderDesc } from './pdf-render.js';
 import { showCatOverlay, hideCatOverlay } from '../../js/catwaiting.js';
 
 export async function exportToPDF(manager) {
-    showCatOverlay(
-        `Este PDF se genera automáticamente a partir del contenido de la página.<br>
-         El diseño, el orden y la presentación visual pueden diferir ligeramente respecto a la versión web.<br>
-         <strong>Para una experiencia óptima, le recomendamos consultar la página directamente.</strong>`
+    await showCatOverlay(
+        `Este PDF es una copia automática y puede tener fallos de diseño.<br>
+         Usa la página web como fuente principal.<br>
+         <strong>El documento resultante es solo un apoyo complementario.</strong>`
     );
     try {
     const { jsPDF } = window.jspdf;

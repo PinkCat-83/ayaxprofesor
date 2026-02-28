@@ -217,13 +217,35 @@ const OVERLAY_STYLE = `
     margin-top: 6px;
     color: #666;
   }
+
+  .cat-pdf-confirm-btn {
+    margin-top: 4px;
+    padding: 10px 28px;
+    background-color: #4a90e2;
+    color: white;
+    border: none;
+    border-radius: 50px;
+    font-size: 1em;
+    font-weight: 600;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    cursor: pointer;
+    transition: background-color 0.2s ease, transform 0.2s ease;
+  }
+
+  .cat-pdf-confirm-btn:hover {
+    background-color: #f39c12;
+    transform: translateY(-2px);
+  }
 `;
 
 let _pdfMessageInterval = null;
 
 /**
- * Muestra el gato en overlay a pantalla completa (para procesos largos).
- * @param {string} [disclaimer] - Texto HTML opcional que aparece encima del gato.
+ * Muestra el overlay a pantalla completa.
+ * Si se pasa disclaimer, primero muestra el texto con un botón de confirmación.
+ * Al confirmar, muestra el gato con mensajes rotativos y resuelve la Promise.
+ * @param {string} [disclaimer] - HTML opcional con aviso previo a la generación.
+ * @returns {Promise<void>}
  */
 export function showCatOverlay(disclaimer = '') {
   if (!document.getElementById('cat-waiting-styles')) {
@@ -241,18 +263,33 @@ export function showCatOverlay(disclaimer = '') {
 
   const overlay = document.createElement('div');
   overlay.id = 'cat-pdf-overlay';
-  const disclaimerHtml = disclaimer
-    ? `<p class="cat-pdf-disclaimer">${disclaimer}</p>`
-    : '';
-  overlay.innerHTML = disclaimerHtml + CAT_SVG + `<p id="cat-pdf-message">${PDF_MESSAGES[0]}</p>`;
   document.body.appendChild(overlay);
 
-  let i = 1;
-  _pdfMessageInterval = setInterval(() => {
-    const p = document.getElementById('cat-pdf-message');
-    if (p) p.textContent = PDF_MESSAGES[i % PDF_MESSAGES.length];
-    i++;
-  }, 2200);
+  const startProcessing = () => {
+    overlay.innerHTML = CAT_SVG + `<p id="cat-pdf-message">${PDF_MESSAGES[0]}</p>`;
+    let i = 1;
+    _pdfMessageInterval = setInterval(() => {
+      const p = document.getElementById('cat-pdf-message');
+      if (p) p.textContent = PDF_MESSAGES[i % PDF_MESSAGES.length];
+      i++;
+    }, 2200);
+  };
+
+  return new Promise(resolve => {
+    if (disclaimer) {
+      overlay.innerHTML = `
+        <p class="cat-pdf-disclaimer">${disclaimer}</p>
+        <button class="cat-pdf-confirm-btn">Entendido, generar PDF</button>
+      `;
+      overlay.querySelector('.cat-pdf-confirm-btn').addEventListener('click', () => {
+        startProcessing();
+        resolve();
+      });
+    } else {
+      startProcessing();
+      resolve();
+    }
+  });
 }
 
 /**
