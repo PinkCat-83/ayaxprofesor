@@ -1,0 +1,30 @@
+{
+  "id": "indentation",
+  "name": "Sangría",
+  "category": "formato",
+  "generaldesc": "La **sangría** es el espacio adicional que se deja entre el margen de la página y el borde del texto de un párrafo.//Se utiliza habitualmente para estructurar jerárquicamente la información o para marcar el inicio de un nuevo párrafo.//Por otro lado, ten en cuenta que la tecla **Tabulador** no genera realmente una sangría, sino un __caracter invisible__ susceptible a formato de texto.//Por ello, te recomendamos usar el **Tabulador** como *sangría* sólo en momentos puntuales y con cautela.",
+  "tags": ["sangría", "margen", "párrafo", "formato", "espaciado", "indentación", "tabulador", "subnivel", "jerarquía"],
+  "list": [
+    {
+      "program": "word",
+      "route": "Inicio >> Párrafo",
+      "shortcut": ["Ctrl + H (aumentar sangría)"],
+      "desc": "",
+      "imgs": ["indentation-word.png"]
+    },
+    {
+      "program": "googledocs",
+      "route": "Formato >> Alineación y sangría >> Opciones de sangría (para más opciones)",
+      "shortcut": [],
+      "desc": "",
+      "imgs": ["indentation-googledocs.png"]
+    },
+    {
+      "program": "writer",
+      "route": "Formato >> Párrafo >> Sangría y espaciado (para más opciones)",
+      "shortcut": [],
+      "desc": "",
+      "imgs": ["indentation-writer.png"]
+    }
+  ]
+}

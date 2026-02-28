@@ -1,0 +1,30 @@
+{
+  "id": "lists",
+  "name": "Listados y Viñetas",
+  "category": "formato",
+  "generaldesc": "Las listas permiten organizar la información de forma clara y jerárquica mediante puntos o números.//Si pulsas **enter** después de escribir un texto, pasarás al siguiente elemento de la lista. Si después del **enter** no escribes nada y vuelves a pulsar **enter**, __¡finalizarás el listado!__//Si pulsas el **tabulador** después de un **enter** (antes de escribir), __¡crearás un sublistado!__. Este proceso es equivalente al uso de la __sangría__: aumentar la sangría desplaza el elemento a un subnivel, mientras que reducirla lo devuelve al nivel superior.",
+  "tags": ["listas", "viñetas", "numeración", "sublistas", "sangría", "formato", "esquema", "ordenar", "puntos", "listados"],
+  "list": [
+    {
+      "program": "word",
+      "route": "Inicio >> Párrafo",
+      "shortcut": ["Enter (siguiente elemento)", "Tab (crear sublistado)", "Enter en celda vacía (reducir nivel)",  "Shift + Tab (reducir nivel)"],
+      "desc": "¡Word también permite crear viñetas personalizadas!",
+      "imgs": ["lists-word.png"]
+    },
+    {
+      "program": "googledocs",
+      "route": "Formato >> Viñetas y numeración",
+      "shortcut": ["Enter (siguiente elemento)", "Tab (crear sublistado)", "Enter en celda vacía (reducir nivel)",  "Shift + Tab (reducir nivel)"],
+      "desc": "Además, *Google Docs* también permite crear __listados con cajas clicables__, que pueden ayudarte a crear una lista y marcar elementos completados.",
+      "imgs": ["lists-googledocs.png"]
+    },
+    {
+      "program": "writer",
+      "route": "Formato >> Listas",
+      "shortcut": ["Enter (siguiente elemento)", "Tab (crear sublistado)", "Enter en celda vacía (reducir nivel)",  "Shift + Tab (reducir nivel)"],
+      "desc": "",
+      "imgs": ["lists-writer.png"]
+    }
+  ]
+}

@@ -1,0 +1,30 @@
+{
+  "id": "insert-page-total",
+  "name": "Insertar número de página y total de páginas",
+  "category": "formato",
+  "generaldesc": "Permite añadir un contador que indica la página actual respecto al total del documento (estilo **Página X de Y**).//Esta función es fundamental para que el lector conozca la extensión completa del archivo y se asegure de que no falta ninguna hoja.",
+  "tags": ["número de página", "total de páginas", "X de Y", "paginación", "formato", "extensión", "contador"],
+  "list": [
+    {
+      "program": "word",
+      "route": "Insertar >> Número de Página >> Posición Actual >> Página X de Y >> Números en negrita",
+      "shortcut": [],
+      "desc": "",
+      "imgs": ["insert-page-total-word.png"]
+    },
+    {
+      "program": "googledocs",
+      "route": "Insertar >> Elementos de páginas >> Números de Página >> Número de Páginas",
+      "shortcut": [],
+      "desc": "Para que aparezca el formato completo, primero debes insertar el número de página normal y luego seguir esta ruta para añadir el campo del total.",
+      "imgs": ["insert-page-total-googledocs.png"]
+    },
+    {
+      "program": "writer",
+      "route": "Insertar >> Número de página",
+      "shortcut": [],
+      "desc": "Al realizar la acción de insertar el número, asegúrate de marcar la casilla **Incluir total de páginas** para obtener el contador completo.",
+      "imgs": ["insert-page-total-writer.png"]
+    }
+  ]
+}

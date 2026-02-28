@@ -1,0 +1,30 @@
+{
+  "id": "insert-hyperlink",
+  "name": "Insertar Enlace / Vínculo / Hipervínculo",
+  "category": "formato",
+  "generaldesc": "Permite conectar un texto o imagen con una dirección web o un recurso externo.//Además de sitios web, también puedes añadir enlaces a **otras partes del mismo documento** (como títulos o marcadores) para facilitar la navegación interna.//Recuerda que también puedes añadir estos enlaces a **imágenes**, simplemente señala esta antes insertarlo.",
+  "tags": ["enlace", "vínculo", "hipervínculo", "url", "navegación", "insertar"],
+  "list": [
+    {
+      "program": "word",
+      "route": "Insertar",
+      "shortcut": ["CTRL + ALT + K"],
+      "desc": "En el cuadro de diálogo://-**Archivo o página web existente**: En __texto__ inserta el texto visible del enlace y en __dirección__ la URL de la página web.//-**Lugar de este documento**: Te permitirá apuntar a diferentes partes del documento si has hecho suo de los *estilos* o *marcadores*.",
+      "imgs": ["insert-hyperlink-word.png"]
+    },
+    {
+      "program": "googledocs",
+      "route": "",
+      "shortcut": ["CTRL + K"],
+      "desc": "En el cuadro de diálogo://-**Primer cuadro de texto**: El texto visible del enlace.//-**Segundo cuadro de texto**: La URL de la página web.//-**Títulos, marcadores y pestañas**: Permite crear enlaces dentro del propio documento.",
+      "imgs": ["insert-hyperlink-googledocs.png"]
+    },
+    {
+      "program": "writer",
+      "route": "",
+      "shortcut": ["CTRL + ALT + K"],
+      "desc": "En el cuadro de diálogo, a la izquierda, podrá encontrar distintas formas de implementarlo. La primera, le permitirá añadir un __texto__ como el texto visible del enlace y en __enlace__ la URL de la página web.",
+      "imgs": ["insert-hyperlink-writer.png"]
+    }
+  ]
+}

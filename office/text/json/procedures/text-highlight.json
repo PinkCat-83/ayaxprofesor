@@ -8,7 +8,7 @@
     {
       "program": "word",
       "route": "Inicio >> Fuente",
-      "shortcut": [],
+      "shortcut": ["Ctrl + Alt + H (aumentar sangría)"],
       "desc": "",
       "imgs": ["text-highlightword.png"]
     },

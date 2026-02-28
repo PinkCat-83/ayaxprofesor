@@ -1,0 +1,30 @@
+{
+  "id": "header-footer-access",
+  "name": "Acceder al Encabezado o Pie de Página",
+  "category": "formato",
+  "generaldesc": "Permite entrar en el modo de edición de las áreas reservadas en los márgenes superior e inferior del documento.//Es el método más rápido para insertar información que debe **repetirse en todas las páginas**, como números de página o títulos.//Además... ¡También puedes añadir otros elementos aquí como **imágenes** o **formas**!",
+  "tags": ["encabezado", "pie de página", "márgenes", "edición", "secciones", "formato", "cabecera", "pie"],
+  "list": [
+    {
+      "program": "word",
+      "route": "Insertar >> Encabezado y pie de Página (para más opciones)",
+      "shortcut": ["Doble clic en la parte superior o inferior de la hoja (para entrar)", "ESC (para salir)"],
+      "desc": "En Office Word, verás que el contenido que no estés modificando se ve *más grisáceo*. Es sólo una señal visual para indicarte que no estás modificando esa sección.",
+      "imgs": ["header-footer-access-word-a.png", "header-footer-access-word-b.png"]
+    },
+    {
+      "program": "googledocs",
+      "route": "Formato >> Encabezado y pie de página (para más opciones)",
+      "shortcut": ["Doble clic en la parte superior o inferior de la hoja (para entrar)", "ESC (para salir)"],
+      "desc": "",
+      "imgs": ["header-footer-access-googledocs.png"]
+    },
+    {
+      "program": "writer",
+      "route": "Formato >> Estilo de página >> Cabecera o Pie (para más opciones)",
+      "shortcut": ["Clic en la parte superior o inferior de la hoja >> Pulsar en +"],
+      "desc": "En Libre Office Writer, verás un indicador muy claro de dónde puedes escribir en el encabezado o pie de página.",
+      "imgs": ["header-footer-access-writer.png"]
+    }
+  ]
+}

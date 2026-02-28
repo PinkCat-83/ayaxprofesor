@@ -1,0 +1,30 @@
+{
+  "id": "insert-page-number",
+  "name": "Insertar número de página",
+  "category": "formato",
+  "generaldesc": "Añade una numeración automática que se actualiza correlativamente en cada hoja del documento.//Es esencial para mantener el orden y facilitar la navegación en documentos extensos.//Aunque técnicamente podrías añadirlo en *cualquier parte del documento*, normalmente suelen añadirse en el **pie de página**.",
+  "tags": ["número de página", "numeración", "paginación", "organización", "formato", "número"],
+  "list": [
+    {
+      "program": "word",
+      "route": "Insertar >> Número de página",
+      "shortcut": [],
+      "desc": "Al elegir un diseño predefinido, además de especificar un lugar concreto, el programa **sustituirá lo que ya tuvieras** en esa sección, a menos que elijas la opción de **posición actual**.//Si has usado la opción **posición actual**, verás que se ha añadido el elemento y ahora __podrás usarlo como un texto normal__, modificando su tamaño, color, fuente...",
+      "imgs": ["insert-page-number-word.png"]
+    },
+    {
+      "program": "googledocs",
+      "route": "Insertar >> Elementos de Página >> Números de página",
+      "shortcut": [],
+      "desc": "Si has usado la opción **posición actual**, verás que se ha añadido el elemento y ahora __podrás usarlo como un texto normal__, modificando su tamaño, color, fuente...",
+      "imgs": ["insert-page-number-googledocs.png"]
+    },
+    {
+      "program": "writer",
+      "route": "Insertar >> Número de página",
+      "shortcut": [],
+      "desc": "Si has usado la opción **posición actual**, verás que se ha añadido el elemento y ahora __podrás usarlo como un texto normal__, modificando su tamaño, color, fuente...",
+      "imgs": ["insert-page-number-writer.png"]
+    }
+  ]
+}
