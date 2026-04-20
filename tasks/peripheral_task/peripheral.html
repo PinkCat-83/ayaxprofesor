@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Periféricos con el Gato Rosa</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+
+  <!-- ═══════════════════════════════════════════
+   PANTALLA: MENÚ PRINCIPAL
+═══════════════════════════════════════════ -->
+  <div id="screen-menu" class="screen active">
+    <div class="menu-bg"></div>
+    <div class="menu-content">
+      <div class="title-block">
+        <img class="menu-cat" src="img/pinkcat_idle.png" alt="Gato Rosa" />
+        <h1>Periféricos con el Gato Rosa</h1>
+        <p class="subtitle">¿Entrada, Salida o Ambas?</p>
+      </div>
+      <div class="difficulty-selector">
+        <p class="choose-label">Elige tu dificultad:</p>
+        <button class="btn-diff" id="btn-nivel1">
+          <span class="diff-icon">🐟</span>
+          <span class="diff-name">Nivel 1</span>
+          <span class="diff-desc">1 vida · Sin red</span>
+        </button>
+        <button class="btn-diff" id="btn-nivel2">
+          <span class="diff-icon">🐠</span>
+          <span class="diff-name">Nivel 2</span>
+          <span class="diff-desc">3 vidas · Con margen</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════
+   PANTALLA: JUEGO
+═══════════════════════════════════════════ -->
+  <div id="screen-game" class="screen">
+
+    <div id="hud">
+      <div id="hud-lives"></div>
+      <div id="hud-progress"></div>
+      <div id="hud-controls">
+        <span style="font-size:0.7rem; color:#ccc; margin-right:4px;">v1.3</span>
+        <button class="btn-toggle active" id="btn-toggle-sound" title="Sonido">🔊</button>
+        <button id="btn-menu-hud">Menú</button>
+      </div>
+    </div>
+
+    <div id="peripheral-display">
+      <span id="peripheral-label">Cargando…</span>
+    </div>
+
+    <div id="game-stage">
+      <svg id="stage-svg" viewBox="0 0 800 320" xmlns="http://www.w3.org/2000/svg"
+        xmlns:xlink="http://www.w3.org/1999/xlink" preserveAspectRatio="xMidYMid meet" style="overflow:hidden">
+
+        <defs>
+          <linearGradient id="skyGrad" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#fdf4ff" />
+            <stop offset="100%" stop-color="#fce7f3" />
+          </linearGradient>
+          <linearGradient id="waterGrad" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#7dd3fc" />
+            <stop offset="100%" stop-color="#0369a1" />
+          </linearGradient>
+        </defs>
+
+        <!-- Fondo cielo (fijo) -->
+        <rect width="800" height="320" fill="url(#skyGrad)" />
+
+        <!-- Nubes -->
+        <g class="cloud" opacity="0.7">
+          <ellipse cx="120" cy="55" rx="45" ry="22" fill="white" />
+          <ellipse cx="150" cy="45" rx="35" ry="20" fill="white" />
+          <ellipse cx="90" cy="60" rx="30" ry="18" fill="white" />
+        </g>
+        <g class="cloud cloud2" opacity="0.6">
+          <ellipse cx="620" cy="40" rx="50" ry="20" fill="white" />
+          <ellipse cx="655" cy="30" rx="38" ry="18" fill="white" />
+          <ellipse cx="590" cy="45" rx="32" ry="16" fill="white" />
+        </g>
+
+        <!-- Agua: sube hasta y=210 para que sea un río prominente -->
+        <rect x="0" y="210" width="800" height="110" fill="url(#waterGrad)" opacity="0.9" />
+        <path id="wave1"
+          d="M0,220 Q100,207 200,220 Q300,233 400,220 Q500,207 600,220 Q700,233 800,220 L800,320 L0,320 Z"
+          fill="#bae6fd" opacity="0.5" />
+        <path id="wave2"
+          d="M0,228 Q100,215 200,228 Q300,241 400,228 Q500,215 600,228 Q700,241 800,228 L800,320 L0,320 Z"
+          fill="#7dd3fc" opacity="0.4" />
+
+        <!-- ══ GRUPO MUNDO ══ -->
+        <g id="world-group">
+
+          <!-- Plataforma izquierda: el gato la pisa, la plataforma tapa sus patas -->
+          <g id="plat-left" transform="translate(0,0)">
+            <image href="img/platform.png" x="-20" y="195" width="130" height="55" />
+          </g>
+
+          <!-- Rocas: base en ROCK_CY=240 (más metidas en agua). Tamaño 64×48 -->
+          <g id="rock0" class="rock-group" transform="translate(205,240)">
+            <image href="img/rock.png" x="-32" y="-48" width="64" height="48" class="rock-img" />
+            <text class="rock-label" x="0" y="-10" text-anchor="middle"></text>
+          </g>
+          <g id="rock1" class="rock-group" transform="translate(375,240)">
+            <image href="img/rock.png" x="-32" y="-48" width="64" height="48" class="rock-img" />
+            <text class="rock-label" x="0" y="-10" text-anchor="middle"></text>
+          </g>
+          <g id="rock2" class="rock-group" transform="translate(545,240)">
+            <image href="img/rock.png" x="-32" y="-48" width="64" height="48" class="rock-img" />
+            <text class="rock-label" x="0" y="-10" text-anchor="middle"></text>
+          </g>
+
+          <!-- Plataforma derecha -->
+          <g id="plat-right" transform="translate(660,0)">
+            <image href="img/platform.png" x="-20" y="195" width="130" height="55" />
+          </g>
+
+          <!-- Capa de polvo (generada dinámicamente por JS) -->
+          <g id="dust-layer"></g>
+
+        </g>
+        <!-- FIN GRUPO MUNDO -->
+
+        <!-- Fuegos artificiales sobre todo (coords SVG fijas) -->
+        <g id="fireworks-layer"></g>
+
+        <!-- GATO
+           Pies en y=210 (techo visual de la plataforma) → transform.y = 210-70 = 140
+           La plataforma empieza en y=195, así que hay 15px de solapamiento → parece pisar
+           Centrado sobre plat-left (ancho efectivo ~90) → transform.x = 20 -->
+        <g id="cat" transform="translate(20,140)">
+          <g id="cat-mirror">
+            <image id="cat-img" href="img/pinkcat_idle.png" x="0" y="0" width="50" height="70" />
+          </g>
+        </g>
+
+        <!-- Capa de agua frontal: tapa los pies del gato para simular que el río
+           está también por delante de las plataformas/rocas -->
+        <rect x="0" y="232" width="800" height="88" fill="url(#waterGrad)" opacity="0.35" />
+        <path d="M0,232 Q100,224 200,232 Q300,240 400,232 Q500,224 600,232 Q700,240 800,232 L800,320 L0,320 Z"
+          fill="#7dd3fc" opacity="0.25" />
+
+      </svg>
+    </div>
+
+    <div id="feedback-msg"></div>
+
+  </div>
+
+  <!-- ═══════════════════════════════════════════
+   PANTALLA: VICTORIA
+═══════════════════════════════════════════ -->
+  <div id="screen-victory" class="screen">
+    <div class="end-content">
+      <div class="end-emoji">🎉</div>
+      <h2>¡Felicidades!</h2>
+      <p id="victory-text">Has completado todos los periféricos.</p>
+      <button class="btn-end" id="btn-play-again">Jugar de nuevo</button>
+      <button class="btn-end secondary" id="btn-menu-victory">Menú principal</button>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════
+   PANTALLA: GAME OVER
+═══════════════════════════════════════════ -->
+  <div id="screen-gameover" class="screen">
+    <div class="end-content">
+      <div class="end-emoji splashed">💧</div>
+      <h2>¡Al agua, pato!</h2>
+      <p id="gameover-text">El gato se ha caído. ¡Inténtalo de nuevo!</p>
+      <button class="btn-end" id="btn-retry">Reintentar</button>
+      <button class="btn-end secondary" id="btn-menu-gameover">Menú principal</button>
+    </div>
+  </div>
+
+  <!-- AUDIO (subcarpeta audio/) -->
+  <audio id="snd-jump" src="audio/jump.mp3" preload="auto"></audio>
+  <audio id="snd-victory" src="audio/victory.mp3" preload="auto"></audio>
+  <audio id="snd-splash" src="audio/splash.mp3" preload="auto"></audio>
+  <audio id="snd-gameover" src="audio/gameover.mp3" preload="auto"></audio>
+  <audio id="snd-fanfare" src="audio/fanfare.mp3" preload="auto" loop></audio>
+
+  <script src="game.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,459 @@
+/* ═══════════════════════════════════════════
+   GATO SALTARÍN – stylesheet
+   Fuente: 'Fredoka One' (display) + 'Nunito' (body)
+═══════════════════════════════════════════ */
+@import url('https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;600;800&display=swap');
+
+:root {
+  --pink-light:  #fce7f3;
+  --pink:        #f9a8d4;
+  --pink-mid:    #ec4899;
+  --pink-dark:   #be185d;
+  --rose:        #fb7185;
+  --sky:         #bae6fd;
+  --sky-dark:    #0369a1;
+  --stone:       #78716c;
+  --gold:        #fcd34d;
+  --gold-dark:   #d97706;
+  --green:       #22c55e;
+  --correct:     #bbf7d0;
+  --wrong:       #fecaca;
+  --text-dark:   #1e1b4b;
+  --text-mid:    #4c1d95;
+  --radius-lg:   18px;
+  --shadow:      0 8px 32px rgba(190,24,93,0.18);
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html, body {
+  width: 100%; height: 100%;
+  font-family: 'Nunito', sans-serif;
+  background: var(--pink-light);
+  overflow: hidden;
+}
+
+/* ── SCREENS ─────────────────────────────── */
+.screen {
+  position: fixed; inset: 0;
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+.screen.active { display: flex; }
+
+/* ── MENÚ PRINCIPAL ──────────────────────── */
+#screen-menu {
+  background: linear-gradient(135deg, #fdf4ff 0%, #fce7f3 60%, #bfdbfe 100%);
+}
+
+.menu-bg {
+  position: absolute; inset: 0;
+  background-image:
+    radial-gradient(circle at 20% 30%, #f9a8d470 0%, transparent 45%),
+    radial-gradient(circle at 80% 70%, #bae6fd80 0%, transparent 45%);
+  pointer-events: none;
+}
+
+.menu-content {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2rem;
+}
+
+.title-block {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.menu-cat {
+  width: 120px; height: auto;
+  filter: drop-shadow(0 4px 12px #f9a8d4aa);
+  animation: menuBob 2.8s ease-in-out infinite;
+}
+@keyframes menuBob {
+  0%, 100% { transform: translateY(0); }
+  50%       { transform: translateY(-10px); }
+}
+
+h1 {
+  font-family: 'Fredoka One', cursive;
+  font-size: clamp(2.4rem, 6vw, 4rem);
+  color: var(--pink-dark);
+  letter-spacing: 1px;
+  text-shadow: 3px 3px 0 #fbcfe8, 5px 5px 0 #f9a8d4;
+}
+
+.subtitle {
+  font-size: 1.1rem;
+  font-weight: 800;
+  color: var(--text-mid);
+  letter-spacing: 0.05em;
+}
+
+.choose-label {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--stone);
+  text-align: center;
+  margin-bottom: 0.3rem;
+}
+
+.difficulty-selector {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.9rem;
+}
+
+.btn-diff {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  width: 280px;
+  padding: 0.9rem 1.4rem;
+  border: 3px solid var(--pink-mid);
+  border-radius: var(--radius-lg);
+  background: white;
+  cursor: pointer;
+  transition: transform 0.15s, box-shadow 0.15s, background 0.15s;
+  box-shadow: 0 4px 16px #f9a8d455;
+}
+.btn-diff:hover {
+  background: var(--pink-light);
+  transform: translateY(-3px) scale(1.03);
+  box-shadow: var(--shadow);
+}
+.btn-diff:active { transform: scale(0.97); }
+
+.diff-icon  { font-size: 1.8rem; }
+.diff-name  { font-family: 'Fredoka One', cursive; font-size: 1.3rem; color: var(--pink-dark); flex: 1; text-align: left; }
+.diff-desc  { font-size: 0.78rem; font-weight: 600; color: var(--stone); }
+
+/* ── HUD ─────────────────────────────────── */
+#screen-game {
+  background: linear-gradient(180deg, #fdf4ff 0%, #fce7f3 100%);
+  flex-direction: column;
+  justify-content: flex-start;
+}
+
+#hud {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.5rem 1.2rem;
+  background: white;
+  border-bottom: 2.5px solid var(--pink-light);
+  box-shadow: 0 2px 8px #f9a8d433;
+  z-index: 10;
+}
+
+#hud-lives { display: flex; gap: 0.35rem; font-size: 1.5rem; min-width: 80px; }
+#hud-progress {
+  font-family: 'Fredoka One', cursive;
+  color: var(--pink-dark);
+  font-size: 1.05rem;
+}
+
+#hud-controls {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+/* Botones toggle (animaciones / sonido) */
+.btn-toggle {
+  padding: 0.25rem 0.5rem;
+  border: 2px solid var(--pink-mid);
+  border-radius: 8px;
+  background: white;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background 0.15s, opacity 0.15s;
+  opacity: 1;
+}
+.btn-toggle:not(.active) {
+  opacity: 0.35;
+  background: #f3f4f6;
+}
+.btn-toggle:hover { background: var(--pink-light); opacity: 1; }
+
+#btn-menu-hud {
+  padding: 0.3rem 0.9rem;
+  border: 2px solid var(--pink-mid);
+  border-radius: 8px;
+  background: white;
+  color: var(--pink-dark);
+  font-family: 'Nunito', sans-serif;
+  font-weight: 800;
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+#btn-menu-hud:hover { background: var(--pink-light); }
+
+/* ── NOMBRE PERIFÉRICO ───────────────────── */
+#peripheral-display {
+  width: 100%;
+  text-align: center;
+  padding: 0.55rem 1rem 0.3rem;
+}
+
+#peripheral-label {
+  font-family: 'Fredoka One', cursive;
+  font-size: clamp(1.6rem, 5vw, 2.6rem);
+  color: var(--text-dark);
+  background: linear-gradient(90deg, var(--pink-dark), var(--text-mid));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  display: inline-block;
+  animation: popIn 0.4s cubic-bezier(0.34,1.56,0.64,1);
+}
+@keyframes popIn {
+  from { transform: scale(0.6); opacity: 0; }
+  to   { transform: scale(1);   opacity: 1; }
+}
+
+/* ── ESCENARIO SVG ───────────────────────── */
+#game-stage {
+  flex: 1;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+#stage-svg {
+  width: 100%;
+  max-width: 900px;
+  height: auto;
+  display: block;
+}
+
+/* Olas animadas */
+#wave1 { animation: waveAnim 3s ease-in-out infinite alternate; }
+#wave2 { animation: waveAnim 4s ease-in-out infinite alternate-reverse; }
+@keyframes waveAnim {
+  from { transform: translateX(-20px); }
+  to   { transform: translateX(20px); }
+}
+
+/* ── ROCAS ───────────────────────────────── */
+.rock-group { cursor: pointer; }
+
+/* Hover: brillo amarillo sobre la imagen de roca */
+.rock-group .rock-img {
+  transition: filter 0.2s;
+}
+.rock-group:hover .rock-img {
+  filter: brightness(1.15) drop-shadow(0 0 6px #fcd34d);
+}
+.rock-group.correct .rock-img {
+  filter: brightness(1.1) drop-shadow(0 0 8px #4ade80);
+}
+.rock-group.incorrect .rock-img {
+  filter: brightness(0.9) drop-shadow(0 0 8px #f87171);
+}
+
+.rock-label {
+  font-family: 'Fredoka One', cursive;
+  font-size: 13px;
+  fill: white;
+  pointer-events: none;
+  paint-order: stroke;
+  stroke: #44403c;
+  stroke-width: 3px;
+}
+
+.rock-group {
+  pointer-events: bounding-box;
+}
+.rock-group * {
+  pointer-events: none;
+}
+
+/* ── GATO – animaciones CSS ──────────────── */
+
+/* Respiración: escala vertical suave desde la base del gato.
+   transform-origin en SVG se aplica en el sistema de coords del elemento.
+   Como el gato tiene height=90 y queremos expandir desde abajo,
+   usamos transform-box + transform-origin. */
+#cat.breathe image {
+  transform-box: fill-box;
+  transform-origin: bottom center;
+  animation: breathe 3.2s ease-in-out infinite;
+}
+@keyframes breathe {
+  0%, 100% { transform: scaleY(1)   scaleX(1);   }
+  45%       { transform: scaleY(1.04) scaleX(0.97); }
+  55%       { transform: scaleY(1.04) scaleX(0.97); }
+}
+
+/* Espejo (flip horizontal) para fanfare: cambio instantáneo sin transición */
+#cat.mirror image {
+  transform-box: fill-box;
+  transform-origin: center center;
+  animation: mirrorFlip 3s steps(1) infinite;
+}
+@keyframes mirrorFlip {
+  0%   { transform: scaleX(1);  }
+  50%  { transform: scaleX(-1); }
+  100% { transform: scaleX(1);  }
+}
+
+/* Hundimiento en el agua — dos capas:
+   #cat.sinking             → opacity fade (JS controla transform del <g>, sin conflicto)
+   #cat-mirror.sinking-mirror → translateY (caída) + scaleX (espejo) en hijo independiente */
+
+#cat.sinking {
+  animation: sinkFade 2.2s ease-in forwards;
+}
+@keyframes sinkFade {
+  0%   { opacity: 1;    }
+  15%  { opacity: 0.95; }
+  40%  { opacity: 0.7;  }
+  70%  { opacity: 0.3;  }
+  100% { opacity: 0;    }
+}
+
+/* Caída lineal constante + espejo que cambia de lado en saltos bruscos.
+   Con timing-function: linear el Y baja a velocidad constante.
+   Los pares de keyframes casi idénticos (N% / N.01%) producen flips instantáneos. */
+#cat-mirror.sinking-mirror {
+  transform-box: fill-box;
+  transform-origin: center center;
+  animation: sinkAndMirror 2.2s linear forwards;
+}
+@keyframes sinkAndMirror {
+  0%      { transform: translateY(0px)  scaleX(1);  }
+  24.99%  { transform: translateY(20px) scaleX(1);  }
+  25%     { transform: translateY(20px) scaleX(-1); }
+  49.99%  { transform: translateY(41px) scaleX(-1); }
+  50%     { transform: translateY(41px) scaleX(1);  }
+  74.99%  { transform: translateY(61px) scaleX(1);  }
+  75%     { transform: translateY(61px) scaleX(-1); }
+  100%    { transform: translateY(82px) scaleX(-1); }
+}
+
+  60%  { opacity: 0.5; transform: translate(var(--dx, 0px), var(--dy, -10px)) scale(1.4); }
+  100% { opacity: 0;   transform: translate(var(--dx, 0px), var(--dy, -18px)) scale(0.6); }
+}
+
+/* ── FUEGOS ARTIFICIALES ─────────────────── */
+.firework-particle {
+  animation: fwFade 0.9s ease-out forwards;
+}
+@keyframes fwFade {
+  0%   { opacity: 1;   }
+  100% { opacity: 0;   }
+}
+
+/* ── FEEDBACK MESSAGE ────────────────────── */
+#feedback-msg {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(0);
+  background: white;
+  border-radius: 16px;
+  padding: 0.7rem 2rem;
+  font-family: 'Fredoka One', cursive;
+  font-size: 1.6rem;
+  box-shadow: 0 8px 32px #0003;
+  pointer-events: none;
+  z-index: 50;
+  transition: transform 0.2s cubic-bezier(0.34,1.56,0.64,1), opacity 0.2s;
+  opacity: 0;
+}
+#feedback-msg.show {
+  transform: translate(-50%, -50%) scale(1);
+  opacity: 1;
+}
+#feedback-msg.correct-msg { color: #15803d; border: 3px solid #4ade80; }
+#feedback-msg.wrong-msg   { color: #b91c1c; border: 3px solid #f87171; }
+
+/* ── PANTALLAS FINALES ───────────────────── */
+#screen-victory {
+  background: linear-gradient(135deg, #f0fdf4, #dcfce7, #bbf7d0);
+}
+#screen-gameover {
+  background: linear-gradient(135deg, #fff1f2, #fce7f3, #bfdbfe);
+}
+
+.end-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  text-align: center;
+  padding: 2rem;
+}
+
+.end-emoji {
+  font-size: 5rem;
+  animation: bounceIn 0.6s cubic-bezier(0.34,1.56,0.64,1);
+}
+.end-emoji.splashed {
+  animation: bounceIn 0.6s cubic-bezier(0.34,1.56,0.64,1), wobble 1s 0.7s ease-in-out;
+}
+@keyframes bounceIn {
+  from { transform: scale(0); opacity: 0; }
+  to   { transform: scale(1); opacity: 1; }
+}
+@keyframes wobble {
+  0%, 100% { transform: rotate(0deg); }
+  25%       { transform: rotate(-15deg); }
+  75%       { transform: rotate(15deg); }
+}
+
+.end-content h2 {
+  font-family: 'Fredoka One', cursive;
+  font-size: 2.4rem;
+  color: var(--text-dark);
+}
+.end-content p {
+  font-size: 1rem;
+  color: var(--stone);
+  font-weight: 600;
+}
+
+.btn-end {
+  padding: 0.75rem 2.2rem;
+  border: none;
+  border-radius: 50px;
+  background: var(--pink-dark);
+  color: white;
+  font-family: 'Fredoka One', cursive;
+  font-size: 1.15rem;
+  cursor: pointer;
+  box-shadow: 0 4px 16px #be185d44;
+  transition: transform 0.15s, box-shadow 0.15s;
+}
+.btn-end:hover  { transform: translateY(-2px); box-shadow: 0 8px 24px #be185d44; }
+.btn-end:active { transform: scale(0.96); }
+.btn-end.secondary {
+  background: white;
+  color: var(--pink-dark);
+  border: 2.5px solid var(--pink-mid);
+  box-shadow: none;
+}
+
+/* ── NUBES animadas ──────────────────────── */
+.cloud  { animation: cloudDrift  28s linear infinite; }
+.cloud2 { animation: cloudDrift2 36s linear infinite; }
+@keyframes cloudDrift  {
+  from { transform: translateX(0); }
+  to   { transform: translateX(820px); }
+}
+@keyframes cloudDrift2 {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-820px); }
+}
