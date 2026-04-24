@@ -1,123 +1,36 @@
 /* ═══════════════════════════════════════════════════════════
-   GATO SALTARÍN – game.js  (versión PNG + efectos)
+   GATO SALTARÍN – engine.js
+   Lógica del juego: pantallas, animaciones, preguntas y flujo.
 ═══════════════════════════════════════════════════════════ */
-'use strict';
+import {
+  PLATFORM_Y, ROUND_WIDTH, ROCK_CX_LOCAL, ROCK_CY,
+  CAT_IMAGES, CAT_Y_STAND, CAT_Y_ROCK, CAT_START_LOCAL, CAT_GOAL_LOCAL,
+} from './constants.js';
 
-// ── CONSTANTES DEL ESCENARIO ─────────────────────────────
-const VW = 800, VH = 320;
+import {
+  state, $, screens,
+  hudLives, hudProgress, peripheralLbl, feedbackMsg,
+  catEl, catMirror, catImg, worldGroup, fireworksLayer,
+  rockGroups, rockLabels,
+  playSound, stopSound,
+} from './state-dom.js';
 
-const PLATFORM_W      = 90;
-const PLATFORM_Y      = 210;   // Y donde los pies del gato tocan (techo visual de plataforma)
-const ROUND_WIDTH     = 660;   // distancia entre inicio plat-izq e inicio plat-der
+// ── FONDO ANIMADO (webp animado) ─────────────────────────
+const bgImage = document.querySelector('#stage-svg image[href^="img/background"]');
 
-const ROCK_CX_LOCAL   = [205, 375, 545];  // centros X centrados entre las dos plataformas
-const ROCK_CY         = 240;              // base Y de las rocas (más metidas en el agua)
+function startBgLoop() {}  // el webp se anima solo
+function stopBgLoop()  {}  // nada que parar
 
-// Imágenes del gato con sus dimensiones de display (más pequeñas)
-// Todas aterrizan con la base en y=210 (techo de plataforma)
-const CAT_IMAGES = {
-  idle:    { src: 'img/pinkcat_idle.png',    w: 50,  h: 70  },
-  sjump:   { src: 'img/pinkcat_sjump.png',   w: 89,  h: 63  },
-  fjump:   { src: 'img/pinkcat_fjump.png',   w: 88,  h: 63  },
-  fanfare: { src: 'img/pinkcat_fanfare.png', w: 70,  h: 81  },
-  water:   { src: 'img/pinkcat_water.png',   w: 54,  h: 70  },
-};
 
-// Y del transform del gato (esquina superior): pies en PLATFORM_Y=210
-const CAT_Y_STAND = PLATFORM_Y - CAT_IMAGES.idle.h;  // 140
-
-// Y del gato parado sobre la cima de una roca
-// Roca: base en ROCK_CY=240, imagen arranca en y=-48 → cima en 240-48=192
-// +15 extra para que el gato quede bien posado visualmente sobre la roca
-// +7% de la altura del gato extra → simula que "pisa" la roca al aterrizar
-const CAT_Y_ROCK  = 192 - CAT_IMAGES.idle.h + 15 + Math.round(CAT_IMAGES.idle.h * 0.07);   // ~142
-
-// X del gato centrado sobre una plataforma de ancho PLATFORM_W
-function catXforImage(imgKey) {
-  return Math.round((PLATFORM_W - CAT_IMAGES[imgKey].w) / 2);
-}
-
-const CAT_START_LOCAL = catXforImage('idle');   // X local sobre plat-izq
-const CAT_GOAL_LOCAL  = catXforImage('idle');   // X local sobre plat-der
-
-// ── ESTADO ───────────────────────────────────────────────
-const state = {
-  perifericos: [],
-  orden: [],
-  indexActual: 0,
-  vidas: 1, vidasMax: 1, nivel: 1,
-  bloqueado: false,
-  worldOffset: 0,
-  catWorldX: CAT_START_LOCAL,
-  catWorldY: CAT_Y_STAND,
-  catImgKey: 'idle',
-  respuestaCorrecta: '',
-  opcionesActuales: [],
-  rondaEnCurso: 0,
-  animEnabled: true,
-  soundEnabled: true,
-};
-
-// ── DOM REFS ─────────────────────────────────────────────
-const $ = id => document.getElementById(id);
-const screens = {
-  menu:     $('screen-menu'),
-  game:     $('screen-game'),
-  victory:  $('screen-victory'),
-  gameover: $('screen-gameover'),
-};
-const hudLives      = $('hud-lives');
-const hudProgress   = $('hud-progress');
-const peripheralLbl = $('peripheral-label');
-const feedbackMsg   = $('feedback-msg');
-const catEl         = $('cat');
-const catMirror     = $('cat-mirror');
-const catImg        = $('cat-img');
-const worldGroup    = $('world-group');
-const fireworksLayer = $('fireworks-layer');
-
-const rockGroups = [$('rock0'), $('rock1'), $('rock2')];
-const rockLabels = rockGroups.map(g => g.querySelector('.rock-label'));
-
-// ── AUDIO ─────────────────────────────────────────────────
-const audio = {
-  jump:     $('snd-jump'),
-  victory:  $('snd-victory'),
-  splash:   $('snd-splash'),
-  gameover: $('snd-gameover'),
-  fanfare:  $('snd-fanfare'),
-};
-function playSound(k) {
-  if (!state.soundEnabled) return;
-  try {
-    const a = audio[k];
-    if (!a) return;
-    a.currentTime = 0;
-    a.play().catch(() => {});
-  } catch(e) {}
-}
-function stopSound(k) {
-  try { const a = audio[k]; if (a) { a.pause(); a.currentTime = 0; } } catch(e) {}
-}
-
-// ── TOGGLES ───────────────────────────────────────────────
-
-$('btn-toggle-sound').addEventListener('click', () => {
-  state.soundEnabled = !state.soundEnabled;
-  $('btn-toggle-sound').classList.toggle('active', state.soundEnabled);
-  if (!state.soundEnabled) stopSound('fanfare');
-});
-
-// ── PANTALLAS ─────────────────────────────────────────────
-function showScreen(name) {
+export function showScreen(name) {
   Object.values(screens).forEach(s => s.classList.remove('active'));
   screens[name].classList.add('active');
 }
 
 // ── CARGA DE DATOS ────────────────────────────────────────
-async function cargarPerifericos() {
+export async function cargarPerifericos() {
   try {
-    const r = await fetch('perifericos.json');
+    const r = await fetch('json/perifericos.json');
     if (!r.ok) throw new Error('HTTP ' + r.status);
     state.perifericos = await r.json();
   } catch(e) {
@@ -144,7 +57,7 @@ async function cargarPerifericos() {
 }
 
 // ── INICIO DEL JUEGO ──────────────────────────────────────
-function iniciarJuego(nivel) {
+export function iniciarJuego(nivel) {
   stopFireworks();
   stopSound('fanfare');
   state.nivel        = nivel;
@@ -161,9 +74,8 @@ function iniciarJuego(nivel) {
 
   resetWorldLayout();
   aplicarCamara(0);
-  // ╔══════════════════════════════════════════╗
-  // ║  GATO: idle — espera en plataforma izq.  ║
-  // ╚══════════════════════════════════════════╝
+  initParalaje();
+  startBgLoop();
   setCatState('idle');
   mostrarPregunta();
   actualizarHUD();
@@ -171,10 +83,7 @@ function iniciarJuego(nivel) {
 }
 
 // ── IMAGEN Y ANIMACIÓN DEL GATO ───────────────────────────
-// delay (opcional): si se indica, ejecuta el cambio después de ese tiempo en ms.
-//   setCatState('idle')        → instantáneo
-//   setCatState('fjump', 400)  → cambia tras 400ms
-function setCatState(key, delay) {
+export function setCatState(key, delay) {
   if (delay) {
     setTimeout(() => setCatState(key), delay);
     return;
@@ -186,21 +95,21 @@ function setCatState(key, delay) {
   catImg.setAttribute('height', img.h);
   catImg.setAttribute('x', 0);
   catImg.setAttribute('y', 0);
+  if (key === 'fanfare') {
+    state.catWorldY = PLATFORM_Y - img.h +5;
+  }
   applyCatAnimClasses();
   setCatSVG();
 }
 
 function applyCatAnimClasses() {
   const key = state.catImgKey;
-  // Quitar clases primero, cambiar src de imagen, luego reflow, luego añadir clases nuevas
-  // Así el navegador no hereda el estado de animación anterior
   catEl.classList.remove('breathe', 'mirror', 'sinking');
   catMirror.classList.remove('sinking-mirror');
-  // Reflow forzado: interrumpe cualquier animación CSS en curso
   void catEl.offsetHeight;
   if (!state.animEnabled) return;
   if (key === 'idle') catEl.classList.add('breathe');
-  if (key === 'fanfare') { catEl.classList.add('breathe'); catEl.classList.add('mirror'); }
+  if (key === 'fanfare') { catEl.classList.add('breathe'); }
   if (key === 'water') {
     catEl.classList.add('sinking');
     catMirror.classList.add('sinking-mirror');
@@ -209,23 +118,76 @@ function applyCatAnimClasses() {
 
 // ── LAYOUT DEL MUNDO ──────────────────────────────────────
 function resetWorldLayout() {
-  const off = state.worldOffset;
+  const off        = state.worldOffset;
+  const totalRondas = state.perifericos.length - 1; // última ronda = último periférico
+  const esPrimera  = state.rondaEnCurso === 0;
+  const esUltima   = state.rondaEnCurso === totalRondas;
+
+  const imgLeft  = esPrimera ? 'img/platform_ground.png' : 'img/platform.png';
+  const imgRight = esUltima  ? 'img/platform_ground.png' : 'img/platform.png';
 
   $('plat-left').setAttribute('transform',  `translate(${off},0)`);
+  $('plat-left').querySelector('image').setAttribute('href', imgLeft);
+
   $('plat-right').setAttribute('transform', `translate(${off + ROUND_WIDTH},0)`);
+  $('plat-right').querySelector('image').setAttribute('href', imgRight);
 
   rockGroups.forEach((g, i) => {
     g.setAttribute('transform',
       `translate(${off + ROCK_CX_LOCAL[i]},${ROCK_CY})`);
     g.classList.remove('correct', 'incorrect');
-    g.style.visibility = '';   // ← siempre restaurar visibilidad
+    g.style.visibility = '';
   });
-
 }
 
-// ── CÁMARA ────────────────────────────────────────────────
+// ── CÁMARA Y PARALAJE ────────────────────────────────────
+// Imagen original: 1600×669. Escenario SVG: 800×320.
+// Con BG_ZOOM=1.1 la imagen se renderiza a ~1760px de ancho,
+// dejando ~960px de margen para mover sin ver el corte.
+const BG_ZOOM        = 1.1;
+const BG_NATIVE_W    = 1600;
+const BG_NATIVE_H    = 669;
+const SVG_W          = 800;
+const SVG_H          = 320;
+
+// Dimensiones renderizadas manteniendo proporción y cubriendo alto del SVG
+const BG_RENDER_H    = SVG_H * BG_ZOOM;
+const BG_RENDER_W    = BG_NATIVE_W * (BG_RENDER_H / BG_NATIVE_H);
+const BG_Y           = -((BG_RENDER_H - SVG_H) / 2);
+
+// Margen horizontal disponible para mover sin ver el corte
+// Empieza centrada (x = -(BG_RENDER_W - SVG_W)/2) y puede ir hasta 0 o hasta -(BG_RENDER_W - SVG_W)
+const BG_MAX_TRAVEL  = (BG_RENDER_W - SVG_W) * 0.6; // usa el 60% del margen disponible
+
+let bgTotalPreguntas = 1;
+let bgStepX          = 0;
+
+function initParalaje() {
+  bgTotalPreguntas = state.perifericos.length;
+  bgStepX = BG_MAX_TRAVEL / bgTotalPreguntas;
+
+  if (bgImage) {
+    bgImage.setAttribute('width',  BG_RENDER_W.toFixed(1));
+    bgImage.setAttribute('height', BG_RENDER_H.toFixed(1));
+    bgImage.setAttribute('y',      BG_Y.toFixed(1));
+    bgImage.setAttribute('x',      bgXForRonda(0).toFixed(1));
+  }
+}
+
+function bgXForRonda(ronda) {
+  // ronda 0 → imagen desplazada hacia la derecha (inicio)
+  // ronda N → se va moviendo a la izquierda suavemente
+  const centerX = -((BG_RENDER_W - SVG_W) / 2);
+  const startX  = centerX + BG_MAX_TRAVEL / 2;
+  return startX - ronda * bgStepX;
+}
+
 function aplicarCamara(camX) {
   worldGroup.setAttribute('transform', `translate(${-camX},0)`);
+}
+
+function aplicarParalajeFondo(ronda) {
+  if (bgImage) bgImage.setAttribute('x', bgXForRonda(ronda).toFixed(1));
 }
 
 function getCamXActual() {
@@ -239,8 +201,6 @@ function camXParaRonda() {
 }
 
 // ── POSICIÓN GATO SVG ─────────────────────────────────────
-// catWorldX = X del borde izquierdo de la imagen del gato en coords de mundo.
-// La imagen tiene ancho variable según el estado.
 function setCatSVG() {
   const camX = getCamXActual();
   const sx = state.catWorldX - camX;
@@ -274,7 +234,7 @@ function mostrarPregunta() {
 
   rockGroups.forEach((g, i) => {
     g.classList.remove('correct', 'incorrect');
-    g.style.visibility = '';          // ← siempre restaurar aquí
+    g.style.visibility = '';
     rockLabels[i].textContent = opciones[i];
   });
 
@@ -283,9 +243,7 @@ function mostrarPregunta() {
 }
 
 // ── CLICK EN ROCA ─────────────────────────────────────────
-rockGroups.forEach((g, i) => g.addEventListener('click', () => manejarClick(i)));
-
-function manejarClick(indiceRoca) {
+export function manejarClick(indiceRoca) {
   if (state.bloqueado) return;
   state.bloqueado = true;
 
@@ -302,17 +260,12 @@ function manejarClick(indiceRoca) {
     const goalWorldX = state.worldOffset + ROUND_WIDTH + CAT_GOAL_LOCAL;
     const rocaLandX  = rocaWorldX - Math.round(CAT_IMAGES.fjump.w / 2);
 
-    // Salto 1: plataforma → roca (sjump/fjump controlado por animarSalto)
-    setCatState('sjump');  // frame inicial antes del primer tick
+    setCatState('sjump');
     animarSalto(rocaLandX, CAT_Y_ROCK, () => {
-
-      // Salto 2: roca → plataforma derecha
       setTimeout(() => {
+        playSound('jump');
         animarSalto(goalWorldX, CAT_Y_STAND, () => {
           setTimeout(() => {
-            // ╔══════════════════════════════════════════════════════════╗
-            // ║  GATO: idle — reposa en plat. derecha, avanza ronda    ║
-            // ╚══════════════════════════════════════════════════════════╝
             setCatState('idle');
             ocultarFeedback();
             state.indexActual++;
@@ -335,15 +288,10 @@ function manejarClick(indiceRoca) {
     const rocaEquivocadaWorldX = state.worldOffset + ROCK_CX_LOCAL[indiceRoca];
     const rocaLandX = rocaEquivocadaWorldX - Math.round(CAT_IMAGES.fjump.w / 2);
 
-    // Salto hacia la roca equivocada (sjump/fjump controlado por animarSalto)
-    setCatState('sjump');  // frame inicial antes del primer tick
+    setCatState('sjump');
     animarSalto(rocaLandX, CAT_Y_ROCK, () => {
-      // La roca equivocada desaparece bajo el gato
       setTimeout(() => {
         rockGroups[indiceRoca].style.visibility = 'hidden';
-        // ╔══════════════════════════════════════════════════════════╗
-        // ║  GATO: water — cae al agua, animación de hundimiento   ║
-        // ╚══════════════════════════════════════════════════════════╝
         setCatState('water');
         setTimeout(() => {
           ocultarFeedback();
@@ -357,14 +305,11 @@ function manejarClick(indiceRoca) {
               state.catWorldX = state.worldOffset + CAT_START_LOCAL;
               state.catWorldY = CAT_Y_STAND;
               aplicarCamara(camXParaRonda());
-              // ╔══════════════════════════════════════════════════════════╗
-              // ║  GATO: idle — vuelve a plataforma izq. tras caer       ║
-              // ╚══════════════════════════════════════════════════════════╝
               setCatState('idle');
-              mostrarPregunta();  // ← restaura visibilidad de rocas aquí
+              mostrarPregunta();
             }, 1200);
           }
-        }, 1800);  // esperar a que la animación CSS de hundimiento termine
+        }, 1800);
       }, 250);
     });
   }
@@ -375,8 +320,6 @@ function scrollAndNextRound() {
   state.rondaEnCurso++;
   state.worldOffset = state.rondaEnCurso * ROUND_WIDTH;
 
-  resetWorldLayout();
-
   state.catWorldX = state.worldOffset + CAT_START_LOCAL;
   state.catWorldY = CAT_Y_STAND;
 
@@ -384,9 +327,7 @@ function scrollAndNextRound() {
   const camXDestino = camXParaRonda();
 
   animarCamara(camXActual, camXDestino, () => {
-    // ╔═════════════════════════════════════════════════════╗
-    // ║  GATO: idle — scroll terminado, nueva plataforma   ║
-    // ╚═════════════════════════════════════════════════════╝
+    resetWorldLayout();
     setCatState('idle');
     actualizarHUD();
     mostrarPregunta();
@@ -400,11 +341,16 @@ function animarCamara(startCamX, targetCamX, onComplete) {
   const intervalo = duracion / pasos;
   let paso = 0;
 
+  const bgXStart  = bgXForRonda(state.rondaEnCurso - 1);
+  const bgXTarget = bgXForRonda(state.rondaEnCurso);
+
   const timer = setInterval(() => {
     paso++;
     const t    = easeInOut(paso / pasos);
     const camX = startCamX + (targetCamX - startCamX) * t;
     aplicarCamara(camX);
+
+    if (bgImage) bgImage.setAttribute('x', (bgXStart + (bgXTarget - bgXStart) * t).toFixed(1));
 
     const sx = state.catWorldX - camX;
     catEl.setAttribute('transform',
@@ -419,7 +365,6 @@ function animarCamara(startCamX, targetCamX, onComplete) {
 }
 
 // ── ANIMACIÓN DE SALTO ────────────────────────────────────
-// El propio salto controla el PNG: sjump mientras sube (t<0.5), fjump mientras baja (t>=0.5)
 function animarSalto(destWorldX, destWorldY, onComplete) {
   const duracion  = 480;
   const pasos     = 28;
@@ -428,11 +373,11 @@ function animarSalto(destWorldX, destWorldY, onComplete) {
   const startY    = state.catWorldY;
   let paso = 0;
 
+  setCatState('sjump');
   const timer = setInterval(() => {
     paso++;
     const t = paso / pasos;
 
-    // El propio salto controla el PNG
     if (t < 0.5) setCatState('sjump');
     else          setCatState('fjump');
 
@@ -452,21 +397,18 @@ function animarSalto(destWorldX, destWorldY, onComplete) {
 }
 
 // ── ANIMACIÓN CAÍDA AL AGUA ───────────────────────────────
-// Solo lleva al gato hasta la superficie del agua con una pequeña caída;
-// el grueso del hundimiento lo hace CSS (.sinking) sobre la <image>.
-function animarCaida(onComplete) {
+export function animarCaida(onComplete) {
   const duracion  = 350;
   const pasos     = 20;
   const intervalo = duracion / pasos;
   const startX    = state.catWorldX;
   const startY    = state.catWorldY;
-  const targetY   = ROCK_CY - CAT_IMAGES.water.h + 10; // justo en la línea del agua
+  const targetY   = ROCK_CY - CAT_IMAGES.water.h + 10;
   let paso = 0;
 
   const timer = setInterval(() => {
     paso++;
-    const t = paso / pasos;
-    // easeIn: empieza despacio, acelera
+    const t    = paso / pasos;
     const ease = t * t;
     state.catWorldX = startX + ease * 8;
     state.catWorldY = startY + ease * (targetY - startY);
@@ -478,19 +420,18 @@ function animarCaida(onComplete) {
   }, intervalo);
 }
 
-
-
 // ── FUEGOS ARTIFICIALES ───────────────────────────────────
 let fireworkInterval = null;
 
-function startFireworks() {
+export function startFireworks() {
   if (!state.animEnabled) return;
   spawnFirework();
   fireworkInterval = setInterval(spawnFirework, 800);
 }
 
-function stopFireworks() {
+export function stopFireworks() {
   if (fireworkInterval) { clearInterval(fireworkInterval); fireworkInterval = null; }
+  stopBgLoop();
   fireworksLayer.innerHTML = '';
 }
 
@@ -520,7 +461,6 @@ function spawnFirework() {
     setTimeout(() => line.remove(), 950);
   }
 
-  // Núcleo brillante
   const core = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
   core.setAttribute('cx', cx);
   core.setAttribute('cy', cy);
@@ -541,29 +481,26 @@ function ocultarFeedback() { feedbackMsg.className = ''; }
 // ── FIN DE PARTIDA ────────────────────────────────────────
 function victoria() {
   stopFireworks();
+  stopBgLoop();
   ocultarFeedback();
-  // ╔══════════════════════════════════════════════════════════╗
-  // ║  GATO: fanfare — celebración con copa, bucle hasta clic ║
-  // ╚══════════════════════════════════════════════════════════╝
   setCatState('fanfare');
   playSound('fanfare');
   startFireworks();
   $('victory-text').textContent =
     `¡Has superado los ${state.perifericos.length} periféricos!`;
-  // El clic en cualquier punto de la pantalla de juego lleva a la pantalla de victoria
   const irAVictoria = () => {
     screens.game.removeEventListener('click', irAVictoria);
     stopFireworks();
     stopSound('fanfare');
     showScreen('victory');
   };
-  // Pequeño delay para evitar que el clic que disparó la última roca cuente
   setTimeout(() => {
     screens.game.addEventListener('click', irAVictoria);
   }, 600);
 }
 
 function gameOver() {
+  stopBgLoop();
   $('gameover-text').textContent =
     'El gato se ha caído. ¡Inténtalo de nuevo!';
   showScreen('gameover');
@@ -577,19 +514,5 @@ function mezclar(arr) {
   }
   return arr;
 }
+
 function easeInOut(t) { return t < 0.5 ? 2 * t * t : -1 + (4 - 2 * t) * t; }
-
-// ── BOTONES ───────────────────────────────────────────────
-$('btn-nivel1').addEventListener('click', () => iniciarJuego(1));
-$('btn-nivel2').addEventListener('click', () => iniciarJuego(2));
-$('btn-menu-hud').addEventListener('click', () => { stopFireworks(); stopSound('fanfare'); showScreen('menu'); });
-$('btn-play-again').addEventListener('click', () => iniciarJuego(state.nivel));
-$('btn-menu-victory').addEventListener('click', () => { stopFireworks(); stopSound('fanfare'); showScreen('menu'); });
-$('btn-retry').addEventListener('click', () => iniciarJuego(state.nivel));
-$('btn-menu-gameover').addEventListener('click', () => showScreen('menu'));
-
-// ── ARRANQUE ──────────────────────────────────────────────
-(async () => {
-  await cargarPerifericos();
-  showScreen('menu');
-})();

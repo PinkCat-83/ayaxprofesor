@@ -1,37 +1,6 @@
 /* ═══════════════════════════════════════════
-   GATO SALTARÍN – stylesheet
-   Fuente: 'Fredoka One' (display) + 'Nunito' (body)
+   GATO SALTARÍN – pantallas y HUD
 ═══════════════════════════════════════════ */
-@import url('https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;600;800&display=swap');
-
-:root {
-  --pink-light:  #fce7f3;
-  --pink:        #f9a8d4;
-  --pink-mid:    #ec4899;
-  --pink-dark:   #be185d;
-  --rose:        #fb7185;
-  --sky:         #bae6fd;
-  --sky-dark:    #0369a1;
-  --stone:       #78716c;
-  --gold:        #fcd34d;
-  --gold-dark:   #d97706;
-  --green:       #22c55e;
-  --correct:     #bbf7d0;
-  --wrong:       #fecaca;
-  --text-dark:   #1e1b4b;
-  --text-mid:    #4c1d95;
-  --radius-lg:   18px;
-  --shadow:      0 8px 32px rgba(190,24,93,0.18);
-}
-
-*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-html, body {
-  width: 100%; height: 100%;
-  font-family: 'Nunito', sans-serif;
-  background: var(--pink-light);
-  overflow: hidden;
-}
 
 /* ── SCREENS ─────────────────────────────── */
 .screen {
@@ -72,13 +41,8 @@ html, body {
 }
 
 .menu-cat {
-  width: 120px; height: auto;
+  width: 240px; height: auto;
   filter: drop-shadow(0 4px 12px #f9a8d4aa);
-  animation: menuBob 2.8s ease-in-out infinite;
-}
-@keyframes menuBob {
-  0%, 100% { transform: translateY(0); }
-  50%       { transform: translateY(-10px); }
 }
 
 h1 {
@@ -214,11 +178,6 @@ h1 {
   -webkit-text-fill-color: transparent;
   background-clip: text;
   display: inline-block;
-  animation: popIn 0.4s cubic-bezier(0.34,1.56,0.64,1);
-}
-@keyframes popIn {
-  from { transform: scale(0.6); opacity: 0; }
-  to   { transform: scale(1);   opacity: 1; }
 }
 
 /* ── ESCENARIO SVG ───────────────────────── */
@@ -229,6 +188,7 @@ h1 {
   align-items: center;
   justify-content: center;
   overflow: hidden;
+  padding: 0.5rem;
 }
 
 #stage-svg {
@@ -236,20 +196,14 @@ h1 {
   max-width: 900px;
   height: auto;
   display: block;
-}
-
-/* Olas animadas */
-#wave1 { animation: waveAnim 3s ease-in-out infinite alternate; }
-#wave2 { animation: waveAnim 4s ease-in-out infinite alternate-reverse; }
-@keyframes waveAnim {
-  from { transform: translateX(-20px); }
-  to   { transform: translateX(20px); }
+  border: 3px solid var(--pink-mid);
+  border-radius: var(--radius-lg);
+  box-shadow: 0 4px 20px rgba(190,24,93,0.2);
 }
 
 /* ── ROCAS ───────────────────────────────── */
 .rock-group { cursor: pointer; }
 
-/* Hover: brillo amarillo sobre la imagen de roca */
 .rock-group .rock-img {
   transition: filter 0.2s;
 }
@@ -278,82 +232,6 @@ h1 {
 }
 .rock-group * {
   pointer-events: none;
-}
-
-/* ── GATO – animaciones CSS ──────────────── */
-
-/* Respiración: escala vertical suave desde la base del gato.
-   transform-origin en SVG se aplica en el sistema de coords del elemento.
-   Como el gato tiene height=90 y queremos expandir desde abajo,
-   usamos transform-box + transform-origin. */
-#cat.breathe image {
-  transform-box: fill-box;
-  transform-origin: bottom center;
-  animation: breathe 3.2s ease-in-out infinite;
-}
-@keyframes breathe {
-  0%, 100% { transform: scaleY(1)   scaleX(1);   }
-  45%       { transform: scaleY(1.04) scaleX(0.97); }
-  55%       { transform: scaleY(1.04) scaleX(0.97); }
-}
-
-/* Espejo (flip horizontal) para fanfare: cambio instantáneo sin transición */
-#cat.mirror image {
-  transform-box: fill-box;
-  transform-origin: center center;
-  animation: mirrorFlip 3s steps(1) infinite;
-}
-@keyframes mirrorFlip {
-  0%   { transform: scaleX(1);  }
-  50%  { transform: scaleX(-1); }
-  100% { transform: scaleX(1);  }
-}
-
-/* Hundimiento en el agua — dos capas:
-   #cat.sinking             → opacity fade (JS controla transform del <g>, sin conflicto)
-   #cat-mirror.sinking-mirror → translateY (caída) + scaleX (espejo) en hijo independiente */
-
-#cat.sinking {
-  animation: sinkFade 2.2s ease-in forwards;
-}
-@keyframes sinkFade {
-  0%   { opacity: 1;    }
-  15%  { opacity: 0.95; }
-  40%  { opacity: 0.7;  }
-  70%  { opacity: 0.3;  }
-  100% { opacity: 0;    }
-}
-
-/* Caída lineal constante + espejo que cambia de lado en saltos bruscos.
-   Con timing-function: linear el Y baja a velocidad constante.
-   Los pares de keyframes casi idénticos (N% / N.01%) producen flips instantáneos. */
-#cat-mirror.sinking-mirror {
-  transform-box: fill-box;
-  transform-origin: center center;
-  animation: sinkAndMirror 2.2s linear forwards;
-}
-@keyframes sinkAndMirror {
-  0%      { transform: translateY(0px)  scaleX(1);  }
-  24.99%  { transform: translateY(20px) scaleX(1);  }
-  25%     { transform: translateY(20px) scaleX(-1); }
-  49.99%  { transform: translateY(41px) scaleX(-1); }
-  50%     { transform: translateY(41px) scaleX(1);  }
-  74.99%  { transform: translateY(61px) scaleX(1);  }
-  75%     { transform: translateY(61px) scaleX(-1); }
-  100%    { transform: translateY(82px) scaleX(-1); }
-}
-
-  60%  { opacity: 0.5; transform: translate(var(--dx, 0px), var(--dy, -10px)) scale(1.4); }
-  100% { opacity: 0;   transform: translate(var(--dx, 0px), var(--dy, -18px)) scale(0.6); }
-}
-
-/* ── FUEGOS ARTIFICIALES ─────────────────── */
-.firework-particle {
-  animation: fwFade 0.9s ease-out forwards;
-}
-@keyframes fwFade {
-  0%   { opacity: 1;   }
-  100% { opacity: 0;   }
 }
 
 /* ── FEEDBACK MESSAGE ────────────────────── */
@@ -399,19 +277,6 @@ h1 {
 
 .end-emoji {
   font-size: 5rem;
-  animation: bounceIn 0.6s cubic-bezier(0.34,1.56,0.64,1);
-}
-.end-emoji.splashed {
-  animation: bounceIn 0.6s cubic-bezier(0.34,1.56,0.64,1), wobble 1s 0.7s ease-in-out;
-}
-@keyframes bounceIn {
-  from { transform: scale(0); opacity: 0; }
-  to   { transform: scale(1); opacity: 1; }
-}
-@keyframes wobble {
-  0%, 100% { transform: rotate(0deg); }
-  25%       { transform: rotate(-15deg); }
-  75%       { transform: rotate(15deg); }
 }
 
 .end-content h2 {
@@ -444,16 +309,4 @@ h1 {
   color: var(--pink-dark);
   border: 2.5px solid var(--pink-mid);
   box-shadow: none;
-}
-
-/* ── NUBES animadas ──────────────────────── */
-.cloud  { animation: cloudDrift  28s linear infinite; }
-.cloud2 { animation: cloudDrift2 36s linear infinite; }
-@keyframes cloudDrift  {
-  from { transform: translateX(0); }
-  to   { transform: translateX(820px); }
-}
-@keyframes cloudDrift2 {
-  from { transform: translateX(0); }
-  to   { transform: translateX(-820px); }
 }
