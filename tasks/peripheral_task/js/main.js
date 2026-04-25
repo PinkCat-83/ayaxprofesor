@@ -5,18 +5,11 @@
    En el HTML basta con:
      <script type="module" src="js/main.js"></script>
 ═══════════════════════════════════════════════════════════ */
-import { state, $, rockGroups, stopSound } from './state-dom.js';
+import { state, $, rockGroups, stopAllSounds } from './state-dom.js';
 import {
-  showScreen, cargarPerifericos, iniciarJuego,
-  manejarClick, stopFireworks,
+  showScreen, cargarPerifericos, iniciarJuego, manejarClick,
 } from './engine.js';
-
-// ── TOGGLES ───────────────────────────────────────────────
-$('btn-toggle-sound').addEventListener('click', () => {
-  state.soundEnabled = !state.soundEnabled;
-  $('btn-toggle-sound').classList.toggle('active', state.soundEnabled);
-  if (!state.soundEnabled) stopSound('fanfare');
-});
+import { stopFireworks } from './fireworks.js';
 
 // ── CLICKS EN ROCAS ───────────────────────────────────────
 rockGroups.forEach((g, i) => g.addEventListener('click', () => manejarClick(i)));
@@ -26,17 +19,20 @@ $('btn-nivel1').addEventListener('click', () => iniciarJuego(1));
 $('btn-nivel2').addEventListener('click', () => iniciarJuego(2));
 $('btn-menu-hud').addEventListener('click', () => {
   stopFireworks();
-  stopSound('fanfare');
+  stopAllSounds();
   showScreen('menu');
 });
 $('btn-play-again').addEventListener('click', () => iniciarJuego(state.nivel));
 $('btn-menu-victory').addEventListener('click', () => {
   stopFireworks();
-  stopSound('fanfare');
+  stopAllSounds();
   showScreen('menu');
 });
 $('btn-retry').addEventListener('click', () => iniciarJuego(state.nivel));
-$('btn-menu-gameover').addEventListener('click', () => showScreen('menu'));
+$('btn-menu-gameover').addEventListener('click', () => {
+  stopAllSounds();
+  showScreen('menu');
+});
 
 // ── ARRANQUE ──────────────────────────────────────────────
 await cargarPerifericos();
