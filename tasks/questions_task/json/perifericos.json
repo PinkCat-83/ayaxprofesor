@@ -6,7 +6,7 @@
         {
             "nombre": "Fácil",
             "icono": "🐟",
-            "vidas": 1,
+            "vidas": 2,
             "preguntas": [
                 {
                     "nombre": "Ratón",
@@ -224,7 +224,7 @@
         {
             "nombre": "Difícil",
             "icono": "🦈",
-            "vidas": 4,
+            "vidas": 3,
             "preguntas": [
                 {
                     "nombre": "Ratón",
