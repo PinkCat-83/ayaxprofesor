@@ -5,7 +5,7 @@ Juego educativo sobre clasificación de periféricos de ordenador.
 ## Estructura de archivos
 
 ```
-peripheral_task/
+question_task/
 ├── perifericos_game.html  ← Punto de entrada: redirige a game.html con su JSON
 ├── game.html              ← Motor del juego (no editar)
 ├── audio/
