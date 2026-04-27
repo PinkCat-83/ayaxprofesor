@@ -169,7 +169,7 @@
                     "nombre": "TouchPad",
                     "respuesta": "Entrada",
                     "opciones": ["Entrada", "Salida", "Ambas"],
-                    "img": "touchpad.png"
+                    "img": "Touchpad.png"
                 },
                 {
                     "nombre": "Monitor / Pantalla Táctil",
