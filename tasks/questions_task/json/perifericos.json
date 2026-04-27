@@ -1,0 +1,400 @@
+{
+    "pageTitle": "Periféricos con el Gato Rosa",
+    "pageSubtitle": "¿Entrada, Salida o Ambas?",
+    "imgfolder": "img/Periphericals",
+    "niveles": [
+        {
+            "nombre": "Fácil",
+            "icono": "🐟",
+            "vidas": 1,
+            "preguntas": [
+                {
+                    "nombre": "Ratón",
+                    "respuesta": "Entrada",
+                    "opciones": ["Entrada", "Salida", "Ambas"],
+                    "img": "mouse.png"
+                },
+                {
+                    "nombre": "Teclado",
+                    "respuesta": "Entrada",
+                    "opciones": ["Entrada", "Salida", "Ambas"],
+                    "img": "keyboard.png"
+                },
+                {
+                    "nombre": "Monitor / Pantalla",
+                    "respuesta": "Salida",
+                    "opciones": ["Entrada", "Salida", "Ambas"],
+                    "img": "monitor.png"
+                },
+                {
+                    "nombre": "Impresora",
+                    "respuesta": "Salida",
+                    "opciones": ["Entrada", "Salida", "Ambas"],
+                    "img": "printer.png"
+                },
+                {
+                    "nombre": "Escáner",
+                    "respuesta": "Entrada",
+                    "opciones": ["Entrada", "Salida", "Ambas"],
+                    "img": "scanner.png"
+                },
+                {
+                    "nombre": "Altavoces",
+                    "respuesta": "Salida",
+                    "opciones": ["Entrada", "Salida", "Ambas"],
+                    "img": "speakers.png"
+                },
+                {
+                    "nombre": "Micrófono",
+                    "respuesta": "Entrada",
+                    "opciones": ["Entrada", "Salida", "Ambas"],
+                    "img": "microphone.png"
+                },
+                {
+                    "nombre": "Pendrive",
+                    "respuesta": "Ambas",
+                    "opciones": ["Entrada", "Salida", "Ambas"],
+                    "img": "usb_pendrive.png"
+                },
+                {
+                    "nombre": "Cámara Web",
+                    "respuesta": "Entrada",
+                    "opciones": ["Entrada", "Salida", "Ambas"],
+                    "img": "webcam.png"
+                },
+                {
+                    "nombre": "Gamepad",
+                    "respuesta": "Entrada",
+                    "opciones": ["Entrada", "Salida", "Ambas"],
+                    "img": "gamepad.png"
+                },
+                {
+                    "nombre": "Auriculares",
+                    "respuesta": "Salida",
+                    "opciones": ["Entrada", "Salida", "Ambas"],
+                    "img": "headphones.png"
+                },
+                {
+                    "nombre": "Proyector",
+                    "respuesta": "Salida",
+                    "opciones": ["Entrada", "Salida", "Ambas"],
+                    "img": "projector.png"
+                }
+            ]
+        },
+        {
+            "nombre": "Medio",
+            "icono": "🐠",
+            "vidas": 3,
+            "preguntas": [
+                {
+                    "nombre": "Ratón",
+                    "respuesta": "Entrada",
+                    "opciones": ["Entrada", "Salida", "Ambas"],
+                    "img": "mouse.png"
+                },
+                {
+                    "nombre": "Teclado",
+                    "respuesta": "Entrada",
+                    "opciones": ["Entrada", "Salida", "Ambas"],
+                    "img": "keyboard.png"
+                },
+                {
+                    "nombre": "Monitor / Pantalla",
+                    "respuesta": "Salida",
+                    "opciones": ["Entrada", "Salida", "Ambas"],
+                    "img": "monitor.png"
+                },
+                {
+                    "nombre": "Impresora",
+                    "respuesta": "Salida",
+                    "opciones": ["Entrada", "Salida", "Ambas"],
+                    "img": "printer.png"
+                },
+                {
+                    "nombre": "Escáner",
+                    "respuesta": "Entrada",
+                    "opciones": ["Entrada", "Salida", "Ambas"],
+                    "img": "scanner.png"
+                },
+                {
+                    "nombre": "Altavoces",
+                    "respuesta": "Salida",
+                    "opciones": ["Entrada", "Salida", "Ambas"],
+                    "img": "speakers.png"
+                },
+                {
+                    "nombre": "Micrófono",
+                    "respuesta": "Entrada",
+                    "opciones": ["Entrada", "Salida", "Ambas"],
+                    "img": "microphone.png"
+                },
+                {
+                    "nombre": "Pendrive",
+                    "respuesta": "Ambas",
+                    "opciones": ["Entrada", "Salida", "Ambas"],
+                    "img": "usb_pendrive.png"
+                },
+                {
+                    "nombre": "Cámara Web",
+                    "respuesta": "Entrada",
+                    "opciones": ["Entrada", "Salida", "Ambas"],
+                    "img": "webcam.png"
+                },
+                {
+                    "nombre": "Gamepad",
+                    "respuesta": "Entrada",
+                    "opciones": ["Entrada", "Salida", "Ambas"],
+                    "img": "gamepad.png"
+                },
+                {
+                    "nombre": "Auriculares",
+                    "respuesta": "Salida",
+                    "opciones": ["Entrada", "Salida", "Ambas"],
+                    "img": "headphones.png"
+                },
+                {
+                    "nombre": "Proyector",
+                    "respuesta": "Salida",
+                    "opciones": ["Entrada", "Salida", "Ambas"],
+                    "img": "projector.png"
+                },
+                {
+                    "nombre": "Teclado con pantalla",
+                    "respuesta": "Ambas",
+                    "opciones": ["Entrada", "Salida", "Ambas"],
+                    "img": "keyboard_with_screen.png"
+                },
+                {
+                    "nombre": "TouchPad",
+                    "respuesta": "Entrada",
+                    "opciones": ["Entrada", "Salida", "Ambas"],
+                    "img": "touchpad.png"
+                },
+                {
+                    "nombre": "Monitor / Pantalla Táctil",
+                    "respuesta": "Ambas",
+                    "opciones": ["Entrada", "Salida", "Ambas"],
+                    "img": "touch_monitor.png"
+                },
+                {
+                    "nombre": "Aparato con Impresora y Escáner",
+                    "respuesta": "Ambas",
+                    "opciones": ["Entrada", "Salida", "Ambas"],
+                    "img": "all_in_one_printer.png"
+                },
+                {
+                    "nombre": "Gafas de Realidad Virtual",
+                    "respuesta": "Ambas",
+                    "opciones": ["Entrada", "Salida", "Ambas"],
+                    "img": "vr_headset.png"
+                },
+                {
+                    "nombre": "Impresora 3D",
+                    "respuesta": "Salida",
+                    "opciones": ["Entrada", "Salida", "Ambas"],
+                    "img": "3d_printer.png"
+                },
+                {
+                    "nombre": "Gamepad con pantalla y sonido",
+                    "respuesta": "Ambas",
+                    "opciones": ["Entrada", "Salida", "Ambas"],
+                    "img": "controller_with_screen.png"
+                },
+                {
+                    "nombre": "Gamepad con vibración",
+                    "respuesta": "Ambas",
+                    "opciones": ["Entrada", "Salida", "Ambas"],
+                    "img": "vibration_controller.png"
+                },
+                {
+                    "nombre": "Auriculares con micrófono",
+                    "respuesta": "Ambas",
+                    "opciones": ["Entrada", "Salida", "Ambas"],
+                    "img": "headset.png"
+                },
+                {
+                    "nombre": "Tableta gráfica básica",
+                    "respuesta": "Entrada",
+                    "opciones": ["Entrada", "Salida", "Ambas"],
+                    "img": "graphics_tablet.png"
+                }
+            ]
+        },
+        {
+            "nombre": "Difícil",
+            "icono": "🦈",
+            "vidas": 4,
+            "preguntas": [
+                {
+                    "nombre": "Ratón",
+                    "respuesta": "Entrada",
+                    "opciones": ["Entrada", "Salida", "Ambas"],
+                    "img": "mouse.png"
+                },
+                {
+                    "nombre": "Teclado",
+                    "respuesta": "Entrada",
+                    "opciones": ["Entrada", "Salida", "Ambas"],
+                    "img": "keyboard.png"
+                },
+                {
+                    "nombre": "Monitor / Pantalla",
+                    "respuesta": "Salida",
+                    "opciones": ["Entrada", "Salida", "Ambas"],
+                    "img": "monitor.png"
+                },
+                {
+                    "nombre": "Impresora",
+                    "respuesta": "Salida",
+                    "opciones": ["Entrada", "Salida", "Ambas"],
+                    "img": "printer.png"
+                },
+                {
+                    "nombre": "Escáner",
+                    "respuesta": "Entrada",
+                    "opciones": ["Entrada", "Salida", "Ambas"],
+                    "img": "scanner.png"
+                },
+                {
+                    "nombre": "Altavoces",
+                    "respuesta": "Salida",
+                    "opciones": ["Entrada", "Salida", "Ambas"],
+                    "img": "speakers.png"
+                },
+                {
+                    "nombre": "Micrófono",
+                    "respuesta": "Entrada",
+                    "opciones": ["Entrada", "Salida", "Ambas"],
+                    "img": "microphone.png"
+                },
+                {
+                    "nombre": "Pendrive",
+                    "respuesta": "Ambas",
+                    "opciones": ["Entrada", "Salida", "Ambas"],
+                    "img": "usb_pendrive.png"
+                },
+                {
+                    "nombre": "Cámara Web",
+                    "respuesta": "Entrada",
+                    "opciones": ["Entrada", "Salida", "Ambas"],
+                    "img": "webcam.png"
+                },
+                {
+                    "nombre": "Gamepad",
+                    "respuesta": "Entrada",
+                    "opciones": ["Entrada", "Salida", "Ambas"],
+                    "img": "gamepad.png"
+                },
+                {
+                    "nombre": "Auriculares",
+                    "respuesta": "Salida",
+                    "opciones": ["Entrada", "Salida", "Ambas"],
+                    "img": "headphones.png"
+                },
+                {
+                    "nombre": "Proyector",
+                    "respuesta": "Salida",
+                    "opciones": ["Entrada", "Salida", "Ambas"],
+                    "img": "projector.png"
+                },
+                {
+                    "nombre": "Teclado con pantalla",
+                    "respuesta": "Ambas",
+                    "opciones": ["Entrada", "Salida", "Ambas"],
+                    "img": "keyboard_with_screen.png"
+                },
+                {
+                    "nombre": "TouchPad",
+                    "respuesta": "Entrada",
+                    "opciones": ["Entrada", "Salida", "Ambas"],
+                    "img": "touchpad.png"
+                },
+                {
+                    "nombre": "Monitor / Pantalla Táctil",
+                    "respuesta": "Ambas",
+                    "opciones": ["Entrada", "Salida", "Ambas"],
+                    "img": "touch_monitor.png"
+                },
+                {
+                    "nombre": "Aparato con Impresora y Escáner",
+                    "respuesta": "Ambas",
+                    "opciones": ["Entrada", "Salida", "Ambas"],
+                    "img": "all_in_one_printer.png"
+                },
+                {
+                    "nombre": "Gafas de Realidad Virtual",
+                    "respuesta": "Ambas",
+                    "opciones": ["Entrada", "Salida", "Ambas"],
+                    "img": "vr_headset.png"
+                },
+                {
+                    "nombre": "Impresora 3D",
+                    "respuesta": "Salida",
+                    "opciones": ["Entrada", "Salida", "Ambas"],
+                    "img": "3d_printer.png"
+                },
+                {
+                    "nombre": "Gamepad con pantalla y sonido",
+                    "respuesta": "Ambas",
+                    "opciones": ["Entrada", "Salida", "Ambas"],
+                    "img": "controller_with_screen.png"
+                },
+                {
+                    "nombre": "Gamepad con vibración",
+                    "respuesta": "Ambas",
+                    "opciones": ["Entrada", "Salida", "Ambas"],
+                    "img": "vibration_controller.png"
+                },
+                {
+                    "nombre": "Auriculares con micrófono",
+                    "respuesta": "Ambas",
+                    "opciones": ["Entrada", "Salida", "Ambas"],
+                    "img": "headset.png"
+                },
+                {
+                    "nombre": "Tableta gráfica básica",
+                    "respuesta": "Entrada",
+                    "opciones": ["Entrada", "Salida", "Ambas"],
+                    "img": "graphics_tablet.png"
+                },
+                {
+                    "nombre": "Plóter",
+                    "respuesta": "Salida",
+                    "opciones": ["Entrada", "Salida", "Ambas"],
+                    "img": "plotter.png"
+                },
+                {
+                    "nombre": "Joystick",
+                    "respuesta": "Entrada",
+                    "opciones": ["Entrada", "Salida", "Ambas"],
+                    "img": "joystick.png"
+                },
+                {
+                    "nombre": "Lector de huellas dactilares",
+                    "respuesta": "Entrada",
+                    "opciones": ["Entrada", "Salida", "Ambas"],
+                    "img": "fingerprint_reader.png"
+                },
+                {
+                    "nombre": "Pantalla Braille",
+                    "respuesta": "Salida",
+                    "opciones": ["Entrada", "Salida", "Ambas"],
+                    "img": "braille_display.png"
+                },
+                {
+                    "nombre": "Smartwatch",
+                    "respuesta": "Ambas",
+                    "opciones": ["Entrada", "Salida", "Ambas"],
+                    "img": "smartwatch.png"
+                },
+                {
+                    "nombre": "Lector de código de barras",
+                    "respuesta": "Entrada",
+                    "opciones": ["Entrada", "Salida", "Ambas"],
+                    "img": "barcode_reader.png"
+                }
+            ]
+        }
+    ]
+}

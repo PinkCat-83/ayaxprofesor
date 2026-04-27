@@ -1,0 +1,9 @@
+/* ═══════════════════════════════════════════
+   GATO SALTARÍN – main.css
+   Punto de entrada: importa todos los parciales.
+   Añade solo este archivo al HTML:
+     <link rel="stylesheet" href="css/main.css">
+═══════════════════════════════════════════ */
+@import url('variables-base.css');
+@import url('screens-hud.css');
+@import url('animations.css');

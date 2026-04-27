@@ -1,0 +1,153 @@
+{
+    "pageTitle": "Fútbol rosa",
+    "pageSubtitle": "¿Cuánto sabes de fútbol?",
+    "imgfolder": "img/Futbol",
+    "niveles": [
+        {
+            "nombre": "Fútbol General",
+            "icono": "⚽",
+            "vidas": 3,
+            "preguntas": [
+                {
+                    "nombre": "¿Cuántos jugadores tiene un equipo en el campo?",
+                    "respuesta": "Once",
+                    "opciones": ["Diez", "Once", "Doce"],
+                    "img": "1.png"
+                },
+                {
+                    "nombre": "¿Cuánto dura un partido reglamentario?",
+                    "respuesta": "90 minutos",
+                    "opciones": ["45 minutos", "90 minutos", "100 minutos"],
+                    "img": "2.png"
+                },
+                {
+                    "nombre": "¿Qué parte del cuerpo no puede tocar el balón (salvo el portero)?",
+                    "respuesta": "La mano",
+                    "opciones": ["La mano", "La cabeza", "El pecho"],
+                    "img": "3.png"
+                },
+                {
+                    "nombre": "¿Cada cuántos años se juega un Mundial?",
+                    "respuesta": "Cuatro",
+                    "opciones": ["Dos", "Cuatro", "Seis"],
+                    "img": "4.png"
+                },
+                {
+                    "nombre": "¿Cómo se castiga una falta grave dentro del área?",
+                    "respuesta": "Penalti",
+                    "opciones": ["Córner", "Falta", "Penalti"],
+                    "img": "5.png"
+                },
+                {
+                    "nombre": "¿Qué tarjeta implica la expulsión directa?",
+                    "respuesta": "Roja",
+                    "opciones": ["Amarilla", "Azul", "Roja"],
+                    "img": "6.png"
+                },
+                {
+                    "nombre": "¿Qué selección ha ganado más Eurocopas?",
+                    "respuesta": "España",
+                    "opciones": ["Alemania", "España", "Italia"],
+                    "img": "15.png"
+                },
+                {
+                    "nombre": "¿Quién es el máximo goleador de los Mundiales?",
+                    "respuesta": "Miroslav Klose",
+                    "opciones": ["Ronaldo", "Miroslav Klose", "Pelé"],
+                    "img": "16.png"
+                },
+                {
+                    "nombre": "¿Quién ganó el primer Mundial de la historia?",
+                    "respuesta": "Uruguay",
+                    "opciones": ["Brasil", "Argentina", "Uruguay"],
+                    "img": "17.png"
+                }
+            ]
+        },
+        {
+            "nombre": "Real Zaragoza",
+            "icono": "🦁",
+            "vidas": 3,
+            "preguntas": [
+                {
+                    "nombre": "¿Cómo se llama el estadio del Real Zaragoza?",
+                    "respuesta": "La Romareda",
+                    "opciones": ["El Alcoraz", "La Romareda", "Torrero"],
+                    "img": "7.png"
+                },
+                {
+                    "nombre": "¿Qué título europeo ganó el club en 1995?",
+                    "respuesta": "Recopa",
+                    "opciones": ["UEFA", "Recopa", "Champions"],
+                    "img": "8.png"
+                },
+                {
+                    "nombre": "¿Quién marcó el gol decisivo en la final de París?",
+                    "respuesta": "Nayim",
+                    "opciones": ["Pardeza", "Nayim", "Higuera"],
+                    "img": "9.png"
+                },
+                {
+                    "nombre": "¿Cuántas Copas del Rey tiene el equipo?",
+                    "respuesta": "Seis",
+                    "opciones": ["Cuatro", "Seis", "Ocho"],
+                    "img": "10.png"
+                },
+                {
+                    "nombre": "¿En qué año se fundó el club actual?",
+                    "respuesta": "1932",
+                    "opciones": ["1920", "1932", "1945"],
+                    "img": "11.png"
+                },
+                {
+                    "nombre": "¿Cómo se conocía al equipo de los años 60?",
+                    "respuesta": "Magníficos",
+                    "opciones": ["Alifantes", "Magníficos", "Zaguates"],
+                    "img": "12.png"
+                },
+                {
+                    "nombre": "¿De qué color es la mítica segunda equipación?",
+                    "respuesta": "Avispa",
+                    "opciones": ["Tomate", "Avispa", "Azul"],
+                    "img": "13.png"
+                },
+                {
+                    "nombre": "¿Quién es el jugador con más partidos oficiales?",
+                    "respuesta": "Xavi Aguado",
+                    "opciones": ["Zapater", "Cedrún", "Xavi Aguado"],
+                    "img": "14.png"
+                },
+                {
+                    "nombre": "¿A qué equipo se ganó la final de Copa de 2001?",
+                    "respuesta": "Celta de Vigo",
+                    "opciones": ["Real Madrid", "Celta de Vigo", "Sevilla"],
+                    "img": "18.png"
+                },
+                {
+                    "nombre": "¿Quién es el máximo goleador histórico del club?",
+                    "respuesta": "Marcelino",
+                    "opciones": ["Marcelino", "Pichi Alonso", "Villa"],
+                    "img": "19.png"
+                },
+                {
+                    "nombre": "¿Cómo se llamaba el campo antes de la Romareda?",
+                    "respuesta": "Torrero",
+                    "opciones": ["San José", "Torrero", "El Portillo"],
+                    "img": "20.png"
+                },
+                {
+                    "nombre": "¿Cómo se llamaba el campo antes de la Romareda?",
+                    "respuesta": "Torrero",
+                    "opciones": ["San José", "Torrero", "El Portillo"],
+                    "img": "20.png"
+                },
+                {
+                    "nombre": "¿Cuál era el apodo de Juan Carlos Blanco?",
+                    "respuesta": "Cacho",
+                    "opciones": ["Cacho", "Lobo", "Toro"],
+                    "img": "21.png"
+                }
+            ]
+        }
+    ]
+}

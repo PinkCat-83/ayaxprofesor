@@ -1,5 +1,0 @@
-[
-  { "nombre": "Impresora",        "respuesta": "Salida" },
-  { "nombre": "Teclado",          "respuesta": "Entrada" },
-  { "nombre": "Ratón",            "respuesta": "Entrada" }
-]
