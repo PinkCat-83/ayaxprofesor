@@ -1,0 +1,445 @@
+/* ============================================================
+   explorer.css — Estilos del Simulador de Explorador de Archivos
+   Parte de: tasks/explorer_task/css/explorer.css
+   
+   NOTA DE DISEÑO:
+   Este archivo tiene dos secciones bien diferenciadas:
+   
+   1. MENÚ DE SELECCIÓN — pendiente de migrar al Design System
+      de Ayax Profesor (ver DESIGN_SYSTEM.md). Actualmente usa
+      el estilo Windows genérico como el resto.
+   
+   2. SIMULADOR — mantiene intencionadamente la estética de
+      Windows Explorer para que el alumnado reconozca el entorno
+      real. No se aplica el Design System aquí.
+   ============================================================ */
+
+
+/* ------------------------------------------------------------
+   BASE
+   ------------------------------------------------------------ */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: #f3f3f3;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+
+/* ------------------------------------------------------------
+   MENÚ DE SELECCIÓN DE EJERCICIOS
+   TODO: Migrar al Design System (ver README_TASK.md § Diseño)
+   ------------------------------------------------------------ */
+
+#exerciseMenu {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.8);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+/* Mascota flotante a la izquierda del menú */
+.menu-pet {
+    position: absolute;
+    left: calc(50% - 650px);
+    top: 50%;
+    transform: translateY(-50%);
+    width: 305px;
+    height: auto;
+    filter: drop-shadow(0 4px 12px #f9a8d4aa);
+    animation: petBob 2.8s ease-in-out infinite;
+    pointer-events: none;
+    z-index: 1001;
+}
+
+@keyframes petBob {
+    0%, 100% { transform: translateY(-50%); }
+    50%       { transform: translateY(calc(-50% - 10px)); }
+}
+
+.menu-content {
+    background: white;
+    padding: 40px;
+    border-radius: 12px;
+    max-width: 800px;
+    max-height: 80vh;
+    overflow-y: auto;
+}
+
+.menu-content h1 {
+    color: #0067C0;
+    margin-bottom: 10px;
+    font-size: 28px;
+}
+
+.menu-content p {
+    color: #666;
+    margin-bottom: 30px;
+}
+
+.exercise-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 15px;
+}
+
+.exercise-btn {
+    padding: 20px;
+    background: #0067C0;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: all 0.3s;
+    text-align: left;
+}
+
+.exercise-btn:hover {
+    background: #005a9e;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.exercise-btn strong {
+    display: block;
+    font-size: 18px;
+    margin-bottom: 5px;
+}
+
+
+/* ------------------------------------------------------------
+   SIMULADOR — BARRA SUPERIOR (TOOLBAR)
+   ------------------------------------------------------------ */
+
+.toolbar {
+    background: white;
+    border-bottom: 1px solid #e0e0e0;
+    padding: 10px 20px;
+}
+
+.address-bar {
+    display: flex;
+    align-items: center;
+    background: #f8f8f8;
+    border: 1px solid #d0d0d0;
+    border-radius: 4px;
+    padding: 8px 12px;
+    margin-bottom: 10px;
+    font-size: 14px;
+}
+
+.address-bar span {
+    color: #666;
+}
+
+.toolbar-buttons {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    align-items: center;
+}
+
+.back-btn {
+    margin-right: 10px;
+    padding-right: 10px;
+    border-right: 2px solid #d0d0d0;
+}
+
+.toolbar-btn {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    padding: 8px 12px;
+    background: white;
+    border: 1px solid #d0d0d0;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 12px;
+    transition: background 0.2s;
+}
+
+.toolbar-btn:hover:not(:disabled) {
+    background: #f0f0f0;
+}
+
+.toolbar-btn:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+}
+
+.toolbar-btn svg {
+    width: 20px;
+    height: 20px;
+}
+
+.back-menu-btn {
+    padding: 10px 20px;
+    background: #666;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 14px;
+    margin-left: auto;
+}
+
+.back-menu-btn:hover {
+    background: #555;
+}
+
+
+/* ------------------------------------------------------------
+   SIMULADOR — ÁREA DE ARCHIVOS
+   ------------------------------------------------------------ */
+
+.file-area {
+    flex: 1;
+    background: white;
+    margin: 20px;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    padding: 20px;
+    overflow-y: auto;
+}
+
+.file-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+    gap: 20px;
+}
+
+.file-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 10px;
+    cursor: pointer;
+    border-radius: 4px;
+    transition: background 0.2s;
+    user-select: none;
+}
+
+.file-item:hover {
+    background: #f0f0f0;
+}
+
+.file-item.selected {
+    background: #cce8ff;
+    outline: 2px solid #0067C0;
+}
+
+.file-item.cut {
+    opacity: 0.5;
+}
+
+.file-icon {
+    width: 64px;
+    height: 64px;
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 48px;
+    object-fit: cover;
+    border-radius: 4px;
+}
+
+.file-icon img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 4px;
+}
+
+.file-name {
+    font-size: 13px;
+    text-align: center;
+    word-break: break-word;
+    max-width: 100px;
+}
+
+.file-name.editing {
+    background: white;
+    border: 2px solid #0067C0;
+    padding: 2px 4px;
+    outline: none;
+}
+
+
+/* ------------------------------------------------------------
+   SIMULADOR — PANEL INFERIOR (DESCRIPCIÓN + CHECKLIST)
+   ------------------------------------------------------------ */
+
+.bottom-panel {
+    background: white;
+    border-top: 1px solid #e0e0e0;
+    padding: 20px;
+    min-height: 150px;
+}
+
+.task-description {
+    margin-bottom: 15px;
+}
+
+.task-description h3 {
+    color: #0067C0;
+    margin-bottom: 10px;
+    font-size: 18px;
+}
+
+.task-description ul {
+    margin-left: 20px;
+}
+
+.task-description li {
+    margin-bottom: 5px;
+    color: #333;
+}
+
+.task-status {
+    display: flex;
+    gap: 15px;
+    align-items: center;
+}
+
+.hint-btn {
+    padding: 10px 20px;
+    background: #ffa500;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background 0.3s;
+}
+
+.hint-btn:hover {
+    background: #ff8c00;
+}
+
+.hint-text {
+    color: #666;
+    font-style: italic;
+}
+
+.completed {
+    color: #00aa00;
+    font-weight: bold;
+    font-size: 24px;
+    animation: bounce 0.5s;
+}
+
+.task-checklist {
+    background: #f8f8f8;
+    padding: 15px;
+    border-radius: 8px;
+    border: 1px solid #e0e0e0;
+}
+
+.task-checklist h3 {
+    color: #0067C0;
+    margin-bottom: 10px;
+    font-size: 18px;
+}
+
+.checklist-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 8px;
+}
+
+.checklist-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 6px 8px;
+    border-radius: 4px;
+    transition: background 0.3s;
+}
+
+.checklist-item.completed {
+    background: #e8f5e9;
+}
+
+.checklist-icon {
+    font-size: 18px;
+    min-width: 20px;
+}
+
+.checklist-text {
+    flex: 1;
+    font-size: 13px;
+    line-height: 1.3;
+}
+
+.checklist-item.completed .checklist-text {
+    color: #2e7d32;
+    font-weight: 500;
+}
+
+
+/* ------------------------------------------------------------
+   DIÁLOGO DE RENOMBRAR
+   (actualmente usa prompt() nativo — este bloque está reservado
+   por si se migra a un diálogo HTML propio en el futuro)
+   ------------------------------------------------------------ */
+
+.rename-dialog {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
+    z-index: 100;
+}
+
+.rename-dialog input {
+    width: 300px;
+    padding: 8px;
+    font-size: 14px;
+    border: 2px solid #0067C0;
+    border-radius: 4px;
+    margin-bottom: 10px;
+}
+
+.rename-dialog-buttons {
+    display: flex;
+    gap: 10px;
+    justify-content: flex-end;
+}
+
+.rename-dialog button {
+    padding: 8px 16px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+.rename-dialog .confirm {
+    background: #0067C0;
+    color: white;
+}
+
+.rename-dialog .cancel {
+    background: #e0e0e0;
+}

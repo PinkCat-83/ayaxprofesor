@@ -1,0 +1,34 @@
+{
+  "id": 2,
+  "title": "Carpeta 02 - Otros destinos",
+  "menuLabel": "📁 02 - Otros destinos",
+  "menuDesc": "Renombra y organiza fotos",
+  "description": "Renombra las fotos de Grecia y muévelas a su carpeta.",
+  "tasks": [
+    "Cambia el nombre de los archivos sin nombre a Grecia 001.jpg, Grecia 002.jpg y Grecia 003.jpg",
+    "Luego mueve cada foto a la carpeta Grecia",
+    "También mueve los archivos de Estados Unidos y Polo Norte a sus carpetas"
+  ],
+  "hints": [
+    "Selecciona un archivo y haz clic en 'Cambiar Nombre'",
+    "Escribe el nuevo nombre y pulsa Enter",
+    "Repite para los tres archivos de Grecia",
+    "Luego corta y pega cada uno en su carpeta correspondiente"
+  ],
+  "iconMode": "auto",
+  "icons": {},
+  "initialFiles": {
+    "Estados Unidos": { "type": "folder", "children": {} },
+    "Grecia":         { "type": "folder", "children": {} },
+    "Polo Norte":     { "type": "folder", "children": {} },
+    "Estados Unidos 01.jpg": { "type": "file" },
+    "Estados Unidos 02.jpg": { "type": "file" },
+    "Estados Unidos 03.jpg": { "type": "file" },
+    "asdffd.jpg": { "type": "file" },
+    "qwerty.jpg": { "type": "file" },
+    "hjkl.jpg":   { "type": "file" },
+    "Polo Norte 01.jpg": { "type": "file" },
+    "Polo Norte 02.jpg": { "type": "file" },
+    "Polo Norte 03.jpg": { "type": "file" }
+  }
+}

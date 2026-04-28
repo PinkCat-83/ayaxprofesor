@@ -1,0 +1,40 @@
+{
+  "id": 7,
+  "title": "Carpeta 07 - Estaciones",
+  "menuLabel": "🍂 07 - Estaciones",
+  "menuDesc": "Organiza por estaciones del año",
+  "description": "Organiza imágenes por estaciones del año.",
+  "tasks": [
+    "Observa cada emoticono y decide a qué estación pertenece",
+    "Renombra cada archivo con el nombre de la estación (ej: Primavera 01.jpg)",
+    "Crea 4 carpetas: Primavera, Verano, Otoño, Invierno",
+    "Mueve 2 archivos a cada carpeta según la estación correspondiente"
+  ],
+  "hints": [
+    "Observa los emoticonos: flores y mariposas = primavera, sol y playa = verano",
+    "Hojas caídas = otoño, nieve y muñeco de nieve = invierno",
+    "Crea las cuatro carpetas de estaciones",
+    "Renombra cada archivo con el nombre de la estación correspondiente"
+  ],
+  "iconMode": "emoji",
+  "icons": {
+    "Imagen1.jpg": "🌸",
+    "Imagen2.jpg": "🦋",
+    "Imagen3.jpg": "☀️",
+    "Imagen4.jpg": "🏖️",
+    "Imagen5.jpg": "🍂",
+    "Imagen6.jpg": "🍁",
+    "Imagen7.jpg": "❄️",
+    "Imagen8.jpg": "⛄"
+  },
+  "initialFiles": {
+    "Imagen1.jpg": { "type": "file" },
+    "Imagen2.jpg": { "type": "file" },
+    "Imagen3.jpg": { "type": "file" },
+    "Imagen4.jpg": { "type": "file" },
+    "Imagen5.jpg": { "type": "file" },
+    "Imagen6.jpg": { "type": "file" },
+    "Imagen7.jpg": { "type": "file" },
+    "Imagen8.jpg": { "type": "file" }
+  }
+}

@@ -1,0 +1,37 @@
+{
+  "id": 1,
+  "title": "Carpeta 01 - Viaje",
+  "menuLabel": "📁 01 - Viaje",
+  "menuDesc": "Organiza archivos de viajes",
+  "description": "Coloca los archivos de cada viaje en la carpeta correspondiente.",
+  "tasks": [
+    "Mueve los 4 archivos de cada país a su carpeta correspondiente",
+    "Por ejemplo: Francia 01.jpg debe estar dentro de la carpeta Francia",
+    "Recuerda que deberás CORTAR primero cada archivo y luego ENTRAR en cada carpeta"
+  ],
+  "hints": [
+    "Primero, haz clic en el archivo para seleccionarlo",
+    "Luego, haz clic en el botón 'Cortar' (las tijeras)",
+    "Después, haz doble clic en la carpeta para abrirla",
+    "Finalmente, haz clic en 'Pegar' para mover el archivo"
+  ],
+  "iconMode": "auto",
+  "icons": {},
+  "initialFiles": {
+    "Francia":     { "type": "folder", "children": {} },
+    "Italia":      { "type": "folder", "children": {} },
+    "Japón":       { "type": "folder", "children": {} },
+    "Francia 01.jpg": { "type": "file" },
+    "Francia 02.jpg": { "type": "file" },
+    "Francia 03.jpg": { "type": "file" },
+    "Francia 04.jpg": { "type": "file" },
+    "Italia 01.jpg":  { "type": "file" },
+    "Italia 02.jpg":  { "type": "file" },
+    "Italia 03.jpg":  { "type": "file" },
+    "Italia 04.jpg":  { "type": "file" },
+    "Japón 01.jpg":   { "type": "file" },
+    "Japón 02.jpg":   { "type": "file" },
+    "Japón 03.jpg":   { "type": "file" },
+    "Japón 04.jpg":   { "type": "file" }
+  }
+}

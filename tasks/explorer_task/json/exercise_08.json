@@ -1,0 +1,40 @@
+{
+  "id": 8,
+  "title": "Carpeta 08 - Peliculas",
+  "menuLabel": "🎬 08 - Peliculas",
+  "menuDesc": "Clasifica por género",
+  "description": "Clasifica Peliculas por género.",
+  "tasks": [
+    "Observa cada imagen para discernir si es una película o dibujos",
+    "Renombra cada archivo a lo que representa (por ejemplo Película01, Dibujos01)",
+    "Crea 2 carpetas: Peliculas y Dibujos",
+    "Mueve cada archivo a su carpeta correspondiente"
+  ],
+  "hints": [
+    "Observa bien cada imagen: ¿es animación o imagen real?",
+    "Renombra los archivos antes de moverlos",
+    "Crea las dos carpetas: Peliculas y Dibujos",
+    "Mueve 4 archivos a cada carpeta"
+  ],
+  "iconMode": "image",
+  "icons": {
+    "qwe.jpg": "img/fileexplorer8/01.jpg",
+    "asd.jpg": "img/fileexplorer8/02.jpg",
+    "zxc.jpg": "img/fileexplorer8/03.jpg",
+    "wer.jpg": "img/fileexplorer8/04.jpg",
+    "sdf.jpg": "img/fileexplorer8/05.jpg",
+    "xcv.jpg": "img/fileexplorer8/06.jpg",
+    "123.jpg": "img/fileexplorer8/07.jpg",
+    "234.jpg": "img/fileexplorer8/08.jpg"
+  },
+  "initialFiles": {
+    "qwe.jpg": { "type": "file" },
+    "asd.jpg": { "type": "file" },
+    "zxc.jpg": { "type": "file" },
+    "wer.jpg": { "type": "file" },
+    "sdf.jpg": { "type": "file" },
+    "xcv.jpg": { "type": "file" },
+    "123.jpg": { "type": "file" },
+    "234.jpg": { "type": "file" }
+  }
+}

@@ -1,0 +1,40 @@
+{
+  "id": 5,
+  "title": "Carpeta 05 - Documentos",
+  "menuLabel": "📄 05 - Documentos",
+  "menuDesc": "Organiza facturas y documentos",
+  "description": "Organiza documentos y facturas en carpetas.",
+  "tasks": [
+    "Observa cada imagen para identificar si es un documento o una factura",
+    "Renombra los archivos según corresponda (ej: Documento 01.jpg, Factura 01.jpg)",
+    "Crea dos carpetas: Documentos y Facturas",
+    "Mueve 4 archivos a cada carpeta según su tipo"
+  ],
+  "hints": [
+    "Primero crea las dos carpetas: Documentos y Facturas",
+    "Mira cada imagen para decidir si es factura o documento",
+    "Renombra con nombres descriptivos que incluyan 'documento' o 'factura'",
+    "Organiza moviendo 4 archivos a cada carpeta"
+  ],
+  "iconMode": "image",
+  "icons": {
+    "Doc1.jpg": "img/fileexplorer5/01.jpg",
+    "Doc2.jpg": "img/fileexplorer5/02.jpg",
+    "Doc3.jpg": "img/fileexplorer5/03.jpg",
+    "Doc4.jpg": "img/fileexplorer5/04.jpg",
+    "Doc5.jpg": "img/fileexplorer5/05.jpg",
+    "Doc6.jpg": "img/fileexplorer5/06.jpg",
+    "Doc7.jpg": "img/fileexplorer5/07.jpg",
+    "Doc8.jpg": "img/fileexplorer5/08.jpg"
+  },
+  "initialFiles": {
+    "Doc1.jpg": { "type": "file" },
+    "Doc2.jpg": { "type": "file" },
+    "Doc3.jpg": { "type": "file" },
+    "Doc4.jpg": { "type": "file" },
+    "Doc5.jpg": { "type": "file" },
+    "Doc6.jpg": { "type": "file" },
+    "Doc7.jpg": { "type": "file" },
+    "Doc8.jpg": { "type": "file" }
+  }
+}

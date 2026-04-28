@@ -1,0 +1,55 @@
+{
+  "id": 3,
+  "title": "Carpeta 03 - Colores",
+  "menuLabel": "🎨 03 - Colores",
+  "menuDesc": "Crea carpetas por colores",
+  "description": "Crea carpetas por colores y organiza los archivos.",
+  "tasks": [
+    "Renombra cada archivo poniendo su color en el nombre (ej: Manzana Roja.jpg)",
+    "Crea 4 carpetas: Azul, Amarillo, Rojo y Verde",
+    "Mueve 4 archivos a cada carpeta según su color"
+  ],
+  "hints": [
+    "Haz clic en 'Nueva Carpeta' para crear las carpetas",
+    "Nombra las carpetas: Azul, Amarillo, Rojo, Verde",
+    "Renombra los archivos incluyendo el nombre del color",
+    "Mueve cada archivo a su carpeta de color correspondiente"
+  ],
+  "iconMode": "emoji",
+  "icons": {
+    "Foto1.jpg":  "🔵",
+    "Foto2.jpg":  "🐬",
+    "Foto3.jpg":  "👖",
+    "Foto4.jpg":  "🐟",
+    "Foto5.jpg":  "🍋",
+    "Foto6.jpg":  "⭐",
+    "Foto7.jpg":  "🌻",
+    "Foto8.jpg":  "🐥",
+    "Foto9.jpg":  "🍎",
+    "Foto10.jpg": "🌹",
+    "Foto11.jpg": "❤️",
+    "Foto12.jpg": "🍓",
+    "Foto13.jpg": "🍀",
+    "Foto14.jpg": "🐸",
+    "Foto15.jpg": "🌲",
+    "Foto16.jpg": "🍏"
+  },
+  "initialFiles": {
+    "Foto1.jpg":  { "type": "file" },
+    "Foto2.jpg":  { "type": "file" },
+    "Foto3.jpg":  { "type": "file" },
+    "Foto4.jpg":  { "type": "file" },
+    "Foto5.jpg":  { "type": "file" },
+    "Foto6.jpg":  { "type": "file" },
+    "Foto7.jpg":  { "type": "file" },
+    "Foto8.jpg":  { "type": "file" },
+    "Foto9.jpg":  { "type": "file" },
+    "Foto10.jpg": { "type": "file" },
+    "Foto11.jpg": { "type": "file" },
+    "Foto12.jpg": { "type": "file" },
+    "Foto13.jpg": { "type": "file" },
+    "Foto14.jpg": { "type": "file" },
+    "Foto15.jpg": { "type": "file" },
+    "Foto16.jpg": { "type": "file" }
+  }
+}

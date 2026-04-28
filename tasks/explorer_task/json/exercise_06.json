@@ -1,0 +1,33 @@
+{
+  "id": 6,
+  "title": "Carpeta 06 - Copias",
+  "menuLabel": "📋 06 - Copias",
+  "menuDesc": "Copia archivos para otros",
+  "description": "Copia archivos para Andrea y Carlos.",
+  "tasks": [
+    "Renombra los archivos a Brasil 001.jpg, Brasil 002.jpg, Brasil 003.jpg, etc.",
+    "Crea dos carpetas: 'Copia para Andrea' y 'Copia para Carlos'",
+    "COPIA (no cortes) los 5 archivos en AMBAS carpetas"
+  ],
+  "hints": [
+    "Primero renombra todos los archivos con nombres de Brasil",
+    "Usa 'Nueva Carpeta' para crear las dos carpetas",
+    "Recuerda usar el botón 'Copiar' en lugar de 'Cortar'",
+    "Al copiar, el archivo original se queda y se crea una copia en la carpeta"
+  ],
+  "iconMode": "emoji",
+  "icons": {
+    "IMG_001.jpg": "⚽",
+    "IMG_002.jpg": "🏖️",
+    "IMG_003.jpg": "🦜",
+    "IMG_004.jpg": "🌴",
+    "IMG_005.jpg": "🎭"
+  },
+  "initialFiles": {
+    "IMG_001.jpg": { "type": "file" },
+    "IMG_002.jpg": { "type": "file" },
+    "IMG_003.jpg": { "type": "file" },
+    "IMG_004.jpg": { "type": "file" },
+    "IMG_005.jpg": { "type": "file" }
+  }
+}

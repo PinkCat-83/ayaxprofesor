@@ -1,0 +1,41 @@
+{
+  "id": 4,
+  "title": "Carpeta 04 - Cosméticos",
+  "menuLabel": "💄 04 - Cosméticos",
+  "menuDesc": "Organiza productos",
+  "description": "Organiza productos por categorías.",
+  "tasks": [
+    "Renombra cada archivo según el producto (ej: Joya 01.jpg, Gafas 01.jpg, Reloj 01.jpg)",
+    "Crea 3 carpetas: Joyas, Gafas y Relojes",
+    "Mueve 3 archivos a cada carpeta según corresponda"
+  ],
+  "hints": [
+    "Observa cada emoticono y decide qué producto es",
+    "Crea 3 carpetas para agrupar: Joyas, Gafas, Relojes",
+    "Usa 'Cambiar Nombre' para renombrar archivos",
+    "Usa 'Cortar' y 'Pegar' para mover los archivos"
+  ],
+  "iconMode": "emoji",
+  "icons": {
+    "Producto1.jpg": "💍",
+    "Producto2.jpg": "💎",
+    "Producto3.jpg": "👑",
+    "Producto4.jpg": "👓",
+    "Producto5.jpg": "🕶️",
+    "Producto6.jpg": "🥽",
+    "Producto7.jpg": "⌚",
+    "Producto8.jpg": "⏰",
+    "Producto9.jpg": "⏱️"
+  },
+  "initialFiles": {
+    "Producto1.jpg": { "type": "file" },
+    "Producto2.jpg": { "type": "file" },
+    "Producto3.jpg": { "type": "file" },
+    "Producto4.jpg": { "type": "file" },
+    "Producto5.jpg": { "type": "file" },
+    "Producto6.jpg": { "type": "file" },
+    "Producto7.jpg": { "type": "file" },
+    "Producto8.jpg": { "type": "file" },
+    "Producto9.jpg": { "type": "file" }
+  }
+}

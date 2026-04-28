@@ -1,0 +1,34 @@
+{
+  "id": 9,
+  "title": "Carpeta 09 - Extensiones",
+  "menuLabel": "📎 09 - Extensión",
+  "menuDesc": "Organiza por tipo de archivo",
+  "description": "Organiza los archivos según su tipo de extensión.",
+  "tasks": [
+    "Observa la extensión de cada archivo (.mp3, .mp4, .pdf, .jpg)",
+    "Crea 4 carpetas: Música, Video, Documento, Foto",
+    "Mueve cada archivo a la carpeta que corresponda a su extensión"
+  ],
+  "hints": [
+    "La extensión son las letras después del punto: .mp3 = música, .mp4 = vídeo",
+    ".pdf = documento, .jpg = foto",
+    "Crea las cuatro carpetas para cada tipo",
+    "Organiza moviendo cada archivo según su extensión"
+  ],
+  "iconMode": "auto",
+  "icons": {},
+  "initialFiles": {
+    "You are not Alone (FF9).mp3":  { "type": "file" },
+    "Happy (C2C).mp3":              { "type": "file" },
+    "Beat it (M. Jackson).mp3":     { "type": "file" },
+    "El señor de los Anillos.mp4":  { "type": "file" },
+    "Interestellar.mp4":            { "type": "file" },
+    "Contact.mp4":                  { "type": "file" },
+    "Mi CV.pdf":                    { "type": "file" },
+    "Contrato.pdf":                 { "type": "file" },
+    "Factura.pdf":                  { "type": "file" },
+    "Mi gato Anubis.jpg":           { "type": "file" },
+    "Mi gato Indalo.jpg":           { "type": "file" },
+    "Mi perrita Pitufina.jpg":      { "type": "file" }
+  }
+}

@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="../favicon.ico">
+
+    <!-- Estilo para el iframe del autor -->
+    <link rel="stylesheet" href="../../css/tinyfoot.css">
+
+    <title>Explorador de Archivos - Simulador</title>
+    <link rel="stylesheet" href="css/explorer.css">
+</head>
+
+<body>
+    <!-- Menú de selección de ejercicios -->
+    <div id="exerciseMenu">
+        <img class="menu-pet" src="/imgs/pet.png" alt="Mascota">
+        <div class="menu-content">
+            <h1>🎯 Explorador de Archivos - Simulador Educativo</h1>
+            <p>Selecciona un ejercicio para comenzar a practicar:</p>
+            <div class="exercise-grid">
+                <button class="exercise-btn" onclick="startExercise(1)">
+                    <strong>📁 01 - Viaje</strong>
+                    Organiza archivos de viajes
+                </button>
+                <button class="exercise-btn" onclick="startExercise(2)">
+                    <strong>📁 02 - Otros destinos</strong>
+                    Renombra y organiza fotos
+                </button>
+                <button class="exercise-btn" onclick="startExercise(3)">
+                    <strong>🎨 03 - Colores</strong>
+                    Crea carpetas por colores
+                </button>
+                <button class="exercise-btn" onclick="startExercise(4)">
+                    <strong>💄 04 - Cosméticos</strong>
+                    Organiza productos
+                </button>
+                <button class="exercise-btn" onclick="startExercise(5)">
+                    <strong>📄 05 - Documentos</strong>
+                    Organiza facturas y documentos
+                </button>
+                <button class="exercise-btn" onclick="startExercise(6)">
+                    <strong>📋 06 - Copias</strong>
+                    Copia archivos para otros
+                </button>
+                <button class="exercise-btn" onclick="startExercise(7)">
+                    <strong>🍂 07 - Estaciones</strong>
+                    Organiza por estaciones del año
+                </button>
+                <button class="exercise-btn" onclick="startExercise(8)">
+                    <strong>🎬 08 - Peliculas</strong>
+                    Clasifica por género
+                </button>
+                <button class="exercise-btn" onclick="startExercise(9)">
+                    <strong>📎 09 - Extensión</strong>
+                    Organiza por tipo de archivo
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Explorador de archivos -->
+    <div class="toolbar">
+        <div class="address-bar">
+            <span id="currentPath">Este equipo</span>
+        </div>
+        <div class="toolbar-buttons">
+            <button class="toolbar-btn back-btn" id="backBtn" onclick="goBack()" disabled title="Atrás">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M19 12H5M12 19l-7-7 7-7" />
+                </svg>
+                Atrás
+            </button>
+            <button class="toolbar-btn" onclick="createFolder()" title="Nueva carpeta">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z" />
+                    <line x1="12" y1="11" x2="12" y2="17" />
+                    <line x1="9" y1="14" x2="15" y2="14" />
+                </svg>
+                Nueva Carpeta
+            </button>
+            <button class="toolbar-btn" id="cutBtn" onclick="cutItem()" disabled title="Cortar">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="6" cy="6" r="3" />
+                    <circle cx="6" cy="18" r="3" />
+                    <line x1="20" y1="4" x2="8.12" y2="15.88" />
+                    <line x1="14.47" y1="14.48" x2="20" y2="20" />
+                    <line x1="8.12" y1="8.12" x2="12" y2="12" />
+                </svg>
+                Cortar
+            </button>
+            <button class="toolbar-btn" id="copyBtn" onclick="copyItem()" disabled title="Copiar">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <rect x="9" y="9" width="13" height="13" rx="2" ry="2" />
+                    <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1" />
+                </svg>
+                Copiar
+            </button>
+            <button class="toolbar-btn" id="pasteBtn" onclick="pasteItem()" disabled title="Pegar">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2" />
+                    <rect x="8" y="2" width="8" height="4" rx="1" ry="1" />
+                </svg>
+                Pegar
+            </button>
+            <button class="toolbar-btn" id="renameBtn" onclick="renameItem()" disabled title="Cambiar nombre">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7" />
+                    <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z" />
+                </svg>
+                Cambiar Nombre
+            </button>
+            <button class="toolbar-btn" id="deleteBtn" onclick="deleteItem()" disabled title="Borrar">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <polyline points="3 6 5 6 21 6" />
+                    <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2" />
+                </svg>
+                Borrar
+            </button>
+            <button class="back-menu-btn" onclick="backToMenu()">← Volver al Menú</button>
+        </div>
+    </div>
+
+    <div class="file-area">
+        <div class="file-grid" id="fileGrid"></div>
+    </div>
+
+    <div class="bottom-panel">
+        <div style="display: flex; gap: 20px;">
+            <div class="task-description" id="taskDescription" style="flex: 1.2;"></div>
+            <div class="task-checklist" id="taskChecklist" style="flex: 1;"></div>
+        </div>
+        <div class="task-status">
+            <button class="hint-btn" onclick="showHint()">💡 Mostrar Pista</button>
+            <div class="hint-text" id="hintText"></div>
+            <div class="completed" id="completedText"></div>
+        </div>
+    </div>
+
+    <!-- iframe para el nombre del autor -->
+    <iframe id="tinyfoot-iframe" class="tinyfoot-iframe" src="../../layout/tinyfoot.html" scrolling="no"></iframe>
+    <!-- animación del iframe anterior -->
+    <script src="../../js/iframeanimation.js"></script>
+
+    <!-- Lógica del simulador (modularizada) -->
+    <script src="js/explorer.js"></script>
+
+</body>
+
+</html>
