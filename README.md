@@ -40,7 +40,7 @@ ayaxprofesor/
 │   ├── cat-bouncing.css     # CSS usado en los gatos revotando?
 │   ├── menu.css             # Diseño a implementar en el menú principal.
 │   ├── foot.css             # CSS para el pie de página grande.
-│   ├── tinyfoot.css         # CSS para el pie de página pequeño.
+│   ├── tinyfoot.css         # CSS para el pie de página pequeño (incluye estilos del iframe y la ventana)
 │   └── redirect_css.css     # CSS para páginas de redirecciones externas (temporales generalmente)
 │
 ├── imgs/
@@ -52,6 +52,7 @@ ayaxprofesor/
 │
 ├── js/
 │   ├── iframeanimation.js  # Animación para esconder el layout tinyfoot.html
+│   ├── tinyfootlogic.js  # Lógica interna del tinyfoot: temporizador, barra de progreso, botón X y reapertura
 │   ├── glitch.js           # Animación de "glitch" para index.html
 │   ├── textfit.js          # Script para manejar el tamaño de la fuente en index.html
 │   ├── catwaiting.js       # Animación de un gato esperando.

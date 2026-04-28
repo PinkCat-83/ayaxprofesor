@@ -5,6 +5,10 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="icon" href="../favicon.ico">
+
+  <!-- Estilo para el iframe del autor -->
+  <link rel="stylesheet" href="/css/tinyfoot.css">
+
   <title>El Desafío de las Extensiones</title>
   <style>
     * {
@@ -658,7 +662,7 @@
       3: { pairs: 10, lives: 2, minNew: 4 },
       4: { pairs: 13, lives: 2, minNew: 4 },
       5: { pairs: 15, lives: 2, minNew: 4 },
-      6: {pairs: 12, lives: 3, minNEw: 12 }
+      6: { pairs: 12, lives: 3, minNEw: 12 }
     };
 
     // Sistema de sonido usando AudioContext para simular sonidos de Windows
@@ -973,13 +977,10 @@
     }
   </script>
 
-  <iframe 
-    id="tinyfoot-iframe"
-    src="/layout/tinyfoot.html" 
-    scrolling="no"
-    style="position: fixed; bottom: 10px; right: -600px; width: 300px; height: 80px; border: none; z-index: 9999; overflow: hidden; transition: right 0.5s ease-in-out;">
-</iframe>
-<script src="/js/iframeanimation.js"></script> <!-- Animación del iframe del foot -->
+  <!-- iframe para el nombre del autor -->
+  <iframe id="tinyfoot-iframe" class="tinyfoot-iframe" src="/layout/tinyfoot.html" scrolling="no"></iframe>
+  <!-- animación del iframe anterior -->
+  <script src="/js/iframeanimation.js"></script>
 
 </body>
 

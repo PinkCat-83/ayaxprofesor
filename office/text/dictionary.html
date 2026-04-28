@@ -6,6 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Procesadores de Texto</title>
     <link rel="stylesheet" href="../css/dictionary.css">
+    <!-- Estilo para el iframe del autor -->
+    <link rel="stylesheet" href="/css/tinyfoot.css">
 </head>
 
 <body>
@@ -46,15 +48,12 @@
         </div>
     </div>
 
-    <iframe 
-        id="tinyfoot-iframe"
-        src="../../layout/tinyfoot.html" 
-        scrolling="no"
-        style="position: fixed; bottom: 10px; right: -600px; width: 300px; height: 80px; border: none; z-index: 9999; overflow: hidden; transition: right 0.5s ease-in-out;">
-    </iframe>
+    <!-- iframe para el nombre del autor -->
+    <iframe id="tinyfoot-iframe" class="tinyfoot-iframe" src="/layout/tinyfoot.html" scrolling="no"></iframe>
+    <!-- animación del iframe anterior -->
+    <script src="/js/iframeanimation.js"></script>
 
     <script src="../js/loader.js"></script>
-    <script src="../../js/iframeanimation.js"></script> <!-- Animación del iframe del foot -->
 </body>
 
 </html>

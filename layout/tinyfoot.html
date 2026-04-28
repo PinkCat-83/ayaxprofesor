@@ -8,25 +8,13 @@
 
 <body>
     <div class="tinyfoot glass" id="tinyfoot">
+        <button class="close-btn" id="close-btn">✕</button>
         <span>👨‍🏫 - Ayax González Suárez</span>
         <span>📧 - ayaxprofesor@gmail.com</span>
+        <span class="zoom-hint">🔍 Ctrl + rueda del ratón para ajustar el zoom</span>
+        <div class="progress-bar" id="progress-bar"></div>
     </div>
-    
-    <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            const tinyfoot = document.getElementById('tinyfoot');
-
-            if (tinyfoot) {
-                tinyfoot.style.cursor = 'pointer';
-
-                tinyfoot.addEventListener('click', function () {
-                    // Enviar mensaje a la página padre
-                    window.parent.postMessage('closeTinyfoot', '*');
-                });
-            }
-        });
-    </script>
-
+    <script src="/js/tinyfootlogic.js"></script>
 </body>
 
 </html>

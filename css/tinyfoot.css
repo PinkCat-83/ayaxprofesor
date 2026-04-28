@@ -12,9 +12,10 @@
 
 /* Tiny footer - esquina inferior derecha */
 .tinyfoot {
+    position: relative;
     z-index: 9999;
-    padding: 8px 16px;
-    font-size: 1rem;
+    padding: 8px 16px 8px 26px;
+    font-size: 1.6rem;
     display: flex;
     flex-direction: column;
     align-items: flex-start;
@@ -22,6 +23,7 @@
     opacity: 0.95;
     transition: opacity 0.3s ease, transform 0.3s ease;
     cursor: pointer;
+    height: auto !important;
 }
 
 .tinyfoot:hover {
@@ -38,4 +40,77 @@
     color: #000;
     font-weight: 500;
     text-shadow: 0 1px 1px rgba(255, 255, 255, 0.3);
+}
+
+.tinyfoot .zoom-hint {
+    font-size: 1.3rem;
+    opacity: 0.65;
+    margin-top: 3px;
+    padding-top: 5px;
+    border-top: 1px solid rgba(0, 0, 0, 0.12);
+    width: 100%;
+}
+
+.tinyfoot-iframe {
+    position: fixed;
+    bottom: 10px;
+    right: -600px;
+    width: 468px;
+    height: 172px;
+    border: none;
+    z-index: 9999;
+    overflow: hidden;
+    transition: right 0.5s ease-in-out;
+}
+
+.tinyfoot-tab {
+    position: fixed;
+    bottom: 10px;
+    right: 10px;
+    width: 42px;
+    height: 42px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.4rem;
+    cursor: pointer;
+    z-index: 9999;
+    border-radius: 50%;
+    transition: transform 0.2s ease, opacity 0.2s ease;
+    opacity: 0.85;
+}
+
+.tinyfoot-tab:hover {
+    transform: scale(1.1);
+    opacity: 1;
+}
+
+.close-btn {
+    position: absolute;
+    top: 6px;
+    right: 8px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 0.9rem;
+    opacity: 0.5;
+    line-height: 1;
+    padding: 0;
+    color: #000;
+    transition: opacity 0.2s ease;
+}
+
+.close-btn:hover {
+    opacity: 1;
+}
+
+.progress-bar {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    height: 3px;
+    width: 100%;
+    background: rgba(255, 105, 180, 0.8);
+    border-radius: 0 0 8px 8px;
+    transition: width 0.1s linear;
 }

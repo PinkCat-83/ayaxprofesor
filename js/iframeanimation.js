@@ -1,22 +1,34 @@
-window.addEventListener('load', function() {
+let isOpen = true;
+
+window.addEventListener('load', function () {
     const iframe = document.getElementById('tinyfoot-iframe');
-    
+
     if (iframe) {
-        // Animar entrada
-        setTimeout(function() {
+        setTimeout(function () {
             iframe.style.right = '10px';
         }, 300);
+
+        iframe.addEventListener('click', function () {
+            if (!isOpen) {
+                isOpen = true;
+                iframe.style.right = '10px';
+                iframe.contentWindow.postMessage('reopenTinyfoot', '*');
+            }
+        });
     }
 });
 
-// Escuchar mensaje del iframe para cerrar
-window.addEventListener('message', function(event) {
+window.addEventListener('message', function (event) {
+    const iframe = document.getElementById('tinyfoot-iframe');
+
     if (event.data === 'closeTinyfoot') {
-        const iframe = document.getElementById('tinyfoot-iframe');
-        iframe.style.right = '-600px';
-        
-        setTimeout(function() {
-            iframe.style.display = 'none';
-        }, 500);
+        isOpen = false;
+        iframe.style.right = '-430px';
+    }
+
+    if (event.data === 'reopenFromInside') {
+        isOpen = true;
+        iframe.style.right = '10px';
+        iframe.contentWindow.postMessage('reopenTinyfoot', '*');
     }
 });
