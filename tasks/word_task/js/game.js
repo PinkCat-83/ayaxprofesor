@@ -19,7 +19,7 @@ let incorrectCount = 0;
 let lives = 10;
 let gameStarted = false;
 let timerInterval;
-let seconds = 15 * 60; // 15 minutos en segundos
+let seconds = 30 * 60; // 15 minutos en segundos
 let pendingQuestions = new Set();
 const answeredQuestions = {}; // Para guardar el historial de respuestas
 
