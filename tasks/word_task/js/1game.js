@@ -10,9 +10,6 @@ const audioCorrect = new Audio('audio/correct.mp3');
 const audioIncorrect = new Audio('audio/incorrect.mp3');
 const audioEnd = new Audio('audio/end.mp3');
 audioEnd.loop = true;
-audioCorrect.volume = 0.7;
-audioIncorrect.volume = 0.7;
-audioEnd.volume = 0.7;
 let currentIndex = 0;
 let correctCount = 0;
 let incorrectCount = 0;
@@ -397,14 +394,6 @@ function initializeEvents() {
         if (confirm('¿Estás seguro de que quieres terminar el intento? Se mostrarán los resultados actuales.')) {
             endGame(false);
         }
-    });
-
-    // Slider de volumen
-    document.getElementById('volume-slider').addEventListener('input', (e) => {
-        const vol = parseFloat(e.target.value);
-        audioCorrect.volume = vol;
-        audioIncorrect.volume = vol;
-        audioEnd.volume = vol;
     });
 }
 

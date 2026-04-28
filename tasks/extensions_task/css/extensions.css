@@ -1,0 +1,503 @@
+/* ═══════════════════════════════════════════
+   EL DESAFÍO DE LAS EXTENSIONES
+   Fuente: 'Fredoka One' (display) + 'Nunito' (body)
+   Paleta y base compartida con Gato Saltarín
+═══════════════════════════════════════════ */
+@import url('https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;600;800&display=swap');
+
+:root {
+  --pink-light:  #fce7f3;
+  --pink:        #f9a8d4;
+  --pink-mid:    #ec4899;
+  --pink-dark:   #be185d;
+  --rose:        #fb7185;
+  --sky:         #bae6fd;
+  --sky-dark:    #0369a1;
+  --stone:       #78716c;
+  --gold:        #fcd34d;
+  --green:       #22c55e;
+  --green-light: #bbf7d0;
+  --red-light:   #fecaca;
+  --text-dark:   #1e1b4b;
+  --text-mid:    #4c1d95;
+  --radius-lg:   18px;
+  --shadow:      0 8px 32px rgba(190, 24, 93, 0.18);
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html, body {
+  width: 100%;
+  min-height: 100vh;
+  font-family: 'Nunito', sans-serif;
+  background: linear-gradient(135deg, #fdf4ff 0%, #fce7f3 60%, #bfdbfe 100%);
+  color: var(--text-dark);
+}
+
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image:
+    radial-gradient(circle at 20% 30%, #f9a8d470 0%, transparent 45%),
+    radial-gradient(circle at 80% 70%, #bae6fd80 0%, transparent 45%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.container {
+  position: relative;
+  z-index: 1;
+  width: 90%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem 0;
+}
+
+/* ══════════════════════════════════════════
+   BOTÓN DE SONIDO
+══════════════════════════════════════════ */
+.sound-toggle {
+  position: fixed;
+  top: 1.2rem;
+  right: 1.2rem;
+  background: white;
+  border: 2.5px solid var(--pink-mid);
+  color: var(--pink-dark);
+  width: 46px;
+  height: 46px;
+  border-radius: 50%;
+  cursor: pointer;
+  font-size: 1.3rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.15s, box-shadow 0.15s;
+  z-index: 2000;
+  box-shadow: 0 4px 12px #f9a8d455;
+}
+
+.sound-toggle:hover {
+  transform: scale(1.1);
+  box-shadow: var(--shadow);
+}
+
+/* ══════════════════════════════════════════
+   MENÚ PRINCIPAL
+══════════════════════════════════════════ */
+#menu {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 3rem 2rem 2rem;
+  gap: 1.2rem;
+  position: relative;
+}
+
+.menu-body {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 2.5rem;
+}
+
+#menu h1 {
+  font-family: 'Fredoka One', cursive;
+  font-size: clamp(1.6rem, 4vw, 2.6rem);
+  color: var(--pink-dark);
+  letter-spacing: 1px;
+  text-shadow: 3px 3px 0 #fbcfe8, 5px 5px 0 #f9a8d4;
+  text-align: center;
+}
+
+.menu-pet {
+  width: 208px;
+  height: auto;
+  flex-shrink: 0;
+  filter: drop-shadow(0 4px 12px #f9a8d4aa);
+  animation: petBob 2.8s ease-in-out infinite;
+  pointer-events: none;
+}
+
+@keyframes petBob {
+  0%, 100% { transform: translateY(0); }
+  50%       { transform: translateY(-10px); }
+}
+
+.difficulty-selector {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.75rem;
+  margin-top: 0.75rem;
+  width: 100%;
+  max-width: 320px;
+}
+
+.difficulty-selector h2 {
+  font-family: 'Fredoka One', cursive;
+  font-size: 1.1rem;
+  color: var(--stone);
+  font-weight: normal;
+  letter-spacing: 0.05em;
+}
+
+.difficulty-btn {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  width: 100%;
+  padding: 0.9rem 1.2rem;
+  border: 3px solid var(--pink-mid);
+  border-radius: var(--radius-lg);
+  background: white;
+  cursor: pointer;
+  transition: transform 0.15s, box-shadow 0.15s, background 0.15s;
+  box-shadow: 0 4px 16px #f9a8d455;
+  font-family: 'Fredoka One', cursive;
+  font-size: 1.2rem;
+  color: var(--pink-dark);
+  text-align: left;
+}
+
+.difficulty-btn:hover {
+  background: var(--pink-light);
+  transform: translateY(-3px) scale(1.02);
+  box-shadow: var(--shadow);
+}
+
+.difficulty-btn:active {
+  transform: scale(0.97);
+}
+
+.library-btn {
+  margin-top: 0.5rem;
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.75rem 2rem;
+  border: 2.5px solid var(--sky-dark);
+  border-radius: 50px;
+  background: white;
+  color: var(--sky-dark);
+  font-family: 'Fredoka One', cursive;
+  font-size: 1.1rem;
+  cursor: pointer;
+  transition: transform 0.15s, box-shadow 0.15s, background 0.15s;
+  box-shadow: 0 4px 12px #bae6fd88;
+}
+
+.library-btn:hover {
+  background: #f0f9ff;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px #bae6fd88;
+}
+
+/* ══════════════════════════════════════════
+   JUEGO
+══════════════════════════════════════════ */
+#game {
+  display: none;
+}
+
+.game-header {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.2rem;
+  background: white;
+  padding: 0.75rem 1.2rem;
+  border-radius: var(--radius-lg);
+  box-shadow: 0 2px 12px #f9a8d433;
+  border: 2px solid var(--pink-light);
+}
+
+.back-btn {
+  background: white;
+  border: 2px solid var(--pink-mid);
+  color: var(--pink-dark);
+  padding: 0.4rem 1rem;
+  border-radius: 50px;
+  cursor: pointer;
+  font-family: 'Nunito', sans-serif;
+  font-weight: 800;
+  font-size: 0.9rem;
+  transition: background 0.15s, transform 0.15s;
+}
+
+.back-btn:hover {
+  background: var(--pink-light);
+  transform: translateX(-2px);
+}
+
+.lives {
+  font-family: 'Fredoka One', cursive;
+  font-size: 1.2rem;
+  color: var(--pink-dark);
+}
+
+.level-info {
+  font-family: 'Fredoka One', cursive;
+  font-size: 1.1rem;
+  color: var(--text-mid);
+}
+
+/* ── Área de juego ── */
+.game-area {
+  display: flex;
+  gap: 0;
+  position: relative;
+}
+
+.column {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  flex: 1;
+}
+
+#extensions   { flex: 0 0 180px; }
+#arrow-lane   { flex: 0 0 160px; }
+#descriptions { flex: 1; }
+
+#arrowCanvas {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 10;
+}
+
+/* ── Cajas ── */
+.extension-box,
+.description-box {
+  background: white;
+  padding: 1rem 1.1rem;
+  border-radius: var(--radius-lg);
+  cursor: grab;
+  transition: background 0.15s, border-color 0.15s, transform 0.15s, box-shadow 0.15s;
+  border: 2.5px solid var(--pink-light);
+  position: relative;
+  user-select: none;
+  box-shadow: 0 2px 8px #f9a8d422;
+  font-weight: 600;
+}
+
+.extension-box {
+  font-family: 'Fredoka One', cursive;
+  font-size: 1.1rem;
+  color: var(--pink-dark);
+  text-align: center;
+}
+
+.description-box {
+  font-size: 0.92rem;
+  color: var(--text-dark);
+}
+
+.extension-box:hover,
+.description-box:hover {
+  background: var(--pink-light);
+  border-color: var(--pink-mid);
+  transform: translateY(-3px);
+  box-shadow: var(--shadow);
+}
+
+.extension-box.drag-source,
+.description-box.drag-source {
+  border-color: var(--pink-mid);
+  background: #fdf2f8;
+  cursor: grabbing;
+  box-shadow: var(--shadow);
+}
+
+.extension-box.drag-over,
+.description-box.drag-over {
+  border-color: var(--pink-mid);
+  background: var(--pink-light);
+  transform: scale(1.03);
+  box-shadow: var(--shadow);
+}
+
+.extension-box.new-level::before {
+  content: '✨';
+  position: absolute;
+  top: 4px;
+  right: 8px;
+  font-size: 1rem;
+}
+
+.matched {
+  background: var(--green-light) !important;
+  border-color: var(--green) !important;
+  pointer-events: none;
+  cursor: default;
+  transform: none !important;
+  box-shadow: none !important;
+}
+
+/* ══════════════════════════════════════════
+   MODAL
+══════════════════════════════════════════ */
+.modal {
+  display: none;
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background: rgba(190, 24, 93, 0.15);
+  backdrop-filter: blur(6px);
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.modal-content {
+  background: white;
+  padding: 3rem 2.5rem;
+  border-radius: var(--radius-lg);
+  text-align: center;
+  position: relative;
+  max-width: 420px;
+  width: 90%;
+  box-shadow: 0 16px 48px rgba(190, 24, 93, 0.2);
+  border: 3px solid var(--pink-light);
+}
+
+.modal-content h2 {
+  font-family: 'Fredoka One', cursive;
+  font-size: 2.2rem;
+  color: var(--pink-dark);
+  margin-bottom: 1.5rem;
+}
+
+.modal-btn {
+  padding: 0.75rem 2.2rem;
+  border: none;
+  border-radius: 50px;
+  background: var(--pink-dark);
+  color: white;
+  font-family: 'Fredoka One', cursive;
+  font-size: 1.15rem;
+  cursor: pointer;
+  box-shadow: 0 4px 16px #be185d44;
+  transition: transform 0.15s, box-shadow 0.15s;
+}
+
+.modal-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px #be185d44;
+}
+
+.modal-btn:active {
+  transform: scale(0.96);
+}
+
+/* ══════════════════════════════════════════
+   BIBLIOTECA
+══════════════════════════════════════════ */
+#library {
+  display: none;
+  flex-direction: column;
+  gap: 1.2rem;
+}
+
+.library-header {
+  background: white;
+  padding: 1rem 1.5rem;
+  border-radius: var(--radius-lg);
+  box-shadow: 0 2px 12px #f9a8d433;
+  border: 2px solid var(--pink-light);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+#library h2 {
+  font-family: 'Fredoka One', cursive;
+  font-size: 1.8rem;
+  color: var(--pink-dark);
+  flex: 1;
+  text-align: center;
+}
+
+#library-content {
+  background: white;
+  padding: 2rem;
+  border-radius: var(--radius-lg);
+  box-shadow: 0 4px 20px #f9a8d433;
+  border: 2px solid var(--pink-light);
+  max-height: calc(80vh - 100px);
+  overflow-y: auto;
+}
+
+.library-section {
+  margin-bottom: 2rem;
+}
+
+.library-section h3 {
+  font-family: 'Fredoka One', cursive;
+  color: var(--pink-dark);
+  margin-bottom: 0.75rem;
+  font-size: 1.3rem;
+  font-weight: normal;
+}
+
+.library-item {
+  background: var(--pink-light);
+  padding: 0.75rem 1rem;
+  border-radius: 10px;
+  margin-bottom: 0.5rem;
+  cursor: pointer;
+  transition: background 0.15s, transform 0.15s, border-color 0.15s;
+  text-decoration: none;
+  color: var(--text-dark);
+  display: block;
+  font-weight: 600;
+  font-size: 0.92rem;
+  border: 2px solid transparent;
+}
+
+.library-item:hover {
+  background: #fdf2f8;
+  border-color: var(--pink-mid);
+  transform: translateX(4px);
+}
+
+.library-item strong {
+  color: var(--pink-dark);
+  font-family: 'Fredoka One', cursive;
+  font-size: 1rem;
+  margin-right: 0.5rem;
+}
+
+.library-item::after {
+  content: '🔗';
+  float: right;
+  opacity: 0.5;
+  font-size: 0.85rem;
+}
+
+/* ══════════════════════════════════════════
+   FUEGOS ARTIFICIALES
+══════════════════════════════════════════ */
+.firework {
+  position: absolute;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  animation: explode 1s ease-out forwards;
+}
+
+@keyframes explode {
+  0%   { transform: translate(0, 0); opacity: 1; }
+  100% { transform: translate(var(--x), var(--y)); opacity: 0; }
+}

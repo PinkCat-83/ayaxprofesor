@@ -48,6 +48,7 @@ ayaxprofesor/
 │   ├── 🧨fileexplorer8/       # Imágenes del ejercicio de explorador de archivos. (habrá que moverlas a su carpeta correcta más adelante)
 │   ├── 🧨icons/               # Carpeta contenedora de iconos de programas
 │   ├── 🧨anne.png             # Imagen para la actividad ""The Voyage of the Marvelous Anne" (habrá que moverla a su carpeta correcta más adelante)
+│   ├── pet.png
 │   └── logo.png
 │
 ├── js/
@@ -69,15 +70,16 @@ ayaxprofesor/
 ├── tasks/
 │   ├── typing_task/[...]       # Actividad de mecanografía (modular, pero requiere revisión para advertencia en páginas muy pequeñas.
 │   ├── questions_task/[...]    # 🐱 Gato Saltarín – juego modular de clasificación de periféricos (ver README_Tasks.md)
+│   ├── extensions_task/[...]   # 🎯 El Desafío de las Extensiones – juego modular de extensiones de archivo (ver README_TASK.md)
 │   ├── 🧨 anne.html            # Página de soluciones al ejercicio "The Voyage of the Marvelous Anne" (Falta modular, poca prioridad)
 │   ├── 🧨 archivos.html        # Explorador de archivos con checklist (Falta modular)
-│   ├── 🧨 extensiones.html     # Unir extensión con su uso (Falta modular y adaptar diseño más específico a la página)
 │   └── word_task/[...]         # Rosco de palabras para comprobar el nivel del alumnado (modular, pero requiere revisión para mejorar su uso en móviles.)
 |
 ├── CNAME
 ├── favicon.ico
 ├── index.html               # Página principal
 ├── ofimatica.html           # Explicación de los distintos tipos de programas de ofimática que existen
+├── DESIGN_SYSTEM.md         # Diccionario de estilos decididos para un diseño homogéneo
 └── README.md
 ```
 
@@ -102,4 +104,5 @@ Desarrollado con `gatitos rosas` para facilitar el aprendizaje en informática b
 
 ## Implementaciones
 
-- Agregar un diseño "estándar" si se entra desde móvil que sea muy básico, pero funcional.
+- Agregar un diseño "estándar" si se entra desde móvil que sea muy básico, pero funcional (a futuro)
+- Por ahora, eliminaré todas referencias a adaptación a móvil.

@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" href="/favicon.ico">
+  <link rel="stylesheet" href="/css/tinyfoot.css">
+  <link rel="stylesheet" href="css/extensions.css">
+  <title>El Desafío de las Extensiones</title>
+</head>
+
+<body>
+  <button class="sound-toggle" id="soundToggle" onclick="toggleSound()">🔊</button>
+
+  <div class="container">
+
+    <!-- Menú Principal -->
+    <div id="menu">
+      <h1>🎯 El Desafío de las Extensiones</h1>
+      <div class="menu-body">
+        <img class="menu-pet" src="/imgs/pet.png" alt="Mascota">
+        <div class="menu-right">
+          <div class="difficulty-selector">
+            <h2>Selecciona la dificultad</h2>
+            <!-- Los botones se generan dinámicamente desde extensions.js -->
+          </div>
+          <button class="library-btn" onclick="showLibrary()">📚 Biblioteca</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Juego -->
+    <div id="game">
+      <div class="game-header">
+        <button class="back-btn" onclick="backToMenu()">← Volver al Menú</button>
+        <div class="lives">❤️ Vidas: <span id="lives">3</span></div>
+        <div class="level-info">Nivel <span id="level">1</span></div>
+      </div>
+
+      <div class="game-area" id="gameArea">
+        <canvas id="arrowCanvas"></canvas>
+        <div class="column" id="extensions"></div>
+        <div id="arrow-lane"></div>
+        <div class="column" id="descriptions"></div>
+      </div>
+    </div>
+
+    <!-- Biblioteca -->
+    <div id="library">
+      <div class="library-header">
+        <button class="back-btn" onclick="hideLibrary()">← Volver</button>
+        <h2>📚 Biblioteca de Extensiones</h2>
+        <div style="width: 120px;"></div>
+      </div>
+      <div id="library-content"></div>
+    </div>
+
+  </div>
+
+  <!-- Modal Victoria -->
+  <div id="victoryModal" class="modal">
+    <div class="modal-content">
+      <h2>¡Bien Hecho! 🎉</h2>
+      <div id="fireworks"></div>
+      <button class="modal-btn" onclick="backToMenu()">Volver al Menú</button>
+    </div>
+  </div>
+
+  <!-- Modal Game Over -->
+  <div id="gameOverModal" class="modal">
+    <div class="modal-content">
+      <h2>¡Buen intento! 💪</h2>
+      <p style="color:var(--stone);font-weight:600;margin-bottom:1rem;">Juega otra vez</p>
+      <button class="modal-btn" onclick="backToMenu()">Volver al Menú</button>
+    </div>
+  </div>
+
+  <script src="js/extensions.js"></script>
+
+  <!-- iframe para el nombre del autor -->
+  <iframe id="tinyfoot-iframe" class="tinyfoot-iframe" src="/layout/tinyfoot.html" scrolling="no"></iframe>
+  <script src="/js/iframeanimation.js"></script>
+
+</body>
+
+</html>

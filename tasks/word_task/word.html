@@ -7,6 +7,11 @@
     <link rel="icon" href="../../favicon.ico">
     <title>Rosco de Palabras</title>
 
+    <!-- Fuentes del Design System -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;600;800&display=swap" rel="stylesheet">
+
     <!-- Estilos -->
     <link rel="stylesheet" href="css/main.css">
     <link rel="stylesheet" href="css/animations.css">
@@ -21,9 +26,11 @@
     <div class="circuit-lines"></div>
     <div class="circuit-line-2"></div>
     <div class="circuit-line-3"></div>
+
     <!-- Header con estadísticas -->
     <div class="header">
         <div class="header-item">
+            <div class="header-label">Vidas</div>
             <div class="lives" id="livesContainer">
                 <span class="heart">♥</span>
                 <span class="heart">♥</span>
@@ -48,6 +55,13 @@
         <div class="header-item">
             <div class="header-label">Tiempo</div>
             <div class="header-value" id="timer">15:00</div>
+        </div>
+        <div class="header-item header-item--volume">
+            <div class="header-label">Volumen</div>
+            <div class="volume-slider-wrap">
+                <span class="volume-icon">🔊</span>
+                <input type="range" id="volume-slider" min="0" max="1" step="0.01" value="0.7" title="Volumen">
+            </div>
         </div>
     </div>
 
@@ -87,14 +101,12 @@
             </div>
             <button class="details-toggle" onclick="toggleAnswers()">Ver todas las preguntas y respuestas</button>
             <div class="answers-list" id="answersList"></div>
-            <button class="btn" onclick="location.reload()">Jugar de nuevo</button>
+            <button class="btn" onclick="restartGame()">Jugar de nuevo</button>
         </div>
     </div>
 
     <!-- Scripts -->
-    <script src="js/data.js"></script>
     <script src="js/game.js"></script>
-
 
     <!-- iframe para el nombre del autor -->
     <iframe id="tinyfoot-iframe" class="tinyfoot-iframe" src="/layout/tinyfoot.html" scrolling="no"></iframe>
