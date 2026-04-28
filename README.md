@@ -100,12 +100,6 @@ Este proyecto nace con el objetivo de proporcionar un espacio seguro y accesible
 
 Desarrollado con `gatitos rosas` para facilitar el aprendizaje en informática básica.
 
-
-## Fallos a corregir:
-
-- En la tarea de mecanografía, al elegir una categoría manualmente hace un aleatorio, por lo que aunque se cambie manualmente no funciona.
-
 ## Implementaciones
 
-- Añadir un recordatorio de "zoom" con control + clic con el minilayout (donde aparece mi nombre)
 - Agregar un diseño "estándar" si se entra desde móvil que sea muy básico, pero funcional.

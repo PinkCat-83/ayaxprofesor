@@ -115,7 +115,7 @@ const App = {
         TextLoader.categories.forEach(category => {
             const option = document.createElement('option');
             option.value = category.fileName;
-            option.textContent = `${category.className} (${category.textCount} textos)`;
+            option.textContent = category.className;
             select.appendChild(option);
         });
     },
@@ -337,24 +337,20 @@ const App = {
     },
 
     /**
-     * Cargar un nuevo texto aleatorio (de CUALQUIER categoría)
+     * Cargar un nuevo texto aleatorio respetando la categoría seleccionada
      */
     async loadNewText() {
         try {
-            // 🎲 Obtener texto aleatorio de CUALQUIER categoría
-            const textData = TextLoader.getRandomTextFromAll();
+            // 🎲 Si hay categoría seleccionada, respetar esa; si no, elegir de todas
+            const textData = this.state.currentCategory
+                ? TextLoader.getRandomText()
+                : TextLoader.getRandomTextFromAll();
 
             if (!textData) {
                 throw new Error('No se pudo obtener un texto');
             }
 
             //console.log(`📖 Cargando: "${textData.title}" de "${textData.category}"`);
-
-            // Actualizar el selector de categoría si cambió
-            if (textData.categoryFile) {
-                this.elements.categorySelect.value = textData.categoryFile;
-                this.state.currentCategory = textData.categoryFile;
-            }
 
             // Inicializar el juego con el texto
             Game.init(textData);
