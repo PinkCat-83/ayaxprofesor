@@ -40,7 +40,8 @@ ayaxprofesor/
 │   ├── menu.css             # Diseño a implementar en el menú principal.
 │   ├── foot.css             # CSS para el pie de página grande.
 │   ├── tinyfoot.css         # CSS para el pie de página pequeño (incluye estilos del iframe y la ventana)
-│   └── redirect_css.css     # CSS para páginas de redirecciones externas (temporales generalmente)
+│   ├── redirect_css.css     # CSS para páginas de redirecciones externas (temporales generalmente)
+│   └── mobile-warning.css   # Overlay de aviso para pantallas < 1024px (compartido)
 │
 ├── imgs/
 │   ├── 🧨icons/             # Carpeta contenedora de iconos de programas (habrá que moverla a Office más adelante)
@@ -49,12 +50,13 @@ ayaxprofesor/
 │   └── logo.png
 │
 ├── js/
-│   ├── iframeanimation.js  # Animación para esconder el layout tinyfoot.html
-│   ├── tinyfootlogic.js    # Lógica interna del tinyfoot: temporizador, barra de progreso, botón X y reapertura
-│   ├── glitch.js           # Animación de "glitch" para index.html
-│   ├── textfit.js          # Script para manejar el tamaño de la fuente en index.html
-│   ├── catwaiting.js       # Animación de un gato esperando.
-│   └── cat-animation.js    # Animación de gatos revotando de index.html
+│   ├── iframeanimation.js   # Animación para esconder el layout tinyfoot.html
+│   ├── tinyfootlogic.js     # Lógica interna del tinyfoot: temporizador, barra de progreso, botón X y reapertura
+│   ├── glitch.js            # Animación de "glitch" para index.html
+│   ├── textfit.js           # Script para manejar el tamaño de la fuente en index.html
+│   ├── catwaiting.js        # Animación de un gato esperando.
+│   ├── cat-animation.js     # Animación de gatos revotando de index.html
+│   └── mobile-warning.js    # Lógica del aviso de pantalla pequeña (compartido)
 │
 ├── layout/
 │   ├── foot.html            # layout para el pie de página grande. 
@@ -65,11 +67,11 @@ ayaxprofesor/
 ├── office/[...]             # Proyecto en pruebas, que será un "diccionario" de "dónde encontrar tal herramienta en cada programa de ofimática". Modulable con json.
 |
 ├── tasks/
-│   ├── typing_task/[...]       # ⌨ Actividad de mecanografía (modular, pero requiere revisión para advertencia en páginas muy pequeñas.
+│   ├── typing_task/[...]       # ⌨ Actividad de mecanografía (modular, pero requiere revisión para advertencia en páginas muy pequeñas. (ver README_Tasks.md)
 │   ├── questions_task/[...]    # 🐱 Gato Saltarín – juego modular de clasificación de periféricos (ver README_Tasks.md)
 │   ├── extensions_task/[...]   # 🎯 El Desafío de las Extensiones – juego modular de extensiones de archivo (ver README_TASK.md)
 │   ├── explorer_task/[...]     # 🔍 Explorador de archivos con checklist (ver README_TASK.md)
-│   ├── word_task/[...]         # 🆎 Rosco de palabras para comprobar el nivel del alumnado
+│   ├── word_task/[...]         # 🆎 Rosco de palabras para comprobar el nivel del alumnado (ver README_Tasks.md)
 │   └── 🧨 anne.html            # Página de soluciones al ejercicio "The Voyage of the Marvelous Anne" (Falta modular, poca prioridad)
 |
 ├── CNAME
@@ -92,28 +94,72 @@ Aunque se ha conseguido unificar los estilos, la diversidad de propósito de cad
 │   │     ├── json/            # Archivos json.
 │   │     ├── css/             # Archivos css de estilos.
 │   │     ├── README_TASK      # Archivo README de la tarea en concreto, que explica la tarea y su funcionamiento y estructura.
-│   │     └── namehtml.html    # Archivo de entrada estándar para el proyecto. Suele tener el mismo nombre de la actividad.
+│   │     └── name_task.html   # Archivo de entrada estándar para el proyecto. Suele tener el mismo nombre de la actividad.
 ```
 
 
 ## Los archivos marcados con 🧨 significa que requieren modulación y actualización de archivos o diseño.
 
 
-## 👨‍🏫 Propósito Educativo
+---
 
-Este proyecto nace con el objetivo de proporcionar un espacio seguro y accesible para el aprendizaje de informática, eliminando las distracciones típicas de internet y centrándose en la experiencia educativa.
+## 🧩 Snippets — Insertar componentes compartidos en una página nueva
+
+Referencia rápida para no tener que buscar en archivos sueltos. Todos usan rutas absolutas y funcionan desde cualquier subcarpeta del proyecto.
 
 ---
+
+### 🦶 Pie de página grande (`foot`)
+
+Pie de página completo con información del autor. Se incrusta como `iframe` fijo en la parte inferior.
+
+```html
+<!-- IFRAME al final de BODY para el FOOT grande -->
+<iframe src="/layout/foot.html" style="position: fixed; bottom: 0; left: 0; right: 0; width: 100%; height: 60px; border: none; z-index: 9999;"></iframe>
+```
+
+---
+
+### 🐾 Pie de página pequeño (`tinyfoot`)
+
+Versión compacta del pie, con animación de entrada/salida. Requiere su CSS en el `<head>` y su script al final del `<body>`.
+
+```html
+<!-- CSS en el HEAD para el TINYFOOT -->
+<link rel="stylesheet" href="/css/tinyfoot.css">
+
+<!-- IFRAME al final de BODY para el TINYFOOT -->
+<iframe id="tinyfoot-iframe" class="tinyfoot-iframe" src="/layout/tinyfoot.html" scrolling="no"></iframe>
+<!-- JS al final de BODY para la animación del TINYFOOT -->
+<script src="/js/iframeanimation.js"></script>
+```
+
+---
+
+### 📵 Aviso de pantalla pequeña (`mobile-warning`)
+
+Overlay que se activa cuando la pantalla es inferior a 1024px. Se descarta por sesión si el usuario elige entrar igualmente.
+
+```html
+<!-- CSS en el HEAD para el warning de móviles -->
+<link rel="stylesheet" href="/css/mobile-warning.css">
+
+<!-- JS al final de BODY para el warning de móviles -->
+<script src="/js/mobile-warning.js"></script>
+```
+
+---
+
+
 
 ## Cuestiones a preguntarse a futuro
 
 - ¿Es mejor unificar todos los CSS ahora que tienen un diseño parecido o mejor lo dejamos como está?
 
 
-## Implementaciones
+## 👨‍🏫 Propósito Educativo
 
-- Establecer una página estándar que redirija automáticamente al entrar en móviles donde se avise que la página no está preparada para esto, pero que si quiere intentarlo puede entrar.
-
+Este proyecto nace con el objetivo de proporcionar un espacio seguro y accesible para el aprendizaje de informática, eliminando las distracciones típicas de internet y centrándose en la experiencia educativa.
 
 
 ## Despedida

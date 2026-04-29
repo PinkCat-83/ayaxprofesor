@@ -7,7 +7,7 @@ Juego educativo sobre clasificación de periféricos de ordenador.
 ```
 question_task/
 ├── perifericos_game.html  ← Punto de entrada: redirige a game.html con su JSON
-├── game.html              ← Motor del juego (no editar)
+├── questions.html              ← Motor del juego (no editar)
 ├── audio/
 │   ├── jump.mp3           ← Sonido de salto
 │   ├── splash.mp3         ← Sonido de chapuzón

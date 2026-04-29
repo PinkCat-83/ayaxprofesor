@@ -1,0 +1,130 @@
+/* =====================================================
+   mobile-warning.css
+   Overlay de aviso para pantallas pequeñas.
+   Estilo coherente con index.html (neón / oscuro).
+   ===================================================== */
+
+#mobile-warning-overlay {
+  display: none; /* Se activa por JS */
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+
+  /* Fondo oscuro con toque neón, igual que index */
+  background: rgba(0, 0, 0, 0.92);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+
+  align-items: center;
+  justify-content: center;
+  font-family: 'Orbitron', sans-serif;
+}
+
+#mobile-warning-overlay.active {
+  display: flex;
+}
+
+/* Caja central */
+.mw-box {
+  background: #0a0a0f;
+  border: 2px solid #ec4899;
+  border-radius: 18px;
+  box-shadow:
+    0 0 24px #ec489966,
+    0 0 64px #ec489922,
+    inset 0 0 32px #ec489908;
+  padding: 2.5rem 2rem;
+  max-width: 480px;
+  width: 90%;
+  text-align: center;
+  position: relative;
+  animation: mwAppear 0.35s cubic-bezier(.34,1.56,.64,1) both;
+}
+
+@keyframes mwAppear {
+  from { opacity: 0; transform: scale(0.88) translateY(16px); }
+  to   { opacity: 1; transform: scale(1) translateY(0); }
+}
+
+/* Icono */
+.mw-icon {
+  font-size: 3rem;
+  display: block;
+  margin-bottom: 0.75rem;
+  filter: drop-shadow(0 0 8px #ec4899aa);
+  animation: mwPulse 2.5s ease-in-out infinite;
+}
+
+@keyframes mwPulse {
+  0%, 100% { transform: scale(1); }
+  50%       { transform: scale(1.1); }
+}
+
+/* Título */
+.mw-title {
+  font-family: 'Orbitron', sans-serif;
+  font-size: clamp(1.1rem, 4vw, 1.4rem);
+  font-weight: 700;
+  color: #ec4899;
+  text-shadow: 0 0 12px #ec489988;
+  margin: 0 0 1rem 0;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+/* Texto */
+.mw-text {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: clamp(0.8rem, 2.5vw, 0.95rem);
+  color: #c4b5d0;
+  line-height: 1.7;
+  margin: 0 0 1.75rem 0;
+}
+
+.mw-text strong {
+  color: #f9a8d4;
+}
+
+/* Botones */
+.mw-actions {
+  display: flex;
+  gap: 0.75rem;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+/* Botón principal: entrar igualmente */
+.mw-btn-enter {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  cursor: pointer;
+  border-radius: 50px;
+  padding: 0.65rem 1.4rem;
+  transition: transform 0.15s, box-shadow 0.15s;
+
+  background: transparent;
+  border: 2px solid #ec4899;
+  color: #ec4899;
+  box-shadow: 0 0 10px #ec489944;
+}
+
+.mw-btn-enter:hover {
+  background: #ec489911;
+  box-shadow: 0 0 20px #ec489977;
+  transform: translateY(-2px);
+}
+
+.mw-btn-enter:active {
+  transform: scale(0.96);
+}
+
+/* Nota al pie de la caja */
+.mw-note {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 0.7rem;
+  color: #6b5a7a;
+  margin-top: 1.25rem;
+}
