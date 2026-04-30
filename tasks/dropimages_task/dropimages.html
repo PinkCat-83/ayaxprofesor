@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>¿Navegador o Buscador?</title>
+  <link rel="stylesheet" href="css/main.css">
+  <link rel="stylesheet" href="/css/tinyfoot.css">
+  <link rel="stylesheet" href="/css/mobile-warning.css">
+</head>
+
+<body>
+
+  <!-- ═══════════════════════════════════════════
+   PANTALLA: MENÚ PRINCIPAL
+  ═══════════════════════════════════════════ -->
+  <div id="screen-menu" class="screen active">
+    <div class="menu-bg"></div>
+    <div class="menu-content">
+      <div class="title-block">
+        <h1 id="page-title">¿Navegador o Buscador?</h1>
+        <p class="subtitle" id="page-subtitle"></p>
+      </div>
+      <div class="difficulty-selector">
+        <img class="menu-cat" src="img/pinkcat_idle.png" alt="Gato Rosa" />
+        <p class="choose-label">Elige tu nivel:</p>
+        <div id="levels-container"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════
+   PANTALLA: JUEGO
+  ═══════════════════════════════════════════ -->
+  <div id="screen-game" class="screen">
+
+    <!-- HUD superior (fuera del escenario) -->
+    <div id="hud">
+      <div id="hud-progress"></div>
+      <div id="hud-controls">
+        <span class="volume-icon">🔊</span>
+        <input type="range" id="volume-slider" min="0" max="100" value="80" title="Volumen" />
+        <button id="btn-menu-hud">Menú</button>
+      </div>
+    </div>
+
+    <!-- Escenario principal -->
+    <div id="game-stage">
+
+      <!-- Marco interior con borde rosa — equivalente a #svg-wrapper/#stage-svg del gato saltarín -->
+      <div id="stage-frame">
+
+        <!-- CAPA 1: Cielo sólido (igual que <rect fill="#7ec8e3"> en el SVG original) -->
+        <div id="sky-layer" aria-hidden="true"></div>
+
+        <!-- CAPA 2: Nubes (encima del cielo, debajo del fondo) -->
+        <div id="clouds-layer" aria-hidden="true">
+          <div class="cloud cloud-a"></div>
+          <div class="cloud cloud-b"></div>
+          <div class="cloud cloud-c"></div>
+        </div>
+
+        <!-- CAPA 3: background.webp con blur gaussiano (encima de nubes) -->
+        <!-- width/height calculados igual que camera.js: zoom 1.1, height=352, y=-16 -->
+        <div id="stage-bg" aria-hidden="true"></div>
+
+        <!-- CAPA 4: Gaviotas (generadas por JS, encima del fondo) -->
+        <div id="seagulls-layer" aria-hidden="true"></div>
+
+        <!-- Contenido del juego (por encima del fondo) -->
+        <div id="game-content">
+
+          <!-- Vidas + emoji — posición absoluta esquina superior izquierda (igual que gato saltarín) -->
+          <div id="hud-lives">
+            <div id="lives-icons" aria-label="Vidas restantes"></div>
+            <span id="btn-explain-game" title="¿Qué es cada cosa?" role="button" tabindex="0">❓</span>
+          </div>
+
+          <!-- ── FILA SUPERIOR: tarjeta centrada ── -->
+          <div id="game-top-row">
+
+            <!-- Centro: tarjeta arrastrable -->
+            <div id="drag-card" draggable="true" aria-grabbed="false">
+              <img id="drag-card-img" src="" alt="" />
+              <span id="drag-card-text">Cargando…</span>
+            </div>
+
+          </div>
+
+        </div>
+        <!-- /game-content -->
+
+        <!-- ── AGUA — SVG idéntico al gato saltarín (fondo + olas + capa frontal) ── -->
+        <!-- ── AGUA TRASERA (z-index 5) — rect + wave1 ── -->
+        <svg id="sea-back" viewBox="0 0 800 110"
+             xmlns="http://www.w3.org/2000/svg"
+             preserveAspectRatio="none"
+             aria-hidden="true">
+          <defs>
+            <linearGradient id="waterGrad" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stop-color="#7dd3fc" />
+              <stop offset="100%" stop-color="#0369a1" />
+            </linearGradient>
+          </defs>
+          <!-- Masa de agua trasera -->
+          <rect x="0" y="0" width="800" height="110" fill="url(#waterGrad)" opacity="0.9" />
+          <!-- Ola trasera -->
+          <path id="wave1"
+            d="M0,10 Q100,-3 200,10 Q300,23 400,10 Q500,-3 600,10 Q700,23 800,10 L800,110 L0,110 Z"
+            fill="#bae6fd" opacity="0.5" />
+        </svg>
+
+        <!-- ── FILA CENTRAL: los tres destinos (entre las dos capas de agua) ── -->
+        <div id="drop-zones-row">
+          <div class="drop-zone" id="drop-navigator" data-answer="1">
+            <img src="img/dest_navigator.png" alt="Navegador" class="drop-zone-img" />
+            <span class="drop-zone-label">Navegador</span>
+          </div>
+          <div class="drop-zone" id="drop-search" data-answer="2">
+            <img src="img/dest_search.png" alt="Buscador" class="drop-zone-img" />
+            <span class="drop-zone-label">Buscador</span>
+          </div>
+          <div class="drop-zone" id="drop-webpage" data-answer="3">
+            <img src="img/dest_webpage.png" alt="Página web" class="drop-zone-img" />
+            <span class="drop-zone-label">Página web</span>
+          </div>
+        </div>
+
+        <!-- ── AGUA FRONTAL (z-index 15) — wave2 + capa semitransparente ── -->
+        <svg id="sea-svg" viewBox="0 0 800 110"
+             xmlns="http://www.w3.org/2000/svg"
+             preserveAspectRatio="none"
+             aria-hidden="true">
+          <!-- Ola delantera -->
+          <path id="wave2"
+            d="M0,18 Q100,5 200,18 Q300,31 400,18 Q500,5 600,18 Q700,31 800,18 L800,110 L0,110 Z"
+            fill="#7dd3fc" opacity="0.4" />
+          <!-- Capa frontal semitransparente -->
+          <rect x="0" y="22" width="800" height="88" fill="url(#waterGrad)" opacity="0.35" />
+          <path
+            d="M0,22 Q100,14 200,22 Q300,30 400,22 Q500,14 600,22 Q700,30 800,22 L800,110 L0,110 Z"
+            fill="#7dd3fc" opacity="0.25" />
+        </svg>
+
+        <!-- ── BARRA DE PROGRESO ── -->
+        <div id="progress-bar-wrapper">
+          <div id="progress-track">
+            <div id="progress-fill"></div>
+          </div>
+          <img id="progress-marker" src="img/progressbar_icon.png" alt="" />
+          <img id="progress-victory" src="img/progressbar_victory.png" alt="" />
+        </div>
+
+      </div>
+      <!-- /stage-frame -->
+
+    </div>
+
+    <!-- Feedback overlay (correcto / incorrecto / victoria) -->
+    <div id="feedback-overlay" aria-live="polite">
+      <div id="feedback-frame">
+        <img id="feedback-img" src="" alt="" />
+        <p id="feedback-msg-text"></p>
+      </div>
+    </div>
+
+    <!-- Modal de explicación -->
+    <div id="explain-modal" aria-hidden="true">
+      <div id="explain-box">
+        <h2>¿Qué es cada cosa?</h2>
+        <div class="explain-entry">
+          <span class="explain-icon">⚓</span>
+          <div class="explain-body">
+            <strong>El Barco — Navegador</strong>
+            <p>Es el programa que abres para ir a internet. Si lo cierras, se acaba la navegación.</p>
+            <p class="explain-hint">Ejemplos: Google Chrome, Firefox, Safari, Edge</p>
+          </div>
+        </div>
+        <div class="explain-entry">
+          <span class="explain-icon">🗺️</span>
+          <div class="explain-body">
+            <strong>El Mapa — Buscador</strong>
+            <p>Aunque son páginas web, su propósito es ayudarte a encontrar otras páginas mediante un índice.</p>
+            <p class="explain-hint">Ejemplos: Google, Bing, DuckDuckGo</p>
+          </div>
+        </div>
+        <div class="explain-entry">
+          <span class="explain-icon">🏝️</span>
+          <div class="explain-body">
+            <strong>El Puerto — Página web</strong>
+            <p>El sitio donde vas a consumir o crear algo. Su propósito no es ayudarte a navegar por internet.</p>
+            <p class="explain-hint">Ejemplos: YouTube, Wikipedia, Amazon</p>
+          </div>
+        </div>
+        <button id="btn-explain-close">Entendido</button>
+      </div>
+    </div>
+
+  </div>
+  <!-- /screen-game -->
+
+  <!-- AUDIO -->
+  <audio id="snd-correct"  src="audio/correct.mp3"  preload="auto"></audio>
+  <audio id="snd-wrong"    src="audio/wrong.mp3"    preload="auto"></audio>
+  <audio id="snd-gameover" src="audio/gameover.mp3" preload="auto"></audio>
+  <audio id="snd-fanfare"  src="audio/fanfare.mp3"  preload="auto" loop></audio>
+
+  <!-- Fuegos artificiales (victoria) -->
+  <div id="fireworks-gif" aria-hidden="true"></div>
+
+  <!-- Overlay de carga -->
+  <div id="loading-overlay">
+    <p id="loading-text">Cargando…</p>
+  </div>
+
+  <script type="module" src="js/main.js"></script>
+
+  <!-- Pie de página del autor -->
+  <iframe id="tinyfoot-iframe" class="tinyfoot-iframe" src="/layout/tinyfoot.html" scrolling="no"></iframe>
+  <script src="/js/iframeanimation.js"></script>
+
+  <!-- Aviso pantalla pequeña -->
+  <script src="/js/mobile-warning.js"></script>
+
+</body>
+
+</html>

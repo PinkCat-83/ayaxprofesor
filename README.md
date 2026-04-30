@@ -72,6 +72,7 @@ ayaxprofesor/
 │   ├── extensions_task/[...]   # 🎯 El Desafío de las Extensiones – juego modular de extensiones de archivo (ver README_TASK.md)
 │   ├── explorer_task/[...]     # 🔍 Explorador de archivos con checklist (ver README_TASK.md)
 │   ├── word_task/[...]         # 🆎 Rosco de palabras para comprobar el nivel del alumnado (ver README_Tasks.md)
+│   ├── 🧨 dropimages_task/[...]   # Falta por realizar
 │   └── 🧨 anne.html            # Página de soluciones al ejercicio "The Voyage of the Marvelous Anne" (Falta modular, poca prioridad)
 |
 ├── CNAME

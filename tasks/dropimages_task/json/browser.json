@@ -1,0 +1,55 @@
+{
+  "pageTitle": "¿Navegador o Buscador?",
+  "pageSubtitle": "Arrastra cada elemento a su categoría correcta",
+  "imgfolder": "img/browser",
+
+  "niveles": [
+    {
+      "nombre": "Fácil",
+      "icono": "⚓",
+      "vidas": 5,
+      "preguntas": [
+        { "nombre": "Google Chrome",   "respuesta": "1", "img": "chrome.png"    },
+        { "nombre": "Google",          "respuesta": "2", "img": "google.png"    },
+        { "nombre": "YouTube",         "respuesta": "3", "img": "youtube.png"   },
+        { "nombre": "Firefox",         "respuesta": "1", "img": "firefox.png"   },
+        { "nombre": "Wikipedia",       "respuesta": "3", "img": "wikipedia.png" },
+        { "nombre": "Bing",            "respuesta": "2", "img": "bing.png"      }
+      ]
+    },
+    {
+      "nombre": "Normal",
+      "icono": "🗺️",
+      "vidas": 3,
+      "preguntas": [
+        { "nombre": "Safari",          "respuesta": "1", "img": "safari.png"      },
+        { "nombre": "DuckDuckGo",      "respuesta": "2", "img": "duckduckgo.png"  },
+        { "nombre": "Amazon",          "respuesta": "3", "img": "amazon.png"      },
+        { "nombre": "Microsoft Edge",  "respuesta": "1", "img": "edge.png"        },
+        { "nombre": "Google",          "respuesta": "2", "img": "google.png"      },
+        { "nombre": "Instagram",       "respuesta": "3", "img": "instagram.png"   },
+        { "nombre": "Google Chrome",   "respuesta": "1", "img": "chrome.png"      },
+        { "nombre": "Wikipedia",       "respuesta": "3", "img": "wikipedia.png"   }
+      ]
+    },
+    {
+      "nombre": "Difícil",
+      "icono": "🌊",
+      "vidas": 2,
+      "preguntas": [
+        { "nombre": "Brave",           "respuesta": "1", "img": "brave.png"       },
+        { "nombre": "Ecosia",          "respuesta": "2", "img": "ecosia.png"      },
+        { "nombre": "Twitch",          "respuesta": "3", "img": "twitch.png"      },
+        { "nombre": "Opera",           "respuesta": "1", "img": "opera.png"       },
+        { "nombre": "Yahoo! Search",   "respuesta": "2", "img": "yahoo.png"       },
+        { "nombre": "X (Twitter)",     "respuesta": "3", "img": "twitter.png"     },
+        { "nombre": "Vivaldi",         "respuesta": "1", "img": "vivaldi.png"     },
+        { "nombre": "Startpage",       "respuesta": "2", "img": "startpage.png"   },
+        { "nombre": "Spotify Web",     "respuesta": "3", "img": "spotify.png"     },
+        { "nombre": "Tor Browser",     "respuesta": "1", "img": "tor.png"         },
+        { "nombre": "Qwant",           "respuesta": "2", "img": "qwant.png"       },
+        { "nombre": "Google Maps",     "respuesta": "3", "img": "googlemaps.png"  }
+      ]
+    }
+  ]
+}

@@ -49,7 +49,7 @@ question_task/
 Cada "juego" es un HTML propio (como `perifericos_game.html`) que redirige a `game.html` pasándole su JSON por parámetro:
 
 ```html
-<meta http-equiv="refresh" content="0;url=game.html?config=perifericos.json" />
+<meta http-equiv="refresh" content="0;url=questions.html?config=perifericos.json" />
 ```
 
 Para crear un juego nuevo basta con:

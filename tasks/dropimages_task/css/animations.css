@@ -1,0 +1,275 @@
+/* ═══════════════════════════════════════════
+   DROP IMAGES – animaciones y keyframes
+   Basado en el gato saltarín + extensiones marítimas
+═══════════════════════════════════════════ */
+
+/* ── MENÚ – mascota flotante ─────────────── */
+.menu-cat {
+  animation: menuBob 2.8s ease-in-out infinite;
+}
+@keyframes menuBob {
+  0%, 100% { transform: translateY(0); }
+  50%       { transform: translateY(-10px); }
+}
+
+/* ── OLAS DEL ESCENARIO (SVG inline) ─────── */
+#wave1 { animation: waveAnim 3s ease-in-out infinite alternate; }
+#wave2 { animation: waveAnim 4s ease-in-out infinite alternate-reverse; }
+@keyframes waveAnim {
+  from { transform: translateX(-20px); }
+  to   { transform: translateX(20px); }
+}
+
+/* ── TARJETA ARRASTRABLE – entrada ──────── */
+#drag-card {
+  animation: popIn 0.4s cubic-bezier(0.34,1.56,0.64,1);
+}
+@keyframes popIn {
+  from { transform: translateX(-50%) scale(0.6); opacity: 0; }
+  to   { transform: translateX(-50%) scale(1);   opacity: 1; }
+}
+
+/* ── ZONAS DE DROP – shake en error ─────── */
+@keyframes zone-shake {
+  0%   { transform: translateX(0); }
+  15%  { transform: translateX(-6px); }
+  30%  { transform: translateX(6px); }
+  45%  { transform: translateX(-4px); }
+  60%  { transform: translateX(4px); }
+  75%  { transform: translateX(-2px); }
+  90%  { transform: translateX(2px); }
+  100% { transform: translateX(0); }
+}
+
+/* ── FUEGOS ARTIFICIALES ─────────────────── */
+.firework-particle {
+  animation: fwFade 0.9s ease-out forwards;
+}
+@keyframes fwFade {
+  0%   { opacity: 1; }
+  100% { opacity: 0; }
+}
+
+/* ── PANTALLAS FINALES – emojis ──────────── */
+.end-emoji {
+  animation: bounceIn 0.6s cubic-bezier(0.34,1.56,0.64,1);
+}
+.end-emoji.splashed {
+  animation: bounceIn 0.6s cubic-bezier(0.34,1.56,0.64,1), wobble 1s 0.7s ease-in-out;
+}
+@keyframes bounceIn {
+  from { transform: scale(0); opacity: 0; }
+  to   { transform: scale(1); opacity: 1; }
+}
+@keyframes wobble {
+  0%, 100% { transform: rotate(0deg); }
+  25%       { transform: rotate(-15deg); }
+  75%       { transform: rotate(15deg); }
+}
+
+
+/* ═══════════════════════════════════════════
+   ANIMACIONES MARÍTIMAS
+   Uso: añadir la clase al elemento deseado.
+   Combinables entre sí.
+═══════════════════════════════════════════ */
+
+/* ── FLOTANDO ────────────────────────────────────────────
+   Movimiento vertical suave. Misma base que petBob
+   pero generalizada como clase reutilizable.
+   Uso: class="anim-float"
+──────────────────────────────────────────────────────── */
+.anim-float {
+  animation: animFloat 3s ease-in-out infinite;
+}
+@keyframes animFloat {
+  0%, 100% { transform: translateY(0); }
+  50%       { transform: translateY(-8px); }
+}
+
+/* ── SOMBRA ──────────────────────────────────────────────
+   Sombra elíptica proyectada en la base del elemento
+   que se expande/contrae en sincronía con el flotado.
+   Uso: añadir un <div class="anim-shadow"> justo debajo
+   del elemento flotante.
+──────────────────────────────────────────────────────── */
+.anim-shadow {
+  width: 60%;
+  height: 10px;
+  margin: 0 auto;
+  background: radial-gradient(ellipse, rgba(0,0,0,0.35) 0%, transparent 70%);
+  border-radius: 50%;
+  animation: animShadow 3s ease-in-out infinite;
+  pointer-events: none;
+}
+@keyframes animShadow {
+  0%, 100% { transform: scaleX(1);    opacity: 0.35; }
+  50%       { transform: scaleX(0.7); opacity: 0.15; }
+}
+
+/* ── BALANCEO ────────────────────────────────────────────
+   Oscilación lateral con pivot en la base del elemento.
+   Tres intensidades disponibles.
+   Uso: class="anim-sway"        (suave, ±3°)
+        class="anim-sway-mid"    (medio, ±6°)
+        class="anim-sway-strong" (fuerte, ±12°)
+──────────────────────────────────────────────────────── */
+.anim-sway,
+.anim-sway-mid,
+.anim-sway-strong {
+  transform-origin: bottom center;
+}
+
+.anim-sway {
+  animation: animSway 4s ease-in-out infinite;
+}
+.anim-sway-mid {
+  animation: animSwayMid 3.5s ease-in-out infinite;
+}
+.anim-sway-strong {
+  animation: animSwayStrong 3s ease-in-out infinite;
+}
+
+@keyframes animSway {
+  0%, 100% { transform: rotate(-3deg); }
+  50%       { transform: rotate(3deg);  }
+}
+@keyframes animSwayMid {
+  0%, 100% { transform: rotate(-6deg); }
+  50%       { transform: rotate(6deg);  }
+}
+@keyframes animSwayStrong {
+  0%, 100% { transform: rotate(-12deg); }
+  50%       { transform: rotate(12deg);  }
+}
+
+/* ── AGUAS TRANQUILAS ────────────────────────────────────
+   Movimiento onduante muy suave, como en un lago en calma.
+   Combina traslación vertical mínima con ligera rotación.
+   Uso: class="anim-calm"
+──────────────────────────────────────────────────────── */
+.anim-calm {
+  animation: animCalm 5s ease-in-out infinite;
+}
+@keyframes animCalm {
+  0%   { transform: translateY(0)    rotate(0deg);    }
+  25%  { transform: translateY(-3px) rotate(0.5deg);  }
+  50%  { transform: translateY(-5px) rotate(0deg);    }
+  75%  { transform: translateY(-3px) rotate(-0.5deg); }
+  100% { transform: translateY(0)    rotate(0deg);    }
+}
+
+/* ── MAREJADA ────────────────────────────────────────────
+   Movimiento más pronunciado e irregular, simula oleaje.
+   Combina traslación con rotación y ligero escalado.
+   Uso: class="anim-surge"
+──────────────────────────────────────────────────────── */
+.anim-surge {
+  animation: animSurge 2.8s ease-in-out infinite;
+}
+@keyframes animSurge {
+  0%   { transform: translateY(0)     rotate(0deg)   scale(1);    }
+  20%  { transform: translateY(-10px) rotate(3deg)   scale(1.02); }
+  40%  { transform: translateY(-6px)  rotate(-1deg)  scale(0.99); }
+  60%  { transform: translateY(-14px) rotate(-3deg)  scale(1.03); }
+  80%  { transform: translateY(-4px)  rotate(2deg)   scale(1);    }
+  100% { transform: translateY(0)     rotate(0deg)   scale(1);    }
+}
+
+
+/* ═══════════════════════════════════════════
+   NUBES — sistema dinámico (3 tamaños)
+   Las nubes se generan por JS añadiendo divs
+   con las clases .cloud-sm / .cloud-md / .cloud-lg
+   dentro de #clouds-layer.
+   El CSS define forma, opacidad y animación
+   de desplazamiento. Cada tamaño tiene su
+   propia velocidad y dirección.
+═══════════════════════════════════════════ */
+
+/* Forma base compartida por todos los tamaños */
+.cloud-sm,
+.cloud-md,
+.cloud-lg {
+  position: absolute;
+  background: white;
+  border-radius: 50px;
+  opacity: 0;   /* el JS controla la opacidad al spawnear */
+  pointer-events: none;
+  will-change: transform;
+}
+
+/* Pseudo-elemento que forma la parte superior redondeada */
+.cloud-sm::before,
+.cloud-md::before,
+.cloud-lg::before {
+  content: '';
+  position: absolute;
+  background: white;
+  border-radius: 50%;
+  top: 0;
+  left: 15%;
+}
+
+/* ── Nube pequeña ── */
+.cloud-sm {
+  width:  80px;
+  height: 22px;
+  opacity: 0.55;
+}
+.cloud-sm::before {
+  width:  40px;
+  height: 40px;
+  top: -18px;
+  left: 15px;
+}
+
+/* ── Nube mediana ── */
+.cloud-md {
+  width:  140px;
+  height: 34px;
+  opacity: 0.65;
+}
+.cloud-md::before {
+  width:  70px;
+  height: 70px;
+  top: -32px;
+  left: 25px;
+}
+
+/* ── Nube grande ── */
+.cloud-lg {
+  width:  220px;
+  height: 50px;
+  opacity: 0.75;
+}
+.cloud-lg::before {
+  width:  110px;
+  height: 110px;
+  top: -50px;
+  left: 40px;
+}
+
+/* ── Animaciones de desplazamiento (izquierda → derecha) ── */
+/* El JS asigna la dirección y el delay aleatorio via style */
+
+@keyframes cloudMoveRight {
+  from { transform: translateX(-120%); }
+  to   { transform: translateX(120vw); }
+}
+
+@keyframes cloudMoveLeft {
+  from { transform: translateX(120vw); }
+  to   { transform: translateX(-120%); }
+}
+
+/* Velocidades por tamaño */
+.cloud-sm { animation: cloudMoveRight 35s linear infinite; }
+.cloud-md { animation: cloudMoveRight 50s linear infinite; }
+.cloud-lg { animation: cloudMoveRight 70s linear infinite; }
+
+/* Variante en sentido contrario — añadir clase .reverse */
+.cloud-sm.reverse { animation: cloudMoveLeft 40s linear infinite; }
+.cloud-md.reverse { animation: cloudMoveLeft 55s linear infinite; }
+.cloud-lg.reverse { animation: cloudMoveLeft 75s linear infinite; }
+

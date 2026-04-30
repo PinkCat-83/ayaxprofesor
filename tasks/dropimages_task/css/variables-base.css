@@ -1,0 +1,49 @@
+/* ═══════════════════════════════════════════
+   DROP IMAGES – variables y base
+   Fuente: 'Fredoka One' (display) + 'Nunito' (body)
+   Variables compartidas con el Design System (idénticas al gato saltarín)
+   + Variables marinas propias del escenario
+═══════════════════════════════════════════ */
+@import url('https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;600;800&display=swap');
+
+:root {
+  /* ── Design System compartido (idéntico al gato saltarín) ── */
+  --pink-light:  #fce7f3;
+  --pink:        #f9a8d4;
+  --pink-mid:    #ec4899;
+  --pink-dark:   #be185d;
+  --rose:        #fb7185;
+  --sky:         #bae6fd;
+  --sky-dark:    #0369a1;
+  --stone:       #78716c;
+  --gold:        #fcd34d;
+  --gold-dark:   #d97706;
+  --green:       #22c55e;
+  --correct:     #bbf7d0;
+  --wrong:       #fecaca;
+  --text-dark:   #1e1b4b;
+  --text-mid:    #4c1d95;
+  --radius-lg:   18px;
+  --shadow:      0 8px 32px rgba(190,24,93,0.18);
+
+  /* ── Paleta marina (usada dentro del escenario) ── */
+  --ocean-deep:    #0c2340;
+  --ocean-mid:     #0e4272;
+  --ocean-surface: #2196c4;
+  --ocean-light:   #a8d8ea;
+  --wave-foam:     #d4f1f9;
+  --wave-light:    #bde0f0;
+  --sky-horizon:   #87ceeb;
+  --halo-color:    #a8d8ea;
+  --radius-card:   14px;
+  --shadow-card:   0 4px 18px rgba(14, 66, 114, 0.22);
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html, body {
+  width: 100%; height: 100%;
+  font-family: 'Nunito', sans-serif;
+  background: var(--pink-light);
+  overflow: hidden;
+}

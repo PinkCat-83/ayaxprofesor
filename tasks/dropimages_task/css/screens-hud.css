@@ -1,0 +1,935 @@
+/* ═══════════════════════════════════════════
+   DROP IMAGES – pantallas y HUD
+═══════════════════════════════════════════ */
+
+/* ── SCREENS ─────────────────────────────── */
+.screen {
+  position: fixed;
+  inset: 0;
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.screen.active {
+  display: flex;
+}
+
+/* ══════════════════════════════════════════
+   MENÚ PRINCIPAL — idéntico al gato saltarín
+══════════════════════════════════════════ */
+#screen-menu {
+  background: linear-gradient(135deg, #fdf4ff 0%, #fce7f3 60%, #bfdbfe 100%);
+  justify-content: flex-start;
+  padding-top: 3rem;
+}
+
+/* Sin ::after — el gato saltarín no tiene ola decorativa inferior */
+.menu-bg {
+  position: absolute;
+  inset: 0;
+  background-image:
+    radial-gradient(circle at 20% 30%, #f9a8d470 0%, transparent 45%),
+    radial-gradient(circle at 80% 70%, #bae6fd80 0%, transparent 45%);
+  pointer-events: none;
+}
+
+.menu-content {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.5rem;
+  padding: 2rem;
+}
+
+.title-block {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.difficulty-selector {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+/* Idéntico al gato saltarín */
+.menu-cat {
+  position: absolute;
+  right: calc(100% + 1.5rem);
+  top: 0;
+  transform: translateY(-65%);
+  width: 260px;
+  height: auto;
+  filter: drop-shadow(0 4px 12px #f9a8d4aa);
+  pointer-events: none;
+}
+
+/* Tamaño idéntico al gato saltarín */
+h1 {
+  font-family: 'Fredoka One', cursive;
+  font-size: clamp(2.4rem, 6vw, 4rem);
+  color: var(--pink-dark);
+  letter-spacing: 1px;
+  text-shadow: 3px 3px 0 #fbcfe8, 5px 5px 0 #f9a8d4;
+}
+
+.subtitle {
+  font-size: 1.1rem;
+  font-weight: 800;
+  color: var(--text-mid);
+  letter-spacing: 0.05em;
+}
+
+/* Color idéntico al gato saltarín */
+.choose-label {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--stone);
+  text-align: center;
+  margin-bottom: 0.3rem;
+}
+
+#levels-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0;
+  scrollbar-width: thin;
+  scrollbar-color: var(--pink-mid) transparent;
+}
+
+#levels-container::-webkit-scrollbar { width: 5px; }
+#levels-container::-webkit-scrollbar-thumb {
+  background: var(--pink-mid);
+  border-radius: 99px;
+}
+
+.btn-diff {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  width: 220px;
+  padding: 0.9rem 1.1rem;
+  border: 3px solid var(--pink-mid);
+  border-radius: var(--radius-lg);
+  background: white;
+  cursor: pointer;
+  transition: transform 0.15s, box-shadow 0.15s, background 0.15s;
+  box-shadow: 0 4px 16px #f9a8d455;
+}
+
+.btn-diff:hover {
+  background: var(--pink-light);
+  transform: translateY(-3px) scale(1.03);
+  box-shadow: var(--shadow);
+}
+
+.btn-diff:active { transform: scale(0.97); }
+
+.diff-icon { font-size: 1.8rem; }
+
+.diff-name {
+  font-family: 'Fredoka One', cursive;
+  font-size: 1.3rem;
+  color: var(--pink-dark);
+  flex: 1;
+  text-align: left;
+}
+
+.diff-desc {
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--stone);
+}
+
+.diff-lives {
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--stone);
+  white-space: nowrap;
+}
+
+/* Botón de explicación (menú y juego) */
+.btn-explain {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.55rem 1.2rem;
+  border: 2px solid var(--wave-foam);
+  border-radius: var(--radius-lg);
+  background: rgba(255, 255, 255, 0.12);
+  backdrop-filter: blur(6px);
+  color: var(--wave-light);
+  font-family: 'Nunito', sans-serif;
+  font-weight: 800;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: background 0.15s, transform 0.15s;
+  margin-top: 0.3rem;
+}
+
+.btn-explain:hover {
+  background: rgba(168, 216, 234, 0.25);
+  transform: translateY(-2px);
+}
+
+/* ══════════════════════════════════════════
+   HUD (barra superior durante el juego)
+══════════════════════════════════════════ */
+#screen-game {
+  /* Idéntico al gato saltarín */
+  background: linear-gradient(180deg, #fdf4ff 0%, #fce7f3 100%);
+  flex-direction: column;
+  justify-content: flex-start;
+}
+
+#hud {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.5rem 1.2rem;
+  min-height: 39px;
+  background: white;
+  border-bottom: 2.5px solid var(--pink-light);
+  box-shadow: 0 2px 8px #f9a8d433;
+  z-index: 10;
+  position: relative;
+}
+
+#hud-progress {
+  font-family: 'Fredoka One', cursive;
+  color: transparent; /* invisible pero ocupa espacio igual que el gato saltarín */
+  font-size: 1.05rem;
+  user-select: none;
+  pointer-events: none;
+}
+
+#hud-controls {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  position: absolute;
+  right: 1.2rem;
+}
+
+/* Slider de volumen — Design System */
+.volume-icon {
+  font-size: 1rem;
+  line-height: 1;
+  user-select: none;
+}
+
+#volume-slider {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 72px;
+  height: 5px;
+  border-radius: 99px;
+  background: linear-gradient(90deg, var(--pink-dark) 0%, var(--pink-mid) 100%);
+  outline: none;
+  cursor: pointer;
+  transition: width 0.2s;
+}
+
+#volume-slider:hover { width: 90px; }
+
+#volume-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: var(--pink-dark);
+  border: 2px solid white;
+  box-shadow: 0 1px 4px #be185d55;
+  cursor: pointer;
+  transition: transform 0.15s;
+}
+
+#volume-slider::-webkit-slider-thumb:hover { transform: scale(1.25); }
+
+#volume-slider::-moz-range-thumb {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: var(--pink-dark);
+  border: 2px solid white;
+  box-shadow: 0 1px 4px #be185d55;
+  cursor: pointer;
+}
+
+#btn-menu-hud {
+  padding: 0.3rem 0.9rem;
+  border: 2px solid var(--pink-mid);
+  border-radius: 8px;
+  background: white;
+  color: var(--pink-dark);
+  font-family: 'Nunito', sans-serif;
+  font-weight: 800;
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+
+#btn-menu-hud:hover {
+  background: var(--pink-light);
+}
+
+/* ══════════════════════════════════════════
+   ESCENARIO DE JUEGO
+   Patrón idéntico al gato saltarín:
+   · #game-stage  = wrapper exterior con padding (sin borde)
+   · #stage-frame = recuadro interior con borde rosa + fondo marino
+══════════════════════════════════════════ */
+#game-stage {
+  position: relative;
+  flex: 1;
+  width: 100%;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  overflow: hidden;
+  /* Padding idéntico al gato saltarín */
+  padding: 2rem 5rem 5rem 5rem;
+}
+
+/* Recuadro interior — equivalente a #stage-svg del gato saltarín */
+#stage-frame {
+  position: relative;
+  width: 100%;
+  max-width: 900px;
+  aspect-ratio: 800 / 320;   /* idéntico al viewBox del gato saltarín */
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  overflow: hidden;
+
+  border: 3px solid var(--pink-mid);
+  border-radius: var(--radius-lg);
+  box-shadow: 0 4px 20px rgba(190, 24, 93, 0.2);
+
+  /* Capa 1: cielo sólido azul — igual que <rect fill="#7ec8e3"> en el SVG original */
+  background-color: #7ec8e3;
+}
+
+/* Todas las capas absolutas dentro de #stage-frame, en orden de apilamiento */
+
+/* CAPA 1: Cielo sólido — igual que <rect fill="#7ec8e3"> en el SVG original */
+#sky-layer {
+  position: absolute;
+  inset: 0;
+  background-color: #7ec8e3;
+  z-index: 0;
+  pointer-events: none;
+}
+
+/* CAPA 2: Nubes — encima del cielo, debajo del fondo */
+#clouds-layer {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+/* CAPA 3: background.webp con blur gaussiano 3px
+   Dimensiones replicadas de camera.js:
+   - zoom 1.1 → height = 320 * 1.1 = 352px → top = -16px (centrado vertical)
+   - width proporcional: 1600 * (352/669) ≈ 836.5px → left centrado
+   Usamos background-size y position para replicarlo sin JS */
+#stage-bg {
+  position: absolute;
+  top: -5%;          /* equivale a y = -16 sobre 320 ≈ -5% */
+  left: 50%;
+  transform: translateX(-50%);
+  width: 104%;       /* zoom 1.1 sobre el ancho */
+  height: 110%;      /* zoom 1.1 sobre el alto */
+  background-image: url('../img/background.webp');
+  background-size: cover;
+  background-position: center center;
+  z-index: 2;
+  pointer-events: none;
+  filter: blur(3px); /* feGaussianBlur stdDeviation="3" */
+}
+
+/* CAPA 4: Gaviotas — encima del fondo */
+#seagulls-layer {
+  position: absolute;
+  top: 5%;
+  left: 0;
+  width: 100%;
+  height: 25%;
+  z-index: 3;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+/* Agua trasera — detrás de los destinos */
+#sea-back {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 33.6%;
+  z-index: 5;
+  pointer-events: none;
+  overflow: visible;
+}
+
+/* Agua frontal — delante de los destinos */
+#sea-svg {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 33.6%;
+  z-index: 15;
+  pointer-events: none;
+  overflow: visible;
+}
+
+/* ── ZONA DE CONTENIDO DEL JUEGO (dentro de #stage-frame) ── */
+#game-content {
+  position: relative;
+  z-index: 10;
+  width: 100%;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  padding: 0.75rem 1rem 0;
+}
+
+/* ── FILA SUPERIOR: vidas + tarjeta + botón ── */
+#game-top-row {
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding-top: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+/* VIDAS */
+/* VIDAS — idéntico al gato saltarín */
+#hud-lives {
+  display: flex;
+  flex-direction: row;
+  gap: 0.35rem;
+  font-size: 1.5rem;
+  min-width: 80px;
+  position: absolute;
+  top: calc(3px + 0.5rem);
+  left: calc(3px + 0.5rem);
+  z-index: 20;
+  pointer-events: none;
+  filter: drop-shadow(0 1px 3px #0004);
+}
+
+#lives-icons {
+  display: flex;
+  gap: 0.35rem;
+  font-size: 1.5rem;
+}
+
+/* Emoji interrogante — esquina superior izquierda, debajo de las vidas */
+#btn-explain-game {
+  position: absolute;
+  top: calc(3px + 0.5rem + 1.5rem + 0.5rem); /* debajo de las vidas */
+  left: calc(3px + 0.5rem);
+  font-size: 1.6rem;
+  cursor: pointer;
+  display: inline-block;
+  animation: petBob 2.8s ease-in-out infinite;
+  filter: drop-shadow(0 2px 4px #0004);
+  user-select: none;
+  background: none;
+  border: none;
+  padding: 0;
+  pointer-events: auto;
+  z-index: 20;
+}
+/* ── TARJETA ARRASTRABLE — centrada igual que #peripheral-display del gato saltarín ── */
+#drag-card {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+  padding: 0.5rem 0.8rem;
+  background: transparent;
+  border: none;
+  border-radius: var(--radius-card);
+  box-shadow: none;
+  cursor: grab;
+  user-select: none;
+  width: 200px;
+  height: 60px;
+  touch-action: none;
+  transition: transform 0.12s;
+  will-change: transform;
+  position: absolute;
+  top: calc(3px + 0.4rem);
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 20;
+}
+
+#drag-card:active { cursor: grabbing; }
+
+#drag-card.dragging {
+  transform: translateX(-50%) scale(1.06) rotate(2deg);
+  box-shadow: 0 12px 36px rgba(14, 66, 114, 0.4);
+  z-index: 100;
+  opacity: 0.92;
+  cursor: grabbing;
+}
+
+#drag-card-img {
+  width: 40px;
+  height: 40px;
+  object-fit: contain;
+  border-radius: 6px;
+  flex-shrink: 0;
+  pointer-events: none;
+}
+
+/* Placeholder cuando no hay imagen */
+#drag-card-img:not([src]),
+#drag-card-img[src=""] {
+  display: none;
+}
+
+#drag-card-text {
+  font-family: 'Fredoka One', cursive;
+  font-size: clamp(0.85rem, 2.5vw, 1.1rem);
+  color: white;
+  line-height: 1.2;
+  pointer-events: none;
+  text-align: center;
+  white-space: normal;
+  word-break: break-word;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  text-shadow: 0 1px 4px #0008, 0 0 8px #0006;
+}
+
+/* Espacio central vacío (placeholder cuando la tarjeta está siendo arrastrada) */
+#drag-card-placeholder {
+  min-width: 140px;
+  max-width: 220px;
+  border: 2.5px dashed rgba(168, 216, 234, 0.5);
+  border-radius: var(--radius-card);
+  background: rgba(255, 255, 255, 0.05);
+}
+
+@keyframes petBob {
+  0%, 100% { transform: translateY(0); }
+  50%       { transform: translateY(-6px); }
+}
+
+/* ── FILA CENTRAL: tres zonas de drop ─────── */
+#drop-zones-row {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-around;
+  padding: 0 2rem;
+  z-index: 10;  /* entre sea-back (5) y sea-svg (15) */
+  pointer-events: auto;
+}
+  padding-bottom: 0.5rem;
+}
+
+/* Zona de drop individual */
+.drop-zone {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.6rem;
+  cursor: pointer;
+  position: relative;
+  border-radius: 16px;
+  padding: 0.5rem;
+  transition: transform 0.15s;
+}
+
+/* Imagen destino (barco / mapa / puerto) */
+.drop-zone-img {
+  width: clamp(100px, 18vw, 180px);
+  height: auto;
+  object-fit: contain;
+  filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.35));
+  transition: filter 0.25s, transform 0.25s;
+  pointer-events: none;
+}
+
+/* Halo sutil — contorno multicapa con transparencias crecientes */
+.drop-zone.halo {
+  transform: scale(1.04);
+}
+
+.drop-zone.halo .drop-zone-img {
+  filter:
+    drop-shadow(0 0  3px rgba(236, 72, 153, 0.9))
+    drop-shadow(0 0  8px rgba(236, 72, 153, 0.55))
+    drop-shadow(0 0 18px rgba(236, 72, 153, 0.25))
+    drop-shadow(0 4px 12px rgba(0, 0, 0, 0.35));
+}
+
+/* Feedback correcto / incorrecto */
+.drop-zone.correct .drop-zone-img {
+  filter:
+    drop-shadow(0 0  3px rgba(74, 222, 128, 0.9))
+    drop-shadow(0 0 10px rgba(74, 222, 128, 0.5))
+    drop-shadow(0 4px 8px rgba(0, 0, 0, 0.3));
+}
+
+.drop-zone.incorrect .drop-zone-img {
+  filter:
+    drop-shadow(0 0  3px rgba(248, 113, 113, 0.9))
+    drop-shadow(0 0 10px rgba(248, 113, 113, 0.5))
+    drop-shadow(0 4px 8px rgba(0, 0, 0, 0.3));
+  animation: zone-shake 0.35s ease;
+}
+
+/* Etiqueta de la zona */
+.drop-zone-label {
+  font-family: 'Fredoka One', cursive;
+  font-size: clamp(0.9rem, 2.5vw, 1.2rem);
+  color: #d4f1f9;
+  text-shadow: 0 2px 6px #0007;
+  text-align: center;
+  pointer-events: none;
+}
+
+/* ── BARRA DE PROGRESO ───────────────────── */
+#progress-bar-wrapper {
+  position: relative;
+  z-index: 20;
+  width: calc(100% - 2rem);
+  margin: 0 1rem 0.75rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+
+#progress-track {
+  width: 100%;
+  height: 12px;
+  background: rgba(190, 24, 93, 0.15);   /* rosa oscuro semitransparente */
+  border: 2px solid var(--pink-mid);
+  border-radius: 99px;
+  overflow: hidden;
+  box-shadow: inset 0 2px 6px rgba(190, 24, 93, 0.15);
+  position: relative;
+}
+
+#progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--pink-dark), var(--pink-mid));
+  border-radius: 99px;
+  transition: width 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 0 8px rgba(236, 72, 153, 0.5);
+  width: 0%;
+}
+
+/* Marcador que avanza sobre la barra */
+#progress-marker {
+  position: absolute;
+  top: 0;
+  left: 0;
+  transform: translate(-50%, -35%);
+  width: 28px;
+  height: 28px;
+  object-fit: contain;
+  filter: drop-shadow(0 2px 6px rgba(190, 24, 93, 0.4));
+  transition: left 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  pointer-events: none;
+  z-index: 2;
+}
+
+/* Imagen de victoria flotando al final de la barra */
+#progress-victory {
+  position: absolute;
+  top: 0;
+  right: 0;
+  transform: translate(25%, -35%);
+  width: 32px;
+  height: 32px;
+  object-fit: contain;
+  filter: drop-shadow(0 2px 6px rgba(190, 24, 93, 0.4));
+  pointer-events: none;
+  z-index: 2;
+  animation: petBob 2.8s ease-in-out infinite;
+}
+
+/* ══════════════════════════════════════════
+   FEEDBACK OVERLAY
+══════════════════════════════════════════ */
+#feedback-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 200;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.2s;
+}
+
+#feedback-overlay.show {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+#feedback-frame {
+  background: rgba(12, 35, 64, 0.85);
+  border: 3px solid var(--ocean-light);
+  border-radius: 24px;
+  padding: 1.5rem 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.75rem;
+  backdrop-filter: blur(8px);
+  box-shadow: 0 8px 40px #000a;
+  transform: scale(0);
+  transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+#feedback-overlay.show #feedback-frame {
+  transform: scale(1);
+}
+
+#feedback-img {
+  width: clamp(80px, 18vw, 160px);
+  height: auto;
+  object-fit: contain;
+}
+
+#feedback-msg-text {
+  font-family: 'Fredoka One', cursive;
+  font-size: 1.4rem;
+  text-align: center;
+}
+
+#feedback-overlay.correct-fb   #feedback-msg-text { color: #4ade80; }
+#feedback-overlay.incorrect-fb #feedback-msg-text { color: #f87171; }
+#feedback-overlay.victory-fb   #feedback-msg-text { color: var(--gold); }
+#feedback-overlay.gameover-fb  #feedback-msg-text { color: var(--rose); }
+
+/* Victoria: fondo más celebratorio */
+#feedback-overlay.victory-fb {
+  background: rgba(0, 0, 0, 0.5);
+}
+
+/* ══════════════════════════════════════════
+   MODAL DE EXPLICACIÓN
+══════════════════════════════════════════ */
+#explain-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 300;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  background: rgba(12, 35, 64, 0.75);
+  backdrop-filter: blur(6px);
+}
+
+#explain-modal.active { display: flex; }
+
+#explain-box {
+  background: #0e4272;
+  border: 2px solid var(--ocean-light);
+  border-radius: 22px;
+  padding: 2rem;
+  max-width: 520px;
+  width: calc(100% - 2rem);
+  color: var(--wave-light);
+  box-shadow: 0 16px 60px #000c;
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+}
+
+#explain-box h2 {
+  font-family: 'Fredoka One', cursive;
+  font-size: 1.8rem;
+  color: #d4f1f9;
+  text-align: center;
+}
+
+.explain-entry {
+  display: flex;
+  gap: 1rem;
+  align-items: flex-start;
+}
+
+.explain-icon { font-size: 2.2rem; flex-shrink: 0; }
+
+.explain-body strong {
+  font-family: 'Fredoka One', cursive;
+  font-size: 1.1rem;
+  color: var(--wave-foam);
+  display: block;
+  margin-bottom: 0.2rem;
+}
+
+.explain-body p {
+  font-size: 0.88rem;
+  line-height: 1.5;
+  color: var(--wave-light);
+  font-weight: 600;
+}
+
+.explain-hint {
+  font-size: 0.78rem;
+  color: var(--sky-horizon);
+  font-style: italic;
+  margin-top: 0.2rem;
+}
+
+#btn-explain-close {
+  align-self: center;
+  padding: 0.6rem 2rem;
+  border: none;
+  border-radius: 50px;
+  background: var(--ocean-surface);
+  color: white;
+  font-family: 'Fredoka One', cursive;
+  font-size: 1.05rem;
+  cursor: pointer;
+  transition: transform 0.15s, background 0.15s;
+}
+
+#btn-explain-close:hover {
+  background: var(--wave-foam);
+  color: var(--ocean-deep);
+  transform: translateY(-2px);
+}
+
+/* ══════════════════════════════════════════
+   FUEGOS ARTIFICIALES (victoria)
+══════════════════════════════════════════ */
+#fireworks-gif {
+  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: 200;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+#fireworks-gif.active { display: block; }
+
+#fireworks-gif img {
+  position: absolute;
+  transition: opacity 0.2s ease;
+}
+
+/* ══════════════════════════════════════════
+   PANTALLAS FINALES
+══════════════════════════════════════════ */
+#screen-victory {
+  background: linear-gradient(135deg, #f0fdf4, #dcfce7, #bbf7d0);
+}
+
+#screen-gameover {
+  background: linear-gradient(135deg, #fff1f2, #fce7f3, #bfdbfe);
+}
+
+.end-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  text-align: center;
+  padding: 2rem;
+}
+
+.end-emoji { font-size: 5rem; }
+
+.end-content h2 {
+  font-family: 'Fredoka One', cursive;
+  font-size: 2.4rem;
+  color: var(--pink-dark);
+}
+
+.end-content p {
+  font-size: 1rem;
+  color: var(--stone);
+  font-weight: 600;
+}
+
+.btn-end {
+  padding: 0.75rem 2.2rem;
+  border: none;
+  border-radius: 50px;
+  background: var(--pink-dark);
+  color: white;
+  font-family: 'Fredoka One', cursive;
+  font-size: 1.15rem;
+  cursor: pointer;
+  box-shadow: 0 4px 16px #be185d44;
+  transition: transform 0.15s, box-shadow 0.15s;
+}
+
+.btn-end:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px #be185d66;
+}
+
+.btn-end:active { transform: scale(0.96); }
+
+.btn-end.secondary {
+  background: white;
+  color: var(--pink-dark);
+  border: 2.5px solid var(--pink-mid);
+  box-shadow: none;
+}
+
+/* ══════════════════════════════════════════
+   OVERLAY DE CARGA
+══════════════════════════════════════════ */
+#loading-overlay {
+  position: fixed;
+  inset: 0;
+  background: #000;
+  z-index: 9999;
+  display: none;
+  align-items: center;
+  justify-content: center;
+}
+
+#loading-overlay.active {
+  display: flex;
+}
+
+#loading-text {
+  font-family: 'Fredoka One', cursive;
+  font-size: 1.8rem;
+  color: white;
+  letter-spacing: 0.05em;
+  animation: loadingPulse 1.2s ease-in-out infinite;
+}
+
+@keyframes loadingPulse {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0.4; }
+}
