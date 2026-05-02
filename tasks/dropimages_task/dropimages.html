@@ -92,7 +92,7 @@
         <!-- /game-content -->
 
         <!-- ── AGUA — SVG idéntico al gato saltarín (fondo + olas + capa frontal) ── -->
-        <!-- ── AGUA TRASERA (z-index 5) — rect + wave1 ── -->
+        <!-- ── AGUA TRASERA — desactivada temporalmente
         <svg id="sea-back" viewBox="0 0 800 110"
              xmlns="http://www.w3.org/2000/svg"
              preserveAspectRatio="none"
@@ -103,15 +103,16 @@
               <stop offset="100%" stop-color="#0369a1" />
             </linearGradient>
           </defs>
-          <!-- Masa de agua trasera -->
           <rect x="0" y="0" width="800" height="110" fill="url(#waterGrad)" opacity="0.9" />
-          <!-- Ola trasera -->
           <path id="wave1"
             d="M0,10 Q100,-3 200,10 Q300,23 400,10 Q500,-3 600,10 Q700,23 800,10 L800,110 L0,110 Z"
             fill="#bae6fd" opacity="0.5" />
         </svg>
+        ── -->
 
-        <!-- ── FILA CENTRAL: los tres destinos (entre las dos capas de agua) ── -->
+        <!-- ── AGUA FRONTAL — desactivada temporalmente
+        <svg id="sea-svg" viewBox="0 0 800 110"
+        <!-- ── FILA CENTRAL: los tres destinos ── -->
         <div id="drop-zones-row">
           <div class="drop-zone" id="drop-navigator" data-answer="1">
             <img src="img/dest_navigator.png" alt="Navegador" class="drop-zone-img" />
@@ -119,6 +120,7 @@
           </div>
           <div class="drop-zone" id="drop-search" data-answer="2">
             <img src="img/dest_search.png" alt="Buscador" class="drop-zone-img" />
+            <div class="float-shadow"></div>
             <span class="drop-zone-label">Buscador</span>
           </div>
           <div class="drop-zone" id="drop-webpage" data-answer="3">
@@ -127,43 +129,24 @@
           </div>
         </div>
 
-        <!-- ── AGUA FRONTAL (z-index 15) — wave2 + capa semitransparente ── -->
-        <svg id="sea-svg" viewBox="0 0 800 110"
-             xmlns="http://www.w3.org/2000/svg"
-             preserveAspectRatio="none"
-             aria-hidden="true">
-          <!-- Ola delantera -->
-          <path id="wave2"
-            d="M0,18 Q100,5 200,18 Q300,31 400,18 Q500,5 600,18 Q700,31 800,18 L800,110 L0,110 Z"
-            fill="#7dd3fc" opacity="0.4" />
-          <!-- Capa frontal semitransparente -->
-          <rect x="0" y="22" width="800" height="88" fill="url(#waterGrad)" opacity="0.35" />
-          <path
-            d="M0,22 Q100,14 200,22 Q300,30 400,22 Q500,14 600,22 Q700,30 800,22 L800,110 L0,110 Z"
-            fill="#7dd3fc" opacity="0.25" />
-        </svg>
-
         <!-- ── BARRA DE PROGRESO ── -->
         <div id="progress-bar-wrapper">
           <div id="progress-track">
             <div id="progress-fill"></div>
           </div>
           <img id="progress-marker" src="img/progressbar_icon.png" alt="" />
-          <img id="progress-victory" src="img/progressbar_victory.png" alt="" />
+        </div>
+
+        <!-- Feedback overlay — dentro del stage-frame para no salirse del tablero -->
+        <div id="feedback-overlay" aria-live="polite">
+          <div id="feedback-frame">
+            <img id="feedback-img" src="" alt="" />
+            <p id="feedback-msg-text"></p>
+          </div>
         </div>
 
       </div>
       <!-- /stage-frame -->
-
-    </div>
-
-    <!-- Feedback overlay (correcto / incorrecto / victoria) -->
-    <div id="feedback-overlay" aria-live="polite">
-      <div id="feedback-frame">
-        <img id="feedback-img" src="" alt="" />
-        <p id="feedback-msg-text"></p>
-      </div>
-    </div>
 
     <!-- Modal de explicación -->
     <div id="explain-modal" aria-hidden="true">

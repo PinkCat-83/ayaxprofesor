@@ -5,6 +5,8 @@
 
 import { cargarNiveles, cablearBotones } from './engine.js';
 import { initDrag }                      from './drag.js';
+import { initClouds }                    from './clouds.js';
+import { initSeagulls }                  from './seagulls.js';
 
 // Imágenes fijas del juego — se precargan una sola vez al arrancar
 const STATIC_IMAGES = [
@@ -27,8 +29,10 @@ function precargarEstaticas() {
 }
 
 document.addEventListener('DOMContentLoaded', async () => {
-  precargarEstaticas();          // lanza la precarga sin esperar
-  await cargarNiveles();         // carga JSON y construye el menú
-  cablearBotones();              // listeners de HUD, explicación, victoria, gameover
-  initDrag();                    // listeners de drag & drop de la tarjeta
+  precargarEstaticas();
+  await cargarNiveles();
+  cablearBotones();
+  initDrag();
+  initClouds();
+  initSeagulls();
 });

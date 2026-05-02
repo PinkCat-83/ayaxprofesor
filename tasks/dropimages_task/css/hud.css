@@ -1,0 +1,103 @@
+/* ═══════════════════════════════════════════
+   DROP IMAGES – hud.css
+   Barra superior durante el juego (HUD)
+═══════════════════════════════════════════ */
+
+#screen-game {
+  background: linear-gradient(180deg, #fdf4ff 0%, #fce7f3 100%);
+  flex-direction: column;
+  justify-content: flex-start;
+}
+
+#hud {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.5rem 1.2rem;
+  min-height: 39px;
+  background: white;
+  border-bottom: 2.5px solid var(--pink-light);
+  box-shadow: 0 2px 8px #f9a8d433;
+  z-index: 10;
+  position: relative;
+}
+
+/* Invisible pero ocupa espacio igual que el gato saltarín */
+#hud-progress {
+  font-family: 'Fredoka One', cursive;
+  color: transparent;
+  font-size: 1.05rem;
+  user-select: none;
+  pointer-events: none;
+}
+
+#hud-controls {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  position: absolute;
+  right: 1.2rem;
+}
+
+/* ── SLIDER DE VOLUMEN ───────────────────── */
+.volume-icon {
+  font-size: 1rem;
+  line-height: 1;
+  user-select: none;
+}
+
+#volume-slider {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 72px;
+  height: 5px;
+  border-radius: 99px;
+  background: linear-gradient(90deg, var(--pink-dark) 0%, var(--pink-mid) 100%);
+  outline: none;
+  cursor: pointer;
+  transition: width 0.2s;
+}
+
+#volume-slider:hover { width: 90px; }
+
+#volume-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: var(--pink-dark);
+  border: 2px solid white;
+  box-shadow: 0 1px 4px #be185d55;
+  cursor: pointer;
+  transition: transform 0.15s;
+}
+
+#volume-slider::-webkit-slider-thumb:hover { transform: scale(1.25); }
+
+#volume-slider::-moz-range-thumb {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: var(--pink-dark);
+  border: 2px solid white;
+  box-shadow: 0 1px 4px #be185d55;
+  cursor: pointer;
+}
+
+/* ── BOTÓN MENÚ ──────────────────────────── */
+#btn-menu-hud {
+  padding: 0.3rem 0.9rem;
+  border: 2px solid var(--pink-mid);
+  border-radius: 8px;
+  background: white;
+  color: var(--pink-dark);
+  font-family: 'Nunito', sans-serif;
+  font-weight: 800;
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+
+#btn-menu-hud:hover { background: var(--pink-light); }

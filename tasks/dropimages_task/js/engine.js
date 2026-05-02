@@ -167,7 +167,7 @@ function actualizarHUD() {
     ? (state.indexActual / state.preguntas.length) * 100
     : 0;
   if (progressBarFill) progressBarFill.style.width = `${pct}%`;
-  if (progressMarker)  progressMarker.style.left = `calc(${pct}% - 14px)`;
+  if (progressMarker)  progressMarker.style.left = `${pct}%`;
 }
 
 // ── MOSTRAR PREGUNTA ──────────────────────────────────────
@@ -216,24 +216,25 @@ function resetDropZones() {
 export function manejarDrop(answerId) {
   if (state.bloqueado) return;
   state.bloqueado = true;
-  if (dragCard) dragCard.draggable = false; // impedir nuevo arrastre durante feedback
+  if (dragCard) dragCard.draggable = false;
 
   const correcta = answerId === state.respuestaCorrecta;
 
-  // Marcar visualmente la zona destino y la tarjeta
   const zonaUsada = dropZones.find(z => z && z.dataset.answer === answerId);
   const zonaBuena = dropZones.find(z => z && z.dataset.answer === state.respuestaCorrecta);
 
   if (zonaUsada)  zonaUsada.classList.add(correcta ? 'correct' : 'incorrect');
-  if (!correcta && zonaBuena) {
-    setTimeout(() => zonaBuena.classList.add('correct'), 200);
-  }
   if (dragCard) dragCard.classList.add(correcta ? 'correct' : 'incorrect');
 
   if (correcta) {
     playSound('correct');
     mostrarFeedback('✓ ¡Correcto!', true);
-    setTimeout(() => avanzar(), FEEDBACK_DELAY);
+
+    const timer = setTimeout(() => avanzar(), FEEDBACK_DELAY);
+    feedbackOverlay?.addEventListener('click', () => {
+      clearTimeout(timer);
+      avanzar();
+    }, { once: true });
 
   } else {
     playSound('wrong');
@@ -242,17 +243,25 @@ export function manejarDrop(answerId) {
     actualizarHUD();
 
     if (state.vidas <= 0) {
-      setTimeout(() => {
+      const timer = setTimeout(() => gameOver(), FEEDBACK_DELAY);
+      feedbackOverlay?.addEventListener('click', () => {
+        clearTimeout(timer);
         gameOver();
-      }, FEEDBACK_DELAY);
+      }, { once: true });
+
     } else {
-      setTimeout(() => {
+      const reanudar = () => {
         ocultarFeedback();
         resetDragCard();
         resetDropZones();
         state.bloqueado = false;
         if (dragCard) dragCard.draggable = true;
-      }, FEEDBACK_DELAY);
+      };
+      const timer = setTimeout(reanudar, FEEDBACK_DELAY);
+      feedbackOverlay?.addEventListener('click', () => {
+        clearTimeout(timer);
+        reanudar();
+      }, { once: true });
     }
   }
 }
@@ -275,24 +284,25 @@ function avanzar() {
 }
 
 // ── FEEDBACK ──────────────────────────────────────────────
-const FEEDBACK_DELAY = 1400; // ms que se muestra el feedback
+const FEEDBACK_DELAY = 2900; // ms que se muestra el feedback
 
 function mostrarFeedback(msg, ok) {
   if (!feedbackOverlay || !feedbackMsgText) return;
   feedbackMsgText.textContent = msg;
   feedbackOverlay.className = 'show ' + (ok ? 'correct-fb' : 'incorrect-fb');
 
-  const feedbackImg = document.getElementById('feedback-img');
-  if (feedbackImg) {
-    feedbackImg.src          = ok ? 'img/ok.png' : 'img/wrong.png';
-    feedbackImg.style.display = '';
+  const feedbackFrame = document.getElementById('feedback-frame');
+  if (feedbackFrame) {
+    feedbackFrame.style.backgroundImage = ok
+      ? "url('img/ok.png')"
+      : "url('img/wrong.png')";
   }
 }
 
 function ocultarFeedback() {
   if (feedbackOverlay) feedbackOverlay.className = '';
-  const feedbackImg = document.getElementById('feedback-img');
-  if (feedbackImg) { feedbackImg.src = ''; feedbackImg.style.display = 'none'; }
+  const feedbackFrame = document.getElementById('feedback-frame');
+  if (feedbackFrame) feedbackFrame.style.backgroundImage = '';
 }
 
 // ── MODAL DE EXPLICACIÓN ──────────────────────────────────
@@ -319,11 +329,8 @@ function victoria() {
     feedbackOverlay.className = 'show victory-fb';
   }
 
-  const feedbackImg = document.getElementById('feedback-img');
-  if (feedbackImg) {
-    feedbackImg.src   = 'img/fanfare.png';
-    feedbackImg.style.display = '';
-  }
+  const feedbackFrame = document.getElementById('feedback-frame');
+  if (feedbackFrame) feedbackFrame.style.backgroundImage = "url('img/fanfare.png')";
 
   // Cualquier clic en el overlay vuelve al menú
   feedbackOverlay?.addEventListener('click', () => {
@@ -345,11 +352,8 @@ function gameOver() {
     feedbackOverlay.className = 'show gameover-fb';
   }
 
-  const feedbackImg = document.getElementById('feedback-img');
-  if (feedbackImg) {
-    feedbackImg.src           = 'img/gameover.png';
-    feedbackImg.style.display = '';
-  }
+  const feedbackFrame = document.getElementById('feedback-frame');
+  if (feedbackFrame) feedbackFrame.style.backgroundImage = "url('img/gameover.png')";
 
   // Cualquier clic en el overlay vuelve al menú
   feedbackOverlay?.addEventListener('click', () => {

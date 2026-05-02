@@ -1,0 +1,213 @@
+/* ═══════════════════════════════════════════
+   DROP IMAGES – components.css
+   Barra de progreso, feedback, modal y fuegos
+═══════════════════════════════════════════ */
+
+/* ── BARRA DE PROGRESO ───────────────────── */
+#progress-bar-wrapper {
+  position: relative;
+  z-index: 20;
+  width: calc(100% - 2rem);
+  margin: 0 1rem 0.75rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+
+#progress-track {
+  width: 100%;
+  height: 12px;
+  background: rgba(190, 24, 93, 0.15);
+  border: 2px solid var(--pink-mid);
+  border-radius: 99px;
+  box-shadow: inset 0 2px 6px rgba(190, 24, 93, 0.15);
+  position: relative;
+  overflow: visible;
+}
+
+#progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--pink-dark), var(--pink-mid));
+  border-radius: 99px;
+  transition: width 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 0 8px rgba(236, 72, 153, 0.5);
+  width: 0%;
+  max-width: 100%;
+}
+
+#progress-marker {
+  position: absolute;
+  top: -28px;
+  left: 0;
+  transform: none;
+  width: 48px;
+  height: 48px;
+  object-fit: contain;
+  filter: drop-shadow(0 2px 6px rgba(190, 24, 93, 0.4));
+  transition: left 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  pointer-events: none;
+  z-index: 2;
+  animation: progressBob 2.5s ease-in-out infinite;
+}
+
+/* ── FEEDBACK OVERLAY ────────────────────── */
+#feedback-overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 50;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.2s;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+}
+
+#feedback-overlay.show {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+#feedback-frame {
+  border: 3px solid var(--pink-mid);
+  border-radius: 18px;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+  box-shadow: 0 8px 40px rgba(190, 24, 93, 0.3);
+  transform: scale(0);
+  transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+  overflow: hidden;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  width: clamp(160px, 28vw, 320px);
+  height: clamp(120px, 21vw, 240px);
+  background-color: rgba(190, 24, 93, 0.1);
+}
+
+#feedback-overlay.show #feedback-frame { transform: scale(1); }
+
+#feedback-img { display: none !important; }
+
+#feedback-msg-text {
+  font-family: 'Fredoka One', cursive;
+  font-size: 1.1rem;
+  text-align: center;
+  color: #000;
+  background: rgba(255, 255, 255, 0.65);
+  padding: 0.25rem 0.75rem;
+  width: 100%;
+  border-radius: 0 0 14px 14px;
+}
+
+#feedback-overlay.correct-fb   #feedback-msg-text,
+#feedback-overlay.incorrect-fb #feedback-msg-text,
+#feedback-overlay.victory-fb   #feedback-msg-text,
+#feedback-overlay.gameover-fb  #feedback-msg-text { color: #000; }
+
+#feedback-overlay.victory-fb { background: rgba(0, 0, 0, 0.5); }
+
+/* ── MODAL DE EXPLICACIÓN ────────────────── */
+#explain-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 300;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  background: rgba(190, 24, 93, 0.15);
+  backdrop-filter: blur(6px);
+}
+
+#explain-modal.active { display: flex; }
+
+#explain-box {
+  background: white;
+  border: 3px solid var(--pink-light);
+  border-radius: var(--radius-lg);
+  padding: 2rem;
+  max-width: 520px;
+  width: calc(100% - 2rem);
+  box-shadow: 0 16px 48px rgba(190, 24, 93, 0.2);
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+}
+
+#explain-box h2 {
+  font-family: 'Fredoka One', cursive;
+  font-size: 1.8rem;
+  color: var(--pink-dark);
+  text-align: center;
+}
+
+.explain-entry {
+  display: flex;
+  gap: 1rem;
+  align-items: flex-start;
+}
+
+.explain-icon { font-size: 2.2rem; flex-shrink: 0; }
+
+.explain-body strong {
+  font-family: 'Fredoka One', cursive;
+  font-size: 1.1rem;
+  color: var(--pink-dark);
+  display: block;
+  margin-bottom: 0.2rem;
+}
+
+.explain-body p {
+  font-size: 0.88rem;
+  line-height: 1.5;
+  color: var(--stone);
+  font-weight: 600;
+}
+
+.explain-hint {
+  font-size: 0.78rem;
+  color: var(--text-mid);
+  font-style: italic;
+  margin-top: 0.2rem;
+}
+
+#btn-explain-close {
+  align-self: center;
+  padding: 0.6rem 2rem;
+  border: none;
+  border-radius: 50px;
+  background: var(--pink-dark);
+  color: white;
+  font-family: 'Fredoka One', cursive;
+  font-size: 1.05rem;
+  cursor: pointer;
+  box-shadow: 0 4px 16px #be185d44;
+  transition: transform 0.15s, box-shadow 0.15s;
+}
+
+#btn-explain-close:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px #be185d66;
+}
+
+/* ── FUEGOS ARTIFICIALES ─────────────────── */
+#fireworks-gif {
+  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: 200;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+#fireworks-gif.active { display: block; }
+
+#fireworks-gif img {
+  position: absolute;
+  transition: opacity 0.2s ease;
+}

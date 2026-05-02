@@ -29,6 +29,12 @@
   to   { transform: translateX(-50%) scale(1);   opacity: 1; }
 }
 
+/* ── SHIMMER DE AGUA sobre elementos flotantes ── */
+@keyframes waterShimmer {
+  0%, 100% { opacity: 0.6; transform: scaleX(1); }
+  50%       { opacity: 1;   transform: scaleX(1.05); }
+}
+
 /* ── ZONAS DE DROP – shake en error ─────── */
 @keyframes zone-shake {
   0%   { transform: translateX(0); }
@@ -74,7 +80,38 @@
    Combinables entre sí.
 ═══════════════════════════════════════════ */
 
-/* ── FLOTANDO ────────────────────────────────────────────
+/* ── MARCADOR DE BARRA DE PROGRESO ──────────────────────── */
+@keyframes progressBob {
+  0%, 100% { transform: translateY(0); }
+  50%       { transform: translateY(-4px); }
+}
+
+/* ── FLOTADO DEL MAPA CON SOMBRA SINCRONIZADA ────────────
+   El mapa sube y baja; la sombra se encoge cuando sube
+   y se expande cuando baja, en perfecta sincronía.
+──────────────────────────────────────────────────────── */
+@keyframes animMapFloat {
+  0%, 100% { transform: translateY(0); }
+  50%       { transform: translateY(-12px); }
+}
+
+@keyframes animMapShadow {
+  0%, 100% { width: 60px; height: 16px; opacity: 0.45; }
+  50%       { width: 35px; height: 10px; opacity: 0.2;  }
+}
+
+/* ── NAVEGACIÓN DEL BARCO ────────────────────────────────
+   Flotado vertical + giro suave ±3° desde la base
+──────────────────────────────────────────────────────── */
+.anim-sail {
+  transform-origin: bottom center;
+  animation: animSail 4s ease-in-out infinite;
+}
+@keyframes animSail {
+  0%   { transform: rotate(-3deg); }
+  50%  { transform: rotate(3deg);  }
+  100% { transform: rotate(-3deg); }
+}
    Movimiento vertical suave. Misma base que petBob
    pero generalizada como clase reutilizable.
    Uso: class="anim-float"

@@ -1,0 +1,230 @@
+/* ═══════════════════════════════════════════
+   DROP IMAGES – screens.css
+   Pantallas base, menú principal y pantallas finales
+═══════════════════════════════════════════ */
+
+/* ── PANTALLAS BASE ──────────────────────── */
+.screen {
+  position: fixed;
+  inset: 0;
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.screen.active { display: flex; }
+
+/* ── MENÚ PRINCIPAL ──────────────────────── */
+#screen-menu {
+  background: linear-gradient(135deg, #fdf4ff 0%, #fce7f3 60%, #bfdbfe 100%);
+  justify-content: flex-start;
+  padding-top: 3rem;
+}
+
+.menu-bg {
+  position: absolute;
+  inset: 0;
+  background-image:
+    radial-gradient(circle at 20% 30%, #f9a8d470 0%, transparent 45%),
+    radial-gradient(circle at 80% 70%, #bae6fd80 0%, transparent 45%);
+  pointer-events: none;
+}
+
+.menu-content {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.5rem;
+  padding: 2rem;
+}
+
+.title-block {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.difficulty-selector {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.menu-cat {
+  position: absolute;
+  right: calc(100% + 1.5rem);
+  top: 0;
+  transform: translateY(-65%);
+  width: 260px;
+  height: auto;
+  filter: drop-shadow(0 4px 12px #f9a8d4aa);
+  pointer-events: none;
+}
+
+h1 {
+  font-family: 'Fredoka One', cursive;
+  font-size: clamp(2.4rem, 6vw, 4rem);
+  color: var(--pink-dark);
+  letter-spacing: 1px;
+  text-shadow: 3px 3px 0 #fbcfe8, 5px 5px 0 #f9a8d4;
+}
+
+.subtitle {
+  font-size: 1.1rem;
+  font-weight: 800;
+  color: var(--text-mid);
+  letter-spacing: 0.05em;
+}
+
+.choose-label {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--stone);
+  text-align: center;
+  margin-bottom: 0.3rem;
+}
+
+#levels-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0;
+  scrollbar-width: thin;
+  scrollbar-color: var(--pink-mid) transparent;
+}
+
+#levels-container::-webkit-scrollbar { width: 5px; }
+#levels-container::-webkit-scrollbar-thumb {
+  background: var(--pink-mid);
+  border-radius: 99px;
+}
+
+.btn-diff {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  width: 220px;
+  padding: 0.9rem 1.1rem;
+  border: 3px solid var(--pink-mid);
+  border-radius: var(--radius-lg);
+  background: white;
+  cursor: pointer;
+  transition: transform 0.15s, box-shadow 0.15s, background 0.15s;
+  box-shadow: 0 4px 16px #f9a8d455;
+}
+
+.btn-diff:hover {
+  background: var(--pink-light);
+  transform: translateY(-3px) scale(1.03);
+  box-shadow: var(--shadow);
+}
+
+.btn-diff:active { transform: scale(0.97); }
+
+.diff-icon { font-size: 1.8rem; }
+
+.diff-name {
+  font-family: 'Fredoka One', cursive;
+  font-size: 1.3rem;
+  color: var(--pink-dark);
+  flex: 1;
+  text-align: left;
+}
+
+.diff-desc,
+.diff-lives {
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--stone);
+  white-space: nowrap;
+}
+
+/* ── PANTALLAS FINALES (heredadas, por compatibilidad) ── */
+#screen-victory {
+  background: linear-gradient(135deg, #f0fdf4, #dcfce7, #bbf7d0);
+}
+
+#screen-gameover {
+  background: linear-gradient(135deg, #fff1f2, #fce7f3, #bfdbfe);
+}
+
+.end-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  text-align: center;
+  padding: 2rem;
+}
+
+.end-emoji { font-size: 5rem; }
+
+.end-content h2 {
+  font-family: 'Fredoka One', cursive;
+  font-size: 2.4rem;
+  color: var(--pink-dark);
+}
+
+.end-content p {
+  font-size: 1rem;
+  color: var(--stone);
+  font-weight: 600;
+}
+
+.btn-end {
+  padding: 0.75rem 2.2rem;
+  border: none;
+  border-radius: 50px;
+  background: var(--pink-dark);
+  color: white;
+  font-family: 'Fredoka One', cursive;
+  font-size: 1.15rem;
+  cursor: pointer;
+  box-shadow: 0 4px 16px #be185d44;
+  transition: transform 0.15s, box-shadow 0.15s;
+}
+
+.btn-end:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px #be185d66;
+}
+
+.btn-end:active { transform: scale(0.96); }
+
+.btn-end.secondary {
+  background: white;
+  color: var(--pink-dark);
+  border: 2.5px solid var(--pink-mid);
+  box-shadow: none;
+}
+
+/* ── OVERLAY DE CARGA ────────────────────── */
+#loading-overlay {
+  position: fixed;
+  inset: 0;
+  background: #000;
+  z-index: 9999;
+  display: none;
+  align-items: center;
+  justify-content: center;
+}
+
+#loading-overlay.active { display: flex; }
+
+#loading-text {
+  font-family: 'Fredoka One', cursive;
+  font-size: 1.8rem;
+  color: white;
+  letter-spacing: 0.05em;
+  animation: loadingPulse 1.2s ease-in-out infinite;
+}
+
+@keyframes loadingPulse {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0.4; }
+}
