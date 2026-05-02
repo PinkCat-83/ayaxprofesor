@@ -96,7 +96,6 @@
         { "nombre": "AltaVista",         "respuesta": "2", "img": "altavista.png"   },
         { "nombre": "Terra",             "respuesta": "2", "img": "terra.png"       },
         { "nombre": "Hotmail",           "respuesta": "3", "img": "hotmail.png"     },
-        { "nombre": "Messenger",         "respuesta": "3", "img": "msn.png"   },
         { "nombre": "MySpace",           "respuesta": "3", "img": "myspace.png"     },
         { "nombre": "Fotolog",           "respuesta": "3", "img": "fotolog.png"     },
         { "nombre": "Tuenti",            "respuesta": "3", "img": "tuenti.png"      },
