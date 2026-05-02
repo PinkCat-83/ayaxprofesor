@@ -110,7 +110,22 @@
 #feedback-overlay.victory-fb   #feedback-msg-text,
 #feedback-overlay.gameover-fb  #feedback-msg-text { color: #000; }
 
-#feedback-overlay.victory-fb { background: rgba(0, 0, 0, 0.5); }
+/* Victoria y derrota — ocupan todo el tablero */
+#feedback-overlay.victory-fb,
+#feedback-overlay.gameover-fb {
+  background: rgba(0, 0, 0, 0.5);
+}
+
+#feedback-overlay.victory-fb  #feedback-frame,
+#feedback-overlay.gameover-fb #feedback-frame {
+  width: 100%;
+  height: 100%;
+  border-radius: 0;
+  border: none;
+  box-shadow: none;
+  background-size: 100% auto;
+  background-color: #000;   /* fondo negro para las franjas laterales si las hay */
+}
 
 /* ── MODAL DE EXPLICACIÓN ────────────────── */
 #explain-modal {

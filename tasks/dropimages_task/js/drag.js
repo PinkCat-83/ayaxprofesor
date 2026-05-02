@@ -70,19 +70,36 @@ function startDrag(e) {
   drag.clone = dragCard.cloneNode(true);
   drag.clone.id = 'drag-clone';
   drag.clone.style.cssText = `
-    position:   fixed;
-    width:      ${rect.width}px;
-    height:     ${rect.height}px;
-    left:       ${rect.left}px;
-    top:        ${rect.top}px;
-    margin:     0;
-    z-index:    9999;
-    pointer-events: none;
-    transition: none;
-    transform:  scale(1.06) rotate(2deg);
-    box-shadow: 0 12px 40px rgba(14,66,114,0.35);
-    opacity:    0.95;
+    position:        fixed;
+    width:           ${rect.width}px;
+    height:          ${rect.height}px;
+    left:            ${rect.left}px;
+    top:             ${rect.top}px;
+    margin:          0;
+    z-index:         9999;
+    pointer-events:  none;
+    transition:      none;
+    transform:       scale(1.06) rotate(2deg);
+    background:      rgba(190, 24, 93, 0.85);
+    backdrop-filter: blur(4px);
+    border-radius:   14px;
+    border:          2px solid rgba(249, 168, 212, 0.6);
+    box-shadow:      0 8px 32px rgba(190, 24, 93, 0.4);
+    opacity:         0.95;
+    display:         flex;
+    flex-direction:  row;
+    align-items:     center;
+    justify-content: flex-start;
+    gap:             0.4rem;
+    padding:         0.5rem 0.8rem;
+    overflow:        hidden;
   `;
+
+  // Resetear estilos heredados que rompen el layout del clon
+  const img  = drag.clone.querySelector('#drag-card-img');
+  const text = drag.clone.querySelector('#drag-card-text');
+  if (img)  { img.removeAttribute('id');  img.style.cssText  = 'width:40px;height:40px;object-fit:contain;border-radius:6px;flex-shrink:0;'; }
+  if (text) { text.removeAttribute('id'); text.style.cssText = 'font-family:Fredoka One,cursive;font-size:1rem;color:white;text-align:center;flex:1;'; }
   document.body.appendChild(drag.clone);
 
   // Ocultar la tarjeta original (queda como "hueco")

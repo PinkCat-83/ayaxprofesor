@@ -22,6 +22,7 @@ Un entorno educativo web diseñado para actividades de informática, completamen
 - **Extensiones** - Aprendizaje sobre extensiones de archivo
 - **Rosco** - Juego tipo pasapalabra pensado para determinar el nivel del alumnado.
 - **Gato Saltarín** - Juego educativo sobre clasificación de periféricos (entrada/salida). Motor modular configurable mediante JSON.
+- **Navegadores** - Juego educativo sobre distinguir navegadores de buscadores y páginas webs de propósito general.
 
 ## 🚀 Acceso
 
@@ -72,7 +73,7 @@ ayaxprofesor/
 │   ├── extensions_task/[...]   # 🎯 El Desafío de las Extensiones – juego modular de extensiones de archivo (ver README_TASK.md)
 │   ├── explorer_task/[...]     # 🔍 Explorador de archivos con checklist (ver README_TASK.md)
 │   ├── word_task/[...]         # 🆎 Rosco de palabras para comprobar el nivel del alumnado (ver README_Tasks.md)
-│   ├── 🧨 dropimages_task/[...]   # Falta por realizar
+│   ├── dropimages_task/[...]   # ⚓ Navegando - juego modular de clasificación de navegadores/buscadores/páginas web
 │   └── 🧨 anne.html            # Página de soluciones al ejercicio "The Voyage of the Marvelous Anne" (Falta modular, poca prioridad)
 |
 ├── CNAME

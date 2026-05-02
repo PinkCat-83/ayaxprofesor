@@ -11,11 +11,14 @@ import { initSeagulls }                  from './seagulls.js';
 // Imágenes fijas del juego — se precargan una sola vez al arrancar
 const STATIC_IMAGES = [
   'img/ok.png',
-  'img/wrong.png',
+  'img/wrong1.png',
+  'img/wrong2.png',
+  'img/wrong3.png',
+  'img/wrong4.png',
+  'img/wrong5.png',
   'img/fanfare.png',
   'img/gameover.png',
   'img/progressbar_icon.png',
-  'img/progressbar_victory.png',
   'img/dest_navigator.png',
   'img/dest_search.png',
   'img/dest_webpage.png',
@@ -35,4 +38,8 @@ document.addEventListener('DOMContentLoaded', async () => {
   initDrag();
   initClouds();
   initSeagulls();
+
+  // Prevenir menú contextual en el escenario para evitar interrupciones en el drag
+  document.getElementById('stage-frame')?.addEventListener('contextmenu', e => e.preventDefault());
+  document.getElementById('drag-card')?.addEventListener('contextmenu',   e => e.preventDefault());
 });

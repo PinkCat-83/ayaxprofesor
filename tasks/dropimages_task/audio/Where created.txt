@@ -1,4 +1,4 @@
-fanfare.mp3 -> Suno 5.5 preview (se suponía que era para gameover)
+fanfare.mp3 -> Suno 4.5
 game over.mp3 -> Gemini
-jump.mp3 -> Eleven Labs
-Splash -> Eleven Labs
+correct.mp3 -> Eleven Labs
+wrong -> Eleven Labs

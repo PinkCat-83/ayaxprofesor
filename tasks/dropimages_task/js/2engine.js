@@ -170,44 +170,6 @@ function actualizarHUD() {
   if (progressMarker)  progressMarker.style.left = `${pct}%`;
 }
 
-// ── AJUSTE DINÁMICO DE FUENTE EN LA TARJETA ──────────────
-/**
- * Reduce el font-size del texto de la tarjeta hasta que quepa
- * sin desbordarse, respetando el ancho disponible.
- */
-function ajustarFuenteTarjeta() {
-  if (!dragLabel || !dragCard) return;
-
-  const texto  = dragLabel.textContent || '';
-  const maxW   = dragCard.clientWidth - 56; // ancho - icono(40) - gap(8) - padding(8)
-  const minSize = 9;
-
-  // Crear span temporal para medir el texto real
-  const ruler = document.createElement('span');
-  ruler.style.cssText = `
-    position: absolute; visibility: hidden; white-space: nowrap;
-    font-family: 'Fredoka One', cursive; pointer-events: none;
-  `;
-  ruler.textContent = texto;
-  document.body.appendChild(ruler);
-
-  let size = parseFloat(getComputedStyle(dragLabel).fontSize) || 17.6;
-  ruler.style.fontSize = size + 'px';
-
-  while (ruler.getBoundingClientRect().width > maxW && size > minSize) {
-    size -= 0.5;
-    ruler.style.fontSize = size + 'px';
-  }
-
-  document.body.removeChild(ruler);
-
-  dragLabel.style.fontSize = size + 'px';
-
-  // Permitir salto de línea si tiene más de una palabra
-  const palabras = texto.trim().split(/\s+/);
-  dragLabel.style.whiteSpace = palabras.length > 1 ? 'normal' : 'nowrap';
-}
-
 // ── MOSTRAR PREGUNTA ──────────────────────────────────────
 function mostrarPregunta() {
   const p = state.preguntas[state.orden[state.indexActual]];
@@ -224,10 +186,7 @@ function mostrarPregunta() {
       dragImg.style.display = 'none';
     }
   }
-  if (dragLabel) {
-    dragLabel.textContent = p.nombre ?? '';
-    requestAnimationFrame(() => ajustarFuenteTarjeta());
-  }
+  if (dragLabel) dragLabel.textContent = p.nombre ?? '';
 
   // Devolver la tarjeta a su posición inicial
   resetDragCard();

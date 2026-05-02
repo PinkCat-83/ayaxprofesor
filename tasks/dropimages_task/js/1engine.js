@@ -170,44 +170,6 @@ function actualizarHUD() {
   if (progressMarker)  progressMarker.style.left = `${pct}%`;
 }
 
-// ── AJUSTE DINÁMICO DE FUENTE EN LA TARJETA ──────────────
-/**
- * Reduce el font-size del texto de la tarjeta hasta que quepa
- * sin desbordarse, respetando el ancho disponible.
- */
-function ajustarFuenteTarjeta() {
-  if (!dragLabel || !dragCard) return;
-
-  const texto  = dragLabel.textContent || '';
-  const maxW   = dragCard.clientWidth - 56; // ancho - icono(40) - gap(8) - padding(8)
-  const minSize = 9;
-
-  // Crear span temporal para medir el texto real
-  const ruler = document.createElement('span');
-  ruler.style.cssText = `
-    position: absolute; visibility: hidden; white-space: nowrap;
-    font-family: 'Fredoka One', cursive; pointer-events: none;
-  `;
-  ruler.textContent = texto;
-  document.body.appendChild(ruler);
-
-  let size = parseFloat(getComputedStyle(dragLabel).fontSize) || 17.6;
-  ruler.style.fontSize = size + 'px';
-
-  while (ruler.getBoundingClientRect().width > maxW && size > minSize) {
-    size -= 0.5;
-    ruler.style.fontSize = size + 'px';
-  }
-
-  document.body.removeChild(ruler);
-
-  dragLabel.style.fontSize = size + 'px';
-
-  // Permitir salto de línea si tiene más de una palabra
-  const palabras = texto.trim().split(/\s+/);
-  dragLabel.style.whiteSpace = palabras.length > 1 ? 'normal' : 'nowrap';
-}
-
 // ── MOSTRAR PREGUNTA ──────────────────────────────────────
 function mostrarPregunta() {
   const p = state.preguntas[state.orden[state.indexActual]];
@@ -224,10 +186,7 @@ function mostrarPregunta() {
       dragImg.style.display = 'none';
     }
   }
-  if (dragLabel) {
-    dragLabel.textContent = p.nombre ?? '';
-    requestAnimationFrame(() => ajustarFuenteTarjeta());
-  }
+  if (dragLabel) dragLabel.textContent = p.nombre ?? '';
 
   // Devolver la tarjeta a su posición inicial
   resetDragCard();
@@ -362,48 +321,47 @@ export function cerrarExplicacion() {
 }
 
 // ── FIN DE PARTIDA ────────────────────────────────────────
-
-// Handler de clic para salir de victoria/gameover — guardado para poder eliminarlo
-let _endClickHandler = null;
-
-function mostrarPantallaFin(clase, imagen, texto, sonido) {
-  // Limpiar listener anterior si existe (evita acumulación)
-  if (_endClickHandler && feedbackOverlay) {
-    feedbackOverlay.removeEventListener('click', _endClickHandler);
-    _endClickHandler = null;
-  }
-
+function victoria() {
   ocultarFeedback();
-  if (sonido) playSound(sonido);
+  playSound('fanfare');
 
   if (feedbackOverlay && feedbackMsgText) {
-    feedbackMsgText.textContent = texto;
-    feedbackOverlay.className = 'show ' + clase;
+    feedbackMsgText.textContent = '¡Lo has conseguido!';
+    feedbackOverlay.className = 'show victory-fb';
   }
 
   const feedbackFrame = document.getElementById('feedback-frame');
-  if (feedbackFrame) feedbackFrame.style.backgroundImage = `url('img/${imagen}')`;
+  if (feedbackFrame) feedbackFrame.style.backgroundImage = "url('img/fanfare.png')";
 
-  _endClickHandler = () => {
+  // Cualquier clic en el overlay vuelve al menú
+  feedbackOverlay?.addEventListener('click', () => {
     stopAllSounds();
     stopFireworks();
     ocultarFeedback();
-    state.bloqueado = false;
-    _endClickHandler = null;
     showScreen('menu');
-  };
-  feedbackOverlay?.addEventListener('click', _endClickHandler, { once: true });
-}
+  }, { once: true });
 
-function victoria() {
   startFireworks();
-  setTimeout(() => {
-    mostrarPantallaFin('victory-fb', 'fanfare.png', '¡Lo has conseguido!', 'fanfare');
-  }, 400);
 }
 
 function gameOver() {
-  mostrarPantallaFin('gameover-fb', 'gameover.png', '¡Se han acabado las vidas!', 'gameover');
+  ocultarFeedback();
+  playSound('gameover');
+
+  if (feedbackOverlay && feedbackMsgText) {
+    feedbackMsgText.textContent = '¡Se han acabado las vidas!';
+    feedbackOverlay.className = 'show gameover-fb';
+  }
+
+  const feedbackFrame = document.getElementById('feedback-frame');
+  if (feedbackFrame) feedbackFrame.style.backgroundImage = "url('img/gameover.png')";
+
+  // Cualquier clic en el overlay vuelve al menú
+  feedbackOverlay?.addEventListener('click', () => {
+    stopAllSounds();
+    ocultarFeedback();
+    showScreen('menu');
+  }, { once: true });
 }
 
 // ── CABLEAR BOTONES GLOBALES ──────────────────────────────
@@ -413,12 +371,6 @@ export function cablearBotones() {
     stopAllSounds();
     stopFireworks();
     ocultarFeedback();
-    state.bloqueado = false;
-    // Limpiar handler de fin de partida si estaba activo
-    if (_endClickHandler && feedbackOverlay) {
-      feedbackOverlay.removeEventListener('click', _endClickHandler);
-      _endClickHandler = null;
-    }
     showScreen('menu');
   });
 
