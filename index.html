@@ -15,6 +15,7 @@
   <link rel="stylesheet" href="css/cat-bouncing.css">
   <link rel="stylesheet" href="css/menu.css">
   <link rel="stylesheet" href="css/mobile-warning.css">
+  <link rel="stylesheet" href="css/password.css">
 </head>
 
 <body>
@@ -34,21 +35,10 @@
 
   <!-- =====================================================
        PANELES COLAPSABLES — anclados a la izquierda
-       =====================================================
-
-       Para usar IMAGEN en vez de texto en el trigger:
-         1. Añade la clase "has-image" al .group-trigger
-         2. Sustituye el span.group-title por un <img src="...">
-
-       Ejemplo:
-         <div class="group-trigger has-image" onclick="toggleGroup(this)">
-           <img src="imgs/title.png" alt="Informática">
-           <span class="group-arrow">▶</span>
-         </div>
-  -->
+  ===================================================== -->
   <div class="side-panels">
 
-    <!-- ── GRUPO 1: Informática (trigger con TEXTO) ── -->
+    <!-- ── GRUPO 1: Informática ── -->
     <div class="group" id="group-informatica">
       <div class="group-trigger" onclick="toggleGroup(this)">
         <span class="group-title">💻 Informática</span>
@@ -65,9 +55,7 @@
 
         <a class="btn" href="tasks/questions_task/Periphericals_questions.html" target="_blank">
           <span class="btn-icon">🖱</span>
-          <span class="btn-label">Periféricos
-            <!-- <span>Esto era un recurso externo, pero ya no</span> -->
-          </span>
+          <span class="btn-label">Periféricos</span>
           <span class="btn-arrow">→</span>
         </a>
 
@@ -113,7 +101,6 @@
           <span class="btn-arrow">→</span>
         </a>
 
-
         <a class="btn" href="/office/text/dictionary.html" target="_blank">
           <span class="btn-icon"><img src="imgs/icons/docx.png" alt=""></span>
           <span class="btn-label">
@@ -122,6 +109,7 @@
           </span>
           <span class="btn-arrow">→</span>
         </a>
+
       </div>
     </div>
 
@@ -164,6 +152,27 @@
       </div>
     </div>
 
+    <!-- ── GRUPO 4: Curso Actual ── -->
+    <div class="group" id="group-curso">
+      <div class="group-trigger" onclick="toggleGroup(this)">
+        <span class="group-title">📚 Curso Actual</span>
+        <span class="group-arrow">▶</span>
+      </div>
+      <div class="group-connector"></div>
+      <div class="group-panel">
+
+        <button class="btn" onclick="abrirCurso()">
+          <span class="btn-icon">🔑</span>
+          <span class="btn-label">
+            Material del Curso
+            <span>Acceso con clave</span>
+          </span>
+          <span class="btn-arrow">→</span>
+        </button>
+
+      </div>
+    </div>
+
   </div>
   <!-- /side-panels -->
 
@@ -184,6 +193,14 @@
     </a>
   </div>
 
+  <!-- Modal Curso Actual (layout externo) -->
+  <div id="modal-curso-wrapper"></div>
+  <script>
+    fetch('/layout/password.html')
+      .then(r => r.text())
+      .then(html => document.getElementById('modal-curso-wrapper').innerHTML = html);
+  </script>
+
   <!-- Scripts originales -->
   <script src="js/cat-animation.js"></script>
 
@@ -192,15 +209,12 @@
     function toggleGroup(trigger) {
       const group = trigger.closest('.group');
       const isOpen = group.classList.contains('open');
-
-      // Cierra todos los grupos abiertos
       document.querySelectorAll('.group.open').forEach(g => g.classList.remove('open'));
-
-      // Si no estaba abierto, ábrelo
       if (!isOpen) group.classList.add('open');
     }
-
   </script>
+
+  <script src="js/password.js"></script>
   <script src="js/glitch.js"></script>
   <script src="js/textfit.js"></script>
   <script src="js/mobile-warning.js"></script>

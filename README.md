@@ -42,7 +42,8 @@ ayaxprofesor/
 │   ├── foot.css             # CSS para el pie de página grande.
 │   ├── tinyfoot.css         # CSS para el pie de página pequeño (incluye estilos del iframe y la ventana)
 │   ├── redirect_css.css     # CSS para páginas de redirecciones externas (temporales generalmente)
-│   └── mobile-warning.css   # Overlay de aviso para pantallas < 1024px (compartido)
+│   ├── mobile-warning.css   # Overlay de aviso para pantallas < 1024px (compartido)
+│   └── password.css         # 🔑 Estilos del modal de acceso con clave (Curso Actual)
 │
 ├── imgs/
 │   ├── 🧨icons/             # Carpeta contenedora de iconos de programas (habrá que moverla a Office más adelante)
@@ -57,11 +58,13 @@ ayaxprofesor/
 │   ├── textfit.js           # Script para manejar el tamaño de la fuente en index.html
 │   ├── catwaiting.js        # Animación de un gato esperando.
 │   ├── cat-animation.js     # Animación de gatos revotando de index.html
-│   └── mobile-warning.js    # Lógica del aviso de pantalla pequeña (compartido)
+│   ├── mobile-warning.js    # Lógica del aviso de pantalla pequeña (compartido)
+│   └── password.js          # 🔑 Lógica del modal de acceso con clave (Curso Actual)
 │
 ├── layout/
 │   ├── foot.html            # layout para el pie de página grande. 
-│   └── tinyfoot.html        # layout para el pie de página pequeño (el más usado). 
+│   ├── tinyfoot.html        # layout para el pie de página pequeño (el más usado). 
+│   └── password.html        # 🔑 HTML del modal de acceso con clave (Curso Actual)
 |
 ├── moodle/                  # Instrucciones para trabajar en Moodle, para no repetir código html en enunciados. Técnicamente, no tiene nada que ver con la página.
 |
@@ -150,11 +153,34 @@ Overlay que se activa cuando la pantalla es inferior a 1024px. Se descarta por s
 <script src="/js/mobile-warning.js"></script>
 ```
 
+### 🔑 Modal de acceso con clave (`password`) — *temporal, por curso*
+
+Modal de contraseña que aparece sobre el `index.html` al pulsar "Curso Actual". Si la clave es correcta, inicia una cuenta atrás de 5 segundos y redirige a una carpeta de Google Drive. La clave y la URL se configuran en las dos primeras líneas de `password.js`.
+
+```html
+<!-- CSS en el HEAD -->
+<link rel="stylesheet" href="/css/password.css">
+
+<!-- Contenedor del modal, justo antes de los scripts finales -->
+<div id="modal-curso-wrapper"></div>
+<script>
+  fetch('/layout/password.html')
+    .then(r => r.text())
+    .then(html => document.getElementById('modal-curso-wrapper').innerHTML = html);
+</script>
+
+<!-- JS al final de BODY -->
+<script src="/js/password.js"></script>
+```
+
+El botón que abre el modal llama simplemente a `abrirCurso()`:
+```html
+<button class="btn" onclick="abrirCurso()">...</button>
+```
+
+> **Nota:** `window.open(_blank)` desde un `setInterval` es bloqueado por los navegadores como popup no solicitado. Por eso la cuenta atrás usa `window.location.href` (misma pestaña) y el botón "Ir ahora" usa `window.open` (nueva pestaña, permitido al venir de un click directo).
+
 ---
-
-
-
-## Cuestiones a preguntarse a futuro
 
 - ¿Es mejor unificar todos los CSS ahora que tienen un diseño parecido o mejor lo dejamos como está?
 
