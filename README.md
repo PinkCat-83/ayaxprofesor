@@ -182,8 +182,6 @@ El botón que abre el modal llama simplemente a `abrirCurso()`:
 
 ---
 
-- ¿Es mejor unificar todos los CSS ahora que tienen un diseño parecido o mejor lo dejamos como está?
-
 
 ## 👨‍🏫 Propósito Educativo
 
