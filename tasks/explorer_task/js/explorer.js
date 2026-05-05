@@ -69,9 +69,9 @@ const EXERCISE_ICONS = {
     4: {
         mode: 'emoji',
         map: {
-            'Producto1.jpg': '💍',  // Anillo 1
-            'Producto2.jpg': '💎',  // Anillo 2
-            'Producto3.jpg': '👑',  // Anillo 3
+            'Producto1.jpg': '💍',  // Joya 1
+            'Producto2.jpg': '💎',  // Joya 2
+            'Producto3.jpg': '👑',  // Joya 3
             'Producto4.jpg': '👓',  // Gafas 1
             'Producto5.jpg': '🕶️',  // Gafas 2
             'Producto6.jpg': '🥽',  // Gafas 3
@@ -305,14 +305,14 @@ const EXERCISE_VALIDATORS = {
     4: {
         checklist: [
             {
-                text: "Carpeta 'Anillos' creada",
-                check: (fs) => Object.keys(fs).some(n => fs[n].type === 'folder' && norm(n).includes('anillo'))
+                text: "Carpeta 'Joyas' creada",
+                check: (fs) => Object.keys(fs).some(n => fs[n].type === 'folder' && norm(n).includes('joya'))
             },
             {
-                text: "3 archivos en la carpeta Anillos",
+                text: "3 archivos en la carpeta Joyas",
                 check: (fs) => {
                     for (let fn in fs) {
-                        if (fs[fn].type === 'folder' && norm(fn).includes('anillo')) {
+                        if (fs[fn].type === 'folder' && norm(fn).includes('joya')) {
                             return Object.keys(fs[fn].children).length === 3;
                         }
                     }
@@ -351,7 +351,7 @@ const EXERCISE_VALIDATORS = {
             }
         ],
         validate: (fs) => {
-            const categorias = ['anillo', 'gafa', 'reloj'];
+            const categorias = ['joya', 'gafa', 'reloj'];
             for (let cat of categorias) {
                 let folder = null;
                 for (let fn in fs) {
@@ -383,14 +383,14 @@ const EXERCISE_VALIDATORS = {
                 }
             },
             {
-                text: "Carpeta 'Contratos' creada",
-                check: (fs) => Object.keys(fs).some(n => fs[n].type === 'folder' && norm(n).includes('contrato'))
+                text: "Carpeta 'Documentos' creada",
+                check: (fs) => Object.keys(fs).some(n => fs[n].type === 'folder' && norm(n).includes('documentos'))
             },
             {
-                text: "4 archivos en carpeta Contratos",
+                text: "4 archivos en carpeta Documentos",
                 check: (fs) => {
                     for (let fn in fs) {
-                        if (fs[fn].type === 'folder' && norm(fn).includes('contrato')) {
+                        if (fs[fn].type === 'folder' && norm(fn).includes('documentos')) {
                             return Object.keys(fs[fn].children).length === 4;
                         }
                     }
@@ -399,16 +399,16 @@ const EXERCISE_VALIDATORS = {
             }
         ],
         validate: (fs) => {
-            let facturas = null, contratos = null;
+            let facturas = null, documentos = null;
             for (let fn in fs) {
                 if (fs[fn].type === 'folder') {
                     if (norm(fn).includes('factura'))  facturas  = fs[fn];
-                    if (norm(fn).includes('contrato')) contratos = fs[fn];
+                    if (norm(fn).includes('documento')) documentos = fs[fn];
                 }
             }
-            if (!facturas || !contratos) return false;
+            if (!facturas || !documentos) return false;
             return Object.keys(facturas.children).length === 4 &&
-                   Object.keys(contratos.children).length === 4;
+                   Object.keys(documentos.children).length === 4;
         }
     },
     6: {
