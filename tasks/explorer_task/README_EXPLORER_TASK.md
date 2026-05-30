@@ -1,190 +1,80 @@
-# 📁 explorer_task — Explorador de Archivos Simulado
+# 📁 Explorer Task — Simulated File Explorer
 
-Simulador interactivo de un explorador de archivos estilo Windows para practicar operaciones básicas de gestión de archivos: mover, copiar, renombrar, crear carpetas y borrar.
+Interactive simulator of a Windows-style file explorer for practising basic file management operations: move, copy, rename, create folders, and delete.
 
----
-
-## 📌 Estado actual
-
-> 🧨 **Pendiente de modularización** — actualmente existe como `archivos.html` en la raíz de `tasks/`. Este documento describe la estructura objetivo tras la modularización.
+→ [Technical README](./README_EXPLORER_TECH.md) · [Design System](../../DESIGN_SYSTEM.md)
 
 ---
 
-## 🎯 Descripción pedagógica
+## Current Status
 
-El alumnado interactúa con un explorador de archivos simulado (sin acceso al sistema real) y debe completar tareas de organización. Cada ejercicio introduce o refuerza una habilidad concreta del manejo de archivos.
-
-**Habilidades trabajadas:**
-- Cortar, copiar y pegar archivos
-- Renombrar archivos
-- Crear carpetas
-- Navegar por la jerarquía de carpetas
-- Clasificar por tipo, nombre o contenido visual
+> 🧨 **Pending modularization** — currently exists as `archivos.html` in the `tasks/` root. This document describes the target structure after modularization.
 
 ---
 
-## 📂 Estructura de carpetas objetivo
+## What is this?
+
+Students interact with a simulated file explorer (no access to the real system) and must complete file organization tasks. Each exercise introduces or reinforces a specific file management skill.
+
+**Skills covered:**
+- Cut, copy and paste files
+- Rename files
+- Create folders
+- Navigate folder hierarchies
+- Sort by type, name or visual content
+
+---
+
+## File Structure
 
 ```
 tasks/explorer_task/
-├── expolorer.html          # Punto de entrada principal (renombrado desde archivos.html)
+├── explorer.html           # Main entry point (renamed from archivos.html)
 ├── css/
-│   └── explorer.css        # Todos los estilos del simulador
+│   └── explorer.css        # All simulator styles
 ├── js/
-│   └── explorer.js         # Lógica del simulador (estado, render, operaciones)
+│   └── explorer.js         # Simulator logic (state, render, operations)
 ├── json/
-│   ├── exercise_01.json    # Ejercicio: Viaje (cortar/pegar)
-│   ├── exercise_02.json    # Ejercicio: Otros destinos (renombrar + mover)
-│   ├── exercise_03.json    # Ejercicio: Colores (crear carpetas + renombrar)
-│   ├── exercise_04.json    # Ejercicio: Cosméticos (clasificar por categoría)
-│   ├── exercise_05.json    # Ejercicio: Documentos (imágenes reales como iconos)
-│   ├── exercise_06.json    # Ejercicio: Copias (copiar sin cortar)
-│   ├── exercise_07.json    # Ejercicio: Estaciones (iconos emoji + renombrar)
-│   ├── exercise_08.json    # Ejercicio: Películas (imágenes reales como iconos)
-│   └── exercise_09.json    # Ejercicio: Extensiones (clasificar por tipo de archivo)
+│   ├── exercise_01.json    # Exercise: Trip (cut/paste)
+│   ├── exercise_02.json    # Exercise: Other destinations (rename + move)
+│   ├── exercise_03.json    # Exercise: Colors (create folders + rename)
+│   ├── exercise_04.json    # Exercise: Cosmetics (classify by category)
+│   ├── exercise_05.json    # Exercise: Documents (real images as icons)
+│   ├── exercise_06.json    # Exercise: Copies (copy without cutting)
+│   ├── exercise_07.json    # Exercise: Seasons (emoji icons + rename)
+│   ├── exercise_08.json    # Exercise: Films (real images as icons)
+│   └── exercise_09.json    # Exercise: Extensions (classify by file type)
 ├── img/
-│   ├── fileexplorer5/      # Imágenes para ejercicio 05 (documentos/facturas)
+│   ├── fileexplorer5/      # Images for exercise 05 (documents/invoices)
 │   │   └── 01.jpg … 08.jpg
-│   └── fileexplorer8/      # Imágenes para ejercicio 08 (películas/dibujos)
+│   └── fileexplorer8/      # Images for exercise 08 (films/cartoons)
 │       └── 01.jpg … 08.jpg
-└── audio/                  # (reservado) Sin audio actualmente en esta task
+└── audio/                  # Reserved — no audio currently in this task
 ```
 
-> Las imágenes en `img/` se moverán desde `imgs/fileexplorer5/` e `imgs/fileexplorer8/` de la raíz del proyecto.
+> Images in `img/` will be moved from `imgs/fileexplorer5/` and `imgs/fileexplorer8/` in the project root.
 
 ---
 
-## 🧩 Ejercicios disponibles
+## Available Exercises
 
-| # | Nombre | Habilidad principal | Iconos |
-|---|--------|--------------------|----|
-| 01 | Viaje | Cortar y pegar | 🗺️ Emoji genérico de imagen |
-| 02 | Otros destinos | Renombrar + mover | 🗺️ Emoji genérico de imagen |
-| 03 | Colores | Crear carpetas + renombrar | Emoji de color (🔵🍋🍎🍀) |
-| 04 | Cosméticos | Clasificar por categoría | Emoji de producto (💍👓⌚) |
-| 05 | Documentos | Cortar/pegar con imagen real | Imagen real (fileexplorer5/) |
-| 06 | Copias | Copiar (no cortar) | Emoji temático (⚽🏖️🦜) |
-| 07 | Estaciones | Renombrar + clasificar | Emoji de estación (🌸☀️🍂❄️) |
-| 08 | Películas | Clasificar con imagen real | Imagen real (fileexplorer8/) |
-| 09 | Extensiones | Clasificar por tipo de archivo | Emoji por extensión (🎵🎬📄📷) |
-
----
-
-## 🔧 Arquitectura de datos (JSON por ejercicio)
-
-Cada `exercise_XX.json` define un ejercicio completo. Estructura objetivo:
-
-```json
-{
-  "id": 1,
-  "title": "Carpeta 01 - Viaje",
-  "menuLabel": "📁 01 - Viaje",
-  "menuDesc": "Organiza archivos de viajes",
-  "description": "Coloca los archivos de cada viaje en la carpeta correspondiente.",
-  "tasks": [
-    "Mueve los 4 archivos de cada país a su carpeta correspondiente",
-    "..."
-  ],
-  "hints": [
-    "Primero, haz clic en el archivo para seleccionarlo",
-    "..."
-  ],
-  "iconMode": "emoji",
-  "icons": {},
-  "initialFiles": {
-    "Francia": { "type": "folder", "children": {} },
-    "Francia 01.jpg": { "type": "file" }
-  },
-  "checklist": [
-    {
-      "text": "4 archivos en la carpeta Francia",
-      "checkType": "filesInFolder",
-      "folder": "Francia",
-      "startsWith": "Francia",
-      "count": 4
-    }
-  ],
-  "validateRules": [
-    {
-      "type": "filesInFolder",
-      "folder": "Francia",
-      "startsWith": "Francia",
-      "count": 4
-    }
-  ]
-}
-```
-
-**`iconMode`** puede ser:
-- `"emoji"` — usa el mapa de `icons: { "nombreArchivo": "🎵" }`
-- `"image"` — usa el mapa de `icons: { "nombreArchivo": "img/fileexplorer5/01.jpg" }`
-- `"auto"` — icono de carpeta/archivo genérico según tipo
-
-**Nota sobre `checklist` y `validateRules`:** Las validaciones complejas (ej. normalización de tildes, regex de colores) que actualmente están en funciones JS inline deberán migrarse a tipos declarativos en JSON o mantenerse como funciones nombradas en `explorer.js`.
+| # | Name | Main skill | Icons |
+|---|---|---|---|
+| 01 | Trip | Cut and paste | 🗺️ Generic image emoji |
+| 02 | Other destinations | Rename + move | 🗺️ Generic image emoji |
+| 03 | Colors | Create folders + rename | Color emoji (🔵🍋🍎🍀) |
+| 04 | Cosmetics | Classify by category | Product emoji (💍👓⌚) |
+| 05 | Documents | Cut/paste with real image | Real image (fileexplorer5/) |
+| 06 | Copies | Copy (not cut) | Thematic emoji (⚽🏖️🦜) |
+| 07 | Seasons | Rename + classify | Season emoji (🌸☀️🍂❄️) |
+| 08 | Films | Classify with real image | Real image (fileexplorer8/) |
+| 09 | Extensions | Classify by file type | Extension emoji (🎵🎬📄📷) |
 
 ---
 
-## ⚙️ Lógica JS (`explorer.js`)
+## Design Note
 
-Funciones principales a extraer del `<script>` inline actual:
+This task intentionally uses two distinct visual layers:
 
-| Función | Descripción |
-|---------|-------------|
-| `startExercise(num)` | Carga un ejercicio y oculta el menú |
-| `backToMenu()` | Vuelve al menú de selección |
-| `initializeExercise(exercise)` | Inicializa el estado con `initialFiles` |
-| `render()` | Renderiza la vista actual del explorador |
-| `updateAddressBar()` | Actualiza la ruta mostrada |
-| `selectItem(name, event)` | Selecciona un archivo o carpeta |
-| `openFolder(name)` | Navega dentro de una carpeta |
-| `goBack()` | Sube un nivel en la jerarquía |
-| `updateButtons()` | Activa/desactiva botones según estado |
-| `createFolder()` | Crea una nueva carpeta |
-| `cutItem()` | Corta el elemento seleccionado |
-| `copyItem()` | Copia el elemento seleccionado |
-| `pasteItem()` | Pega desde el portapapeles |
-| `renameItem()` | Renombra el elemento seleccionado |
-| `deleteItem()` | Elimina el elemento seleccionado |
-| `showHint()` | Muestra la siguiente pista cíclica |
-| `updateChecklist(exercise)` | Actualiza el panel de checklist |
-| `getCurrentFolder()` | Helper: devuelve el objeto de la carpeta actual |
-
-**Estado global** (variables a mantener en módulo o closure):
-- `fileSystem` — árbol de archivos en memoria
-- `currentPath` — array de nombres de carpeta (ruta actual)
-- `selectedItem` — nombre del elemento seleccionado
-- `clipboard` — `{ name, path }` del elemento en portapapeles
-- `clipboardMode` — `'cut'` o `'copy'`
-- `currentExercise` — número del ejercicio activo
-- `hintLevel` — índice de la pista actual
-- `iconMapping` — mapa de rutas a iconos tras renombrar
-
----
-
-### Decisión de diseño para la modularización
-
-Este simulador tiene dos capas visuales diferenciadas:
-
-1. **Menú de selección de ejercicios** — debe adaptarse al Design System (fondo degradado pastel, Fredoka One, `--pink-dark`, mascota `pet.png`).
-2. **Simulador en sí** — debe mantener la estética de Windows Explorer (fondo blanco/gris, tipografía de sistema, toolbar con iconos SVG) para que el alumnado reconozca el entorno real. No se aplica el Design System aquí.
-
-### Aclaración sobre estética
-- Debido a que la idea del ejercicio es que se parezca lo más posible al **Explorador de Archivos** de *Windows*, la estética es claramente distinta a lo acordado en DESIGN_SYSTEM.md
-
----
-
-## 🔗 Recursos compartidos usados
-
-| Recurso | Ruta | Descripción |
-|---------|------|-------------|
-| `tinyfoot.css` | `/css/tinyfoot.css` | Estilos del iframe de autor |
-| `tinyfoot.html` | `/layout/tinyfoot.html` | Layout del pie de autor |
-| `iframeanimation.js` | `/js/iframeanimation.js` | Animación del iframe |
-| `favicon.ico` | `/favicon.ico` | Icono de pestaña |
-
-## 📝 Notas adicionales
-
-- Las funciones de validación de los ejercicios 3, 4, 7 y 8 usan expresiones regulares y normalización de tildes. Al migrar a JSON, estas reglas deben representarse con `checkType` declarativo o mantenerse como funciones nombradas en `explorer.js`.
-- El ejercicio 1 tiene una restricción especial en `pasteItem()`: no permite pegar en la raíz si el modo es `cut`. Esta lógica debe preservarse en `explorer.js` como caso especial documentado.
-- El ejercicio 6 tiene validación de que los archivos originales permanezcan en la raíz (para forzar el uso de Copiar en lugar de Cortar).
-- `iconMapping` es el mecanismo que mantiene la asociación icono↔archivo tras un renombrado; es crítico para los ejercicios con imágenes reales (05, 08).
+1. **Exercise selection menu** — follows the Design System (pastel gradient, Fredoka One, `--pink-dark`, `pet.png` mascot).
+2. **Simulator itself** — mimics Windows Explorer (white/grey background, system font, SVG toolbar icons). The Design System does **not** apply here — the goal is for students to recognize a familiar real-world interface.

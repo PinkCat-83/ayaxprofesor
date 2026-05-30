@@ -1,75 +1,85 @@
-# ⚓ Drop Images — ¿Navegador o Buscador?
+# ⚓ Drop Images Task — Browser or Search Engine?
 
-Juego educativo de drag & drop sobre clasificación de elementos web (navegadores, buscadores y páginas web). Motor modular configurable mediante JSON, con diseño homogéneo al resto de actividades del proyecto.
+Educational drag & drop game about web element classification (browsers, search engines, and websites). Modular engine configurable via JSON, visually consistent with the rest of the project.
+
+→ [Technical README](./README_DROPIMAGES_TECH.md) · [Design System](../../DESIGN_SYSTEM.md)
 
 ---
 
-## Estructura de archivos
+## What is this?
+
+Students drag image cards into one of three drop zones — Browser, Search Engine, or Website — to classify web elements correctly. The game has multiple difficulty levels, a life system, sound effects, and victory/defeat screens.
+
+The engine is fully data-driven: creating a new game only requires a new JSON file and an entry HTML. The engine itself (`dropimages.html`) is never modified.
+
+---
+
+## File Structure
 
 ```
 dropimages_task/
-├── browser_game.html           ← Punto de entrada: redirige a dropimages.html con su JSON
-├── dropimages.html             ← Motor del juego (no editar salvo cambios estructurales)
+├── browser_game.html           ← Entry point: redirects to dropimages.html with its JSON
+├── dropimages.html             ← Game engine (do not edit unless structural changes needed)
 ├── audio/
-│   ├── correct.mp3             ← Sonido de acierto
-│   ├── wrong.mp3               ← Sonido de fallo
-│   ├── gameover.mp3            ← Sonido de derrota
-│   └── fanfare.mp3             ← Música de victoria (en bucle)
+│   ├── correct.mp3
+│   ├── wrong.mp3
+│   ├── gameover.mp3
+│   └── fanfare.mp3             ← Victory music (looped)
 ├── css/
-│   ├── main.css                ← Punto de entrada CSS (importa todos los parciales)
-│   ├── variables-base.css      ← Variables CSS, reset y estilos base
-│   ├── screens.css             ← Menú principal, botones de nivel, pantallas finales, loading
-│   ├── hud.css                 ← Barra superior, slider de volumen, botón Menú
-│   ├── stage.css               ← Escenario, capas de fondo, tarjeta, vidas, drop-zones
-│   ├── components.css          ← Barra de progreso, feedback, modal, fuegos artificiales
-│   └── animations.css          ← Todos los @keyframes
+│   ├── main.css                ← CSS entry point (imports all partials)
+│   ├── variables-base.css      ← CSS variables, reset and base styles
+│   ├── screens.css             ← Main menu, level buttons, end screens, loading
+│   ├── hud.css                 ← Top bar, volume slider, Menu button
+│   ├── stage.css               ← Stage, background layers, card, lives, drop-zones
+│   ├── components.css          ← Progress bar, feedback, modal, fireworks
+│   └── animations.css          ← All @keyframes
 ├── img/
-│   ├── background.webp         ← Fondo del escenario (1408 × 768 px)
-│   ├── fireworks.gif           ← Animación de fuegos artificiales
-│   ├── dest_navigator.png      ← Zona de drop: Navegador    (1500 × 1100 px)
-│   ├── dest_search.png         ← Zona de drop: Buscador     (1500 × 1100 px)
-│   ├── dest_webpage.png        ← Zona de drop: Página web   (1500 × 1100 px)
-│   ├── ok.png                  ← Imagen de feedback correcto (500 x 500 px)
-│   ├── wrong.png               ← Imagen de feedback incorrecto (500 x 500 px)
-│   ├── fanfare.png             ← Imagen de victoria (1376 × 768 px)
-│   ├── gameover.png            ← Imagen de derrota (1376 × 768 px)
-│   ├── progressbar_icon.png    ← Marcador móvil de la barra de progreso (500 × 500 px)
-│   └── browser/                ← Logos de las preguntas (500 × 500 px, PNG transparente)
+│   ├── background.webp         ← Stage background (1408 × 768 px)
+│   ├── fireworks.gif
+│   ├── dest_navigator.png      ← Drop zone: Browser    (1500 × 1100 px)
+│   ├── dest_search.png         ← Drop zone: Search     (1500 × 1100 px)
+│   ├── dest_webpage.png        ← Drop zone: Website    (1500 × 1100 px)
+│   ├── ok.png                  ← Correct feedback image (500 × 500 px)
+│   ├── wrong.png               ← Incorrect feedback image (500 × 500 px)
+│   ├── fanfare.png             ← Victory image (1376 × 768 px)
+│   ├── gameover.png            ← Game over image (1376 × 768 px)
+│   ├── progressbar_icon.png    ← Progress bar moving marker (500 × 500 px)
+│   └── browser/                ← Question logos (500 × 500 px, transparent PNG)
 │       ├── chrome.png
 │       ├── google.png
 │       └── …
 ├── js/
-│   ├── state-dom.js            ← Estado global y referencias al DOM
-│   ├── engine.js               ← Flujo del juego: menú, preguntas, feedback, victoria/gameover
-│   ├── drag.js                 ← Lógica de arrastrar la tarjeta y soltarla en zona
-│   ├── fireworks.js            ← Fuegos artificiales de victoria
-│   ├── clouds.js               ← Generador de nubes SVG vectoriales animadas
-│   ├── seagulls.js             ← Generador de gaviotas SVG animadas
-│   └── main.js                 ← Punto de entrada JS + precarga de imágenes estáticas
+│   ├── state-dom.js            ← Global state and DOM references
+│   ├── engine.js               ← Game flow: menu, questions, feedback, victory/gameover
+│   ├── drag.js                 ← Card drag and drop logic
+│   ├── fireworks.js            ← Victory fireworks
+│   ├── clouds.js               ← Animated SVG cloud generator
+│   ├── seagulls.js             ← Animated SVG seagull generator
+│   └── main.js                 ← JS entry point + static image preloading
 └── json/
-    └── browser.json            ← Configuración completa del juego
+    └── browser.json            ← Full game configuration
 ```
 
 ---
 
-## Cómo funciona el sistema de juegos
+## How to Create a New Game
 
-Cada "juego" es un HTML propio que redirige a `dropimages.html` pasándole su JSON por parámetro de URL:
+Each game is a standalone HTML that redirects to `dropimages.html` with its JSON as a URL parameter:
 
 ```html
 <meta http-equiv="refresh" content="0;url=dropimages.html?config=browser.json" />
 ```
 
-Para crear un juego nuevo basta con:
+To create a new game:
 
-1. Crear un JSON en `json/` con el formato descrito abajo.
-2. Duplicar `browser_game.html` y cambiar el nombre del JSON en la línea de redirección.
+1. Create a JSON in `json/` following the format below.
+2. Duplicate `browser_game.html` and change the JSON name in the redirect line.
 
-`dropimages.html` no hay que tocarlo nunca.
+Never edit `dropimages.html`.
 
 ---
 
-## Formato del JSON de configuración
+## JSON Configuration Format
 
 ```json
 {
@@ -92,143 +102,25 @@ Para crear un juego nuevo basta con:
 }
 ```
 
-| Campo          | Descripción |
-|----------------|-------------|
-| `pageTitle`    | Título que aparece en el menú principal |
-| `pageSubtitle` | Subtítulo descriptivo bajo el título |
-| `imgfolder`    | Ruta a la carpeta de imágenes de las preguntas (relativa a la raíz) |
-| `niveles`      | Array de niveles disponibles (aparecen como botones en el menú) |
-| `nombre`       | Nombre del nivel o de la pregunta |
-| `icono`        | Emoji que aparece en el botón del nivel en el menú |
-| `vidas`        | Número de vidas para ese nivel (se muestra en el botón del menú) |
-| `preguntas`    | Array de preguntas del nivel |
-| `respuesta`    | `"1"` = Navegador · `"2"` = Buscador · `"3"` = Página web |
-| `img`          | Nombre del archivo de imagen para la tarjeta (buscado dentro de `imgfolder`) |
+| Field | Description |
+|---|---|
+| `pageTitle` | Title shown in the main menu |
+| `pageSubtitle` | Descriptive subtitle below the title |
+| `imgfolder` | Path to the question images folder (relative to root) |
+| `niveles` | Array of available levels (rendered as buttons in the menu) |
+| `nombre` | Level or question name |
+| `icono` | Emoji shown on the level button in the menu |
+| `vidas` | Number of lives for that level (shown on the menu button) |
+| `preguntas` | Array of questions for the level |
+| `respuesta` | `"1"` = Browser · `"2"` = Search Engine · `"3"` = Website |
+| `img` | Image filename for the card (looked up inside `imgfolder`) |
 
-### Tamaños de imágenes
+### Image Sizes
 
-| Tipo | Tamaño | Notas |
-|------|--------|-------|
-| Logos de preguntas (`img/browser/`) | 500 × 500 px | PNG con fondo transparente |
-| Zonas de drop (`dest_*.png`) | 1500 × 1100 px | PNG con fondo transparente (100px extra izquierda para sombras) |
-| Feedback (`ok.png`, `wrong.png`, `fanfare.png`, `gameover.png`) | libre | Se usan como `background-image` del frame |
-| Barra de progreso (`progressbar_icon.png`) | 500 × 500 px | PNG con fondo transparente |
-| Fondo del escenario (`background.webp`) | 1408 × 768 px | |
-
----
-
-## Diseño del escenario
-
-### Orden de capas (z-index)
-
-| z-index | Elemento | Descripción |
+| Type | Size | Notes |
 |---|---|---|
-| 0 | `#sky-layer` | Cielo sólido `#7ec8e3` |
-| 1 | `#clouds-layer` | 8 nubes SVG vectoriales (`clouds.js`) |
-| 2 | `#stage-bg` | `background.webp`, sin zoom ni blur, anclado al top |
-| 4 | `#seagulls-layer` | 5 gaviotas SVG (`seagulls.js`) |
-| 10 | `#drop-zones-row` | Imágenes `dest_*` flotando en el mar |
-| 20 | `#hud-lives`, `#drag-card`, `#btn-explain-game`, `#progress-bar-wrapper` | Primer plano |
-| 50 | `#feedback-overlay` | Feedback dentro del tablero |
-| 9999 | `#loading-overlay` | Pantalla de carga negra |
-
----
-
-## Nubes (`clouds.js`)
-
-8 nubes SVG vectoriales con 5 formas distintas (clásica, alargada, esponjosa, grande y plana, y muy grande con múltiples torres). Todas arrancan dentro del escenario en posición aleatoria — sin periodo en blanco. Al llegar al borde se reciclan inmediatamente sin pausa. Parámetros en `CLOUD_CONFIG`.
-
-## Gaviotas (`seagulls.js`)
-
-5 gaviotas SVG formadas por dos líneas `<line>`. Aleteo sinusoidal (`Math.sin`) y movimiento unificados en un único `requestAnimationFrame`. Efecto de alejamiento: el tamaño final es el 30% del inicial. Se reciclan sin pausa desde el lado contrario.
-
----
-
-## Tarjeta arrastrable
-
-- Dimensiones: `154 × 56px` con fondo rosa semitransparente `rgba(190, 24, 93, 0.35)`
-- Icono siempre anclado a la izquierda (`flex-start`), texto centrado en el espacio restante (`flex: 1`)
-- Texto en máximo 2 líneas (`max-height: 2.4em`), sin sombra
-- Al arrastrar: clon con fondo rosa más opaco (`0.85`), mismo padding y layout que la original
-- Al soltar fuera de zona: vuelve a su posición con `transform: translateX(-50%)`
-
----
-
-## Animaciones de las zonas de drop
-
-| Elemento | Animación |
-|---|---|
-| Barco (`#drop-navigator`) | Rotación suave ±3° (`animSail`, 4s, `transform-origin: bottom center`) |
-| Mapa (`#drop-search`) | Flotado ±12px (`animMapFloat`, 3s) + sombra elíptica negra sincronizada (`animMapShadow`) |
-| Embarcadero (`#drop-webpage`) | Sin animación (decisión de diseño) |
-
-### Clases disponibles en `animations.css`
-
-| Clase | Efecto |
-|---|---|
-| `anim-float` | Flotado vertical ±8px |
-| `anim-shadow` | Sombra elíptica sincronizada |
-| `anim-sway` / `anim-sway-mid` / `anim-sway-strong` | Balanceo ±3° / ±6° / ±12° |
-| `anim-calm` | Aguas tranquilas |
-| `anim-surge` | Marejada pronunciada |
-| `anim-sail` | Rotación ±3° desde la base |
-
----
-
-## Sistema de feedback y pantallas finales
-
-El `#feedback-overlay` vive dentro del `#stage-frame` (`position: absolute`). La imagen es el `background-image` del frame rectangular. Dura **2.4 segundos** o hasta clic del usuario. Al fallar solo se marca en rojo la zona incorrecta.
-
-| Estado | Clase CSS | Imagen | Sonido |
-|--------|-----------|--------|--------|
-| Correcto | `correct-fb` | `ok.png` | `correct.mp3` |
-| Incorrecto | `incorrect-fb` | `wrong.png` | `wrong.mp3` |
-| Victoria | `victory-fb` | `fanfare.png` | `fanfare.mp3` + fuegos artificiales |
-| Derrota | `gameover-fb` | `gameover.png` | `gameover.mp3` |
-
-En victoria y derrota, un clic vuelve al menú principal.
-
----
-
-## Sistema de precarga de imágenes
-
-**Fase 1 — al arrancar** (`main.js`): imágenes estáticas en paralelo sin bloquear el menú.
-
-**Fase 2 — al iniciar nivel** (`engine.js`): logos del nivel con `Promise.allSettled()`. Pantalla de carga negra hasta que todas están listas.
-
----
-
-## Barra de progreso
-
-- `#progress-track` — carril rosa semitransparente
-- `#progress-fill` — relleno que avanza con cada acierto
-- `#progress-marker` (`progressbar_icon.png`) — flota ±4px (`progressBob`), avanza con `left: X%`
-
-Al completar el nivel la barra llega al 100% antes de mostrar la victoria.
-
----
-
-## Instrucciones para la IA
-
-- El autor indicará por mensaje directo qué hay que hacer.
-- Antes de proceder, pedir los archivos necesarios para las modificaciones solicitadas.
-- Consultar el `DESIGN_SYSTEM.md` del proyecto para mantener coherencia visual.
-- El CSS está dividido en 5 parciales — editar siempre el archivo correcto según la sección.
-
----
-
-## ✅ Todo implementado
-
-- [x] Tarjeta con icono fijo a la izquierda, texto centrado, fondo rosa semitransparente
-- [x] Clon de arrastre con mismo layout y fondo más opaco
-- [x] Feedback dura 2.4s o hasta clic
-- [x] Victoria y derrota mediante overlay dentro del tablero
-- [x] Barra de progreso con marcador flotante
-- [x] Precarga en dos fases con pantalla de carga
-- [x] Nubes SVG vectoriales (8 nubes, 5 formas)
-- [x] Gaviotas SVG con aleteo sinusoidal y efecto de alejamiento
-- [x] Barco con rotación suave, mapa con flotado y sombra
-- [x] Halo de arrastre multicapa, sin pista verde al fallar
-- [x] CSS dividido en 5 parciales
-- [x] SVG de agua descartado definitivamente
-- [x] Posición y tamaño de `dest_*` ajustados con imágenes definitivas
+| Question logos (`img/browser/`) | 500 × 500 px | PNG with transparent background |
+| Drop zones (`dest_*.png`) | 1500 × 1100 px | PNG with transparent background (100px extra left for shadows) |
+| Feedback images | free | Used as `background-image` of the frame |
+| Progress bar marker (`progressbar_icon.png`) | 500 × 500 px | PNG with transparent background |
+| Stage background (`background.webp`) | 1408 × 768 px | |

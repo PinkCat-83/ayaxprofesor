@@ -1,86 +1,63 @@
-# 🎯 El Desafío de las Extensiones
+# 🎯 Extensions Task — The Extension Challenge
 
-Juego educativo interactivo para aprender a identificar extensiones de archivo arrastrando cada extensión hasta su descripción correcta.
+Interactive educational game for learning to identify file extensions by dragging each extension to its correct description.
+
+→ [Technical README](./README_EXTENSION_TECH.md) · [Design System](../../DESIGN_SYSTEM.md)
 
 ---
 
-## 📁 Estructura del proyecto
+## What is this?
+
+The player selects a difficulty level from the main menu. Each round presents a column of extensions (`.PDF`, `.MP3`, etc.) and a shuffled column of descriptions. The goal is to match each extension to its correct description by dragging from one box to the other (mouse and touch compatible).
+
+- ✅ **Correct** — the pair is linked with a green arrow and added to the solved list.
+- ❌ **Wrong** — a red arrow fades out and a life is lost.
+- 🏆 **Victory** — all pairs matched; a modal with fireworks is shown.
+- 💀 **Game Over** — no lives remaining; end-of-game modal is shown.
+
+---
+
+## File Structure
 
 ```
 extensions_task/
-├── extensions.html       # Estructura principal de la aplicación
-├── README_TASK.md
+├── extensions.html       # Main application structure
 ├── css/
-│   └── extensions.css    # Estilos visuales del juego
+│   └── extensions.css    # Game visual styles
 ├── js/
-│   └── extensions.js     # Lógica del juego
+│   └── extensions.js     # Game logic
 └── json/
-    └── data.json         # Extensiones, descripciones, enlaces y configuración
+    └── data.json         # Extensions, descriptions, links and config
 ```
 
-> Esta task usa recursos propios exclusivamente, más los recursos generales de la raíz del proyecto (`/imgs/pet.png`, `/css/tinyfoot.css`, `/layout/tinyfoot.html`, `/js/iframeanimation.js`).
+> This task uses only its own resources plus shared project assets (`/imgs/pet.png`, `/css/tinyfoot.css`, `/layout/tinyfoot.html`, `/js/iframeanimation.js`).
 
 ---
 
-## 🎮 Cómo funciona
+## Difficulty Levels
 
-El jugador selecciona un nivel de dificultad en el menú principal. En cada partida se presenta una columna de extensiones (`.PDF`, `.MP3`, etc.) y otra de descripciones desordenadas. El objetivo es unir cada extensión con su descripción correcta arrastrando desde una caja hasta la otra (compatible con ratón y pantalla táctil).
+| Level | Name | Pairs | Lives | Min. new extensions |
+|---|---|---|---|---|
+| 1 | Basic | 5 | 3 | 5 |
+| 2 | Intermediate | 7 | 3 | 4 |
+| 3 | Advanced | 10 | 2 | 4 |
+| 4 | Power User | 13 | 2 | 4 |
+| 5 | Developer | 15 | 2 | 4 |
+| 6 | Retro Legacy | 12 | 3 | 12 |
 
-- ✅ **Acierto** → la pareja queda enlazada con una flecha verde y se añade al registro de acertadas.
-- ❌ **Error** → aparece una flecha roja que se desvanece y se pierde una vida.
-- 🏆 **Victoria** → al emparejar todas las parejas se muestra un modal con fuegos artificiales.
-- 💀 **Game Over** → al agotar las vidas se muestra el modal de fin de partida.
-
----
-
-## 🗂️ Niveles de dificultad
-
-| Nivel | Nombre       | Parejas | Vidas | Extensiones nuevas mín. |
-|-------|--------------|---------|-------|--------------------------|
-| 1     | Básico       | 5       | 3     | 5                        |
-| 2     | Intermedio   | 7       | 3     | 4                        |
-| 3     | Avanzado     | 10      | 2     | 4                        |
-| 4     | Power User   | 13      | 2     | 4                        |
-| 5     | Developer    | 15      | 2     | 4                        |
-| 6     | Legado Retro | 12      | 3     | 12                       |
-
-Cada nivel incluye un mínimo de extensiones propias del nivel más extensiones repasadas de niveles anteriores.
+Each level includes a minimum of level-specific extensions plus extensions reviewed from previous levels.
 
 ---
 
-## 📚 Biblioteca
+## Library
 
-Accesible desde el menú principal, muestra todas las extensiones organizadas por nivel con un enlace a su artículo de Wikipedia en español.
-
----
-
-## 🔊 Sonido
-
-El juego genera efectos de sonido mediante la **Web Audio API** (sin archivos de audio externos). Se puede activar o desactivar en cualquier momento con el botón 🔊 de la esquina superior derecha.
-
-| Evento  | Sonido               |
-|---------|----------------------|
-| Click   | Tono corto agudo     |
-| Acierto | Glissando ascendente |
-| Error   | Tono grave breve     |
+Accessible from the main menu. Shows all extensions organized by level with a link to their Wikipedia article (in Spanish).
 
 ---
 
-## 🏹 Flechas
+## Adding or Editing Extensions
 
-Las flechas se dibujan sobre un `<canvas>` superpuesto al área de juego.
-
-| Estado                  | Color                     | Grosor |
-|-------------------------|---------------------------|--------|
-| En arrastre / retroceso | Negro semitransparente    | 4 px   |
-| Acierto (permanente)    | Verde (`#4CAF50`)         | 4 px   |
-| Error (se desvanece)    | Rojo (`rgba(255,80,80,…)`)| 4 px   |
-
----
-
-## 🗃️ Añadir o modificar extensiones
-
-Todo el contenido del juego se gestiona en `json/data.json`, sin tocar el código JavaScript:
+All game content is managed in `json/data.json` — no JavaScript changes needed:
 
 ```json
 {
@@ -98,41 +75,18 @@ Todo el contenido del juego se gestiona en `json/data.json`, sin tocar el códig
 }
 ```
 
-- **`levels`** — extensiones agrupadas por nivel con su descripción.
-- **`links`** — URL de Wikipedia para cada extensión (usada en la Biblioteca).
-- **`config`** — número de parejas, vidas y extensiones nuevas mínimas por nivel.
-
-Para añadir un nivel nuevo basta con agregar una entrada en los tres objetos.
+To add a new level, add an entry in all three objects (`levels`, `links`, `config`).
 
 ---
 
-## 🖼️ Menú principal
+## Deployment
 
-El menú se compone de dos zonas:
-
-- **Título** — centrado en la parte superior, a todo el ancho.
-- **Cuerpo** — fila con la mascota a la izquierda y el selector de dificultad + botón Biblioteca a la derecha.
-
-Al volver al menú (desde el juego o la Biblioteca) la página hace scroll automático al inicio para evitar desplazamientos visuales.
-
----
-
-## 🚀 Despliegue
-
-El proyecto es estático y no requiere backend ni dependencias. Al usar `fetch` para cargar `data.json`, necesita ser servido por HTTP (no funciona abriendo el HTML directamente desde el sistema de archivos).
+This task is static and requires no backend or dependencies. Because it uses `fetch` to load `data.json`, it must be served over HTTP — it does not work when opened directly from the filesystem.
 
 ```bash
-# Con Python
+# Python
 python -m http.server 8000
 
-# Con Node.js
+# Node.js
 npx serve .
 ```
-
----
-
-## 🛠️ Tecnologías
-
-- **HTML5** — estructura semántica
-- **CSS3** — diseño pastel, animaciones, responsive
-- **JavaScript (Vanilla)** — lógica del juego, Canvas API, Web Audio API, Touch Events
