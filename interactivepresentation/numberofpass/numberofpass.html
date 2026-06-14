@@ -1,0 +1,520 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>¿Por qué importan las contraseñas seguras?</title>
+<link rel="stylesheet" href="/css/tinyfoot.css">
+<link rel="stylesheet" href="/css/mobile-warning.css">
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap');
+
+  :root {
+    --bg: #0d080d;
+    --surface: #170f17;
+    --surface2: #201420;
+    --border: rgba(255,255,255,0.09);
+    --border-active: rgba(236,96,155,0.5);
+    --text: #f8f0f5;
+    --muted: rgba(248,240,245,0.5);
+    --hint: rgba(248,240,245,0.3);
+    --pink: #ec609b;
+    --pink-dim: rgba(236,96,155,0.12);
+    --pink-light: rgba(236,96,155,0.06);
+    --rose: #f9a8d4;
+    --mono: 'JetBrains Mono', monospace;
+    --sans: 'Inter', system-ui, sans-serif;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: var(--sans);
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    padding: 2.5rem 1.5rem 4rem;
+    line-height: 1.6;
+  }
+
+  .page { max-width: 960px; margin: 0 auto; }
+
+  .header { text-align: center; margin-bottom: 3rem; }
+  .eyebrow {
+    font-size: 11px; font-weight: 500; letter-spacing: .15em;
+    text-transform: uppercase; color: var(--pink); margin-bottom: 1rem;
+  }
+  h1 {
+    font-size: clamp(26px, 5vw, 42px); font-weight: 300;
+    letter-spacing: -.02em; color: var(--text); line-height: 1.2; margin-bottom: 1rem;
+  }
+  h1 em { font-style: normal; color: var(--pink); }
+  .subtitle { font-size: 15px; color: var(--muted); max-width: 520px; margin: 0 auto; }
+
+  .layout {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: auto auto;
+    gap: 1.5rem;
+  }
+
+  .section-label {
+    font-size: 11px; font-weight: 500; letter-spacing: .12em;
+    text-transform: uppercase; color: var(--hint); margin-bottom: 1rem;
+  }
+
+  /* LEFT COL */
+  .levels-col { grid-column: 1; grid-row: 1 / 3; display: flex; flex-direction: column; }
+
+  .level-card {
+    border: 1px solid rgba(255,255,255,0.13);
+    border-radius: 14px; margin-bottom: 8px; cursor: pointer;
+    transition: border-color .2s, background .2s;
+    overflow: hidden; user-select: none;
+  }
+  .level-card:hover { border-color: rgba(236,96,155,0.3); background: var(--pink-light); }
+  .level-card.active { border-color: var(--border-active); background: var(--pink-dim); }
+
+  .level-header { display: flex; align-items: center; gap: 12px; padding: 13px 14px; }
+
+  .level-num {
+    width: 30px; height: 30px; border-radius: 50%;
+    border: 1.5px solid rgba(255,255,255,0.2);
+    display: flex; align-items: center; justify-content: center;
+    font-family: var(--mono); font-size: 12px; font-weight: 500;
+    color: rgba(248,240,245,0.55); flex-shrink: 0; transition: all .2s;
+  }
+  .level-card.active .level-num { background: var(--pink); border-color: var(--pink); color: #fff; }
+
+  .level-body { flex: 1; min-width: 0; }
+  .level-locked { font-size: 13px; color: rgba(248,240,245,0.6); line-height: 1; }
+  .level-unlocked { display: none; }
+  .level-card.active .level-locked { display: none; }
+  .level-card.active .level-unlocked { display: block; }
+  .level-name { font-size: 13px; font-weight: 500; color: var(--text); margin-bottom: 2px; line-height: 1; }
+  .level-row2 { display: flex; align-items: baseline; gap: 7px; min-width: 0; overflow: hidden; }
+  .level-count { font-family: var(--mono); font-size: 10px; color: var(--pink); white-space: nowrap; flex-shrink: 0; }
+  .level-example { font-family: var(--mono); font-size: 10px; color: var(--muted); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; min-width: 0; }
+
+  .level-toggle {
+    width: 22px; height: 22px; border-radius: 50%;
+    border: 1.5px solid rgba(255,255,255,0.18);
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0; font-size: 16px; line-height: 1;
+    color: rgba(248,240,245,0.45); transition: all .2s;
+  }
+  .level-card.active .level-toggle { background: var(--pink); border-color: var(--pink); color: #fff; }
+
+  .slider-wrap {
+    background: var(--surface);
+    border: 1px solid rgba(255,255,255,0.09);
+    border-radius: 16px; padding: 1.25rem 1.5rem; margin-top: 0.5rem;
+  }
+  .slider-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem; }
+  .slider-header-label { font-size: 13px; color: var(--muted); }
+  .slider-value { font-family: var(--mono); font-size: 20px; font-weight: 500; color: var(--pink); }
+  .slider-value small { font-size: 12px; font-weight: 400; color: var(--muted); margin-left: 4px; }
+
+  input[type=range] {
+    width: 100%; height: 4px;
+    -webkit-appearance: none; appearance: none;
+    background: var(--surface2); border-radius: 2px; outline: none; cursor: pointer;
+  }
+  input[type=range]::-webkit-slider-thumb {
+    -webkit-appearance: none; width: 18px; height: 18px; border-radius: 50%;
+    background: var(--pink); border: 3px solid var(--bg); cursor: pointer; transition: transform .15s;
+  }
+  input[type=range]::-webkit-slider-thumb:hover { transform: scale(1.25); }
+  input[type=range]::-moz-range-thumb {
+    width: 18px; height: 18px; border-radius: 50%;
+    background: var(--pink); border: 3px solid var(--bg); cursor: pointer;
+  }
+  .slider-marks {
+    display: flex; justify-content: space-between;
+    margin-top: 6px; font-size: 11px; color: var(--hint); font-family: var(--mono);
+  }
+
+  /* RIGHT TOP */
+  .result-col { grid-column: 2; grid-row: 1; }
+
+  .result-wrap {
+    background: var(--surface); border: 1px solid rgba(255,255,255,0.09);
+    border-radius: 20px; padding: 1.75rem 1.75rem 1.5rem;
+    position: relative; overflow: hidden;
+  }
+  .result-wrap::before {
+    content: ''; position: absolute; top: 0; left: 0; right: 0; height: 1px;
+    background: linear-gradient(90deg, transparent, var(--pink), transparent); opacity: .6;
+  }
+  .result-label {
+    font-size: 11px; font-weight: 500; letter-spacing: .1em;
+    text-transform: uppercase; color: var(--hint); margin-bottom: .75rem;
+  }
+  .result-number {
+    font-size: 22px; font-weight: 300; letter-spacing: -.02em;
+    color: var(--text); margin-bottom: .35rem;
+    height: 32px; display: flex; align-items: center; transition: color .3s;
+    overflow: hidden; white-space: nowrap; text-overflow: ellipsis;
+  }
+  .result-number.empty { color: rgba(248,240,245,0.3); font-size: 15px; }
+  .result-sci {
+    font-family: var(--mono); font-size: 12px; color: var(--rose);
+    margin-bottom: 1rem; min-height: 18px; opacity: 0; transition: opacity .3s;
+  }
+  .result-sci.visible { opacity: 1; }
+  .formula {
+    font-family: var(--mono); font-size: 11px; color: var(--hint);
+    padding-top: 1rem; border-top: 1px solid rgba(255,255,255,0.07); min-height: 18px;
+  }
+
+  /* RIGHT BOTTOM */
+  .chart-col { grid-column: 2; grid-row: 2; }
+
+  .chart-wrap {
+    background: var(--surface); border: 1px solid rgba(255,255,255,0.09);
+    border-radius: 20px; padding: 1.25rem 1.25rem 1rem;
+    position: relative; overflow: hidden;
+  }
+  .chart-wrap::before {
+    content: ''; position: absolute; top: 0; left: 0; right: 0; height: 1px;
+    background: linear-gradient(90deg, transparent, var(--pink), transparent); opacity: .25;
+  }
+
+  .chart-note { display: none; }
+
+  .chart-empty {
+    display: flex; align-items: center; justify-content: center;
+    height: 180px; color: var(--hint); font-size: 13px; text-align: center; line-height: 1.8;
+  }
+
+  .chart-canvas-wrap { position: relative; height: 180px; }
+
+  /* current position marker */
+  .chart-marker-label {
+    position: absolute; top: 4px; right: 0;
+    font-family: var(--mono); font-size: 10px; color: var(--pink);
+    opacity: 0; transition: opacity .3s;
+  }
+  .chart-marker-label.visible { opacity: 1; }
+
+  .footer { text-align: center; font-size: 12px; color: var(--hint); margin-top: 2rem; }
+
+  @media (max-width: 640px) {
+    .layout { grid-template-columns: 1fr; }
+    .levels-col { grid-column: 1; grid-row: 2; }
+    .result-col  { grid-column: 1; grid-row: 1; }
+    .chart-col   { grid-column: 1; grid-row: 3; }
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <header class="header">
+    <p class="eyebrow">Ejercicio interactivo</p>
+    <h1>¿Por qué una contraseña <em>segura</em><br>marca la diferencia?</h1>
+    <p class="subtitle">Desbloquea niveles de seguridad uno a uno y observa cómo el número de combinaciones posibles crece de forma exponencial.</p>
+  </header>
+
+  <div class="layout">
+
+    <div class="levels-col">
+      <p class="section-label">Niveles de seguridad</p>
+      <div id="levels"></div>
+      <div class="slider-wrap">
+        <div class="slider-header">
+          <span class="slider-header-label">Longitud de la contraseña</span>
+          <div class="slider-value" id="slider-val">8<small>caracteres</small></div>
+        </div>
+        <input type="range" min="1" max="15" value="8" step="1" id="slider" oninput="update()">
+        <div class="slider-marks">
+          <span>1</span><span>4</span><span>8</span><span>12</span><span>15</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="result-col">
+      <p class="section-label">Combinaciones posibles</p>
+      <div class="result-wrap">
+        <p class="result-label">Total de contraseñas distintas</p>
+        <div class="result-number empty" id="res-num">Activa un nivel para comenzar</div>
+        <div class="result-sci" id="res-sci"></div>
+        <div class="formula" id="formula"></div>
+      </div>
+    </div>
+
+    <div class="chart-col">
+      <p class="section-label">Combinaciones según longitud</p>
+      <div class="chart-wrap">
+        <p class="chart-note" id="chart-note"></p>
+        <div id="chart-empty" class="chart-empty">Activa al menos un nivel<br>para ver la evolución</div>
+        <div class="chart-canvas-wrap" id="chart-cw" style="display:none">
+          <canvas id="chart"></canvas>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <p class="footer">Cuantos más niveles y más longitud, más combinaciones — y más difícil de atacar por fuerza bruta.</p>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<script>
+const SETS = [
+  { id:'num',  label:'Números',           count:10,     example:'0  1  2  3  4  5  6  7  8  9' },
+  { id:'low',  label:'Minúsculas',        count:26,     example:'a  b  c  d  e  f  g  …  x  y  z' },
+  { id:'up',   label:'Mayúsculas',        count:26,     example:'A  B  C  D  E  F  G  …  X  Y  Z' },
+  { id:'sym',  label:'Símbolos ASCII',    count:32,     example:'!  @  #  $  %  &  *  (  )  +  =  …' },
+  { id:'uni',  label:'Unicode estándar',  count:162,    example:'á  é  ñ  ü  ç  å  ø  β  δ  θ  λ  …' },
+  { id:'unic', label:'Unicode completo',  count:154742, example:'𝓐  ✦  ⚡  ♾  𝄞  ☯  ❋  ⟁  ☄  𝕳  …' },
+];
+
+const state = {};
+SETS.forEach(s => state[s.id] = false);
+let chartInst = null;
+
+function buildLevels() {
+  const c = document.getElementById('levels');
+  SETS.forEach((s, i) => {
+    const card = document.createElement('div');
+    card.className = 'level-card';
+    card.id = 'card-' + s.id;
+    card.innerHTML = `
+      <div class="level-header">
+        <div class="level-num">${i + 1}</div>
+        <div class="level-body">
+          <div class="level-locked">Nivel de seguridad ${i + 1}</div>
+          <div class="level-unlocked">
+            <div class="level-name">${s.label}</div>
+            <div class="level-row2">
+              <span class="level-count">+${s.count.toLocaleString('es-ES')} car.</span>
+              <span class="level-example">${s.example}</span>
+            </div>
+          </div>
+        </div>
+        <div class="level-toggle" id="tog-${s.id}">+</div>
+      </div>`;
+    card.addEventListener('click', () => toggle(s.id));
+    c.appendChild(card);
+  });
+}
+
+function toggle(id) {
+  state[id] = !state[id];
+  const card = document.getElementById('card-' + id);
+  const tog  = document.getElementById('tog-' + id);
+  card.classList.toggle('active', state[id]);
+  tog.textContent = state[id] ? '×' : '+';
+  update();
+}
+
+// All math in log10 space to avoid huge numbers
+function logComb(chars, len) {
+  if (chars <= 0 || len <= 0) return 0;
+  return len * Math.log10(chars);
+}
+
+function bigNumFromLog(lv) {
+  if (lv <= 0) return '1';
+  const exp = Math.floor(lv);
+  const mantissa = Math.pow(10, lv - exp);
+  if (exp < 6) return Math.round(Math.pow(10, lv)).toLocaleString('es-ES');
+  const units = [
+    [63,'vigintillones'],[60,'novemdecillones'],[57,'octodecillones'],
+    [54,'septendecillones'],[51,'sexdecillones'],[48,'quindecillones'],
+    [45,'cuatordecillones'],[42,'tredecillones'],[39,'duodecillones'],
+    [36,'undecillones'],[33,'decillones'],[30,'nonillones'],
+    [27,'octillones'],[24,'cuatrillones'],[21,'trillones'],
+    [18,'trillones'],[15,'billones'],[12,'billones'],
+    [9,'millones'],[6,'millones']
+  ];
+  for (const [e, nom] of units) {
+    if (exp >= e) {
+      const v = mantissa * Math.pow(10, exp - e);
+      const fmt = v >= 10 ? Math.round(v).toLocaleString('es-ES') : v.toFixed(1).replace('.', ',');
+      return fmt + ' ' + nom;
+    }
+  }
+  return `10^${exp}`;
+}
+
+function sciStrFromLog(lv) {
+  const exp = Math.floor(lv);
+  if (exp < 6) return '';
+  const m = Math.pow(10, lv - exp).toFixed(2).replace('.', ',');
+  const sup = String(exp).split('').map(c => '⁰¹²³⁴⁵⁶⁷⁸⁹'[+c] || c).join('');
+  return `${m} × 10${sup}  ←  un 1 seguido de ${exp} ceros`;
+}
+
+// Tick label from a log10 value
+function tickLabel(lv) {
+  const exp = Math.round(lv);
+  if (exp === 0) return '1';
+  if (exp < 6)   return `10^${exp}`;
+  const units = [
+    [63,'Vig'],[57,'Oct-d'],[54,'Sep-d'],[48,'Qui-d'],
+    [42,'Tre-d'],[36,'Und-d'],[33,'Dec'],[30,'Non'],
+    [27,'Oct'],[24,'Cuat'],[21,'Trill'],[15,'Bill'],[9,'Mill'],[6,'Mill']
+  ];
+  for (const [e, nom] of units) {
+    if (exp >= e) return `~${nom} (10^${exp})`;
+  }
+  return `10^${exp}`;
+}
+
+function drawChart(chars, currentLen) {
+  const emptyEl = document.getElementById('chart-empty');
+  const cwEl    = document.getElementById('chart-cw');
+  const canvas  = document.getElementById('chart');
+
+  if (chars === 0) {
+    emptyEl.style.display = 'flex';
+    cwEl.style.display = 'none';
+    if (chartInst) { chartInst.destroy(); chartInst = null; }
+    return;
+  }
+
+  emptyEl.style.display = 'none';
+  cwEl.style.display = 'block';
+
+  // X: 1..15
+  const xLabels = Array.from({length: 15}, (_, i) => i + 1);
+  // Y: log10(chars^x) = x * log10(chars)
+  const logC = Math.log10(chars);
+  const yData = xLabels.map(x => x * logC);
+
+  const yMin = 0;
+  const yMax = Math.ceil(15 * logC) + 1; // dynamic ceiling
+
+  // Decide sensible tick step based on range
+  const range = yMax - yMin;
+  let step = 1;
+  if (range > 60) step = 10;
+  else if (range > 30) step = 5;
+  else if (range > 10) step = 2;
+
+  const gridColor = 'rgba(248,240,245,0.06)';
+  const tickColor = 'rgba(248,240,245,0.3)';
+  const monoFont  = { family: 'JetBrains Mono', size: 10 };
+  const pointColors = xLabels.map(x => x === currentLen ? '#ffffff' : '#ec609b');
+  const pointBorder = xLabels.map(x => x === currentLen ? '#ec609b' : '#ec609b');
+  const pointRadii  = xLabels.map(x => x === currentLen ? 6 : 3);
+
+  const cfg = {
+    type: 'line',
+    data: {
+      labels: xLabels,
+      datasets: [{
+        label: 'Combinaciones',
+        data: yData,
+        borderColor: '#ec609b',
+        backgroundColor: 'rgba(236,96,155,0.07)',
+        borderWidth: 2,
+        pointBackgroundColor: pointColors,
+        pointBorderColor: pointBorder,
+        pointBorderWidth: xLabels.map(x => x === currentLen ? 2 : 1),
+        pointRadius: pointRadii,
+        pointHoverRadius: 5,
+        tension: 0.35,
+        fill: true,
+      }]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      animation: { duration: 250 },
+      interaction: { mode: 'index', intersect: false },
+      plugins: {
+        legend: { display: false },
+        tooltip: {
+          backgroundColor: '#170f17',
+          borderColor: 'rgba(236,96,155,0.3)', borderWidth: 1,
+          titleColor: '#f9a8d4', bodyColor: 'rgba(248,240,245,0.65)',
+          titleFont: monoFont, bodyFont: monoFont,
+          callbacks: {
+            title: items => `Longitud: ${items[0].label} caracteres`,
+            label: ctx => ` ${bigNumFromLog(ctx.raw)} combinaciones`
+          }
+        }
+      },
+      scales: {
+        x: {
+          title: { display: false },
+          ticks: { color: tickColor, font: monoFont },
+          grid: { color: gridColor },
+          border: { color: 'transparent' },
+          min: 1, max: 15,
+        },
+        y: {
+          title: { display: false },
+          ticks: {
+            color: tickColor, font: monoFont,
+            stepSize: step,
+            callback: v => tickLabel(v),
+            maxTicksLimit: 8,
+          },
+          grid: { color: gridColor },
+          border: { color: 'transparent' },
+          min: yMin,
+          max: yMax,
+        }
+      }
+    }
+  };
+
+  if (chartInst) {
+    // Update in place for smooth transition
+    chartInst.data.datasets[0].data = yData;
+    chartInst.data.datasets[0].pointBackgroundColor = pointColors;
+    chartInst.data.datasets[0].pointBorderColor = pointBorder;
+    chartInst.data.datasets[0].pointBorderWidth = xLabels.map(x => x === currentLen ? 2 : 1);
+    chartInst.data.datasets[0].pointRadius = pointRadii;
+    chartInst.data.datasets[0].pointRadius = pointRadii;
+    chartInst.options.scales.y.min = yMin;
+    chartInst.options.scales.y.max = yMax;
+    chartInst.options.scales.y.ticks.stepSize = step;
+    chartInst.options.plugins.tooltip.callbacks.label = cfg.options.plugins.tooltip.callbacks.label;
+    chartInst.update('active');
+  } else {
+    chartInst = new Chart(canvas, cfg);
+  }
+}
+
+function update() {
+  const active = SETS.filter(s => state[s.id]);
+  const len = parseInt(document.getElementById('slider').value);
+  document.getElementById('slider-val').innerHTML = `${len}<small>caracteres</small>`;
+
+  const numEl   = document.getElementById('res-num');
+  const sciEl   = document.getElementById('res-sci');
+  const formula = document.getElementById('formula');
+
+  const chars = active.reduce((a, s) => a + s.count, 0);
+
+  if (chars === 0) {
+    numEl.textContent = 'Activa un nivel para comenzar';
+    numEl.className = 'result-number empty';
+    sciEl.textContent = ''; sciEl.classList.remove('visible');
+    formula.textContent = '';
+  } else {
+    const lv = logComb(chars, len);
+    numEl.textContent = bigNumFromLog(lv);
+    numEl.className = 'result-number has-value';
+    const sci = sciStrFromLog(lv);
+    sciEl.textContent = sci;
+    sciEl.classList.toggle('visible', sci !== '');
+    formula.textContent = `${chars.toLocaleString('es-ES')} caracteres  ^  ${len} posiciones  =  ${bigNumFromLog(lv)}`;
+  }
+
+  drawChart(chars, len);
+}
+
+buildLevels();
+update();
+</script>
+<iframe id="tinyfoot-iframe" class="tinyfoot-iframe" src="/layout/tinyfoot.html" scrolling="no"></iframe>
+<script src="/js/iframeanimation.js"></script>
+<script src="/js/mobile-warning.js"></script>
+</body>
+</html>

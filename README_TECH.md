@@ -200,5 +200,3 @@ The button that opens the modal simply calls `abrirCurso()`:
 - [ ] **`office/` project** — In-progress JSON-driven dictionary of office tool locations across different programs.
 
 ---
-
-*Last updated: [date] · Maintained by [Your Name](https://github.com/your-username)*

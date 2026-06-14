@@ -32,6 +32,14 @@ Un entorno educativo web diseñado para actividades de informática, completamen
 
 ---
 
+## 📚 Presentaciones interactivas disponibles
+
+| Actividad | Descripción | Documentación |
+|---|---|---|
+| **Flujo de datos en internet** | Simulación de cómo se mueven los datos en internet desde que sale de nuestro ordenador a Youtube| [README](./interactivepresentation/internetdataflow/README_FLOW_PRES.md) |
+| **Cantidad de Contraseñas entre 1 y 15 caracteres** | Simulación de la exponencialidad del número de caracteres en una contraseña | [README](./interactivepresentation/internetdataflow/README_PASS_PRES.md) |
+---
+
 ## 🚀 Acceso
 
 Visita la web en: [ayaxprofesor.es](https://ayaxprofesor.es)

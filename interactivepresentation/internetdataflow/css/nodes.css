@@ -1,0 +1,111 @@
+/* ── DEVICE NODES ─────────────────────────────────────────────────────────── */
+.device-node {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  z-index: 10;
+  display: flex; flex-direction: column; align-items: center;
+  transition: top 0.45s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.device-icon {
+  width: 64px; height: 64px; border-radius: 14px;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  border: 1px solid var(--border2); background: var(--bg3);
+  font-size: 28px; transition: all 0.3s; overflow: hidden;
+}
+
+.device-icon.active        { box-shadow: 0 0 0 2px var(--accent), 0 0 16px rgba(88,166,255,0.3); border-color: var(--accent); }
+.device-icon.visited       { border-color: rgba(88,166,255,0.3); opacity: 0.7; }
+.device-icon.active-return { box-shadow: 0 0 0 2px var(--green), 0 0 16px rgba(63,185,80,0.3); border-color: var(--green); }
+
+.device-icon.vpn-style {
+  background: rgba(124,58,237,0.15); border-color: var(--vpn2);
+  animation: vpn-pulse 2s ease-in-out infinite;
+}
+.device-icon.vpn-style .vpn-lbl {
+  font-size: 7px; font-weight: 700; color: var(--vpn3);
+  letter-spacing: 0.5px; margin-top: -2px;
+  font-family: 'JetBrains Mono', monospace; line-height: 1;
+}
+.device-icon.vpn-style.active { box-shadow: 0 0 0 2px var(--vpn), 0 0 16px rgba(163,113,247,0.4); }
+
+/* ── ROUTER IMAGE ──────────────────────────────────────────────────────────── */
+.router-img-wrap {
+  position: relative; width: 58px; height: 33px;
+  display: flex; align-items: center; justify-content: center;
+}
+.router-img-wrap img { width: 58px; height: auto; display: block; }
+
+/* ── INTRO REVEAL ──────────────────────────────────────────────────────────── */
+.node-hidden {
+  opacity: 0; transform: translate(-50%, -50%) scale(0.4);
+  transition: opacity 0.35s ease, transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+.node-hidden.revealed {
+  opacity: 1; transform: translate(-50%, -50%) scale(1);
+}
+.r-node.node-hidden   { transform: translate(-50%, -50%) scale(0.4); }
+.r-node.node-hidden.revealed { transform: translate(-50%, -50%) scale(1); }
+.yt-node.node-hidden  { transform: translate(-50%, -50%) scale(0.4); }
+.yt-node.node-hidden.revealed { transform: translate(-50%, -50%) scale(1); }
+
+/* ── ROUTER TRIANGLES ──────────────────────────────────────────────────────── */
+.r-node {
+  position: absolute; transform: translate(-50%, -50%);
+  z-index: 10; display: flex; flex-direction: column; align-items: center;
+}
+
+.router-triangle {
+  width: 0; height: 0;
+  border-left: 18px solid transparent; border-right: 18px solid transparent;
+  border-bottom: 30px solid #2d3748;
+  transition: border-bottom-color 0.3s, filter 0.3s;
+}
+.router-triangle.visited       { border-bottom-color: #2a4a6b; }
+.router-triangle.active-now    { border-bottom-color: var(--accent); filter: drop-shadow(0 0 6px rgba(88,166,255,0.6)); }
+.router-triangle.active-return { border-bottom-color: var(--green);  filter: drop-shadow(0 0 6px rgba(63,185,80,0.6)); }
+
+/* ── VPN EXIT SHIELD ───────────────────────────────────────────────────────── */
+.vpn-exit-shield {
+  display: none; flex-direction: column; align-items: center; justify-content: center;
+  width: 42px; height: 42px; border-radius: 10px;
+  background: rgba(124,58,237,0.2); border: 1px solid var(--vpn2);
+  font-size: 18px; animation: vpn-pulse 2s ease-in-out infinite; transition: all 0.3s;
+}
+.vpn-exit-shield .vpn-label-inside {
+  font-size: 7px; font-weight: 700; color: var(--vpn3);
+  letter-spacing: 0.5px; margin-top: -2px;
+  font-family: 'JetBrains Mono', monospace; line-height: 1;
+}
+.vpn-exit-shield.active { box-shadow: 0 0 0 2px var(--vpn), 0 0 14px rgba(163,113,247,0.5); }
+
+/* ── YOUTUBE NODE ──────────────────────────────────────────────────────────── */
+.yt-node { position: absolute; transform: translate(-50%, -50%); z-index: 10;
+  display: flex; flex-direction: column; align-items: center; }
+.yt-icon {
+  width: 64px; height: 64px; border-radius: 14px;
+  display: flex; align-items: center; justify-content: center;
+  border: 1px solid var(--border2); background: var(--bg3);
+  overflow: hidden; transition: all 0.3s;
+}
+.yt-icon img { width: 56px; height: auto; display: block; }
+.yt-icon.active        { box-shadow: 0 0 0 2px #ff0000, 0 0 16px rgba(255,0,0,0.4); border-color: #ff0000; }
+.yt-icon.active-return { box-shadow: 0 0 0 2px #ff0000, 0 0 16px rgba(255,0,0,0.4); border-color: #ff0000; }
+.yt-icon.visited       { border-color: rgba(255,0,0,0.3); opacity: 0.7; }
+
+/* ── SATELLITE NODES ───────────────────────────────────────────────────────── */
+.sat-icon {
+  width: 56px; height: 56px; border-radius: 14px;
+  display: flex; align-items: center; justify-content: center;
+  border: 1px solid var(--border2); background: var(--bg3);
+  overflow: hidden; transition: all 0.3s;
+}
+.sat-icon img { width: 46px; height: auto; display: block; }
+.sat-icon.active        { box-shadow: 0 0 0 2px var(--accent), 0 0 16px rgba(88,166,255,0.3); border-color: var(--accent); }
+.sat-icon.active-return { box-shadow: 0 0 0 2px var(--green),  0 0 16px rgba(63,185,80,0.3);  border-color: var(--green); }
+
+/* ── ANIMATIONS ────────────────────────────────────────────────────────────── */
+@keyframes vpn-pulse {
+  0%,100% { box-shadow: 0 0 6px rgba(163,113,247,0.3); }
+  50%     { box-shadow: 0 0 16px rgba(163,113,247,0.7); }
+}

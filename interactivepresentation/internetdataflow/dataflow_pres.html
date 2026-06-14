@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>¿Cómo funciona Internet?</title>
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="/css/tinyfoot.css">
+  <link rel="stylesheet" href="css/variables.css">
+  <link rel="stylesheet" href="css/layout.css">
+  <link rel="stylesheet" href="css/nodes.css">
+  <link rel="stylesheet" href="css/ui.css">
+</head>
+<body>
+
+<h1>¿Cómo funciona Internet?</h1>
+<p class="subtitle">del ordenador a YouTube — un paquete a la vez</p>
+
+<div class="stage-banner">
+  <div class="stage-title" id="stage-title">Listo para enviar</div>
+  <div class="stage-desc"  id="stage-desc">Pulsa "Siguiente salto" para iniciar la transmisión</div>
+</div>
+
+<div class="canvas-row">
+  <div class="phone-panel" id="phone-panel">
+    <div class="phone-panel-title">📞 Flujo de información</div>
+    <div id="phone-lines"></div>
+  </div>
+
+  <div class="scene-wrapper" id="scene-wrapper">
+    <canvas id="line-canvas"></canvas>
+    <canvas id="anim-canvas"></canvas>
+    <div id="scene"></div>
+    <div class="hop-info">Salto <span class="hop-count" id="hop-num">0</span></div>
+    <div class="enc-badge" id="enc-badge">🔒 VPN ACTIVA — Tráfico cifrado</div>
+    <div class="finish-badge" id="finish-badge">
+      <div class="finish-badge-title" id="finish-title">✅ ¡Solicitud recibida!</div>
+      <div class="finish-badge-sub"   id="finish-sub">YouTube ha respondido</div>
+    </div>
+  </div>
+
+  <div class="btn-panel">
+    <!-- Modo base -->
+    <button class="btn mode-btn active-mode" id="btn-mode-empty"  onclick="setMode('empty')"  title="Vacío">⬜</button>
+    <button class="btn mode-btn"             id="btn-mode-normal" onclick="setMode('normal')" title="Normal">🌐</button>
+    <div class="btn-divider"></div>
+    <!-- Capas -->
+    <button class="btn mode-btn" id="btn-mode-vpn" onclick="setMode('vpn')"  title="Activar VPN">🛡️</button>
+    <button class="btn mode-btn sat-btn" id="btn-sat"      onclick="toggleSat()"     title="Activar satélite">🛸</button>
+    <div class="btn-divider"></div>
+    <!-- Variante -->
+    <button class="btn mode-btn"         id="btn-5g"       onclick="toggle5G()"      title="Modo 5G">📶</button>
+    <div class="btn-divider"></div>
+    <!-- Acción -->
+    <button class="btn danger"           id="btn-next"     onclick="nextStep()"      title="Siguiente">▶️</button>
+  </div>
+
+</div><!-- end canvas-row -->
+
+<!-- JS — orden de carga importa: config y state primero, luego módulos, main al final -->
+<script src="js/config.js"></script>
+<script src="js/state.js"></script>
+<script src="js/path.js"></script>
+<script src="js/canvas.js"></script>
+<script src="js/phone.js"></script>
+<script src="js/nodes.js"></script>
+<script src="js/steps.js"></script>
+<script src="js/modes.js"></script>
+<script src="js/variants.js"></script>
+<script src="js/drag.js"></script>
+<script src="js/main.js"></script>
+
+<!-- Tinyfoot -->
+<iframe id="tinyfoot-iframe" class="tinyfoot-iframe" src="/layout/tinyfoot.html" scrolling="no"></iframe>
+<script src="/js/iframeanimation.js"></script>
+
+</body>
+</html>

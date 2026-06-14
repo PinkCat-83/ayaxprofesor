@@ -1,0 +1,13 @@
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
+
+:root {
+  --bg: #0d1117; --bg2: #161b22; --bg3: #1c2230;
+  --border: rgba(255,255,255,0.08); --border2: rgba(255,255,255,0.15);
+  --text: #e6edf3; --text2: #8b949e; --text3: #484f58;
+  --accent: #58a6ff; --accent2: #1f6feb;
+  --red: #ff4d4d; --red2: #ff7070;
+  --green: #3fb950; --green2: #56d364;
+  --vpn: #a371f7; --vpn2: #7c3aed; --vpn3: #c084fc;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; caret-color: transparent; }
