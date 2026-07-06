@@ -1,9 +1,9 @@
 // ─── KEYBOARD / PRESENTER REMOTE ──────────────────────────────────────────────
 document.addEventListener('keydown', e => {
-  if (['ArrowRight','ArrowDown',' '].includes(e.key)) {
+  if (['ArrowRight','ArrowDown',' ','PageDown'].includes(e.key)) {
     e.preventDefault();
     document.getElementById('btn-next').click();
-  } else if (['ArrowLeft','ArrowUp'].includes(e.key)) {
+  } else if (['ArrowLeft','ArrowUp','PageUp'].includes(e.key)) {
     e.preventDefault();
     setMode(currentMode);
   }
