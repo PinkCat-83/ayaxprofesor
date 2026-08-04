@@ -37,6 +37,10 @@ const Game = {
         // Renderizar texto objetivo
         UI.renderTargetText(this.targetText);
 
+        // Resetear panel de feedback de tecla (esperada / pulsada)
+        UI.resetKeyFeedback();
+        UI.setExpectedKey(this.targetText[0]);
+
         // Limpiar y habilitar input
         UI.clearInput();
         UI.enableInput();
@@ -77,6 +81,7 @@ const Game = {
             if (charElement) {
                 this.shakeElement(charElement);
             }
+            UI.setLastKey(typedChar, false);
             event.target.value = typedText.slice(0, -1);
             return;
         }
@@ -94,14 +99,19 @@ const Game = {
             if (charElement) {
                 this.shakeElement(charElement);
             }
+            UI.setLastKey(typedChar, false);
             event.target.value = typedText.slice(0, -1);
         } else {
             // Correcto: marcar y avanzar
             UI.highlightChar(currentPosition, 'correct');
+            // No mostrar nada en "Pulsada" cuando es correcta: solo interesa
+            // el feedback quando el alumno se equivoca.
+            UI.setLastKey(null);
             const nextChar = UI.getCharElement(currentPosition + 1);
             if (nextChar) {
                 UI.addCharClass(currentPosition + 1, 'current');
             }
+            UI.setExpectedKey(this.targetText[currentPosition + 1]);
 
             // Verificar si terminó el texto
             if (typedText.length === this.targetText.length) {
@@ -172,6 +182,7 @@ const Game = {
         this.textData = null;
 
         UI.clearInput();
+        UI.resetKeyFeedback();
         Metrics.reset();
     },
 

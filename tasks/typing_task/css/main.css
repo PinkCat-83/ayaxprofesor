@@ -279,6 +279,105 @@ body {
 }
 
 /* ============================================================
+   FILA DE ENTRADA + FEEDBACK DE TECLA
+   ============================================================ */
+.input-row {
+  display: flex;
+  align-items: stretch;
+  gap: var(--spacing-md);
+}
+
+.input-row .text-input {
+  flex: 1;
+  min-width: 0;
+}
+
+.key-feedback-panel {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-sm);
+  justify-content: center;
+  width: 110px;
+  flex-shrink: 0;
+}
+
+.key-feedback-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+.key-feedback-label {
+  font-size: 0.7rem;
+  color: #9ca3af;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.key-box {
+  width: 100%;
+  min-height: 3rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Courier New', monospace;
+  font-size: 1.5rem;
+  font-weight: bold;
+  border-radius: var(--border-radius-sm);
+  border: var(--border-width) solid var(--color-secondary);
+  background-color: rgba(0, 255, 255, 0.08);
+  color: var(--color-secondary);
+  text-shadow: 0 0 6px var(--color-secondary);
+  transition: all var(--transition-fast);
+  word-break: break-all;
+  padding: 0 0.25rem;
+}
+
+.key-box--expected {
+  border-color: var(--color-secondary);
+}
+
+.key-box--neutral {
+  border-color: #374151;
+  background-color: rgba(255, 255, 255, 0.05);
+  color: #9ca3af;
+  text-shadow: none;
+}
+
+.key-box--correct {
+  border-color: var(--color-success);
+  background-color: rgba(74, 222, 128, 0.15);
+  color: var(--color-success);
+  text-shadow: 0 0 6px var(--color-success);
+}
+
+.key-box--incorrect {
+  border-color: var(--color-error);
+  background-color: rgba(248, 113, 113, 0.15);
+  color: var(--color-error);
+  text-shadow: 0 0 6px var(--color-error);
+  animation: shake 0.2s ease-in-out;
+}
+
+@media (max-width: 768px) {
+  .input-row {
+    flex-direction: column;
+  }
+
+  .key-feedback-panel {
+    width: 100%;
+    flex-direction: row;
+    justify-content: center;
+  }
+
+  .key-feedback-item {
+    flex: 1;
+    max-width: 160px;
+  }
+}
+
+/* ============================================================
    ESTADOS DE CARACTERES
    ============================================================ */
 .correct {

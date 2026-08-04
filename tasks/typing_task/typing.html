@@ -156,9 +156,22 @@
             </div>
         </div>
 
-        <!-- ÁREA DE ESCRITURA -->
-        <textarea id="user-input" class="text-input" placeholder="Empieza a escribir aquí..." spellcheck="false"
-            autofocus aria-label="Área de escritura"></textarea>
+        <!-- ÁREA DE ESCRITURA + FEEDBACK DE TECLA -->
+        <div class="input-row">
+            <textarea id="user-input" class="text-input" placeholder="Empieza a escribir aquí..." spellcheck="false"
+                autofocus aria-label="Área de escritura"></textarea>
+
+            <div id="key-feedback" class="key-feedback-panel" aria-live="polite">
+                <div class="key-feedback-item">
+                    <span class="key-feedback-label">Esperada</span>
+                    <div id="expected-key" class="key-box key-box--expected">–</div>
+                </div>
+                <div class="key-feedback-item">
+                    <span class="key-feedback-label">Pulsada</span>
+                    <div id="last-key" class="key-box key-box--neutral">–</div>
+                </div>
+            </div>
+        </div>
     </main>
 
     <!-- JAVASCRIPT - Orden importa! -->

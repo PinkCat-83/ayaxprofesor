@@ -229,6 +229,46 @@ const App = {
 
         // Control de velocidad de auto-escritura
         this.setupAutoTypeSpeedControl();
+
+        // NUEVO: Mantener el foco siempre en el área de escritura
+        this.setupFocusGuard();
+    },
+
+    /**
+     * Mantener el foco siempre en el textarea de escritura, para que el
+     * alumno no "se pierda" al hacer clic fuera de él por accidente.
+     * Se excluyen del "robo de foco" los controles del panel lateral
+     * (selector, botones, toggles, slider) para no romper su uso.
+     */
+    setupFocusGuard() {
+        const input = this.elements.userInput;
+        if (!input) return;
+
+        const isAllowedTarget = (el) => {
+            if (!el || el === document.body || el === document.documentElement) return false;
+            return el === input || (el.closest && (el.closest('#control-panel') || el.closest('#user-input')));
+        };
+
+        // Clic en cualquier parte de la página que no sea un control del panel
+        // o el propio textarea -> devolver el foco al textarea.
+        document.addEventListener('click', (e) => {
+            if (input.disabled) return;
+            if (!isAllowedTarget(e.target)) {
+                input.focus();
+            }
+        });
+
+        // Si el textarea pierde el foco por cualquier otra vía y el nuevo
+        // elemento activo no es un control legítimo del panel, recuperarlo.
+        input.addEventListener('blur', () => {
+            if (input.disabled) return;
+            setTimeout(() => {
+                if (input.disabled) return;
+                if (!isAllowedTarget(document.activeElement)) {
+                    input.focus();
+                }
+            }, 0);
+        });
     },
 
     /**

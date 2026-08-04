@@ -12,7 +12,9 @@ const UI = {
         cpm: null,
         errors: null,
         errorPercent: null,
-        timer: null
+        timer: null,
+        expectedKey: null,
+        lastKey: null
     },
 
     /**
@@ -29,6 +31,8 @@ const UI = {
         this.elements.errors = document.getElementById('errors');
         this.elements.errorPercent = document.getElementById('error-percent');
         this.elements.timer = document.getElementById('timer');
+        this.elements.expectedKey = document.getElementById('expected-key');
+        this.elements.lastKey = document.getElementById('last-key');
 
         // Verificar que todos los elementos existen
         const missingElements = [];
@@ -240,5 +244,65 @@ showFinishScreen(finalStats) {
      */
     getCharElement(index) {
         return document.getElementById(`char-${index}`);
+    },
+
+    /**
+     * Formatear un carácter para mostrarlo en las cajas de feedback de tecla
+     * @param {string|null|undefined} char - Carácter a formatear
+     * @returns {string}
+     */
+    formatKeyDisplay(char) {
+        if (char === null || char === undefined) return '–';
+        if (char === '\n') return '↵';
+        if (char === ' ') return '␣';
+        return char;
+    },
+
+    /**
+     * Actualizar la caja que muestra la tecla que se espera pulsar
+     * @param {string|null|undefined} char - Carácter esperado
+     */
+    setExpectedKey(char) {
+        if (!this.elements.expectedKey) return;
+        this.elements.expectedKey.textContent = this.formatKeyDisplay(char);
+    },
+
+    /**
+     * Actualizar la caja que muestra la última tecla pulsada
+     * @param {string|null|undefined} char - Carácter pulsado (null para estado neutro)
+     * @param {boolean} isCorrect - Si la tecla pulsada fue correcta
+     */
+    setLastKey(char, isCorrect) {
+        if (!this.elements.lastKey) return;
+        const el = this.elements.lastKey;
+
+        el.textContent = this.formatKeyDisplay(char);
+        el.classList.remove('key-box--correct', 'key-box--incorrect', 'key-box--neutral');
+
+        if (char === null || char === undefined) {
+            el.classList.add('key-box--neutral');
+            return;
+        }
+
+        if (isCorrect) {
+            el.classList.add('key-box--correct');
+            return;
+        }
+
+        // Error: forzar el reinicio de la animación de sacudida en CADA
+        // pulsación incorrecta, incluso si se repite la misma tecla
+        // consecutivamente (si no, la clase ya estaría puesta y CSS no
+        // relanzaría la animación).
+        el.classList.remove('key-box--incorrect');
+        void el.offsetWidth; // fuerza reflow para reiniciar la animación
+        el.classList.add('key-box--incorrect');
+    },
+
+    /**
+     * Reiniciar el panel de feedback de tecla a su estado inicial
+     */
+    resetKeyFeedback() {
+        this.setExpectedKey(null);
+        this.setLastKey(null);
     }
 };
