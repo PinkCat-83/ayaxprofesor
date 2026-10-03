@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>¿Qué necesito? · Excel Avanzado</title>
+<style>
+  :root{
+    --azul:#2980b9; --azul-claro:#3498db; --fondo:#f9f9f9; --texto:#2c3e50;
+    --gris:#7f8c8d; --borde:#d6eaf8; --verde:#27ae60; --ambar:#e67e22; --rojo:#c0392b;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;padding:16px;font-family:sans-serif;color:var(--texto);background:#fff;line-height:1.6}
+  .caja{max-width:720px;margin:0 auto;border-left:5px solid var(--azul-claro);background:var(--fondo);border-radius:5px;padding:20px 22px}
+  h1{color:var(--azul);font-size:1.35rem;margin:0 0 6px;border-bottom:2px solid var(--azul-claro);padding-bottom:6px}
+  .intro{margin:10px 0 0}
+  .progreso{display:flex;gap:4px;margin:18px 0 6px}
+  .progreso span{flex:1;height:6px;border-radius:3px;background:#dfe6ec;transition:background .3s}
+  .progreso span.hecho{background:var(--verde)}
+  .progreso span.actual{background:var(--azul-claro)}
+  .paso{font-size:.85rem;color:var(--gris);margin:0 0 4px}
+  .tramo{font-weight:bold;color:var(--azul);font-size:1.1rem;margin:0 0 10px}
+  .pregunta{font-size:1.05rem;margin:0 0 8px}
+  ul.puntos{margin:0 0 16px;padding-left:20px}
+  ul.puntos li{margin:3px 0}
+  code{background:#ebf5fb;border:1px solid var(--borde);border-radius:3px;padding:0 4px;font-size:.92em}
+  .opciones{display:flex;flex-wrap:wrap;gap:8px}
+  button{font:inherit;cursor:pointer;border-radius:5px;padding:9px 16px;border:1px solid transparent}
+  .si{background:var(--verde);color:#fff}
+  .medio{background:var(--ambar);color:#fff}
+  .no{background:var(--rojo);color:#fff}
+  .secundario{background:#fff;color:var(--azul);border-color:var(--azul-claro)}
+  button:hover{filter:brightness(1.08)}
+  button:focus-visible{outline:3px solid #f1c40f;outline-offset:2px}
+  .empezar{background:var(--azul);color:#fff;margin-top:16px}
+  .nav{margin-top:14px}
+  .resultado{background:#fff;border:1px solid var(--borde);border-radius:5px;padding:16px;margin-top:14px}
+  .resultado .grande{font-size:1.25rem;font-weight:bold;color:var(--azul);margin:0 0 8px}
+  .resultado dl{display:grid;grid-template-columns:auto 1fr;gap:4px 12px;margin:10px 0}
+  .resultado dt{color:var(--gris)}
+  .resultado dd{margin:0;font-weight:bold}
+  .aviso{background:#ebf5fb;border:1px solid var(--azul-claro);border-radius:5px;padding:10px 12px;margin-top:12px;font-size:.95rem}
+  .oculto{display:none}
+</style>
+</head>
+<body>
+<div class="caja">
+  <h1>🧭 ¿Qué necesito?</h1>
+
+  <!-- Portada -->
+  <section id="portada">
+    <p class="intro">No es un examen: es una guía de 1 o 2 minutos para saber <strong>por qué tramo te conviene empezar</strong>.</p>
+    <p>Te haremos como mucho <strong>8 preguntas</strong>, una por tramo. Responde con sinceridad: <em>¿sabrías hacerlo ahora mismo sin buscarlo?</em> En cuanto algo no lo tengas claro, te diremos dónde empezar.</p>
+    <button class="empezar" id="btnEmpezar">Empezar</button>
+  </section>
+
+  <!-- Pregunta -->
+  <section id="preguntas" class="oculto" aria-live="polite">
+    <div class="progreso" id="barra"></div>
+    <p class="paso" id="paso"></p>
+    <p class="tramo" id="tramo"></p>
+    <p class="pregunta">¿Sabrías hacer todo esto sin buscarlo?</p>
+    <ul class="puntos" id="puntos"></ul>
+    <div class="opciones">
+      <button class="si" data-r="si">✅ Sí, sin problema</button>
+      <button class="medio" data-r="medio">🤔 Más o menos</button>
+      <button class="no" data-r="no">❌ No</button>
+    </div>
+    <div class="nav"><button class="secundario" id="btnAtras">← Anterior</button></div>
+  </section>
+
+  <!-- Resultado -->
+  <section id="final" class="oculto" aria-live="polite">
+    <div class="progreso" id="barraFinal"></div>
+    <div class="resultado">
+      <p class="grande" id="resTitulo"></p>
+      <p id="resTexto"></p>
+      <dl id="resDatos"></dl>
+    </div>
+    <div class="aviso" id="resAviso"></div>
+    <div class="nav"><button class="secundario" id="btnReiniciar">↺ Volver a empezar</button></div>
+  </section>
+</div>
+
+<script>
+const tramos = [
+  {ico:"🚀", nombre:"Tramo 01 - Primeros Pasos", video:"001", videoTitulo:"Presentación de Hojas de Cálculo", contenido:"Empezarás por lo esencial: cómo está organizada una hoja de cálculo, cómo introducir datos y cómo convertirlos en una tabla ordenada, legible y fácil de filtrar.",
+   puntos:["Dar <strong>formato de tabla</strong> a unos datos y ajustar el ancho de las columnas.",
+           "<strong>Inmovilizar</strong> la fila de encabezados para que no desaparezca al bajar.",
+           "<strong>Ordenar y filtrar</strong> por una columna (por ejemplo, de la A a la Z)."]},
+  {ico:"➕", nombre:"Tramo 02 - Fórmulas Básicas", video:"005", videoTitulo:"Fórmulas Básicas", contenido:"Empezarás por las fórmulas: operaciones aritméticas, el orden en que Excel las resuelve, cómo arrastrarlas a toda una columna y cómo obtener totales rápidos.",
+   puntos:["Escribir una fórmula como <code>=B2*C2</code> y arrastrarla a toda la columna.",
+           "Saber por qué <code>=2+3*4</code> da 14 y no 20.",
+           "Usar la <strong>fila de totales</strong> y la <strong>Autosuma</strong>, y ocultar o mostrar hojas."]},
+  {ico:"🎨", nombre:"Tramo 03 - Formatos Condicionales y Personalizados", video:"009", videoTitulo:"Formato Condicional Básico", contenido:"Empezarás por los formatos que «hablan»: hacer que Excel resalte automáticamente los datos importantes y controlar cómo se muestran los números.",
+   puntos:["Hacer que se pinten solas las celdas que superen un valor (<strong>formato condicional</strong>).",
+           "Ordenar las reglas cuando una celda cumple dos condiciones a la vez.",
+           "Crear un <strong>formato personalizado</strong>, por ejemplo que un 5 se vea como <code>5 uds.</code>"]},
+  {ico:"📊", nombre:"Tramo 04 - Porcentajes, Orden y Gráficas", video:"012", videoTitulo:"Orden Multinivel", contenido:"Empezarás por el análisis sencillo de datos: cálculos con porcentajes, ordenaciones por varios criterios y gráficas para presentar resultados.",
+   puntos:["Calcular un <strong>aumento del 15 %</strong> sobre un precio y qué % representa una parte del total.",
+           "Ordenar por <strong>varios niveles</strong> (por ejemplo, por provincia y después por importe).",
+           "Crear una <strong>gráfica</strong> a partir de una tabla y cambiar su diseño."]},
+  {ico:"🔗", nombre:"Tramo 05 - Referencias y Funciones Básicas", video:"014", videoTitulo:"Referencias Absolutas", contenido:"Empezarás por las referencias (fijar celdas con $ y enlazar datos entre hojas) y por tus primeras funciones: SUMA, PROMEDIO, CONTAR y compañía.",
+   puntos:["Saber cuándo escribir <code>$E$1</code> en lugar de <code>E1</code> al arrastrar una fórmula.",
+           "Traer un dato de otra hoja, como <code>=Datos!B3</code>.",
+           "Usar SUMA, PROMEDIO, MAX, MIN, CONTAR y CONTARA, sabiendo en qué se diferencian <strong>CONTAR</strong> y <strong>CONTARA</strong>."]},
+  {ico:"🛡️", nombre:"Tramo 06 - Funciones Avanzadas y Validaciones", video:"021", videoTitulo:"Formatos Condicionales Predefinidos", contenido:"Empezarás por funciones con varios argumentos y anidadas, la función SI para que Excel tome decisiones, y herramientas para controlar los datos: validación y protección.",
+   puntos:["Escribir un <strong>SI</strong>: por ejemplo, «Aprobado» si la nota es ≥ 5 y «Suspenso» si no.",
+           "Usar <strong>SUMAR.SI</strong> o meter una función dentro de otra.",
+           "Crear un <strong>desplegable</strong> con validación de datos y <strong>proteger una hoja</strong> dejando algunas celdas editables."]},
+  {ico:"🔄", nombre:"Tramo 07 - Análisis Dinámico", video:"031", videoTitulo:"Segmentación de Datos", contenido:"Empezarás por el análisis dinámico: tablas dinámicas, segmentaciones y escalas de tiempo, junto con el control de errores y las funciones Y y O.",
+   puntos:["Crear una <strong>tabla dinámica</strong> y filtrarla con una <strong>segmentación de datos</strong>.",
+           "Ocultar errores como <code>#¡DIV/0!</code> con <strong>SI.ERROR</strong>.",
+           "Combinar condiciones con <strong>Y</strong> / <strong>O</strong> dentro de un SI."]},
+  {ico:"🔍", nombre:"Tramo 08 - Búsquedas y Proyectos finales", video:"036", videoTitulo:"Métodos de Búsqueda", contenido:"Empezarás por las herramientas más potentes del curso: funciones de búsqueda como BUSCARX, formato condicional con fórmulas, nombres de rango y funciones de conjunto.",
+   puntos:["Traer datos de otra tabla con <strong>BUSCARX</strong> (o BUSCARV).",
+           "Aplicar un <strong>formato condicional con fórmula</strong> que resalte la fila entera, como <code>=$B2&gt;30</code>.",
+           "<strong>Asignar nombres</strong> a rangos y usarlos en fórmulas."]}
+];
+
+const $ = id => document.getElementById(id);
+let actual = 0;
+
+function pintarBarra(el, hechos, marcado){
+  el.innerHTML = tramos.map((_,i)=>`<span class="${i<hechos?'hecho':(i===marcado?'actual':'')}"></span>`).join("");
+}
+function mostrar(sec){
+  ["portada","preguntas","final"].forEach(s => $(s).classList.toggle("oculto", s!==sec));
+}
+function pintarPregunta(){
+  const t = tramos[actual];
+  pintarBarra($("barra"), actual, actual);
+  $("paso").textContent = `Pregunta ${actual+1} de ${tramos.length}`;
+  $("tramo").textContent = `${t.ico} ${t.nombre}`;
+  $("puntos").innerHTML = t.puntos.map(p=>`<li>${p}</li>`).join("");
+  $("btnAtras").style.visibility = actual===0 ? "hidden" : "visible";
+  mostrar("preguntas");
+  document.querySelector(".opciones button").focus();
+}
+function resultado(indice, respuesta){
+  mostrar("final");
+  if(indice === null){
+    pintarBarra($("barraFinal"), tramos.length, -1);
+    $("resTitulo").textContent = "🏆 ¡Dominas todo el temario!";
+    $("resTexto").innerHTML = "Dominas todo el temario, pero esto no ha hecho más que empezar. Te recomiendo hacer las actividades del <strong>tramo final</strong> y lanzarte con <strong>tus propios proyectos</strong>: ese es el mejor momento para aprender de verdad.";
+    $("resDatos").innerHTML = "";
+    $("resAviso").innerHTML = "💬 ¿Tienes una idea o un problema real del trabajo que quieras resolver con Excel? <strong>¡Plantéalo en el foro y te ayudaremos!</strong>";
+    return;
+  }
+  const t = tramos[indice];
+  pintarBarra($("barraFinal"), indice, indice);
+  $("resTitulo").textContent = `Tu punto de partida: ${t.ico} ${t.nombre}`;
+  $("resTexto").innerHTML = t.contenido;
+  $("resDatos").innerHTML =
+    `<dt>Primer vídeo</dt><dd>${t.video} · ${t.videoTitulo}</dd>`;
+  $("resAviso").innerHTML = respuesta === "medio"
+    ? "🤔 Como lo tienes «más o menos», puedes ver los vídeos de este tramo a más velocidad. Si ves que lo dominas, pasa al siguiente tramo."
+    : "💡 Recuerda que las actividades son acumulativas: cada una da por sabido todo lo anterior. Si en algún momento te atascas con algo de un tramo previo, vuelve a su vídeo.";
+}
+
+$("btnEmpezar").onclick = () => { actual = 0; pintarPregunta(); };
+$("btnAtras").onclick = () => { if(actual>0){ actual--; pintarPregunta(); } };
+$("btnReiniciar").onclick = () => { actual = 0; mostrar("portada"); $("btnEmpezar").focus(); };
+document.querySelectorAll(".opciones button").forEach(b => b.onclick = () => {
+  const r = b.dataset.r;
+  if(r === "si"){
+    if(actual < tramos.length-1){ actual++; pintarPregunta(); }
+    else resultado(null);
+  } else resultado(actual, r);
+});
+</script>
+</body>
+</html>
